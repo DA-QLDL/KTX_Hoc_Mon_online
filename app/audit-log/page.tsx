@@ -1,0 +1,10 @@
+'use client'
+import { useEffect, useState } from 'react'
+import { ClipboardList, RefreshCw } from 'lucide-react'
+import { Protected } from '@/modules/auth/Protected'
+import { AppShell } from '@/components/AppShell'
+import { PageHeader } from '@/components/PageHeader'
+import { listAudit } from '@/modules/audit/api'
+import type { AuditLog } from '@/modules/audit/types'
+import { useAuth } from '@/modules/auth/AuthProvider'
+export default function Audit(){const {account}=useAuth();const [q,setQ]=useState('');const [rows,setRows]=useState<AuditLog[]>([]);const [loading,setLoading]=useState(false);const load=async()=>{setLoading(true);try{setRows(await listAudit(q))}finally{setLoading(false)}};useEffect(()=>{load()},[]);if(account?.role!=='admin'&&account?.role!=='manager')return <Protected><AppShell><div className="content"><div className="card"><p>Bạn không có quyền xem Nhật ký hệ thống.</p></div></div></AppShell></Protected>;return <Protected><AppShell><div className="content"><PageHeader icon={ClipboardList} title="NHẬT KÝ HỆ THỐNG" subtitle="Audit log được ghi tự động tại PostgreSQL/Supabase" actions={<button className="btn" onClick={load}><RefreshCw size={15}/> Đồng bộ</button>}/><div className="card"><div className="toolbar"><input className="input" style={{flex:1}} value={q} onChange={e=>setQ(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')load()}} placeholder="Tìm email, hành động, nội dung..."/><button className="btn primary" onClick={load}>Tìm</button></div><div className="tableWrap"><table><thead><tr><th>Thời gian</th><th>Người thực hiện</th><th>Vai trò</th><th>Hành động</th><th>Đối tượng</th><th>Nội dung</th></tr></thead><tbody>{rows.map(x=><tr key={x.id}><td>{new Date(x.created_at).toLocaleString('vi-VN')}</td><td>{x.actor_email||'Hệ thống'}</td><td>{x.actor_role||'—'}</td><td><span className="tag">{x.action}</span></td><td>{x.entity_type}{x.entity_id?` · ${x.entity_id.slice(0,8)}`:''}</td><td>{x.summary||'—'}</td></tr>)}</tbody></table>{!loading&&!rows.length&&<div className="empty">Chưa có nhật ký.</div>}</div></div></div></AppShell></Protected>}
