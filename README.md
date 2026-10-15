@@ -28,3 +28,12 @@ Báo cáo suất ăn Online giữ form nhập số suất, suất mặn/chay, c�
 ## v30.1
 - Sửa build Vercel/Next.js 15 cho `/address-tools`: bọc `useSearchParams()` trong `Suspense`.
 - Không thay đổi chức năng hay dữ liệu.
+
+## v30.2 — Auth hoàn chỉnh
+- Bổ sung AuthGate ở RootLayout.
+- Chưa đăng nhập luôn chuyển tới `/login`.
+- Đăng nhập / Đăng ký / Quên mật khẩu / Đặt mật khẩu mới.
+- Chờ duyệt / gửi lại yêu cầu / kiểm tra quyền.
+- Trang `/account` cho mọi tài khoản đã được duyệt.
+- Sidebar có mục `Tài khoản của tôi` và user card dẫn tới hồ sơ.
+- Giữ nguyên toàn bộ module nghiệp vụ v30.1.
