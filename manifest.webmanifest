@@ -1,0 +1,13 @@
+{
+  "name": "Quản lý KTX Hóc Môn",
+  "short_name": "KTX Hóc Môn",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f8fc",
+  "theme_color": "#246BFD",
+  "description": "Ứng dụng quản lý công nhân và vận hành KTX Hóc Môn",
+  "icons": [
+    {"src":"./pwa-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
