@@ -4292,7 +4292,60 @@ function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)retu
 </style>
 </head><body><h1>${esc(d.title)}</h1><p>Kỳ báo cáo: ${esc(vn(RC96.from))} - ${esc(vn(RC96.to))} · ${esc(RC96.ktx||'Tất cả KTX')}</p><table><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${d.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')}</table><!-- KTX-STABLE-101 · Production baseline -->
 <!-- STEP105_PERFORMANCE_OPTIMIZATION -->
-</body></html>`);w.document.close();setTimeout(()=>{w.focus();w.print()},250)}
+</body>
+<style id="step131SystemGroupPackingStyle">
+/* STEP131 — các cụm hệ thống bám sát từ trái sang phải, chỉ xuống hàng khi hết chiều ngang */
+#sysfunc .sysfunc-wrap{
+  display:flex!important;
+  flex-flow:row wrap!important;
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+  justify-content:flex-start!important;
+  align-items:flex-start!important;
+  align-content:flex-start!important;
+  gap:10px!important;
+}
+#sysfunc .sysfunc-intro,
+#sysfunc .sysfunc-footer{
+  flex:0 0 100%!important;
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+}
+#sysfunc .sysfunc-group{
+  flex:0 0 calc((100% - 30px)/4)!important;
+  width:calc((100% - 30px)/4)!important;
+  min-width:245px!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+  margin:0!important;
+}
+#sysfunc .sysfunc-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:7px!important;
+}
+#sysfunc .sysfunc-btn{width:100%!important;min-width:0!important}
+@media(max-width:1180px){
+  #sysfunc .sysfunc-group{
+    flex-basis:calc((100% - 20px)/3)!important;
+    width:calc((100% - 20px)/3)!important;
+  }
+}
+@media(max-width:860px){
+  #sysfunc .sysfunc-group{
+    flex-basis:calc((100% - 10px)/2)!important;
+    width:calc((100% - 10px)/2)!important;
+    min-width:230px!important;
+  }
+}
+@media(max-width:560px){
+  #sysfunc .sysfunc-group{flex-basis:100%!important;width:100%!important;min-width:0!important}
+  #sysfunc .sysfunc-grid{grid-template-columns:1fr!important}
+}
+</style>
+</html>`);w.document.close();setTimeout(()=>{w.focus();w.print()},250)}
 managementReportsPage=function(){
  if(!RC96.from||!RC96.to){const r=rc96Range(RC96.preset||'month');RC96.from=r[0];RC96.to=r[1]}
  const L=rc96Base(),rs=rooms(L),free=rs.reduce((s,r)=>s+Math.max(0,CAP-r.n),0),over=rs.filter(r=>r.n>CAP).length,missing=L.filter(w=>!w.cccd||!w.sdt||!w.dob||!R(w)).length,away=L.filter(w=>isAwayOn(w)).length,inc=L.filter(w=>rc96InRange(w.date,RC96.from,RC96.to)).length,dec=rc96Arc().filter(a=>rc96InRange(a.date,RC96.from,RC96.to)).length,ks=[...new Set(W.map(K).filter(Boolean))].sort(num);
@@ -5008,6 +5061,59 @@ body[data-page="sysfunc"] #sysfunc{display:block!important;visibility:visible!im
 }
 @media(max-width:760px){
   #sysfunc .sysfunc-group{flex:1 1 100%!important;min-width:0!important}
+}
+</style>
+
+<style id="step131SystemGroupPackingStyle">
+/* STEP131 — các cụm hệ thống bám sát từ trái sang phải, chỉ xuống hàng khi hết chiều ngang */
+#sysfunc .sysfunc-wrap{
+  display:flex!important;
+  flex-flow:row wrap!important;
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+  justify-content:flex-start!important;
+  align-items:flex-start!important;
+  align-content:flex-start!important;
+  gap:10px!important;
+}
+#sysfunc .sysfunc-intro,
+#sysfunc .sysfunc-footer{
+  flex:0 0 100%!important;
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+}
+#sysfunc .sysfunc-group{
+  flex:0 0 calc((100% - 30px)/4)!important;
+  width:calc((100% - 30px)/4)!important;
+  min-width:245px!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+  margin:0!important;
+}
+#sysfunc .sysfunc-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:7px!important;
+}
+#sysfunc .sysfunc-btn{width:100%!important;min-width:0!important}
+@media(max-width:1180px){
+  #sysfunc .sysfunc-group{
+    flex-basis:calc((100% - 20px)/3)!important;
+    width:calc((100% - 20px)/3)!important;
+  }
+}
+@media(max-width:860px){
+  #sysfunc .sysfunc-group{
+    flex-basis:calc((100% - 10px)/2)!important;
+    width:calc((100% - 10px)/2)!important;
+    min-width:230px!important;
+  }
+}
+@media(max-width:560px){
+  #sysfunc .sysfunc-group{flex-basis:100%!important;width:100%!important;min-width:0!important}
+  #sysfunc .sysfunc-grid{grid-template-columns:1fr!important}
 }
 </style>
 </html>
