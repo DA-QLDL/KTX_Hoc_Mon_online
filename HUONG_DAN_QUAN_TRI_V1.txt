@@ -1,0 +1,23 @@
+HƯỚNG DẪN QUẢN TRỊ NHANH — KTX HÓC MÔN v1.0
+
+Hàng ngày:
+- Dashboard vận hành: kiểm tra quân số, vào/ra, phòng đầy/quá tải và việc cần xử lý.
+- Trung tâm cảnh báo: xử lý cảnh báo nghiệp vụ.
+- Trung tâm sự cố: kiểm tra lỗi kỹ thuật mới.
+- Sức khỏe hệ thống: kiểm tra Supabase, Local/Cloud, backup, PWA.
+
+Hàng tuần:
+- Kiểm tra toàn bộ dữ liệu.
+- Chuẩn hóa dữ liệu khi có đề xuất.
+- Kiểm tra Hoạt động người dùng/Phân quyền.
+
+Hàng tháng:
+- Xác nhận có backup online.
+- Xem Báo cáo định kỳ.
+- Bảo trì & lưu trữ dữ liệu cũ nếu dung lượng tăng nhiều.
+
+Trước cập nhật phiên bản:
+- Backup.
+- Nghiệm thu Production.
+- Deploy một commit đầy đủ.
+- Kiểm tra lại đồng bộ 2 máy và PWA.

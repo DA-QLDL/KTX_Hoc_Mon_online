@@ -1,0 +1,34 @@
+BÁO CÁO KIỂM TRA TĨNH — KTX v1.0.0
+
+01. [ĐẠT] Không có ID HTML tĩnh bị trùng
+02. [ĐẠT] Có section incidents
+03. [ĐẠT] Có menu incidents
+04. [ĐẠT] Có section security
+05. [ĐẠT] Có menu security
+06. [ĐẠT] Có section opsboard
+07. [ĐẠT] Có menu opsboard
+08. [ĐẠT] Có section reportauto
+09. [ĐẠT] Có menu reportauto
+10. [ĐẠT] Có section standards
+11. [ĐẠT] Có menu standards
+12. [ĐẠT] Có section maintenance
+13. [ĐẠT] Có menu maintenance
+14. [ĐẠT] Có section qa
+15. [ĐẠT] Có menu qa
+16. [ĐẠT] Có section release
+17. [ĐẠT] Có menu release
+18. [ĐẠT] Có hàm incidentCenterPage
+19. [ĐẠT] Có hàm securityPage
+20. [ĐẠT] Có hàm opsBoardPage
+21. [ĐẠT] Có hàm reportAutoPage
+22. [ĐẠT] Có hàm standardsPage
+23. [ĐẠT] Có hàm maintenancePage
+24. [ĐẠT] Có hàm qaPage
+25. [ĐẠT] Có hàm releasePage
+26. [ĐẠT] Phiên bản meta v1.0.0
+27. [ĐẠT] Giữ định mức CAP 20
+28. [ĐẠT] Có PWA manifest
+29. [ĐẠT] Có Service Worker
+
+Tổng: 29/29 đạt.
+Lưu ý: đây là kiểm tra tĩnh/cú pháp; checklist thao tác thật nằm trong Hệ thống → Nghiệm thu Production.
