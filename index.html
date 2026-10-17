@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ký túc xá Hóc Môn</title>
+<meta name="app-version" content="KTX-STABLE-101">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -4133,7 +4134,8 @@ function rc96Data(){
 function rc96FileSlug(s){return sa(s).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'bao-cao'}
 function rc96SetPreset(p){RC96.preset=p;const [a,b]=rc96Range(p);RC96.from=a;RC96.to=b;managementReportsPage()}
 function rc96Preview(){const d=rc96Data(),pv=$('rc96Preview');if(!pv)return;pv.innerHTML=`<div class="rc96-preview-head"><b>${esc(d.title)}</b><span>${d.count.toLocaleString('vi-VN')} dòng · ${vn(RC96.from)} → ${vn(RC96.to)}</span></div><div class="wrap"><table><thead><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${d.rows.slice(0,300).map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')||`<tr><td colspan="${d.headers.length}" class="mut">Không có dữ liệu phù hợp.</td></tr>`}</tbody></table></div>${d.rows.length>300?`<div class="mut" style="padding:7px 10px">Hiển thị 300/${d.rows.length.toLocaleString('vi-VN')} dòng. File xuất chứa đầy đủ dữ liệu.</div>`:''}`}
-function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)return alert('Trình duyệt đang chặn cửa sổ in. Hãy cho phép pop-up rồi thử lại.');const css=`body{font-family:Arial,sans-serif;color:#172b4d;padding:24px}h1{font-size:20px;margin:0 0 5px}p{font-size:11px;color:#65758b}table{border-collapse:collapse;width:100%;font-size:10px;margin-top:14px}th,td{border:1px solid #cfd8e5;padding:5px;text-align:left}th{background:#eef4fb}@page{size:A4 landscape;margin:12mm}`;w.document.write(`<html><head><title>${esc(d.title)}</title><style>${css}</style></head><body><h1>${esc(d.title)}</h1><p>Kỳ báo cáo: ${esc(vn(RC96.from))} - ${esc(vn(RC96.to))} · ${esc(RC96.ktx||'Tất cả KTX')}</p><table><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${d.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')}</table></body></html>`);w.document.close();setTimeout(()=>{w.focus();w.print()},250)}
+function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)return alert('Trình duyệt đang chặn cửa sổ in. Hãy cho phép pop-up rồi thử lại.');const css=`body{font-family:Arial,sans-serif;color:#172b4d;padding:24px}h1{font-size:20px;margin:0 0 5px}p{font-size:11px;color:#65758b}table{border-collapse:collapse;width:100%;font-size:10px;margin-top:14px}th,td{border:1px solid #cfd8e5;padding:5px;text-align:left}th{background:#eef4fb}@page{size:A4 landscape;margin:12mm}`;w.document.write(`<html><head><title>${esc(d.title)}</title><style>${css}</style></head><body><h1>${esc(d.title)}</h1><p>Kỳ báo cáo: ${esc(vn(RC96.from))} - ${esc(vn(RC96.to))} · ${esc(RC96.ktx||'Tất cả KTX')}</p><table><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${d.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')}</table><!-- KTX-STABLE-101 · Production baseline -->
+</body></html>`);w.document.close();setTimeout(()=>{w.focus();w.print()},250)}
 managementReportsPage=function(){
  if(!RC96.from||!RC96.to){const r=rc96Range(RC96.preset||'month');RC96.from=r[0];RC96.to=r[1]}
  const L=rc96Base(),rs=rooms(L),free=rs.reduce((s,r)=>s+Math.max(0,CAP-r.n),0),over=rs.filter(r=>r.n>CAP).length,missing=L.filter(w=>!w.cccd||!w.sdt||!w.dob||!R(w)).length,away=L.filter(w=>isAwayOn(w)).length,inc=L.filter(w=>rc96InRange(w.date,RC96.from,RC96.to)).length,dec=rc96Arc().filter(a=>rc96InRange(a.date,RC96.from,RC96.to)).length,ks=[...new Set(W.map(K).filter(Boolean))].sort(num);
@@ -4249,4 +4251,3 @@ managementReportsPage=function(){
 </style>
 </body>
 </html>
-<!-- redeploy pwa -->
