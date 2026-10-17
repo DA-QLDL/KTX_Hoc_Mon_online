@@ -1,0 +1,11 @@
+KTX Hóc Môn v1.0.1 HOTFIX
+
+Sửa lỗi trang không hiển thị sau bản hợp nhất STEP113-120.
+Nguyên nhân: hàm all() tại script khởi động tham chiếu trực tiếp các hàm được khai báo ở các script phía sau, làm phát sinh ReferenceError trước khi trang Tổng quan kịp render.
+
+Cách sửa:
+- Chuyển cơ chế gọi trang sang tra cứu tên hàm động qua window sau khi script tương ứng đã được nạp.
+- Bổ sung kiểm tra an toàn cho updateAlertBadges/QCAM.
+- Đổi cache Service Worker để buộc PWA nhận bản sửa mới.
+
+Triển khai: upload toàn bộ file trong thư mục này lên root repo trong một commit, không xóa index.html ở commit riêng.

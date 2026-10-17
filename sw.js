@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ktx-hoc-mon-pwa-v1-0-0';
+const CACHE_NAME = 'ktx-hoc-mon-pwa-v1-0-1-hotfix';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
