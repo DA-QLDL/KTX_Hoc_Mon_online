@@ -4830,7 +4830,7 @@ function accessAccountIssues(){const out=[];const rows=Object.entries(SD.ACC||{}
 function accessControlPage(){const el=$('access');if(!el)return;if(!can('acct')){el.innerHTML='<div class="card"><p class="mut">Chỉ Quản trị mới xem được Trung tâm phân quyền & truy cập.</p></div>';return}const accounts=Object.entries(SD.ACC||{});const issues=accessAccountIssues();const admins=accounts.filter(([,a])=>a&&a.role==='admin').length;const scoped=accounts.filter(([,a])=>((a&&a.ktx)||[]).length||((a&&a.days)||[]).length).length;const sensitive=ACCESS_ORDER.filter(k=>SENSITIVE_PERMS.includes(k)||['del','restore'].includes(k));const roleRows=Object.entries(ROLES).map(([r,label])=>{const p=ROLE_PERMS[r]||{};return `<tr><td><b>${esc(label)}</b><div class="mut" style="font-size:8.5px">${esc(r)}</div></td>${ACCESS_ORDER.map(k=>`<td class="${SENSITIVE_PERMS.includes(k)?'access-sensitive':''}">${p[k]?'<span class="access-yes">✓</span>':'<span class="access-no">—</span>'}</td>`).join('')}</tr>`}).join('');const issueHtml=issues.length?issues.map(x=>`<div class="access-alert ${x.sev==='warn'?'warn':''}"><i class="access-dot"></i><div><b>${x.sev==='high'?'Cấu hình cần xử lý':'Cần rà soát'}</b><small>${esc(x.msg)}</small></div></div>`).join(''):`<div class="access-alert ok"><i class="access-dot"></i><div><b>Chưa phát hiện cấu hình bất thường</b><small>Vai trò tài khoản hiện tại khớp với ma trận quyền hệ thống.</small></div></div>`;const acctHtml=accounts.length?accounts.map(([id,a])=>{const role=a&&a.role||'viewer';const p=ROLE_PERMS[role]||ROLE_PERMS.viewer;const sens=sensitive.filter(k=>p[k]).length;return `<div class="access-account"><div><strong>${esc((a&&a.name)||id)}</strong><div class="mut" style="font-size:8.5px">${esc(id)}</div></div><div><span class="access-badge ${role==='admin'?'red':role==='viewer'?'':'green'}">${esc(ROLES[role]||role)}</span></div><div>${esc(accessScopeText(a||{}))}</div><div><b>${Object.values(p).filter(Boolean).length}</b> quyền · <b>${sens}</b> nhạy cảm</div><div><button class="btn s sm" data-access-user="${esc(id)}">Mở</button></div></div>`}).join(''):'<div class="mut">Chưa có tài khoản nhân viên trong cấu hình hiện tại.</div>';el.innerHTML=`<div class="access-kpis"><div class="access-kpi"><span>Tài khoản</span><b>${accounts.length.toLocaleString('vi-VN')}</b><small>Không tính chủ sở hữu cục bộ</small></div><div class="access-kpi"><span>Quản trị</span><b>${admins.toLocaleString('vi-VN')}</b><small>Tài khoản có toàn quyền</small></div><div class="access-kpi"><span>Có giới hạn phạm vi</span><b>${scoped.toLocaleString('vi-VN')}</b><small>KTX hoặc Dãy được giao</small></div><div class="access-kpi"><span>Cảnh báo cấu hình</span><b>${issues.length.toLocaleString('vi-VN')}</b><small>Cần rà soát trước khi vận hành</small></div></div><div class="access-grid"><div><div class="card"><div class="access-head"><div><h3>Ma trận quyền theo vai trò</h3><div class="mut" style="font-size:9px">Quyền nhạy cảm được đánh dấu riêng và kiểm tra độc lập.</div></div><span class="spacer"></span><button class="btn s sm" id="access_accounts">Quản lý tài khoản</button></div><div class="wrap"><table class="cmp3 access-matrix"><tr><th>Vai trò</th>${ACCESS_ORDER.map(k=>`<th class="${SENSITIVE_PERMS.includes(k)?'access-sensitive':''}">${esc(ACCESS_LABELS[k]||k)}</th>`).join('')}</tr>${roleRows}</table></div><div class="access-note" style="margin-top:10px"><b>Quyền nhạy cảm:</b> Xóa hẳn · Backup · Tài khoản · Duyệt QR · Import. Phạm vi KTX/Dãy hiện được kiểm tra khi Quản lý/Nhập liệu thêm, sửa, chuyển phòng hoặc cập nhật cư trú cho một công nhân.</div></div><div class="card"><div class="access-head"><h3>Tài khoản & phạm vi phụ trách</h3><span class="spacer"></span><span class="access-badge">${accounts.length} tài khoản</span></div><div>${acctHtml}</div></div></div><div><div class="card"><h3>Kiểm tra cấu hình truy cập</h3>${issueHtml}<div class="access-actions" style="margin-top:10px"><button class="btn s sm" id="access_refresh">Kiểm tra lại</button><button class="btn s sm" id="access_activity">Hoạt động người dùng</button></div></div><div class="card"><h3>Vai trò hiện tại</h3><div class="access-note"><b>${esc(ME.name||'Người dùng')}</b><br>Vai trò: ${esc(ROLES[ME.role]||ME.role)}<br>Phạm vi: ${esc(accessScopeText(ME.acct||{}))}<br><br>Trang này chỉ kiểm tra và hiển thị quyền. Mọi thay đổi tài khoản vẫn thực hiện tại <b>Quản lý tài khoản</b> để tránh sửa quyền nhầm.</div></div><div class="card"><h3>Khuyến nghị vận hành</h3><div class="access-note">• Chỉ giữ số lượng Quản trị tối thiểu cần thiết.<br>• Quản lý/Nhập liệu nên được giới hạn KTX/Dãy khi có phân công rõ.<br>• Bảo vệ chỉ dùng cho nghiệp vụ xem và xác nhận vào/ra.<br>• Kiểm tra Hoạt động người dùng sau các thao tác nhạy cảm.<br>• Không cấp quyền Backup/Import/Xóa hẳn cho tài khoản không phụ trách quản trị dữ liệu.</div></div></div></div>`;$('access_accounts').onclick=()=>go('acc');$('access_refresh').onclick=()=>accessControlPage();$('access_activity').onclick=()=>go('activity');el.querySelectorAll('[data-access-user]').forEach(b=>b.onclick=()=>go('acc'))}
 
 /* STEP111 — Dashboard quản trị hệ thống */
-.adm-top{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-bottom:10px}.adm-kpi{border:1px solid #e1e9f3;border-radius:12px;background:#fff;padding:10px 11px;min-height:70px}.adm-kpi span{display:block;color:#72839a;font-size:8.8px;font-weight:800;text-transform:uppercase;letter-spacing:.02em}.adm-kpi b{display:block;color:#203d63;font-size:18px;margin-top:4px}.adm-kpi small{display:block;color:#7c8ca1;font-size:8.8px;margin-top:3px}.adm-kpi.ok{background:#f5fbf7;border-color:#cfe9d8}.adm-kpi.warn{background:#fffaf0;border-color:#f2dfb3}.adm-kpi.bad{background:#fff5f6;border-color:#efced3}.adm-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:10px}.adm-card{margin-bottom:10px}.adm-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}.adm-head h3{margin:0}.adm-head .spacer{margin-left:auto}.adm-status-list{display:grid;gap:6px}.adm-status{display:grid;grid-template-columns:10px minmax(120px,.8fr) minmax(0,1.8fr) auto;align-items:center;gap:7px;padding:7px 8px;border:1px solid #e6edf5;border-radius:9px;background:#fbfdff}.adm-status i{width:8px;height:8px;border-radius:50%;background:#8aa0ba}.adm-status.ok i{background:#24a269}.adm-status.warn i{background:#e5a02d}.adm-status.bad i{background:#d94b58}.adm-status b{font-size:9.5px;color:#2b486c}.adm-status span{font-size:9px;color:#647a96;overflow-wrap:anywhere}.adm-status .btn{padding:4px 7px;font-size:8.5px}.adm-alerts{display:grid;gap:6px}.adm-alert{padding:7px 8px;border:1px solid #e4ebf4;border-radius:9px;background:#fff}.adm-alert b{display:block;color:#304d70;font-size:9.5px}.adm-alert small{display:block;color:#7a8aa0;font-size:8.7px;margin-top:2px;line-height:1.35}.adm-alert.danger{border-left:3px solid #d94b58}.adm-alert.warn{border-left:3px solid #e0a030}.adm-activity{display:grid;gap:5px}.adm-act{display:grid;grid-template-columns:115px 120px 90px 1fr;gap:7px;align-items:start;padding:6px 7px;border-bottom:1px solid #edf2f7;font-size:8.9px}.adm-act:last-child{border-bottom:0}.adm-act time{color:#7a8ba0}.adm-act strong{color:#2b486b}.adm-act .tag{font-size:8px}.adm-act span{color:#607590;line-height:1.35}.adm-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.adm-mini{display:grid;grid-template-columns:1fr auto;gap:6px;padding:7px 0;border-bottom:1px solid #edf2f7}.adm-mini:last-child{border-bottom:0}.adm-mini span{color:#647991;font-size:9px}.adm-mini b{color:#294a70;font-size:9.5px}.adm-note{padding:8px 9px;border:1px solid #dfe8f3;border-radius:9px;background:#f7faff;color:#6c809b;font-size:8.8px;line-height:1.45}@media(max-width:1200px){.adm-top{grid-template-columns:repeat(3,1fr)}.adm-grid{grid-template-columns:1fr}}@media(max-width:700px){.adm-top{grid-template-columns:1fr 1fr}.adm-status{grid-template-columns:10px 1fr}.adm-status span,.adm-status .btn{grid-column:2}.adm-act{grid-template-columns:1fr 1fr}.adm-act span{grid-column:1/-1}.adm-actions{grid-template-columns:1fr}}
+.adm-top{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-bottom:10px}.adm-kpi{border:1px solid #e1e9f3;border-radius:12px;background:#fff;padding:10px 11px;min-height:70px}.adm-kpi span{display:block;color:#72839a;font-size:8.8px;font-weight:800;text-transform:uppercase;letter-spacing:.02em}.adm-kpi b{display:block;color:#203d63;font-size:18px;margin-top:4px}.adm-kpi small{display:block;color:#7c8ca1;font-size:8.8px;margin-top:3px}.adm-kpi.ok{background:#f5fbf7;border-color:#cfe9d8}.adm-kpi.warn{background:#fffaf0;border-color:#f2dfb3}.adm-kpi.bad{background:#fff5f6;border-color:#efced3}.adm-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:10px}.adm-card{margin-bottom:10px}.adm-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}.adm-head h3{margin:0}.adm-head .spacer{margin-left:auto}.adm-status-list{display:grid;gap:6px}.adm-status{display:grid;grid-template-columns:10px minmax(120px,.8fr) minmax(0,1.8fr);align-items:center;gap:7px;padding:7px 8px;border:1px solid #e6edf5;border-radius:9px;background:#fbfdff}.adm-status i{width:8px;height:8px;border-radius:50%;background:#8aa0ba}.adm-status.ok i{background:#24a269}.adm-status.warn i{background:#e5a02d}.adm-status.bad i{background:#d94b58}.adm-status b{font-size:9.5px;color:#2b486c}.adm-status span{font-size:9px;color:#647a96;overflow-wrap:anywhere}.adm-status .btn{padding:4px 7px;font-size:8.5px}.adm-alerts{display:grid;gap:6px}.adm-alert{padding:7px 8px;border:1px solid #e4ebf4;border-radius:9px;background:#fff}.adm-alert b{display:block;color:#304d70;font-size:9.5px}.adm-alert small{display:block;color:#7a8aa0;font-size:8.7px;margin-top:2px;line-height:1.35}.adm-alert.danger{border-left:3px solid #d94b58}.adm-alert.warn{border-left:3px solid #e0a030}.adm-activity{display:grid;gap:5px}.adm-act{display:grid;grid-template-columns:115px 120px 90px 1fr;gap:7px;align-items:start;padding:6px 7px;border-bottom:1px solid #edf2f7;font-size:8.9px}.adm-act:last-child{border-bottom:0}.adm-act time{color:#7a8ba0}.adm-act strong{color:#2b486b}.adm-act .tag{font-size:8px}.adm-act span{color:#607590;line-height:1.35}.adm-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.adm-mini{display:grid;grid-template-columns:1fr auto;gap:6px;padding:7px 0;border-bottom:1px solid #edf2f7}.adm-mini:last-child{border-bottom:0}.adm-mini span{color:#647991;font-size:9px}.adm-mini b{color:#294a70;font-size:9.5px}.adm-note{padding:8px 9px;border:1px solid #dfe8f3;border-radius:9px;background:#f7faff;color:#6c809b;font-size:8.8px;line-height:1.45}@media(max-width:1200px){.adm-top{grid-template-columns:repeat(3,1fr)}.adm-grid{grid-template-columns:1fr}}@media(max-width:700px){.adm-top{grid-template-columns:1fr 1fr}.adm-status{grid-template-columns:10px 1fr}.adm-status span,.adm-status .btn{grid-column:2}.adm-act{grid-template-columns:1fr 1fr}.adm-act span{grid-column:1/-1}.adm-actions{grid-template-columns:1fr}}
 </style>
 <script id="step111-admin-dashboard-js">
 async function adminDashboardPage(){
@@ -4846,7 +4846,7 @@ async function adminDashboardPage(){
  const cloudKnown=typeof h.cloudWorkers==='number',delta=cloudKnown?Math.abs(Number(h.workerDelta||0)):null;
  const kKind=h.bad?'bad':(h.warn||badAudit||warnAudit)?'warn':'ok';
  const alertTop=alerts.slice(0,8),actTop=acts.slice(0,8);
- const status=(kind,title,detail,goTo,label)=>`<div class="adm-status ${kind}"><i></i><b>${esc(title)}</b><span>${esc(detail)}</span>${goTo?`<button class="btn s sm" data-adm-go="${goTo}">${esc(label||'Mở')}</button>`:''}</div>`;
+ const status=(kind,title,detail)=>`<div class="adm-status ${kind}"><i></i><b>${esc(title)}</b><span>${esc(detail)}</span></div>`;
  el.innerHTML=`<div class="adm-top">
  <div class="adm-kpi ${kKind}"><span>Tình trạng chung</span><b>${esc(h.healthText||'Đang theo dõi')}</b><small>${Number(h.bad||0)} lỗi · ${Number(h.warn||0)} cần chú ý</small></div>
  <div class="adm-kpi ${h.syncReady&&!h.lastError?'ok':'warn'}"><span>Đồng bộ Supabase</span><b>${h.syncReady?'Sẵn sàng':'Cần kiểm tra'}</b><small>${h.lastSync?'Lần gần nhất '+healthDate(h.lastSync):'Chưa có mốc đồng bộ'}</small></div>
@@ -4856,14 +4856,14 @@ async function adminDashboardPage(){
  </div>
  <div class="adm-grid"><div>
  <div class="card adm-card"><div class="adm-head"><h3>Trạng thái vận hành</h3><span class="spacer"></span><button class="btn s sm" id="admRefresh">Làm mới</button></div><div class="adm-status-list">
- ${status(h.online?'ok':'bad','Kết nối Internet',h.online?'Đang online':'Mất kết nối mạng','health','Kiểm tra')}
- ${status(h.auth?'ok':'bad','Supabase Auth',h.auth?'Đã đăng nhập':'Chưa đăng nhập Supabase','sync','Mở đồng bộ')}
- ${status(h.syncReady&&!h.lastError?'ok':h.syncEnabled?'warn':'bad','Đồng bộ dữ liệu',h.syncEnabled?(h.syncReady?'Đang hoạt động':'Đã bật nhưng chưa sẵn sàng'):'Đang tắt','sync','Mở')}
- ${status(cloudKnown?(delta===0?'ok':'warn'):'warn','Đối chiếu Local / Cloud',cloudKnown?(delta===0?'Số công nhân đang khớp':`Chênh ${delta.toLocaleString('vi-VN')} hồ sơ`):'Chưa lấy được số liệu Cloud','health','Xem chi tiết')}
- ${status(badAudit?'bad':warnAudit?'warn':'ok','Kiểm tra dữ liệu',audit.length?`${audit.length.toLocaleString('vi-VN')} vấn đề · ${badAudit} nghiêm trọng · ${warnAudit} cảnh báo`:'Không phát hiện vấn đề','dataaudit','Mở kiểm tra')}
- ${status(Number(h.onlineBackups||0)>0?'ok':'warn','Backup dữ liệu',`Online ${Number(h.onlineBackups||0)} · Trên máy ${Number(h.localBackups||0)}`,'backup','Mở backup')}
+ ${status(h.online?'ok':'bad','Kết nối Internet',h.online?'Đang online':'Mất kết nối mạng')}
+ ${status(h.auth?'ok':'bad','Supabase Auth',h.auth?'Đã đăng nhập':'Chưa đăng nhập Supabase')}
+ ${status(h.syncReady&&!h.lastError?'ok':h.syncEnabled?'warn':'bad','Đồng bộ dữ liệu',h.syncEnabled?(h.syncReady?'Đang hoạt động':'Đã bật nhưng chưa sẵn sàng'):'Đang tắt')}
+ ${status(cloudKnown?(delta===0?'ok':'warn'):'warn','Đối chiếu Local / Cloud',cloudKnown?(delta===0?'Số công nhân đang khớp':`Chênh ${delta.toLocaleString('vi-VN')} hồ sơ`):'Chưa lấy được số liệu Cloud')}
+ ${status(badAudit?'bad':warnAudit?'warn':'ok','Kiểm tra dữ liệu',audit.length?`${audit.length.toLocaleString('vi-VN')} vấn đề · ${badAudit} nghiêm trọng · ${warnAudit} cảnh báo`:'Không phát hiện vấn đề')}
+ ${status(Number(h.onlineBackups||0)>0?'ok':'warn','Backup dữ liệu',`Online ${Number(h.onlineBackups||0)} · Trên máy ${Number(h.localBackups||0)}`)}
  </div></div>
- <div class="card adm-card"><div class="adm-head"><h3>Cảnh báo cần chú ý</h3><span class="spacer"></span><button class="btn s sm" data-adm-go="alerts">Mở Trung tâm cảnh báo</button></div><div class="adm-alerts">${alertTop.length?alertTop.map(x=>`<div class="adm-alert ${x.sev==='danger'?'danger':x.sev==='warn'?'warn':''}"><b>${esc(x.title||'Cảnh báo')}</b><small>${esc(x.detail||'')}</small></div>`).join(''):'<div class="adm-note">Hiện không có cảnh báo cần xử lý.</div>'}</div>${alerts.length>8?`<div class="adm-note" style="margin-top:7px">Đang hiển thị 8/${alerts.length} cảnh báo mới nhất.</div>`:''}</div>
+ <div class="card adm-card"><div class="adm-head"><h3>Cảnh báo cần chú ý</h3></div><div class="adm-alerts">${alertTop.length?alertTop.map(x=>`<div class="adm-alert ${x.sev==='danger'?'danger':x.sev==='warn'?'warn':''}"><b>${esc(x.title||'Cảnh báo')}</b><small>${esc(x.detail||'')}</small></div>`).join(''):'<div class="adm-note">Hiện không có cảnh báo cần xử lý.</div>'}</div>${alerts.length>8?`<div class="adm-note" style="margin-top:7px">Đang hiển thị 8/${alerts.length} cảnh báo mới nhất.</div>`:''}</div>
  <div class="card adm-card"><div class="adm-head"><h3>Hoạt động người dùng gần nhất</h3><span class="spacer"></span><button class="btn s sm" data-adm-go="activity">Xem toàn bộ</button></div><div class="adm-activity">${actTop.length?actTop.map(x=>`<div class="adm-act"><time>${esc(typeof uaFmtTime==='function'?uaFmtTime(uaAt(x)):(x.t||'—'))}</time><strong>${esc(typeof uaActor==='function'?uaActor(x):(x.actor||'Không rõ'))}</strong><span class="tag">${esc(x.a||'LOG')}</span><span>${esc(x.d||'')}</span></div>`).join(''):'<div class="adm-note">Chưa có hoạt động người dùng.</div>'}</div></div>
  </div><div>
  <div class="card adm-card"><h3>Thống kê nhanh</h3><div class="adm-mini"><span>Công nhân hiện tại</span><b>${W.length.toLocaleString('vi-VN')}</b></div><div class="adm-mini"><span>Điều chuyển · Nghỉ việc</span><b>${ARC.length.toLocaleString('vi-VN')}</b></div><div class="adm-mini"><span>Nhật ký hệ thống</span><b>${LOG.length.toLocaleString('vi-VN')}</b></div><div class="adm-mini"><span>Điểm danh</span><b>${ATT.length.toLocaleString('vi-VN')}</b></div><div class="adm-mini"><span>Đăng ký chờ xử lý</span><b>${REG.length.toLocaleString('vi-VN')}</b></div><div class="adm-mini"><span>Thao tác nhạy cảm</span><b>${sensitive.toLocaleString('vi-VN')}</b></div></div>
@@ -5334,4 +5334,89 @@ body.auth-locked #authHubGate.hide{display:flex!important}
 })();
 </script>
 
+
+
+<!-- STEP135 — UNIFIED APPLICATION BUTTONS + ADMIN DASHBOARD CLEANUP -->
+<style id="step135UnifiedButtons">
+/* Một ngôn ngữ nút duy nhất cho toàn bộ ứng dụng: trắng, viền mảnh, bo gọn, bóng nhẹ. */
+:root{
+  --ktx-btn-bg:#ffffff;
+  --ktx-btn-text:#17385f;
+  --ktx-btn-border:#cbd9ea;
+  --ktx-btn-border-hover:#8fb5e9;
+  --ktx-btn-hover:#f8fbff;
+  --ktx-btn-shadow:0 2px 7px rgba(29,63,105,.055);
+  --ktx-btn-shadow-hover:0 5px 13px rgba(29,63,105,.09);
+  --ktx-btn-accent:#2e73d2;
+}
+
+/* Nút thao tác chung */
+.btn,label.btn,
+.btn.g,label.btn.g,.btn.r,label.btn.r,.btn.s,label.btn.s,.btn.a,label.btn.a,
+#tools .btn,#tools [class*="ta-"],
+.ac-actions button,.auth-userbar button,.system-backbar,
+.aqd-read,.aqd-edit,.aqd-open-center,.aqd-x,
+.seg button,.wkd button,.day-chip,
+.room-filterbar button,.alert-filterbar button,.roomd-type,
+#meal .meal-report-btn,#meal .meal-copy-btn,#meal .meal-import-btn,
+#rpd .report-excel-btn,#rpd .report-export-btn,
+#t6 #tA,#t6 #tB,#t6 #tC,#t6 #tD,#t6 #tN,#t6 #tX,#t6 label.btn:has(#tU){
+  background:var(--ktx-btn-bg)!important;
+  color:var(--ktx-btn-text)!important;
+  border:1px solid var(--ktx-btn-border)!important;
+  border-radius:9px!important;
+  box-shadow:var(--ktx-btn-shadow)!important;
+  filter:none!important;
+  text-shadow:none!important;
+  font-weight:700!important;
+  transition:background .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease,transform .15s ease!important;
+}
+.btn:hover,label.btn:hover,
+#tools .btn:hover,#tools [class*="ta-"]:hover,
+.ac-actions button:hover,.auth-userbar button:hover,.system-backbar:hover,
+.aqd-read:hover,.aqd-edit:hover,.aqd-open-center:hover,.aqd-x:hover,
+.seg button:hover,.wkd button:hover,.day-chip:hover,
+.room-filterbar button:hover,.alert-filterbar button:hover,.roomd-type:hover,
+#meal .meal-report-btn:hover,#meal .meal-copy-btn:hover,#meal .meal-import-btn:hover,
+#rpd .report-excel-btn:hover,#rpd .report-export-btn:hover,
+#t6 #tA:hover,#t6 #tB:hover,#t6 #tC:hover,#t6 #tD:hover,#t6 #tN:hover,#t6 #tX:hover,#t6 label.btn:has(#tU):hover{
+  background:var(--ktx-btn-hover)!important;
+  color:#175fae!important;
+  border-color:var(--ktx-btn-border-hover)!important;
+  box-shadow:var(--ktx-btn-shadow-hover)!important;
+  transform:translateY(-1px)!important;
+  filter:none!important;
+}
+.btn:active,label.btn:active,.system-backbar:active{transform:translateY(0)!important;box-shadow:0 1px 3px rgba(29,63,105,.08)!important}
+.btn:disabled,label.btn:has(input:disabled),button:disabled{opacity:.45!important;transform:none!important;box-shadow:none!important;cursor:not-allowed!important}
+
+/* Nút đang chọn: vẫn nền trắng, nhận diện bằng viền xanh giống nhóm Chức năng hệ thống. */
+.seg button.on,.wkd button.on,.day-chip.on,
+.room-filterbar button.on,.alert-filterbar button.on,.roomd-type.on{
+  background:#fff!important;color:#155fae!important;border-color:#73a7e7!important;
+  box-shadow:inset 3px 0 0 var(--ktx-btn-accent),var(--ktx-btn-shadow)!important;
+}
+.seg button.on small,.wkd button.on small{color:#5e7694!important}
+
+/* Các nút có icon: icon giữ dạng ô vuông nhận diện nhẹ như mẫu Chức năng hệ thống. */
+.btn svg.i,#tools .btn svg.i,.system-backbar .back-arrow{
+  color:var(--ktx-btn-accent)!important;
+}
+
+/* Chức năng hệ thống là mẫu chuẩn; giữ cùng kích thước/viền và icon trong ô vuông. */
+#sysfunc .sysfunc-btn,#sysfunc .sysfunc-btn.sf-green,#sysfunc .sysfunc-btn.sf-purple,#sysfunc .sysfunc-btn.sf-warn,#sysfunc .sysfunc-btn.sf-danger{
+  background:#fff!important;color:#273b55!important;border:1px solid #d7e2ef!important;border-left:3px solid var(--group)!important;
+  border-radius:9px!important;box-shadow:var(--ktx-btn-shadow)!important;
+}
+#sysfunc .sysfunc-btn:hover{background:#f8fbff!important;border-color:#a9c2df!important;border-left-color:var(--group)!important;box-shadow:var(--ktx-btn-shadow-hover)!important}
+#sysfunc .sysfunc-btn .sficon{background:#fff!important;border:1px solid color-mix(in srgb,var(--group) 48%,#dbe4ef)!important;box-shadow:none!important}
+
+/* Dashboard quản trị: đã bỏ các nút điều hướng bên phải; hàng trạng thái cân lại 3 cột. */
+#adminboard .adm-status{grid-template-columns:10px minmax(145px,.85fr) minmax(0,1.85fr)!important;padding:9px 10px!important}
+#adminboard .adm-status .btn{display:none!important}
+#adminboard .adm-head{min-height:24px}
+
+/* Không biến các nút điều hướng sidebar / ô phòng thành nút thao tác kiểu card. */
+nav button,.r,.room-cell,.chip button,.fi .fa button{box-shadow:none}
+</style>
 </html>
