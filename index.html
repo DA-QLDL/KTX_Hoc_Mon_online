@@ -602,6 +602,7 @@ table{font-size:12.8px!important}th{font-size:11.5px!important;font-weight:700!i
 @media(max-width:760px){#sysfunc .sysfunc-btn{height:36px!important;padding:0 11px!important}#sysfunc .sysfunc-btn b{font-size:10px!important}}
 </style>
 
+
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -4291,9 +4292,6 @@ function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)retu
 </style>
 </head><body><h1>${esc(d.title)}</h1><p>Kỳ báo cáo: ${esc(vn(RC96.from))} - ${esc(vn(RC96.to))} · ${esc(RC96.ktx||'Tất cả KTX')}</p><table><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${d.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')}</table><!-- KTX-STABLE-101 · Production baseline -->
 <!-- STEP105_PERFORMANCE_OPTIMIZATION -->
-
-
-
 </body></html>`);w.document.close();setTimeout(()=>{w.focus();w.print()},250)}
 managementReportsPage=function(){
  if(!RC96.from||!RC96.to){const r=rc96Range(RC96.preset||'month');RC96.from=r[0];RC96.to=r[1]}
@@ -4914,4 +4912,66 @@ body[data-page="sysfunc"] #sysfunc{display:block!important;visibility:visible!im
 })();
 </script>
 </body>
+
+<style id="step129SystemLayoutStyle">
+/* STEP129 — giao diện hệ thống trung tính; 2 cụm chức năng mỗi dòng */
+#sysfunc .sysfunc-wrap{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;
+  align-items:start!important;
+}
+#sysfunc .sysfunc-intro,#sysfunc .sysfunc-footer{grid-column:1/-1!important}
+#sysfunc .sysfunc-group{
+  padding:12px 13px!important;border:1px solid #dfe7f1!important;border-radius:14px!important;
+  background:#fff!important;box-shadow:0 4px 14px rgba(31,55,91,.055)!important;
+}
+#sysfunc .sysfunc-group h3{margin:0 0 9px!important;font-size:11.5px!important;color:#24364f!important;font-weight:800!important}
+#sysfunc .sysfunc-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+#sysfunc .sysfunc-btn,#sysfunc .sysfunc-btn.sf-green,#sysfunc .sysfunc-btn.sf-purple,#sysfunc .sysfunc-btn.sf-warn,#sysfunc .sysfunc-btn.sf-danger{
+  --btn:#fff!important;--btn2:#fff!important;--acc:#66788f!important;--acc2:#fff!important;
+  min-height:42px!important;height:auto!important;padding:8px 10px!important;border:1px solid #dfe6ef!important;border-radius:10px!important;
+  background:#fff!important;color:#24364f!important;box-shadow:0 2px 8px rgba(31,55,91,.045)!important;
+  display:flex!important;align-items:center!important;gap:8px!important;text-align:left!important;transition:.15s ease!important;
+}
+#sysfunc .sysfunc-btn:before{display:none!important}
+#sysfunc .sysfunc-btn:hover{transform:translateY(-1px)!important;background:#f7faff!important;border-color:#b9c9de!important;box-shadow:0 5px 12px rgba(31,55,91,.08)!important;filter:none!important}
+#sysfunc .sysfunc-btn .sficon{width:26px!important;height:26px!important;flex:0 0 26px!important;border-radius:8px!important;background:#f1f5fa!important;color:#58708f!important;box-shadow:none!important;display:grid!important;place-items:center!important}
+#sysfunc .sysfunc-btn .sficon .i{width:14px!important;height:14px!important}
+#sysfunc .sysfunc-btn>span:last-child{display:block!important;min-width:0!important}
+#sysfunc .sysfunc-btn b{display:block!important;color:#24364f!important;font-size:10.2px!important;line-height:1.25!important;font-weight:750!important;margin:0!important;white-space:normal!important}
+#sysfunc .sysfunc-btn small{display:none!important}
+#sysfunc .sysfunc-intro{padding:11px 13px!important}
+#sysfunc .sysfunc-footer{padding:1px 3px!important}
+.system-backbar{display:flex;align-items:center;gap:7px;width:max-content;margin:0 0 10px 0;padding:7px 11px;border:1px solid #d7e0ec;border-radius:9px;background:#fff;color:#344b68;font-size:10px;font-weight:750;cursor:pointer;box-shadow:0 2px 8px rgba(31,55,91,.05);transition:.15s ease}
+.system-backbar:hover{background:#f5f8fc;border-color:#b9c9da;transform:translateY(-1px)}
+.system-backbar .back-arrow{font-size:14px;line-height:1}
+@media(max-width:900px){#sysfunc .sysfunc-wrap{grid-template-columns:1fr!important}#sysfunc .sysfunc-intro,#sysfunc .sysfunc-footer{grid-column:auto!important}}
+@media(max-width:560px){#sysfunc .sysfunc-grid{grid-template-columns:1fr!important}}
+</style>
+
+
+<script id="step129SystemBackScript">
+(function(){
+  const SYSTEM_PAGES=new Set(['adminboard','acc','access','activity','security','sync','backup','dataaudit','standards','safety','health','incidents','alerts','opsboard','log','reportauto','maintenance','qa','release']);
+  function currentPage(){return (typeof page!=='undefined'&&page)||document.body.dataset.page||''}
+  function addBack(){
+    const p=currentPage(); if(!SYSTEM_PAGES.has(p)) return;
+    const sec=document.getElementById(p); if(!sec) return;
+    if(sec.querySelector(':scope > .system-backbar')) return;
+    const b=document.createElement('button');b.type='button';b.className='system-backbar';
+    b.innerHTML='<span class="back-arrow">←</span><span>Quay lại Chức năng hệ thống</span>';
+    b.addEventListener('click',function(){if(typeof go==='function')go('sysfunc')});
+    sec.insertBefore(b,sec.firstChild);
+  }
+  const obs=new MutationObserver(function(){queueMicrotask(addBack)});
+  function start(){
+    obs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['data-page']});
+    addBack();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+  document.addEventListener('click',function(){setTimeout(addBack,0)},true);
+})();
+</script>
+
 </html>
