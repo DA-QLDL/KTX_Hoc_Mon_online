@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ktx-hoc-mon-pwa-v1-0-7-system-groups-row';
+const CACHE_NAME = 'ktx-hoc-mon-pwa-v1-0-8-admin-white-buttons';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
