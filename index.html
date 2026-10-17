@@ -2522,7 +2522,7 @@ const T={sysfunc:['Chức năng hệ thống','Tất cả công cụ quản tr�
 function syncTopActions(){const ids=['xt','fxb','undoImport','xw','aw','xr','bs','bn','mnb2','wd','ds2','dsall','gk','imode'];if(page=='home'){ids.forEach(id=>{const e=$(id);if(e)e.classList.toggle('hide',!['fxb','xw','xr','gk'].includes(id))});if($('gk')){$('gk').classList.add('home-ktx-select')}}else if(page=='work'){ids.forEach(id=>{const e=$(id);if(e)e.classList.toggle('hide',['gk'].includes(id))});if($('gk'))$('gk').classList.remove('home-ktx-select')}}
 function all(){pill();const fnName={home:'home',sysfunc:null,alerts:'alertCenterPage',reports:'managementReportsPage',meal:'mealPage',work:'work',log:'logp',activity:'userActivityPage',adminboard:'adminDashboardPage',access:'accessControlPage',incidents:'incidentCenterPage',security:'securityPage',opsboard:'opsBoardPage',reportauto:'reportAutoPage',standards:'standardsPage',maintenance:'maintenancePage',qa:'qaPage',release:'releasePage',t6:'tttv',t7:'docsPage',arc:'arcPage',acc:'accPage',backup:'backupPage',sync:'syncPage',health:'systemHealthPage',dataaudit:'dataAuditPage',safety:'safetyPage',qr:'qrPage'}[page];const f=fnName&&window[fnName];if(typeof f==='function')f();if(window.DEDUP_ON&&$('go')&&$('go').onclick)$('go').onclick();if(typeof applyPerms==='function')applyPerms();if(typeof syncTopActions==='function')syncTopActions();if(typeof updateAlertBadges==='function')updateAlertBadges();if(page!='qr'&&typeof QCAM!=='undefined'&&QCAM&&typeof camStop==='function')camStop()}
 const GN={sysfunc:'Hệ thống',alerts:'Hệ thống',reports:'Ký túc xá',home:'Ký túc xá',meal:'Ký túc xá',work:'Ký túc xá',t6:'Ký túc xá',t2:'Tiện ích',t3:'Tiện ích',t4:'Tiện ích',t5:'Tiện ích',log:'Hệ thống',activity:'Hệ thống',adminboard:'Hệ thống',access:'Hệ thống',incidents:'Hệ thống',security:'Hệ thống',opsboard:'Hệ thống',reportauto:'Hệ thống',standards:'Hệ thống',maintenance:'Hệ thống',qa:'Hệ thống',release:'Hệ thống',acc:'Hệ thống',backup:'Hệ thống',sync:'Hệ thống',health:'Hệ thống',dataaudit:'Hệ thống',safety:'Hệ thống',qr:'Ký túc xá',arc:'Ký túc xá',t7:'Tiện ích'};
-function go(p){if(p=='t3'||p=='t4')p='home';if(p==='acc'&&!can('acct')){alert('Bạn không có quyền Quản lý tài khoản.');p='home'}if(p==='activity'&&!can('acct')){alert('Chỉ Quản trị mới xem được Hoạt động người dùng.');p='home'}if(p==='adminboard'&&!can('acct')){alert('Chỉ Quản trị mới xem được Dashboard quản trị.');p='home'}if(p==='access'&&!can('acct')){alert('Chỉ Quản trị mới xem được Phân quyền & truy cập.');p='home'}if(['incidents','security','maintenance','qa','release'].includes(p)&&!can('acct')){alert('Chức năng này dành cho Quản trị.');p='home'}if(['opsboard','reportauto','standards'].includes(p)&&!can('report')){alert('Bạn không có quyền xem chức năng này.');p='home'}if(p==='backup'&&!can('backup')){alert('Bạn không có quyền Sao lưu dữ liệu.');p='home'}page=p;document.querySelectorAll('nav button[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p==p));Object.keys(T).forEach(k=>$(k).classList.toggle('hide',k!=p));$('ttl').textContent=T[p][0];$('sub').textContent=T[p][1];$('eb').textContent=GN[p]||'Ký túc xá';
+function go(p){if(p=='t3'||p=='t4')p='home';if(p==='acc'&&!can('acct')){alert('Bạn không có quyền Quản lý tài khoản.');p='home'}if(p==='activity'&&!can('acct')){alert('Chỉ Quản trị mới xem được Hoạt động người dùng.');p='home'}if(p==='adminboard'&&!can('acct')){alert('Chỉ Quản trị mới xem được Dashboard quản trị.');p='home'}if(p==='access'&&!can('acct')){alert('Chỉ Quản trị mới xem được Phân quyền & truy cập.');p='home'}if(['incidents','security','maintenance','qa','release'].includes(p)&&!can('acct')){alert('Chức năng này dành cho Quản trị.');p='home'}if(['opsboard','reportauto','standards'].includes(p)&&!can('report')){alert('Bạn không có quyền xem chức năng này.');p='home'}if(p==='backup'&&!can('backup')){alert('Bạn không có quyền Sao lưu dữ liệu.');p='home'}document.body.dataset.page=p;page=p;document.querySelectorAll('nav button[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p==p));Object.keys(T).forEach(k=>$(k).classList.toggle('hide',k!=p));$('ttl').textContent=T[p][0];$('sub').textContent=T[p][1];$('eb').textContent=GN[p]||'Ký túc xá';
  const hiddenPages=['sysfunc','alerts','reports','t2','t3','t4','t5','t6','t7','arc','acc','activity','adminboard','access','incidents','security','opsboard','reportauto','standards','maintenance','qa','release','backup','sync','health','dataaudit','safety','qr','log','meal'];$('tools').classList.toggle('hide',hiddenPages.includes(p));
  window.scrollTo(0,0);if(p=='t2')window.DEDUP_ON=true;applyPerms();syncTopActions();all();if(p==='sysfunc'&&typeof window.forceSystemHub==='function')setTimeout(window.forceSystemHub,0)}
 document.querySelectorAll('nav button[data-p]').forEach(b=>b.onclick=()=>go(b.dataset.p));document.querySelectorAll('.gh').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
@@ -3799,7 +3799,7 @@ async function pwaInstall(){if(pwaStandalone())return pwaOpenInstall();if(!PWA_P
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();PWA_PROMPT=e;pwaUpdateUI()});
 window.addEventListener('appinstalled',()=>{PWA_PROMPT=null;pwaUpdateUI();if($('pwaInstallDlg')&&$('pwaInstallDlg').open)$('pwaInstallDlg').close()});
 if($('pwaInstallNav'))$('pwaInstallNav').onclick=pwaOpenInstall;if($('pwaInstallGo'))$('pwaInstallGo').onclick=pwaInstall;if($('pwaInstallClose'))$('pwaInstallClose').onclick=()=>$('pwaInstallDlg').close();
-if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=127',{scope:'./'});reg.update().catch(()=>{})}catch(e){console.warn('PWA service worker:',e)}pwaUpdateUI();const lp=new URLSearchParams(location.search).get('page');if(['home','work','meal','t6','qr','arc','reports'].includes(lp)){setTimeout(()=>{try{go(lp)}catch(e){}},350)}});
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=105',{scope:'./'});reg.update().catch(()=>{})}catch(e){console.warn('PWA service worker:',e)}pwaUpdateUI();const lp=new URLSearchParams(location.search).get('page');if(['home','work','meal','t6','qr','arc','reports'].includes(lp)){setTimeout(()=>{try{go(lp)}catch(e){}},350)}});
 else window.addEventListener('load',pwaUpdateUI);
 setTimeout(()=>{updateAlertBadges();if(page==='home')home();pwaUpdateUI()},80);
 </script>
@@ -4831,6 +4831,10 @@ setTimeout(()=>{try{reportAutoMaybe(false);updateIncidentBadge()}catch(e){}},150
 @media(max-width:1100px){.sysfunc-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(max-width:760px){.sysfunc-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:480px){.sysfunc-grid{grid-template-columns:1fr!important}}
+
+/* STEP128 — Chức năng hệ thống chỉ hiển thị tại đúng menu */
+body:not([data-page="sysfunc"]) #sysfunc{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+body[data-page="sysfunc"] #sysfunc{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
 </style>
 <script id="step125SystemHubFixScript">
 (function(){
@@ -4897,6 +4901,16 @@ setTimeout(()=>{try{reportAutoMaybe(false);updateIncidentBadge()}catch(e){}},150
     if(typeof page!=='undefined' && page==='sysfunc') setTimeout(window.forceSystemHub,50);
     else if(el) el.classList.add('hide');
   });
+  // Luôn đồng bộ trạng thái hiển thị với trang hiện tại.
+  const syncHubVisibility=()=>{
+    const active=(typeof page!=='undefined' && page==='sysfunc');
+    document.body.dataset.page=active?'sysfunc':(typeof page!=='undefined'?page:'');
+    const el=document.getElementById('sysfunc');
+    if(el) el.classList.toggle('hide',!active);
+  };
+  document.addEventListener('click',()=>setTimeout(syncHubVisibility,0),true);
+  window.addEventListener('popstate',syncHubVisibility);
+  setTimeout(syncHubVisibility,0);
 })();
 </script>
 </body>
