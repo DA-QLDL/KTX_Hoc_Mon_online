@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ktx-hoc-mon-pwa-v1-0-9-auth-access-complete';
+const CACHE_NAME = 'ktx-hoc-mon-pwa-step134-auth-first-ui';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',

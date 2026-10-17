@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ký túc xá Hóc Môn</title>
-<meta name="app-version" content="KTX-v1.0.3-SYSTEM-HUB">
+<meta name="app-version" content="KTX-STEP134-AUTH-FIRST-UI">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -4384,6 +4384,9 @@ function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)retu
   #sysfunc .sysfunc-grid{grid-template-columns:1fr!important}
 }
 </style>
+
+
+
 </html>`);w.document.close();setTimeout(()=>{w.focus();w.print()},250)}
 managementReportsPage=function(){
  if(!RC96.from||!RC96.to){const r=rc96Range(RC96.preset||'month');RC96.from=r[0];RC96.to=r[1]}
@@ -5186,4 +5189,149 @@ setTimeout(init,700);
   #sysfunc .sysfunc-grid{grid-template-columns:1fr!important}
 }
 </style>
+
+
+<!-- STEP134 — AUTH-FIRST UI + UNIFIED WHITE BUTTON SYSTEM -->
+<style id="step134UnifiedUiStyle">
+/* 1) Khi chưa xác thực: chỉ hiển thị màn hình đăng nhập */
+body.auth-locked{display:block!important;min-height:100vh!important;overflow:hidden!important;background:#f3f7fc!important;zoom:1!important}
+body.auth-locked>nav,
+body.auth-locked>main,
+body.auth-locked>#authUserbar,
+body.auth-locked>.toast,
+body.auth-locked>dialog{display:none!important}
+body.auth-locked #authHubGate{display:flex!important}
+body.auth-locked #authHubGate.hide{display:flex!important}
+
+/* 2) Màn hình đăng nhập độc lập, sạch và chuyên nghiệp */
+#authHubGate.auth-gate2{
+  inset:0!important;min-height:100vh!important;padding:24px!important;
+  background:radial-gradient(circle at 50% 0,#e7f0ff 0,#f4f7fb 42%,#eef3f9 100%)!important;
+  align-items:center!important;justify-content:center!important;
+}
+#authHubGate .auth-card2{
+  width:min(430px,calc(100vw - 32px))!important;
+  border:1px solid #d8e2ef!important;border-radius:18px!important;
+  background:#fff!important;padding:26px 26px 22px!important;
+  box-shadow:0 24px 60px rgba(35,63,99,.15),0 2px 8px rgba(35,63,99,.05)!important;
+}
+#authHubGate .auth-brand2{justify-content:flex-start!important;margin-bottom:18px!important}
+#authHubGate .auth-logo2{
+  width:48px!important;height:48px!important;border-radius:13px!important;
+  background:#fff!important;color:#246bdf!important;border:2px solid #8cb7f3!important;
+  box-shadow:0 5px 14px rgba(36,107,223,.12)!important;font-weight:900!important;
+}
+#authHubGate .auth-card2 h2{font-size:20px!important;line-height:1.25!important;color:#172b49!important}
+#authHubGate .auth-card2 .mut{font-size:11.5px!important;color:#73839b!important;margin-top:3px!important}
+#authHubGate .auth-tabs2{
+  padding:4px!important;gap:4px!important;border:1px solid #dfe7f1!important;border-radius:11px!important;
+  background:#f7f9fc!important;margin:15px 0 17px!important;
+}
+#authHubGate .auth-tabs2 button{
+  border:0!important;background:transparent!important;color:#687a93!important;border-radius:8px!important;
+  padding:8px 10px!important;box-shadow:none!important;font-size:11.5px!important;
+}
+#authHubGate .auth-tabs2 button.on{background:#fff!important;color:#225fae!important;box-shadow:0 2px 7px rgba(32,72,119,.10)!important}
+#authHubGate .auth-field2{margin:11px 0!important;gap:6px!important}
+#authHubGate .auth-field2 span{font-size:11.5px!important;color:#4c607d!important}
+#authHubGate .auth-field2 input{
+  width:100%!important;height:43px!important;background:#fff!important;border:1px solid #d4dfec!important;
+  border-radius:10px!important;color:#1e304b!important;box-shadow:inset 0 1px 2px rgba(32,60,96,.025)!important;
+}
+#authHubGate .auth-field2 input:focus{border-color:#78a8ea!important;box-shadow:0 0 0 3px rgba(36,107,223,.10)!important;outline:0!important}
+#authHubGate .auth-mainbtn2{
+  height:43px!important;margin-top:11px!important;border:1px solid #2c71d2!important;border-radius:10px!important;
+  background:#fff!important;color:#1f62bd!important;box-shadow:0 5px 14px rgba(36,107,223,.11)!important;
+}
+#authHubGate .auth-mainbtn2:hover{background:#f5f9ff!important;border-color:#1f62bd!important;transform:translateY(-1px)!important}
+#authHubGate .auth-msg2{font-size:11px!important;line-height:1.45!important}
+#authHubGate .auth-foot2{font-size:9.5px!important;line-height:1.5!important;color:#8492a6!important}
+
+/* 3) Hệ thống nút: nền trắng, viền rõ, đồng nhất */
+.btn,label.btn,
+.btn.g,label.btn.g,
+.btn.r,label.btn.r,
+.btn.s,label.btn.s,
+.btn.a,label.btn.a{
+  background:#fff!important;color:#31506f!important;border:1px solid #cbd8e8!important;
+  box-shadow:0 2px 7px rgba(32,58,91,.055)!important;filter:none!important;
+}
+.btn:hover,label.btn:hover{background:#f7faff!important;color:#1f5fae!important;border-color:#91b5e6!important;box-shadow:0 5px 12px rgba(32,58,91,.08)!important;filter:none!important}
+.btn.g,label.btn.g{color:#14734d!important;border-color:#9ed8bc!important}
+.btn.r,label.btn.r{color:#b53c4b!important;border-color:#edb5bd!important}
+.btn.a,label.btn.a{color:#9a6508!important;border-color:#e6c67f!important}
+.btn.s,label.btn.s{color:#4f637d!important;border-color:#d0dae7!important}
+#tools .btn,#tools .ta-slate,#tools .ta-blue,#tools .ta-green,#tools .ta-indigo,#tools .ta-emerald,#tools .ta-cyan,#tools .ta-violet,#tools .ta-amber,#tools .ta-purple{
+  background:#fff!important;color:#385573!important;border:1px solid #ccd8e7!important;box-shadow:0 2px 7px rgba(32,58,91,.05)!important;
+}
+#tools .btn:hover{background:#f6f9fd!important;border-color:#91b3df!important;color:#225eaa!important}
+
+/* 4) Chức năng hệ thống: bốn cụm nối tiếp, khối trắng và viền nhận diện */
+#sysfunc .sysfunc-wrap{display:flex!important;flex-flow:row wrap!important;justify-content:flex-start!important;align-items:flex-start!important;align-content:flex-start!important;gap:10px!important;width:100%!important}
+#sysfunc .sysfunc-intro,#sysfunc .sysfunc-footer{flex:0 0 100%!important;width:100%!important}
+#sysfunc .sysfunc-intro{background:#fff!important;border:1px solid #dbe4ef!important;border-radius:14px!important;box-shadow:0 3px 11px rgba(31,55,91,.045)!important}
+#sysfunc .sysfunc-group{
+  --group:#7b93b2;
+  flex:0 0 calc((100% - 30px)/4)!important;width:calc((100% - 30px)/4)!important;min-width:238px!important;
+  background:#fff!important;border:1px solid #dce4ee!important;border-top:3px solid var(--group)!important;
+  border-radius:13px!important;padding:11px!important;margin:0!important;box-shadow:0 4px 14px rgba(31,55,91,.05)!important;
+}
+#sysfunc .sysfunc-group:nth-of-type(2){--group:#4f83d1}
+#sysfunc .sysfunc-group:nth-of-type(3){--group:#4aa078}
+#sysfunc .sysfunc-group:nth-of-type(4){--group:#d29a3c}
+#sysfunc .sysfunc-group:nth-of-type(5){--group:#8a6fc4}
+#sysfunc .sysfunc-group h3{margin:0 0 9px!important;color:#263c58!important;font-size:11.3px!important;font-weight:800!important}
+#sysfunc .sysfunc-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+#sysfunc .sysfunc-btn,#sysfunc .sysfunc-btn.sf-green,#sysfunc .sysfunc-btn.sf-purple,#sysfunc .sysfunc-btn.sf-warn,#sysfunc .sysfunc-btn.sf-danger{
+  width:100%!important;min-width:0!important;min-height:45px!important;height:auto!important;padding:8px 9px!important;
+  background:#fff!important;color:#273b55!important;border:1px solid #dbe4ef!important;border-left:3px solid var(--group)!important;
+  border-radius:9px!important;box-shadow:0 2px 7px rgba(31,55,91,.04)!important;display:flex!important;align-items:center!important;gap:8px!important;text-align:left!important;
+}
+#sysfunc .sysfunc-btn:hover{background:#f8fbff!important;border-color:#b5c9e1!important;border-left-color:var(--group)!important;transform:translateY(-1px)!important;box-shadow:0 5px 12px rgba(31,55,91,.075)!important}
+#sysfunc .sysfunc-btn .sficon{width:27px!important;height:27px!important;flex:0 0 27px!important;border:1px solid color-mix(in srgb,var(--group) 42%,#dbe4ef)!important;background:#fff!important;color:var(--group)!important;border-radius:7px!important;box-shadow:none!important}
+#sysfunc .sysfunc-btn b{font-size:10px!important;line-height:1.25!important;color:#293d57!important;margin:0!important}
+#sysfunc .sysfunc-btn small{display:none!important}
+.system-backbar{background:#fff!important;border:1px solid #ccd8e6!important;color:#37516e!important;box-shadow:0 2px 7px rgba(31,55,91,.045)!important}
+.system-backbar:hover{background:#f7faff!important;border-color:#9eb9da!important;color:#225fae!important}
+
+/* 5) Tài khoản / quản trị: nút thao tác cùng ngôn ngữ giao diện */
+.ac-actions button,.auth-userbar button,.aqd-read,.aqd-edit,.aqd-open-center{
+  background:#fff!important;color:#345878!important;border:1px solid #cbd9e8!important;box-shadow:0 2px 6px rgba(32,58,91,.045)!important;
+}
+.ac-actions button:hover,.auth-userbar button:hover{background:#f6f9fd!important;border-color:#95b5da!important;color:#205fa8!important}
+.ac-actions .save{color:#1e66b8!important;border-color:#9bc0ec!important}
+
+@media(max-width:1180px){#sysfunc .sysfunc-group{flex-basis:calc((100% - 20px)/3)!important;width:calc((100% - 20px)/3)!important}}
+@media(max-width:860px){#sysfunc .sysfunc-group{flex-basis:calc((100% - 10px)/2)!important;width:calc((100% - 10px)/2)!important;min-width:220px!important}}
+@media(max-width:560px){
+  #authHubGate.auth-gate2{padding:14px!important;align-items:center!important}
+  #authHubGate .auth-card2{padding:21px 18px 18px!important}
+  #sysfunc .sysfunc-group{flex-basis:100%!important;width:100%!important;min-width:0!important}
+  #sysfunc .sysfunc-grid{grid-template-columns:1fr!important}
+}
+</style>
+<script id="step134AuthFirstScript">
+(function(){
+  function lock(){document.body.classList.add('auth-locked')}
+  function unlock(){document.body.classList.remove('auth-locked')}
+  lock();
+  function hook(){
+    if(typeof window.authHubShow==='function' && !window.authHubShow.__step134){
+      const oldShow=window.authHubShow;
+      const f=function(){lock();return oldShow.apply(this,arguments)};f.__step134=true;window.authHubShow=f;
+    }
+    if(typeof window.authHubHide==='function' && !window.authHubHide.__step134){
+      const oldHide=window.authHubHide;
+      const f=function(){const r=oldHide.apply(this,arguments);unlock();return r};f.__step134=true;window.authHubHide=f;
+    }
+  }
+  hook();
+  // STEP133 khởi tạo auth sau ~700ms; hook lại ngắn hạn để bảo đảm không bị code cũ ghi đè.
+  let n=0;const tm=setInterval(function(){hook();if(++n>16)clearInterval(tm)},100);
+  window.addEventListener('pageshow',function(){
+    try{if(!(window.SUPA_SYNC&&SUPA_SYNC.session))lock()}catch(e){lock()}
+  });
+})();
+</script>
+
 </html>
