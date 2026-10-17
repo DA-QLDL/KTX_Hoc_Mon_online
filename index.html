@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ký túc xá Hóc Môn</title>
-<meta name="app-version" content="KTX-STABLE-101">
+<meta name="app-version" content="KTX-STABLE-108">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -4144,6 +4144,9 @@ function rc96SetPreset(p){RC96.preset=p;const [a,b]=rc96Range(p);RC96.from=a;RC9
 function rc96Preview(){const d=rc96Data(),pv=$('rc96Preview');if(!pv)return;pv.innerHTML=`<div class="rc96-preview-head"><b>${esc(d.title)}</b><span>${d.count.toLocaleString('vi-VN')} dòng · ${vn(RC96.from)} → ${vn(RC96.to)}</span></div><div class="wrap"><table><thead><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${d.rows.slice(0,300).map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')||`<tr><td colspan="${d.headers.length}" class="mut">Không có dữ liệu phù hợp.</td></tr>`}</tbody></table></div>${d.rows.length>300?`<div class="mut" style="padding:7px 10px">Hiển thị 300/${d.rows.length.toLocaleString('vi-VN')} dòng. File xuất chứa đầy đủ dữ liệu.</div>`:''}`}
 function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)return alert('Trình duyệt đang chặn cửa sổ in. Hãy cho phép pop-up rồi thử lại.');const css=`body{font-family:Arial,sans-serif;color:#172b4d;padding:24px}h1{font-size:20px;margin:0 0 5px}p{font-size:11px;color:#65758b}table{border-collapse:collapse;width:100%;font-size:10px;margin-top:14px}th,td{border:1px solid #cfd8e5;padding:5px;text-align:left}th{background:#eef4fb}@page{size:A4 landscape;margin:12mm}`;w.document.write(`<html><head><title>${esc(d.title)}</title><style>${css}</style></head><body><h1>${esc(d.title)}</h1><p>Kỳ báo cáo: ${esc(vn(RC96.from))} - ${esc(vn(RC96.to))} · ${esc(RC96.ktx||'Tất cả KTX')}</p><table><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${d.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')}</table><!-- KTX-STABLE-101 · Production baseline -->
 <!-- STEP105_PERFORMANCE_OPTIMIZATION -->
+
+
+
 </body></html>`);w.document.close();setTimeout(()=>{w.focus();w.print()},250)}
 managementReportsPage=function(){
  if(!RC96.from||!RC96.to){const r=rc96Range(RC96.preset||'month');RC96.from=r[0];RC96.to=r[1]}
@@ -4265,7 +4268,7 @@ managementReportsPage=function(){
 </style>
 <script>
 /* STEP102 — Sức khỏe hệ thống */
-const HEALTH_VERSION='KTX-STABLE-101';
+const HEALTH_VERSION='KTX-STABLE-108';
 function healthFmtBytes(n){n=Number(n)||0;if(n<1024)return n+' B';if(n<1048576)return (n/1024).toLocaleString('vi-VN',{maximumFractionDigits:1})+' KB';if(n<1073741824)return (n/1048576).toLocaleString('vi-VN',{maximumFractionDigits:1})+' MB';return (n/1073741824).toLocaleString('vi-VN',{maximumFractionDigits:2})+' GB'}
 function healthLocalStorageBytes(){let n=0;try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i)||'',v=localStorage.getItem(k)||'';n+=(k.length+v.length)*2}}catch(e){}return n}
 function healthDate(v){if(!v)return 'Chưa có';const d=new Date(v);return Number.isFinite(d.getTime())?d.toLocaleString('vi-VN'):'Không hợp lệ'}
@@ -4484,5 +4487,44 @@ if($('impPrevGo')&&!window.__step104ImportSafe){window.__step104ImportSafe=true;
  setTimeout(()=>{if(page==='sync')syncPage();if(online()&&SUPA_SYNC.enabled&&SUPA_SYNC.ready&&SUPA_SYNC.pending)scheduleRetry()},1200);
 })();
 </script>
+
+<style>
+/* STEP108 — Giám sát dữ liệu tự động */
+.audit-auto{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 9px;padding:9px 11px;border:1px solid #dce7f4;border-radius:10px;background:#f8fbff;color:#5d718e;font-size:10px}.audit-auto b{color:#24476f}.audit-auto .spacer{margin-left:auto}.audit-auto label{display:inline-flex;align-items:center;gap:6px;font-weight:750;color:#36577d}.audit-auto input{width:15px;height:15px}.audit-auto .audit-auto-state{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;background:#edf5ff;color:#2b69b8;font-weight:800}.audit-auto .audit-auto-state.warn{background:#fff5df;color:#a56800}.audit-auto .audit-auto-state.bad{background:#fff0f2;color:#bd3f50}@media(max-width:760px){.audit-auto .spacer{margin-left:0;width:100%}}
+</style>
+<script>
+/* STEP108 — Daily automatic data audit + alert integration */
+(function(){
+ const CFG='ktx_auto_audit_cfg_v1', RES='ktx_auto_audit_result_v1';
+ function cfg(){try{return Object.assign({on:true,lastDay:'',lastAt:0},JSON.parse(localStorage.getItem(CFG)||'{}'))}catch(e){return {on:true,lastDay:'',lastAt:0}}}
+ function saveCfg(c){try{localStorage.setItem(CFG,JSON.stringify(c))}catch(e){}}
+ function saveResult(A){const c=cfg(),bad=A.filter(x=>x.sev==='danger').length,warn=A.filter(x=>x.sev==='warn').length,res={at:Date.now(),day:ldy(),total:A.length,bad,warn};try{localStorage.setItem(RES,JSON.stringify(res))}catch(e){}c.lastDay=ldy();c.lastAt=res.at;saveCfg(c);return res}
+ function result(){try{return JSON.parse(localStorage.getItem(RES)||'null')}catch(e){return null}}
+ function run(force=false){const c=cfg();if(!force&&(!c.on||c.lastDay===ldy()))return result();const A=typeof dataAuditScan==='function'?dataAuditScan():[];const r=saveResult(A);try{if(typeof updateAlertBadges==='function')updateAlertBadges()}catch(e){}return r}
+ window.KTX_AUTO_AUDIT108={cfg,result,run,set(v){const c=cfg();c.on=!!v;saveCfg(c);if(c.on)run(true);return c}};
+ const baseIssueList=issueList;
+ issueList=function(){
+   const base=baseIssueList(),seen=new Set(base.map(x=>[x.type,x.title,x.detail,x.w&&x.w.id||''].join('|'))),extra=[];
+   if(cfg().on&&typeof dataAuditScan==='function')dataAuditScan().forEach(a=>{
+     if(!['danger','warn'].includes(a.sev)||a.cat==='duplicate')return;
+     const w=a.w||(a.workers&&a.workers[0])||null;
+     if(a.sev==='warn'&&a.cat==='profile'&&/Chưa có SĐT|Chưa có CCCD|Chưa có ngày sinh/.test(a.detail))return;
+     const type='audit-'+a.cat,key=[type,a.title,a.detail,w&&w.id||''].join('|');if(seen.has(key))return;
+     seen.add(key);extra.push({category:'audit',type,sev:a.sev,title:a.title,detail:a.detail,w,room:a.room});
+   });
+   return [...extra,...base];
+ };
+ const baseAuditPage=dataAuditPage;
+ dataAuditPage=function(){
+   baseAuditPage();const root=$('auditRoot');if(!root)return;const c=cfg(),r=result(),bar=document.createElement('div');bar.className='audit-auto';
+   const cls=r?(r.bad?'bad':r.warn?'warn':''):'warn',text=r?`${r.total.toLocaleString('vi-VN')} vấn đề · ${r.bad} nghiêm trọng · ${r.warn} cảnh báo`:'Chưa có kết quả quét tự động';
+   bar.innerHTML=`<label><input type="checkbox" id="auditAutoOn" ${c.on?'checked':''}> Tự quét dữ liệu mỗi ngày</label><span class="audit-auto-state ${cls}">${esc(text)}</span><span>${r&&r.at?'Lần gần nhất: '+new Date(r.at).toLocaleString('vi-VN'):'Hệ thống sẽ quét khi mở ứng dụng.'}</span><span class="spacer"></span><button class="btn s sm" id="auditAutoRun">Quét tự động ngay</button>`;
+   const card=root.querySelector('.card');if(card)card.insertBefore(bar,card.firstChild);else root.prepend(bar);
+   $('auditAutoOn').onchange=e=>{KTX_AUTO_AUDIT108.set(e.target.checked);dataAuditPage()};$('auditAutoRun').onclick=()=>{run(true);dataAuditPage()};
+ };
+ setTimeout(()=>{try{run(false);if(page==='alerts')alertCenterPage()}catch(e){console.warn('STEP108 auto audit',e)}},1800);
+})();
+</script>
+
 </body>
 </html>
