@@ -3800,7 +3800,7 @@ async function pwaInstall(){if(pwaStandalone())return pwaOpenInstall();if(!PWA_P
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();PWA_PROMPT=e;pwaUpdateUI()});
 window.addEventListener('appinstalled',()=>{PWA_PROMPT=null;pwaUpdateUI();if($('pwaInstallDlg')&&$('pwaInstallDlg').open)$('pwaInstallDlg').close()});
 if($('pwaInstallNav'))$('pwaInstallNav').onclick=pwaOpenInstall;if($('pwaInstallGo'))$('pwaInstallGo').onclick=pwaInstall;if($('pwaInstallClose'))$('pwaInstallClose').onclick=()=>$('pwaInstallDlg').close();
-if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=105',{scope:'./'});reg.update().catch(()=>{})}catch(e){console.warn('PWA service worker:',e)}pwaUpdateUI();const lp=new URLSearchParams(location.search).get('page');if(['home','work','meal','t6','qr','arc','reports'].includes(lp)){setTimeout(()=>{try{go(lp)}catch(e){}},350)}});
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=107',{scope:'./'});reg.update().catch(()=>{})}catch(e){console.warn('PWA service worker:',e)}pwaUpdateUI();const lp=new URLSearchParams(location.search).get('page');if(['home','work','meal','t6','qr','arc','reports'].includes(lp)){setTimeout(()=>{try{go(lp)}catch(e){}},350)}});
 else window.addEventListener('load',pwaUpdateUI);
 setTimeout(()=>{updateAlertBadges();if(page==='home')home();pwaUpdateUI()},80);
 </script>
@@ -4974,4 +4974,40 @@ body[data-page="sysfunc"] #sysfunc{display:block!important;visibility:visible!im
 })();
 </script>
 
+
+<style id="step130SystemGroupsRowStyle">
+/* STEP130 — 4 cụm Chức năng hệ thống nối tiếp trên cùng một hàng, chỉ xuống dòng khi thiếu chỗ */
+#sysfunc .sysfunc-wrap{
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:wrap!important;
+  align-items:flex-start!important;
+  gap:10px!important;
+}
+#sysfunc .sysfunc-intro,
+#sysfunc .sysfunc-footer{
+  flex:0 0 100%!important;
+  width:100%!important;
+}
+#sysfunc .sysfunc-group{
+  flex:1 1 240px!important;
+  min-width:220px!important;
+  width:auto!important;
+  margin:0!important;
+}
+#sysfunc .sysfunc-grid{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:7px!important;
+}
+#sysfunc .sysfunc-btn{
+  width:100%!important;
+}
+@media(max-width:1180px){
+  #sysfunc .sysfunc-group{flex-basis:230px!important;min-width:210px!important}
+}
+@media(max-width:760px){
+  #sysfunc .sysfunc-group{flex:1 1 100%!important;min-width:0!important}
+}
+</style>
 </html>

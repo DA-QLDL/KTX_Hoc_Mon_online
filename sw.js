@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ktx-hoc-mon-pwa-v1-0-6-system-layout';
+const CACHE_NAME = 'ktx-hoc-mon-pwa-v1-0-7-system-groups-row';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
