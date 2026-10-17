@@ -551,6 +551,57 @@ table{font-size:12.8px!important}th{font-size:11.5px!important;font-weight:700!i
 <style id="step120css">
 .sys-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}.sys-kpi{background:#fff;border:1px solid #e4eaf2;border-radius:14px;padding:12px}.sys-kpi span{display:block;font-size:9px;color:#6b7b90;font-weight:700;text-transform:uppercase;letter-spacing:.04em}.sys-kpi b{display:block;font-size:22px;color:#18324f;margin:4px 0}.sys-kpi small{font-size:9px;color:#718096}.sys-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,.8fr);gap:12px}.sys-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}.sys-head h3{margin:0}.sys-actions{display:flex;gap:7px;flex-wrap:wrap}.sys-list{display:grid;gap:7px}.sys-row{display:grid;grid-template-columns:110px 110px minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 10px;border:1px solid #e8edf4;border-radius:11px;background:#fff;font-size:10px}.sys-row time{font-size:9px;color:#6e7d91}.sev{display:inline-flex;padding:3px 7px;border-radius:999px;font-size:8px;font-weight:800}.sev.high{background:#fee8ea;color:#b42333}.sev.warn{background:#fff2d7;color:#a56000}.sev.info{background:#e9f2ff;color:#2368b2}.sev.ok{background:#e6f6ed;color:#19724a}.sys-note{font-size:9px;line-height:1.55;color:#65758b;background:#f7f9fc;border:1px solid #e4eaf2;border-radius:10px;padding:10px}.check-row{display:grid;grid-template-columns:28px minmax(0,1fr) 110px;gap:8px;align-items:start;padding:9px 0;border-bottom:1px solid #edf1f6;font-size:10px}.check-row:last-child{border-bottom:0}.check-row input{width:16px;height:16px}.release-hero{background:linear-gradient(135deg,#edf6ff,#f6fbff);border:1px solid #d7e7f8;border-radius:18px;padding:18px}.release-hero h2{margin:0 0 5px;color:#17395e}.release-badge{display:inline-flex;padding:4px 9px;border-radius:999px;background:#dff3e9;color:#19724a;font-size:9px;font-weight:800}.mini-bars{display:grid;gap:7px}.mini-bar{display:grid;grid-template-columns:130px 1fr 48px;gap:8px;align-items:center;font-size:9px}.mini-bar i{height:7px;background:#e9eef5;border-radius:99px;overflow:hidden;position:relative}.mini-bar i:after{content:'';position:absolute;inset:0;width:var(--w);background:#7ca8d5;border-radius:99px}.ops-tasks{display:grid;gap:7px}.ops-task{display:flex;gap:8px;align-items:flex-start;padding:9px;border:1px solid #e7ecf2;border-radius:10px}.ops-task b{display:block;font-size:10px}.ops-task small{display:block;color:#718096;font-size:9px;margin-top:2px}.pill-sm{display:inline-flex;padding:3px 7px;border-radius:999px;font-size:8px;font-weight:800;background:#eef3f8;color:#48627d}.pill-sm.hot{background:#fee8ea;color:#b42333}.pill-sm.warn{background:#fff2d7;color:#9b6100}.std-preview td,.std-preview th{font-size:9px}.maint-box{padding:10px;border:1px solid #e5ebf2;border-radius:11px;background:#fff;margin-bottom:8px}.maint-box b{font-size:11px}.maint-box small{display:block;font-size:9px;color:#718096;margin-top:3px}@media(max-width:1000px){.sys-kpis{grid-template-columns:repeat(2,1fr)}.sys-grid{grid-template-columns:1fr}}
 </style>
+
+<style id="step127-system-action-buttons">
+/* STEP127 — nút Chức năng hệ thống theo phong cách action bar sáng, hiện đại */
+#sysfunc .sysfunc-wrap{gap:12px!important}
+#sysfunc .sysfunc-intro{padding:12px 14px!important;border-radius:14px!important;background:#fff!important;border:1px solid #dbe6f4!important;box-shadow:0 5px 16px rgba(38,72,120,.06)!important}
+#sysfunc .sysfunc-group{padding:12px 13px!important;border-radius:14px!important;background:#fff!important;border:1px solid #dbe6f4!important;box-shadow:0 5px 16px rgba(38,72,120,.055)!important}
+#sysfunc .sysfunc-group h3{font-size:12px!important;margin:0 0 10px!important;color:#223a5e!important;font-weight:800!important}
+#sysfunc .sysfunc-grid{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:9px!important}
+#sysfunc .sysfunc-btn{
+  --btn:#2878e8;--btn2:#1667d9;
+  width:auto!important;min-width:0!important;min-height:38px!important;height:38px!important;
+  padding:0 14px!important;border:0!important;border-radius:9px!important;
+  background:linear-gradient(135deg,var(--btn),var(--btn2))!important;
+  color:#fff!important;box-shadow:0 5px 12px color-mix(in srgb,var(--btn) 28%,transparent)!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;
+  flex:0 0 auto!important;position:relative!important;overflow:hidden!important;
+  transition:transform .15s ease,box-shadow .15s ease,filter .15s ease!important;
+}
+#sysfunc .sysfunc-btn:before{display:none!important}
+#sysfunc .sysfunc-btn:hover{transform:translateY(-2px)!important;filter:brightness(1.04)!important;box-shadow:0 8px 18px color-mix(in srgb,var(--btn) 34%,transparent)!important}
+#sysfunc .sysfunc-btn:active{transform:translateY(0)!important;filter:brightness(.98)!important}
+#sysfunc .sysfunc-btn .sficon{width:19px!important;height:19px!important;border-radius:0!important;background:transparent!important;color:#fff!important;box-shadow:none!important;display:grid!important;place-items:center!important;flex:0 0 19px!important}
+#sysfunc .sysfunc-btn .sficon .i{width:15px!important;height:15px!important}
+#sysfunc .sysfunc-btn>span:last-child{display:flex!important;align-items:center!important;min-width:0!important}
+#sysfunc .sysfunc-btn b{font-size:10.6px!important;line-height:1!important;margin:0!important;color:#fff!important;font-weight:800!important;white-space:nowrap!important}
+#sysfunc .sysfunc-btn small{display:none!important}
+/* Màu sáng theo từng nhóm chức năng */
+#sysfunc .sysfunc-group:nth-of-type(2) .sysfunc-btn:nth-child(5n+1){--btn:#6557f5;--btn2:#5143e6}
+#sysfunc .sysfunc-group:nth-of-type(2) .sysfunc-btn:nth-child(5n+2){--btn:#2f7df4;--btn2:#1768df}
+#sysfunc .sysfunc-group:nth-of-type(2) .sysfunc-btn:nth-child(5n+3){--btn:#18a9c7;--btn2:#0b91ae}
+#sysfunc .sysfunc-group:nth-of-type(2) .sysfunc-btn:nth-child(5n+4){--btn:#18ad79;--btn2:#0f9667}
+#sysfunc .sysfunc-group:nth-of-type(2) .sysfunc-btn:nth-child(5n){--btn:#f09a1a;--btn2:#dd7f08}
+#sysfunc .sysfunc-group:nth-of-type(3) .sysfunc-btn:nth-child(5n+1){--btn:#15aa76;--btn2:#0b9465}
+#sysfunc .sysfunc-group:nth-of-type(3) .sysfunc-btn:nth-child(5n+2){--btn:#2790ea;--btn2:#1479d3}
+#sysfunc .sysfunc-group:nth-of-type(3) .sysfunc-btn:nth-child(5n+3){--btn:#725df4;--btn2:#5a46e8}
+#sysfunc .sysfunc-group:nth-of-type(3) .sysfunc-btn:nth-child(5n+4){--btn:#ef9b18;--btn2:#dd8208}
+#sysfunc .sysfunc-group:nth-of-type(3) .sysfunc-btn:nth-child(5n){--btn:#18a9c7;--btn2:#0b91ae}
+#sysfunc .sysfunc-group:nth-of-type(4) .sysfunc-btn:nth-child(5n+1){--btn:#12a873;--btn2:#0a9061}
+#sysfunc .sysfunc-group:nth-of-type(4) .sysfunc-btn:nth-child(5n+2){--btn:#ef466b;--btn2:#dc3157}
+#sysfunc .sysfunc-group:nth-of-type(4) .sysfunc-btn:nth-child(5n+3){--btn:#f5a013;--btn2:#df8606}
+#sysfunc .sysfunc-group:nth-of-type(4) .sysfunc-btn:nth-child(5n+4){--btn:#2f7df4;--btn2:#1768df}
+#sysfunc .sysfunc-group:nth-of-type(4) .sysfunc-btn:nth-child(5n){--btn:#6e5af4;--btn2:#5644df}
+#sysfunc .sysfunc-group:nth-of-type(5) .sysfunc-btn:nth-child(5n+1){--btn:#2f7df4;--btn2:#1768df}
+#sysfunc .sysfunc-group:nth-of-type(5) .sysfunc-btn:nth-child(5n+2){--btn:#16aa77;--btn2:#0a9365}
+#sysfunc .sysfunc-group:nth-of-type(5) .sysfunc-btn:nth-child(5n+3){--btn:#ef9a19;--btn2:#dc8008}
+#sysfunc .sysfunc-group:nth-of-type(5) .sysfunc-btn:nth-child(5n+4){--btn:#6e5af4;--btn2:#5542df}
+#sysfunc .sysfunc-group:nth-of-type(5) .sysfunc-btn:nth-child(5n){--btn:#18a9c7;--btn2:#0b91ae}
+#sysfunc .sysfunc-footer{font-size:9px!important;color:#73839a!important}
+@media(max-width:760px){#sysfunc .sysfunc-btn{height:36px!important;padding:0 11px!important}#sysfunc .sysfunc-btn b{font-size:10px!important}}
+</style>
+
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -3748,7 +3799,7 @@ async function pwaInstall(){if(pwaStandalone())return pwaOpenInstall();if(!PWA_P
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();PWA_PROMPT=e;pwaUpdateUI()});
 window.addEventListener('appinstalled',()=>{PWA_PROMPT=null;pwaUpdateUI();if($('pwaInstallDlg')&&$('pwaInstallDlg').open)$('pwaInstallDlg').close()});
 if($('pwaInstallNav'))$('pwaInstallNav').onclick=pwaOpenInstall;if($('pwaInstallGo'))$('pwaInstallGo').onclick=pwaInstall;if($('pwaInstallClose'))$('pwaInstallClose').onclick=()=>$('pwaInstallDlg').close();
-if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=104',{scope:'./'});reg.update().catch(()=>{})}catch(e){console.warn('PWA service worker:',e)}pwaUpdateUI();const lp=new URLSearchParams(location.search).get('page');if(['home','work','meal','t6','qr','arc','reports'].includes(lp)){setTimeout(()=>{try{go(lp)}catch(e){}},350)}});
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=127',{scope:'./'});reg.update().catch(()=>{})}catch(e){console.warn('PWA service worker:',e)}pwaUpdateUI();const lp=new URLSearchParams(location.search).get('page');if(['home','work','meal','t6','qr','arc','reports'].includes(lp)){setTimeout(()=>{try{go(lp)}catch(e){}},350)}});
 else window.addEventListener('load',pwaUpdateUI);
 setTimeout(()=>{updateAlertBadges();if(page==='home')home();pwaUpdateUI()},80);
 </script>
