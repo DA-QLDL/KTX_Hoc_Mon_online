@@ -3748,7 +3748,7 @@ async function pwaInstall(){if(pwaStandalone())return pwaOpenInstall();if(!PWA_P
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();PWA_PROMPT=e;pwaUpdateUI()});
 window.addEventListener('appinstalled',()=>{PWA_PROMPT=null;pwaUpdateUI();if($('pwaInstallDlg')&&$('pwaInstallDlg').open)$('pwaInstallDlg').close()});
 if($('pwaInstallNav'))$('pwaInstallNav').onclick=pwaOpenInstall;if($('pwaInstallGo'))$('pwaInstallGo').onclick=pwaInstall;if($('pwaInstallClose'))$('pwaInstallClose').onclick=()=>$('pwaInstallDlg').close();
-if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=103',{scope:'./'});reg.update().catch(()=>{})}catch(e){console.warn('PWA service worker:',e)}pwaUpdateUI();const lp=new URLSearchParams(location.search).get('page');if(['home','work','meal','t6','qr','arc','reports'].includes(lp)){setTimeout(()=>{try{go(lp)}catch(e){}},350)}});
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=104',{scope:'./'});reg.update().catch(()=>{})}catch(e){console.warn('PWA service worker:',e)}pwaUpdateUI();const lp=new URLSearchParams(location.search).get('page');if(['home','work','meal','t6','qr','arc','reports'].includes(lp)){setTimeout(()=>{try{go(lp)}catch(e){}},350)}});
 else window.addEventListener('load',pwaUpdateUI);
 setTimeout(()=>{updateAlertBadges();if(page==='home')home();pwaUpdateUI()},80);
 </script>
@@ -4755,9 +4755,31 @@ setTimeout(()=>{try{reportAutoMaybe(false);updateIncidentBadge()}catch(e){}},150
 
 </script>
 
-<style id="step125SystemHubFix">
-#sysfunc:not(.hide){display:block!important;visibility:visible!important;opacity:1!important;min-height:420px!important}
+<style id="step126SystemHubPolish">
+/* STEP126 — Chức năng hệ thống chỉ xuất hiện ở đúng trang + giao diện compact hiện đại */
+#sysfunc.hide{display:none!important;visibility:hidden!important;opacity:0!important}
+#sysfunc:not(.hide){display:block!important;visibility:visible!important;opacity:1!important;min-height:360px!important}
 #sysfunc:not(.hide) .sysfunc-wrap{display:flex!important;visibility:visible!important;opacity:1!important}
+.sysfunc-wrap{gap:10px!important}
+.sysfunc-intro{padding:11px 13px!important;border-radius:14px!important;background:linear-gradient(135deg,#ffffff 0%,#f3f8ff 100%)!important;box-shadow:0 6px 18px rgba(36,82,145,.07)!important}
+.sysfunc-intro .sf-ico{width:36px!important;height:36px!important;border-radius:11px!important;background:linear-gradient(135deg,#e8f2ff,#f2ecff)!important;color:#316ee8!important}
+.sysfunc-intro h3{font-size:14px!important;margin-bottom:2px!important}.sysfunc-intro p{font-size:9.5px!important}
+.sysfunc-group{padding:11px!important;border-radius:14px!important;background:rgba(255,255,255,.96)!important;box-shadow:0 6px 18px rgba(40,74,120,.06)!important}
+.sysfunc-group h3{font-size:11px!important;margin:0 0 8px!important;color:#243a5a!important}
+.sysfunc-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important}
+.sysfunc-btn{--acc:#3b82f6;--acc2:#eff6ff;min-height:58px!important;padding:9px 10px!important;border-radius:12px!important;border:1px solid color-mix(in srgb,var(--acc) 24%,#dce6f4)!important;background:linear-gradient(145deg,#fff 0%,var(--acc2) 100%)!important;box-shadow:0 4px 12px rgba(32,65,110,.08)!important;align-items:center!important;position:relative!important;overflow:hidden!important}
+.sysfunc-btn:before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--acc);opacity:.9}
+.sysfunc-btn:hover{transform:translateY(-2px)!important;box-shadow:0 9px 20px color-mix(in srgb,var(--acc) 16%,transparent)!important;border-color:color-mix(in srgb,var(--acc) 45%,#dce6f4)!important}
+.sysfunc-btn .sficon{width:30px!important;height:30px!important;border-radius:9px!important;background:color-mix(in srgb,var(--acc) 12%,#fff)!important;color:var(--acc)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--acc) 12%,transparent)!important}
+.sysfunc-btn b{font-size:10.2px!important;margin:0 0 2px!important;color:#1f3350!important}.sysfunc-btn small{font-size:8.1px!important;line-height:1.28!important;color:#6d7d92!important}
+.sysfunc-btn.sf-purple{--acc:#7c5cff;--acc2:#f4f1ff}.sysfunc-btn.sf-green{--acc:#19a66a;--acc2:#effbf5}.sysfunc-btn.sf-warn{--acc:#f59e0b;--acc2:#fff8e8}.sysfunc-btn.sf-danger{--acc:#ef476f;--acc2:#fff1f4}
+.sysfunc-group:nth-of-type(2) .sysfunc-btn:nth-child(2n){--acc:#06a6c9;--acc2:#eefbfe}.sysfunc-group:nth-of-type(2) .sysfunc-btn:nth-child(3n){--acc:#7c5cff;--acc2:#f5f2ff}
+.sysfunc-group:nth-of-type(3) .sysfunc-btn:nth-child(2n){--acc:#0ea5e9;--acc2:#eff9ff}.sysfunc-group:nth-of-type(3) .sysfunc-btn:nth-child(3n){--acc:#8b5cf6;--acc2:#f6f2ff}
+.sysfunc-group:nth-of-type(4) .sysfunc-btn:nth-child(2n){--acc:#14b8a6;--acc2:#effcf9}.sysfunc-group:nth-of-type(4) .sysfunc-btn:nth-child(3n){--acc:#f59e0b;--acc2:#fff9ec}
+.sysfunc-footer{font-size:8.5px!important;padding:0 2px!important}
+@media(max-width:1100px){.sysfunc-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:760px){.sysfunc-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:480px){.sysfunc-grid{grid-template-columns:1fr!important}}
 </style>
 <script id="step125SystemHubFixScript">
 (function(){
@@ -4803,18 +4825,27 @@ setTimeout(()=>{try{reportAutoMaybe(false);updateIncidentBadge()}catch(e){}},150
   window.forceSystemHub=function(){
     const el=document.getElementById('sysfunc'); if(!el) return;
     if(!el.querySelector('#sysfuncForcedContent')) el.innerHTML=HUB_HTML;
-    el.classList.remove('hide'); el.style.display='block'; el.style.visibility='visible'; el.style.opacity='1';
     wireHub(el);
+    const active=(typeof page!=='undefined' && page==='sysfunc');
+    el.classList.toggle('hide',!active);
+    el.style.removeProperty('display');
+    el.style.removeProperty('visibility');
+    el.style.removeProperty('opacity');
   };
   document.addEventListener('click',function(e){
     const b=e.target.closest && e.target.closest('button[data-p="sysfunc"]');
     if(b) setTimeout(window.forceSystemHub,0);
   },true);
   document.addEventListener('DOMContentLoaded',function(){
-    window.forceSystemHub();
-    const el=document.getElementById('sysfunc'); if(el && (typeof page!=='undefined' && page!=='sysfunc')) el.classList.add('hide');
+    const el=document.getElementById('sysfunc');
+    if(el) el.classList.add('hide');
+    if(typeof page!=='undefined' && page==='sysfunc') setTimeout(window.forceSystemHub,0);
   });
-  window.addEventListener('load',function(){ if(typeof page!=='undefined' && page==='sysfunc') setTimeout(window.forceSystemHub,50); });
+  window.addEventListener('load',function(){
+    const el=document.getElementById('sysfunc');
+    if(typeof page!=='undefined' && page==='sysfunc') setTimeout(window.forceSystemHub,50);
+    else if(el) el.classList.add('hide');
+  });
 })();
 </script>
 </body>
