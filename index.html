@@ -2321,6 +2321,40 @@ const T={loading:['Đang đăng nhập...','Đang xác minh tài khoản claude.
  $('gt1').textContent=T[0];$('gt2').textContent=T[1];$('gb').innerHTML=(T[2]=='rq'?'<button class="btn" id="g_rq">Gửi yêu cầu cấp quyền</button>':'')+(T[2]?'<button class="btn s" id="g_re">Tải lại</button>':'');
  if($('g_rq'))$('g_rq').onclick=async()=>{try{await SD.db.collection('requests').doc(ME.id||'anon').set({at:Date.now()});SD.gate='sent';showGate()}catch(e){alert('Không gửi được yêu cầu. Hãy liên hệ quản trị viên để được cấp quyền truy cập trang này.')}};
  if($('g_re'))$('g_re').onclick=()=>location.reload()}
+
+// STEP123 — global renderer for centralized System Functions hub
+window.systemFunctionsPage=function(){
+ const el=$('sysfunc');if(!el)return;
+ const items=[
+  {g:'Quản trị & truy cập',p:'adminboard',t:'Dashboard quản trị',d:'Tổng hợp tình trạng hệ thống và các chỉ số quản trị.',i:'home',perm:'acct',c:'purple'},
+  {g:'Quản trị & truy cập',p:'acc',t:'Quản lý tài khoản',d:'Tài khoản, vai trò và phạm vi phụ trách.',i:'key',perm:'acct'},
+  {g:'Quản trị & truy cập',p:'access',t:'Phân quyền & truy cập',d:'Kiểm tra ma trận quyền và cấu hình truy cập.',i:'key',perm:'acct'},
+  {g:'Quản trị & truy cập',p:'activity',t:'Hoạt động người dùng',d:'Theo dõi thao tác quan trọng theo từng tài khoản.',i:'users',perm:'acct'},
+  {g:'Quản trị & truy cập',p:'security',t:'Phiên đăng nhập & bảo mật',d:'Theo dõi phiên hiện tại và dấu hiệu cần rà soát.',i:'key',perm:'acct'},
+  {g:'Dữ liệu & đồng bộ',p:'sync',t:'Đồng bộ Supabase',d:'Đồng bộ dữ liệu giữa nhiều máy và xử lý hàng đợi.',i:'ul',c:'green'},
+  {g:'Dữ liệu & đồng bộ',p:'backup',t:'Sao lưu dữ liệu',d:'Backup thủ công, tự động và khôi phục dữ liệu.',i:'dl',perm:'backup',c:'green'},
+  {g:'Dữ liệu & đồng bộ',p:'dataaudit',t:'Kiểm tra toàn bộ dữ liệu',d:'Quét chất lượng, trùng lặp, phòng và cư trú.',i:'check',c:'green'},
+  {g:'Dữ liệu & đồng bộ',p:'standards',t:'Chuẩn hóa dữ liệu',d:'Chuẩn hóa định dạng CCCD, SĐT, MNV, KTX, Dãy, Phòng.',i:'check',perm:'report'},
+  {g:'Dữ liệu & đồng bộ',p:'safety',t:'An toàn dữ liệu',d:'Điểm khôi phục và bảo vệ trước thao tác lớn.',i:'key'},
+  {g:'Giám sát & vận hành',p:'health',t:'Sức khỏe hệ thống',d:'Kiểm tra Internet, Supabase, backup, PWA và dung lượng.',i:'check',c:'green'},
+  {g:'Giám sát & vận hành',p:'incidents',t:'Trung tâm sự cố',d:'Lỗi ứng dụng, đồng bộ, import và lịch sử xử lý.',i:'log',perm:'acct',c:'danger'},
+  {g:'Giám sát & vận hành',p:'alerts',t:'Trung tâm cảnh báo',d:'Các vấn đề dữ liệu và công việc cần xử lý.',i:'log',c:'warn'},
+  {g:'Giám sát & vận hành',p:'opsboard',t:'Dashboard vận hành',d:'Tình hình KTX trong ngày và đầu việc cần xử lý.',i:'home',perm:'report'},
+  {g:'Giám sát & vận hành',p:'log',t:'Nhật ký hệ thống',d:'Lịch sử thao tác và thay đổi dữ liệu.',i:'log'},
+  {g:'Báo cáo & vòng đời hệ thống',p:'reportauto',t:'Báo cáo định kỳ',d:'Lưu chốt số liệu ngày, tuần và tháng.',i:'chart',perm:'report'},
+  {g:'Báo cáo & vòng đời hệ thống',p:'maintenance',t:'Bảo trì & lưu trữ',d:'Dọn dữ liệu cũ và giữ ứng dụng hoạt động nhẹ.',i:'tool',perm:'acct'},
+  {g:'Báo cáo & vòng đời hệ thống',p:'qa',t:'Nghiệm thu Production',d:'Checklist kiểm thử trước khi phát hành.',i:'check',perm:'acct'},
+  {g:'Báo cáo & vòng đời hệ thống',p:'release',t:'Phát hành v1.0',d:'Thông tin phiên bản và trạng thái phát hành.',i:'bld',perm:'acct'},
+  {g:'Báo cáo & vòng đời hệ thống',p:'pwa',t:'Cài ứng dụng',d:'Cài KTX Hóc Môn như ứng dụng trên máy tính/điện thoại.',i:'dl',c:'purple'}
+ ];
+ const allowed=x=>!x.perm||can(x.perm);
+ const groups=[...new Set(items.map(x=>x.g))];
+ const icon=x=>`<svg class="i"><use href="#i-${x}"/></svg>`;
+ const cls=x=>x.c?` sf-${x.c}`:'';
+ el.innerHTML=`<div class="sysfunc-wrap"><div class="sysfunc-intro"><div class="sf-ico">${icon('cog')}</div><div><h3>Chức năng hệ thống</h3><p>Tất cả công cụ quản trị được gom tại đây. Bấm vào từng chức năng để mở trang tương ứng.</p></div></div>${groups.map(g=>{const rows=items.filter(x=>x.g===g&&allowed(x));if(!rows.length)return'';return `<div class="sysfunc-group"><h3>${esc(g)}</h3><div class="sysfunc-grid">${rows.map(x=>`<button class="sysfunc-btn${cls(x)}" type="button" data-sys-go="${esc(x.p)}"><span class="sficon">${icon(x.i)}</span><span><b>${esc(x.t)}</b><small>${esc(x.d)}</small></span></button>`).join('')}</div></div>`}).join('')}<div class="sysfunc-footer">Các nút được hiển thị theo quyền của tài khoản hiện tại. Chức năng không có quyền sẽ tự động ẩn.</div></div>`;
+ el.querySelectorAll('[data-sys-go]').forEach(b=>b.onclick=()=>{const p=b.dataset.sysGo;if(p==='pwa'){if(typeof pwaOpenInstall==='function')pwaOpenInstall();else if($('pwaInstallDlg'))$('pwaInstallDlg').showModal();return}go(p)});
+};
+
 async function authInit(){if(!(window.claude&&claude.use))return;let U=null,db=null;try{U=await claude.use('user')}catch(e){}try{db=await claude.use('db')}catch(e){}
  SD.U=U;SD.db=db;if(!U||!db)return;
  try{const m=await U.me();ME.id=m.id;ME.name=m.name||'';ME.owner=!!m.isOwner}catch(e){try{ME.owner=await U.isOwner()}catch(x){}}
