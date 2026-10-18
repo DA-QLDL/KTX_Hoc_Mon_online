@@ -6157,4 +6157,47 @@ nav #aubOut svg{width:15px;height:15px;flex:none}
 <script id="step145-account-actions">
 window.addEventListener('unhandledrejection',e=>{const m=String(e.reason&&e.reason.message||e.reason||'');if(/app_accounts|access_requests|Không tìm thấy tài khoản|RLS|phân quyền|permission/i.test(m)){console.error('KTX_ACCOUNT_ACTION',m);alert('Lỗi quản lý tài khoản: '+m)}});
 </script>
+
+<style id="step146-sidebar-bottom">
+/* STEP146: menu cuộn riêng; tài khoản/đăng xuất cố định ở chân sidebar. */
+@media(min-width:861px){
+  body>nav{height:100vh!important;max-height:100vh!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;position:sticky!important;top:0!important;min-height:0!important;padding-bottom:12px!important}
+  body>nav>.brand{flex:0 0 auto!important}
+  body>nav>#step146NavScroll{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;scrollbar-width:thin;scrollbar-color:#cbd9ed transparent;padding:2px 0 12px}
+  body>nav>#authUserbar{order:10!important;flex:0 0 auto!important;margin:0 2px 0!important;padding:10px!important;max-width:calc(100% - 4px)!important;box-sizing:border-box!important}
+  body>nav>#authUserbar #aubOut{display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:100%!important;min-height:38px!important;background:#fff!important;border:1px solid #c4d8f0!important;border-radius:9px!important;color:#1d5bb1!important;font-size:12px!important;font-weight:800!important;cursor:pointer!important}
+  body>nav>#authUserbar #aubOut:hover{background:#edf5ff!important;border-color:#78a9e7!important}
+  body>nav>#ft{display:none!important}
+}
+@media(max-width:860px){body>nav>#step146NavScroll{display:contents!important}}
+</style>
+<script id="step146-sidebar-script">
+(function(){
+ function pinLogout(){
+   const nav=document.querySelector('body>nav');if(!nav)return;
+   const brand=nav.querySelector(':scope>.brand');
+   let scroller=document.getElementById('step146NavScroll');
+   if(!scroller){
+     scroller=document.createElement('div');scroller.id='step146NavScroll';
+     if(brand)brand.insertAdjacentElement('afterend',scroller);else nav.prepend(scroller);
+   }
+   // The login gate already hides the sidebar; keep all existing Auth handlers intact.
+   Array.from(nav.children).forEach(c=>{
+      if(c===brand||c===scroller||c.id==='ft'||c.id==='authUserbar')return;
+      scroller.appendChild(c);
+   });
+   const bar=document.getElementById('authUserbar');
+   if(bar && bar.parentElement!==nav)nav.appendChild(bar);
+   if(bar){
+     if(bar.previousElementSibling?.id==='step146NavScroll'){};
+     bar.setAttribute('aria-label','Tài khoản và đăng xuất');
+   }
+ }
+ document.addEventListener('DOMContentLoaded',pinLogout);
+ window.addEventListener('load',pinLogout);
+ const mo=new MutationObserver(()=>{if(document.getElementById('authUserbar')){pinLogout();mo.disconnect()}});
+ document.addEventListener('DOMContentLoaded',()=>{if(!document.getElementById('authUserbar'))mo.observe(document.querySelector('body>nav')||document.body,{childList:true,subtree:false})});
+})();
+</script>
+
 </html>
