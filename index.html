@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ký túc xá Hóc Môn</title>
-<meta name="app-version" content="KTX-STEP144-RESPONSIBLE-DAYS">
+<meta name="app-version" content="KTX-STEP173-FINAL-UI-CANDIDATE">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -652,6 +652,44 @@ table{font-size:12.8px!important}th{font-size:11.5px!important;font-weight:700!i
 #home .ktx-gender-row{cursor:pointer;transition:background .16s,border-color .16s,box-shadow .16s}
 #home .ktx-gender-row:hover,#home .ktx-gender-row:focus-within{background:#ecf5ff;border-color:#65a0fa;box-shadow:0 2px 8px #236bc71a}
 #home .ktx-gender-row:focus-visible{outline:2px solid #2271e7;outline-offset:2px}
+</style>
+
+<style id="step173-final-visual-standard">
+/* STEP173 visual-only pass. Never modify source data/auth/API/business logic. */
+:root{--ui-gap:10px;--ui-radius:11px;--ui-border:#d9e4f3;--ui-blue:#2563eb}
+html{overflow-x:hidden}body{min-width:0}main{min-width:0;width:100%;max-width:none!important;padding-inline:clamp(14px,2vw,28px)!important}
+@media(min-width:861px){
+ body>nav{height:100dvh!important;max-height:100dvh!important;min-height:100dvh!important;position:sticky!important;top:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;align-self:stretch!important;padding-bottom:0!important}
+ body>nav>.brand{flex:0 0 auto!important}
+ body>nav>#step146NavScroll{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;scrollbar-width:none!important;padding-bottom:8px!important}
+ body>nav>#step146NavScroll::-webkit-scrollbar{width:0!important;display:none!important}
+ body>nav>#authUserbar{position:static!important;inset:auto!important;order:99!important;flex:0 0 auto!important;margin:0 8px 8px!important;width:calc(100% - 16px)!important;max-width:none!important}
+ body>nav>#ft{display:none!important}
+}
+/* toolbar rhythm and consistent form controls */
+main .top{gap:12px!important;align-items:flex-start!important;min-width:0}
+main .top-actions,main .row{gap:10px!important;row-gap:10px!important}
+main :is(button.btn,.btn,select,input:not([type=checkbox]):not([type=radio]),textarea){box-sizing:border-box;min-height:36px}
+main :is(input:not([type=checkbox]):not([type=radio]),select,textarea){border-radius:9px}
+main .btn{gap:8px;white-space:normal;text-align:left}
+main .btn svg.i{flex-shrink:0}
+main .card{border-radius:13px}
+main .g4,main .g2{gap:14px!important;min-width:0}
+main .g4>*,main .g2>*{min-width:0}
+/* tool and system navigation tiles: icon always left, label always left */
+:is(#toolsPage,#systemFunctions,#sysfunc,#t7,#utilityHub,#utilitiesHub) :is(.tool-card,.tool-tile,.sys-func-btn,.utility-tile,.hub-tile){justify-content:flex-start!important;text-align:left!important;gap:12px!important;min-width:0}
+:is(#toolsPage,#systemFunctions,#sysfunc,#t7,#utilityHub,#utilitiesHub) :is(.tool-card,.tool-tile,.sys-func-btn,.utility-tile,.hub-tile) svg{flex:0 0 auto}
+/* all worker-style tables: consistent row rhythm, keep sideways scrolling in tables only */
+:is(#work,#t6,#arc,#t2) .wrap{max-width:100%;overflow-x:auto;border-radius:12px}
+:is(#work,#t6,#arc,#t2) table{border-collapse:separate;border-spacing:0;font-variant-numeric:tabular-nums}
+:is(#work,#t6,#arc,#t2) table th{background:var(--pn2);color:var(--bl);font-weight:700;border-bottom:1px solid var(--ln);padding:11px 9px}
+:is(#work,#t6,#arc,#t2) table td{padding:10px 9px;border-bottom:1px solid var(--ln);vertical-align:middle}
+:is(#work,#t6,#arc,#t2) table tbody tr:hover td{background:var(--gl)!important}
+/* dialogs do not create horizontal window scroll */
+dialog{max-width:min(94vw,820px);box-sizing:border-box}dialog :is(input,select,textarea){min-width:0}dialog .fg{gap:12px}dialog .vf{gap:10px;flex-wrap:wrap}
+/* retain accessible scrolling on short devices rather than crop controls */
+@media(max-width:860px){body>nav{max-width:100vw}main{padding-inline:12px!important}main .g2{grid-template-columns:minmax(0,1fr)!important}}
+@media(max-width:600px){main .top-actions{width:100%;justify-content:flex-start}main .btn{min-height:38px}dialog .fg{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body>
@@ -3862,7 +3900,7 @@ async function pwaInstall(){if(pwaStandalone())return pwaOpenInstall();if(!PWA_P
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();PWA_PROMPT=e;pwaUpdateUI()});
 window.addEventListener('appinstalled',()=>{PWA_PROMPT=null;pwaUpdateUI();if($('pwaInstallDlg')&&$('pwaInstallDlg').open)$('pwaInstallDlg').close()});
 if($('pwaInstallNav'))$('pwaInstallNav').onclick=pwaOpenInstall;if($('pwaInstallGo'))$('pwaInstallGo').onclick=pwaInstall;if($('pwaInstallClose'))$('pwaInstallClose').onclick=()=>$('pwaInstallDlg').close();
-if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=140',{scope:'./'});reg.update().catch(()=>{})}catch(e){console.warn('PWA service worker:',e)}pwaUpdateUI();const lp=new URLSearchParams(location.search).get('page');if(['home','work','meal','t6','qr','arc','reports'].includes(lp)){setTimeout(()=>{try{go(lp)}catch(e){}},350)}});
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=174',{scope:'./'});reg.update().catch(()=>{})}catch(e){console.warn('PWA service worker:',e)}pwaUpdateUI();const lp=new URLSearchParams(location.search).get('page');if(['home','work','meal','t6','qr','arc','reports'].includes(lp)){setTimeout(()=>{try{go(lp)}catch(e){}},350)}});
 else window.addEventListener('load',pwaUpdateUI);
 setTimeout(()=>{updateAlertBadges();if(page==='home')home();pwaUpdateUI()},80);
 </script>
@@ -5663,7 +5701,7 @@ nav button,.r,.room-cell,.chip button,.fi .fa button{box-shadow:none}
       <button class="sysfunc-btn sf-green" type="button" data-util-go="u169_pccc"><span class="sficon"><svg class="i"><use href="#i-log"></use></svg></span><span><b>Checklist bình PCCC</b><small>Quản lý danh sách, cập nhật và xuất Excel theo mẫu.</small></span></button>
       <button class="sysfunc-btn sf-purple" type="button" data-util-go="t2"><span class="sficon"><svg class="i"><use href="#i-copy"></use></svg></span><span><b>Lọc trùng</b><small>Quét trùng trong danh sách công nhân hiện tại và dữ liệu so sánh.</small></span></button>
       <button class="sysfunc-btn sf-green" type="button" data-util-go="t5"><span class="sficon"><svg class="i"><use href="#i-pic"></use></svg></span><span><b>PDF → ảnh</b><small>Chuyển file PDF thành ảnh PNG/JPG để dùng nhanh.</small></span></button>
-      <button class="sysfunc-btn sf-warn" type="button" data-util-go="t7"><span class="sficon"><svg class="i"><use href="#i-folder"></use></svg></span><span><b>Lưu trữ tài liệu</b><small>Quản lý hợp đồng, công văn, biên bản và các tài liệu khác.</small></span></button>
+      <button class="sysfunc-btn sf-green" type="button" data-util-go="u169_backup"><span class="sficon"><svg class="i"><use href="#i-folder"></use></svg></span><span><b>Kiểm tra &amp; sao lưu tiện ích</b><small>Xem và sao lưu 5 tiện ích trước khi cập nhật.</small></span></button><button class="sysfunc-btn sf-warn" type="button" data-util-go="t7"><span class="sficon"><svg class="i"><use href="#i-folder"></use></svg></span><span><b>Lưu trữ tài liệu</b><small>Quản lý hợp đồng, công văn, biên bản và các tài liệu khác.</small></span></button>
     </div></div><div class="sysfunc-footer">Các tiện ích vẫn giữ nguyên quyền sử dụng và chức năng cũ, chỉ thay đổi cách bố trí hiển thị.</div></div>`;
     el.querySelectorAll('[data-util-go]').forEach(b=>b.onclick=()=>go(b.dataset.utilGo));
   }
@@ -6638,9 +6676,9 @@ window.addEventListener('unhandledrejection',e=>{const m=String(e.reason&&e.reas
 </style>
 <style id="step169-utility-style">.u169-wrap{width:100%;max-width:100%;min-width:0}.u169-wrap .u169-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 0}.u169-wrap iframe{display:block;width:100%;border:1px solid #d2e0f2;border-radius:13px;background:#fff;height:calc(100dvh - 180px);min-height:500px}</style>
 <script id="step169-utility-script">(function(){
- const titles={cosovatchat:'Cơ sở vật chất KTX','vs-vpp':'Danh mục dụng vụ VS–VPP','vipham-ncc':'Sổ theo dõi vi phạm NCC',pccc:'Checklist bình PCCC'};
+ const titles={cosovatchat:'Cơ sở vật chất KTX','vs-vpp':'Danh mục dụng vụ VS–VPP','vipham-ncc':'Sổ theo dõi vi phạm NCC',pccc:'Checklist bình PCCC',backup:'Kiểm tra & sao lưu tiện ích'};
  const originalGo=window.go;
- function ensure(slug){let section=document.getElementById('u169_'+slug);if(section)return section;section=document.createElement('section');section.id='u169_'+slug;section.className='hide u169-wrap';section.innerHTML='<div class="u169-head"><button class="btn s" type="button">← Quay lại Tiện ích</button><strong>'+titles[slug]+'</strong></div><iframe loading="lazy" title="'+titles[slug]+'" src="./'+slug+'.html"></iframe>';document.querySelector('main').append(section);section.querySelector('button').onclick=()=>window.go('utilhub');return section}
+ function ensure(slug){let section=document.getElementById('u169_'+slug);if(section)return section;section=document.createElement('section');section.id='u169_'+slug;section.className='hide u169-wrap';section.innerHTML='<div class="u169-head"><button class="btn s" type="button">← Quay lại Tiện ích</button><strong>'+titles[slug]+'</strong></div><iframe loading="lazy" title="'+titles[slug]+'" src="./'+(slug==='backup'?'kiem-tra-sao-luu':slug)+'.html"></iframe>';document.querySelector('main').append(section);section.querySelector('button').onclick=()=>window.go('utilhub');return section}
  window.go=function(p){Object.keys(titles).forEach(slug=>document.getElementById('u169_'+slug)?.classList.add('hide'));if(p&&p.startsWith('u169_')&&titles[p.slice(5)]){const slug=p.slice(5);originalGo.call(this,'utilhub');document.getElementById('utilhub')?.classList.add('hide');ensure(slug).classList.remove('hide');if(typeof page!=='undefined')page=p;document.getElementById('ttl').textContent=titles[slug];document.getElementById('sub').textContent='Tiện ích quản lý theo biểu mẫu KTX';window.scrollTo(0,0);return}return originalGo.apply(this,arguments)};
 })();</script>
 <style id="step170-auth-privacy">#authHubGate #ahEmail,#authHubGate #ahPass{background:#fff!important}</style>
