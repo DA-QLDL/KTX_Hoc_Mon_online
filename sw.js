@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ktx-hoc-mon-pwa-step134-auth-first-ui-step135';
+const CACHE_NAME = 'ktx-hoc-mon-pwa-step137-spacing-sidebar';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
