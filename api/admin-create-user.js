@@ -1,4 +1,4 @@
-// STEP147 Vercel Node Serverless API: server-side Supabase Admin API only.
+// STEP149 Vercel Node Serverless API: server-side Supabase Admin API only.
 // Configure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Vercel Environment Variables.
 const BASE = process.env.SUPABASE_URL;
 const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -40,12 +40,28 @@ module.exports=async function(req,res){
    const auth=await sb('/auth/v1/admin/users','POST',{email,password,email_confirm:true,user_metadata:{display_name:display_name.trim(),username,change_password_required:true}});
    newUser=auth.user||auth;
    if(!newUser.id)throw new Error('Supabase Auth không trả về user ID');
-   // Server writes assigned scoped privileges; no password or secret stored in app_accounts.
-   await sb('/rest/v1/app_accounts?on_conflict=user_id','POST',{user_id:newUser.id,email,display_name:display_name.trim(),role,ktx,days,enabled:true,updated_at:new Date().toISOString()});
+   // An Auth trigger may already have inserted the corresponding app_accounts row.
+   // PATCH first avoids duplicate primary keys from inserting the same user_id twice.
+   const profile={email,display_name:display_name.trim(),role,ktx,days,enabled:true,updated_at:new Date().toISOString()};
+   const filter=`/rest/v1/app_accounts?user_id=eq.${encodeURIComponent(newUser.id)}`;
+   let records=await sb(filter,'PATCH',profile);
+   if(!Array.isArray(records))throw new Error('Phản hồi hồ sơ tài khoản không hợp lệ');
+   if(records.length===0){
+    try{
+     records=await sb('/rest/v1/app_accounts','POST',{user_id:newUser.id,...profile});
+    }catch(insertError){
+     // A concurrently running auth trigger can create the row after the first PATCH.
+     if(!/duplicate key|23505|unique constraint/i.test(insertError.message||''))throw insertError;
+     records=await sb(filter,'PATCH',profile);
+    }
+   }
+   if(!Array.isArray(records)||records.length!==1||records[0].user_id!==newUser.id){
+    throw new Error('Không lưu được phân quyền tài khoản chính xác; vui lòng kiểm tra trigger và app_accounts RLS');
+   }
    return respond(res,201,{ok:true,user_id:newUser.id,username,role});
   }catch(e){
    if(newUser&&newUser.id){try{await sb(`/auth/v1/admin/users/${encodeURIComponent(newUser.id)}`,'DELETE')}catch(rollback){console.error('ACCOUNT_ROLLBACK_FAILED',newUser.id,rollback.message)}}
    throw e;
   }
- }catch(e){console.error('ADMIN_CREATE_FAILED',e.message);return respond(res,[400,401,403,409].includes(e.status)?e.status:400,{error:e.message||'Tạo tài khoản thất bại'})}
+ }catch(e){console.error('ADMIN_CREATE_FAILED',e.message);return respond(res,[400,401,403,409].includes(e.status)?e.status:500,{error:e.message||'Tạo tài khoản thất bại'})}
 };
