@@ -638,6 +638,16 @@ table{font-size:12.8px!important}th{font-size:11.5px!important;font-weight:700!i
 #adminboard .adm-actions .btn{width:100%;justify-content:flex-start;padding:9px 11px!important;min-height:38px}
 #adminboard .adm-head .btn{padding:6px 10px!important}
 </style>
+
+<style id="step153-sidebar-fullheight-no-scrollbar">
+/* STEP153: thanh sidebar chạm đáy viewport; menu không lộ thanh cuộn */
+@media (min-width:861px){
+ body>nav{height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;top:0!important;bottom:0!important;padding-bottom:12px!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+ body>nav>#step146NavScroll{flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;padding:2px 0 6px!important;margin-bottom:0!important;scrollbar-width:none!important;-ms-overflow-style:none!important}
+ body>nav>#step146NavScroll::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+ body>nav>#authUserbar{position:static!important;order:20!important;flex:0 0 auto!important;bottom:auto!important;left:auto!important;right:auto!important;width:calc(100% - 4px)!important;margin:0 2px!important;z-index:3!important}
+}
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -4344,6 +4354,47 @@ function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)retu
 </style>
 </head><body><h1>${esc(d.title)}</h1><p>Kỳ báo cáo: ${esc(vn(RC96.from))} - ${esc(vn(RC96.to))} · ${esc(RC96.ktx||'Tất cả KTX')}</p><table><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${d.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')}</table><!-- KTX-STABLE-101 · Production baseline -->
 <!-- STEP105_PERFORMANCE_OPTIMIZATION -->
+
+<style id="step152IncidentStyles">
+#incident152{min-width:0}#incident152 .incident152-shell{background:#fff;border:1px solid #d7e3f3;border-radius:14px;padding:14px;margin-top:12px}#incident152 iframe{display:block;border:1px solid #dce7f5;border-radius:12px;width:100%;height:calc(100vh - 250px);min-height:660px;background:#eef4fc}#incident152 .incident152-note{font-size:12px;color:#617492;margin-top:8px}#incident152 .incident152-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+</style>
+<script id="step152IncidentFeature">
+(function(){
+ function init(){
+  if(!document.getElementById('incident152')){
+   const el=document.createElement('section');el.id='incident152';el.className='hide';el.innerHTML=`<div class="incident152-actions"><button class="btn s" type="button" id="incident152Back">← Quay lại Tiện ích</button><b>Biên bản sự vụ</b></div><div class="incident152-shell"><iframe title="Ứng dụng Biên bản sự vụ" id="incident152Frame" loading="lazy" src="./bien-ban-su-vu.html"></iframe><p class="incident152-note">Biên bản sự vụ được kế thừa từ ứng dụng gốc, lưu riêng dữ liệu biên bản trong trình duyệt. Không chỉnh sửa danh sách công nhân hay tài khoản của ứng dụng chính.</p></div>`;
+   document.querySelector('main').appendChild(el);
+   document.getElementById('incident152Back').onclick=()=>window.go('utilhub');
+  }
+  if(typeof T!=='undefined'&&!T.incident152)T.incident152=['Biên bản sự vụ','Lập biên bản, lựa chọn phương án xử lý, tính tiền và xuất Word'];
+  if(typeof GN!=='undefined')GN.incident152='Tiện ích';
+  const hub=document.getElementById('utilhub');
+  if(hub&&!hub.querySelector('[data-util-go="incident152"]')){
+   const grid=hub.querySelector('.sysfunc-grid');if(grid){
+    const btn=document.createElement('button');btn.type='button';btn.className='sysfunc-btn sf-purple';btn.dataset.utilGo='incident152';btn.innerHTML='<span class="sficon"><svg class="i"><use href="#i-log"></use></svg></span><span><b>Biên bản sự vụ</b><small>Lập biên bản, xử lý vi phạm và tải Word.</small></span>';btn.onclick=()=>window.go('incident152');grid.appendChild(btn);
+   }
+  }
+ }
+ const baseGo=window.go;
+ window.go=function(page){
+  init();
+  if(page==='incident152'){
+    document.body.dataset.page=page;
+    if(typeof T!=='undefined')Object.keys(T).forEach(k=>{let e=document.getElementById(k);if(e)e.classList.toggle('hide',k!==page)});
+    const element=document.getElementById('incident152');element.classList.remove('hide');
+    const t=document.getElementById('ttl'), sub=document.getElementById('sub'), eb=document.getElementById('eb');
+    if(t)t.textContent='Biên bản sự vụ';if(sub)sub.textContent='Công cụ lập biên bản KTX';if(eb)eb.textContent='TIỆN ÍCH';
+    const tools=document.getElementById('tools');if(tools)tools.classList.add('hide');
+    document.querySelectorAll('nav button[data-p]').forEach(b=>b.classList.remove('on'));
+    window.scrollTo(0,0);return;
+  }
+  document.getElementById('incident152')?.classList.add('hide');
+  const result=baseGo.apply(this,arguments);
+  init();return result;
+ };
+ window.addEventListener('DOMContentLoaded',init);
+})();
+</script>
 </body>
 <style id="step131SystemGroupPackingStyle">
 /* STEP131 — các cụm hệ thống bám sát từ trái sang phải, chỉ xuống hàng khi hết chiều ngang */
