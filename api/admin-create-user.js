@@ -4,7 +4,11 @@ const BASE = process.env.SUPABASE_URL;
 const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const DOMAIN = 'users.ktx-hoc-mon.app'; // internal Auth identifier only; no email is sent
 const cors = { 'Content-Type':'application/json; charset=utf-8', 'Cache-Control':'no-store', 'X-Content-Type-Options':'nosniff' };
-const respond=(res,code,payload)=>res.status(code).set(cors).json(payload);
+const respond=(res,code,payload)=>{
+ res.statusCode=code;
+ for(const [name,value] of Object.entries(cors))res.setHeader(name,value);
+ return res.end(JSON.stringify(payload));
+};
 const validUsername=s=>typeof s==='string' && /^[a-z][a-z0-9._-]{2,31}$/.test(s);
 const safeArr=(v,choices)=>Array.isArray(v)&&v.length<=20&&v.every(x=>choices.includes(x));
 async function sb(path,method='GET',body,token=KEY){
