@@ -5656,6 +5656,7 @@ nav button,.r,.room-cell,.chip button,.fi .fa button{box-shadow:none}
     el.innerHTML=`<div class="utilhub-wrap"><div class="sysfunc-intro"><div class="sf-ico"><svg class="i"><use href="#i-tool"></use></svg></div><div><h3>Tiện ích</h3><p>Các công cụ hỗ trợ được gom gọn vào một nơi để sidebar ngắn hơn và thao tác thuận tiện hơn.</p></div></div>
     <div class="sysfunc-group"><h3>Công cụ tiện ích</h3><div class="sysfunc-grid">
       <button class="sysfunc-btn sf-green" type="button" data-util-go="meal"><span class="sficon"><svg class="i"><use href="#i-log"></use></svg></span><span><b>Báo cáo suất ăn</b><small>Lập báo cáo sáng, trưa, chiều; nhập thực đơn và xuất báo cáo.</small></span></button>
+      <button class="sysfunc-btn sf-green" type="button" data-util-go="ledger167"><span class="sficon"><svg class="i"><use href="#i-log"></use></svg></span><span><b>Sổ theo dõi công nhân tăng/giảm</b><small>Chốt quân số theo ngày, theo dõi biến động và xuất Excel.</small></span></button>
       <button class="sysfunc-btn sf-purple" type="button" data-util-go="t2"><span class="sficon"><svg class="i"><use href="#i-copy"></use></svg></span><span><b>Lọc trùng</b><small>Quét trùng trong danh sách công nhân hiện tại và dữ liệu so sánh.</small></span></button>
       <button class="sysfunc-btn sf-green" type="button" data-util-go="t5"><span class="sficon"><svg class="i"><use href="#i-pic"></use></svg></span><span><b>PDF → ảnh</b><small>Chuyển file PDF thành ảnh PNG/JPG để dùng nhanh.</small></span></button>
       <button class="sysfunc-btn sf-warn" type="button" data-util-go="t7"><span class="sficon"><svg class="i"><use href="#i-folder"></use></svg></span><span><b>Lưu trữ tài liệu</b><small>Quản lý hợp đồng, công văn, biên bản và các tài liệu khác.</small></span></button>
@@ -6538,4 +6539,94 @@ window.addEventListener('unhandledrejection',e=>{const m=String(e.reason&&e.reas
 #sysfunc .sysfunc-btn b,#utilhub .sysfunc-btn b,
 #sysfunc .sysfunc-btn small,#utilhub .sysfunc-btn small {text-align:left!important;margin-left:0!important}
 </style>
+
+<style id="step166-qr-hub-style">
+#qr .qr166-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+#qr .qr166-head h3{margin:0;font-size:18px}
+#qr .qr166-switch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 14px}
+#qr .qr166-switch button{padding:13px 12px;border:1px solid #cbdcf2;border-radius:12px;background:#fff;color:#23466d;text-align:left;cursor:pointer;min-height:65px;font-weight:700;display:flex;gap:10px;align-items:center}
+#qr .qr166-switch button .qr166-ico{width:34px;height:34px;border-radius:10px;background:#eaf2ff;color:#2563eb;display:grid;place-items:center;font-size:22px;flex-shrink:0}
+#qr .qr166-switch button[data-mode="out"] .qr166-ico{background:#fff0ef;color:#d14a41}
+#qr .qr166-switch button[data-mode="att"] .qr166-ico{background:#e7f8ef;color:#138458}
+#qr .qr166-switch button.active{border-color:#2f6fe8;background:#eef5ff;box-shadow:0 1px 6px #2f6fe820}
+#qr .qr166-switch button[data-mode="out"].active{border-color:#dc6156;background:#fff5f3}
+#qr .qr166-switch button[data-mode="att"].active{border-color:#1b9c64;background:#effbf4}
+#qr .qr166-switch small{font-size:11px;font-weight:500;display:block;margin-top:4px;color:#58708c}
+#qr .qr166-tools{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:10px 0 16px;padding:12px;border:1px solid #dce7f5;border-radius:12px;background:#fff}
+#qr .qr166-tools .btn{margin:0!important;min-height:34px}
+#qr .qr166-single{grid-template-columns:minmax(0,1fr)!important;max-width:640px;margin:0 auto 14px}
+#qr .qr166-single>.card{width:100%;min-width:0}
+#qr .qr166-old-tabs{display:none!important}
+@media(max-width:700px){#qr .qr166-switch{grid-template-columns:1fr}#qr .qr166-head{align-items:flex-start}#qr .qr166-single{max-width:100%}}
+</style>
+<script id="step166-qr-hub-script">
+(function(){
+  var selected='in';
+  var original=qrPage;
+  if(typeof original!=='function')return;
+  qrPage=function(){
+    var r=original.apply(this,arguments);
+    var host=document.getElementById('qr');if(!host)return r;
+    var legacy=host.querySelector(':scope > .row');if(legacy)legacy.classList.add('qr166-old-tabs');
+    var head=document.createElement('div');head.className='qr166-head';
+    head.innerHTML='<div><h3>QR code</h3><div class="mut">Đăng ký vào / ra và điểm danh công nhân · Chờ người có quyền duyệt</div></div>';
+    host.insertBefore(head,legacy||host.firstChild);
+    var switcher=document.createElement('div');switcher.className='qr166-switch';
+    var items=[['in','↪','Đăng ký vào','Gửi hồ sơ để duyệt vào KTX'],['out','↩','Đăng ký ra','Gửi hồ sơ để duyệt ra KTX'],['att','✓','Điểm danh','Chờ quản lý duyệt Vào / Ra']];
+    items.forEach(function(it){var b=document.createElement('button');b.type='button';b.dataset.mode=it[0];b.className=selected===it[0]?'active':'';
+      var icon=document.createElement('span');icon.className='qr166-ico';icon.textContent=it[1];b.appendChild(icon);
+      var txt=document.createElement('span');txt.textContent=it[2];var sm=document.createElement('small');sm.textContent=it[3];txt.appendChild(sm);b.appendChild(txt);
+      b.onclick=function(){selected=it[0];QT='make';qrPage()};switcher.appendChild(b)});
+    host.insertBefore(switcher,legacy||host.firstChild);
+    var toolbar=document.createElement('div');toolbar.className='qr166-tools';
+    function tool(label,fn){var b=document.createElement('button');b.className='btn s sm';b.type='button';b.textContent=label;b.onclick=fn;toolbar.appendChild(b)}
+    if(can('qrApprove')){tool('Duyệt đăng ký vào',function(){QT='regin';qrPage()});tool('Duyệt đăng ký ra',function(){QT='regout';qrPage()})}
+    if(can('view'))tool('Danh sách điểm danh / Xuất Excel',function(){QT='attendance';qrPage()});
+    if(can('attendance'))tool('Xác nhận vào / ra thủ công',function(){QT='scan';qrPage()});
+    if(QT==='make'&&selected==='att'&&can('attendance'))tool('Xem yêu cầu điểm danh chờ duyệt',function(){var b=document.getElementById('qr160load');if(b)b.click()});
+    host.insertBefore(toolbar,document.getElementById('qb'));
+    if(QT==='make'){
+      var grid=host.querySelector('#qb > .g2');
+      if(grid){grid.classList.add('qr166-single');var cards=Array.from(grid.children);cards.forEach(function(card,i){card.style.display=i===({in:0,out:1,att:2}[selected])?'':'none'})}
+    }
+    return r;
+  };
+})();
+</script>
+
+<style id="step167-ledger-style">
+#ledger167{width:100%;min-width:0}
+#ledger167 .ledger167-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:12px 0}
+#ledger167 iframe{display:block;width:100%;min-height:calc(100dvh - 170px);border:1px solid #d5e3f2;border-radius:14px;background:#fff}
+</style>
+<script id="step167-ledger-script">
+(function(){
+ function init(){
+  let el=document.getElementById('ledger167');
+  if(!el){el=document.createElement('section');el.id='ledger167';el.className='hide';el.innerHTML='<div class="ledger167-head"><button type="button" class="btn s" id="ledger167Back">← Quay lại Tiện ích</button><strong>Sổ theo dõi quân số tăng/giảm</strong></div><iframe id="ledger167Frame" title="Sổ theo dõi công nhân tăng giảm" src="./so-tang-giam.html"></iframe>';document.querySelector('main').appendChild(el);el.querySelector('#ledger167Back').onclick=()=>window.go('utilhub')}
+  if(typeof T!=='undefined'&&!T.ledger167) T.ledger167=['Sổ theo dõi công nhân tăng/giảm','Ghi nhận quân số theo ngày, xuất Excel'];
+  if(typeof GN!=='undefined')GN.ledger167='Tiện ích';
+ }
+ window.addEventListener('message',e=>{
+  if(e.origin!==location.origin||e.data?.type!=='ktx-ledger-get-snapshot'||e.source!==document.getElementById('ledger167Frame')?.contentWindow)return;
+  const rows=Array.isArray(W)?W:[];
+  const male=rows.filter(w=>isNam(w.gt)).length, female=rows.filter(w=>isNu(w.gt)).length;
+  const vinAlpha=rows.filter(w=>/vin\s*alpha/i.test(String(w.unit||''))).length;
+  const staff=(typeof SUPA_SYNC!=='undefined'&&SUPA_SYNC.account?.display_name)||document.getElementById('aubName')?.textContent||'';
+  e.source.postMessage({type:'ktx-ledger-snapshot',data:{total:rows.length,male,female,vinAlpha,updater:staff.trim()}},e.origin);
+ });
+ const prevGo=window.go;
+ window.go=function(p){init();if(p==='ledger167'){
+   prevGo.call(this,'utilhub');document.getElementById('utilhub')?.classList.add('hide');
+   document.getElementById('ledger167')?.classList.remove('hide');
+   if(typeof page!=='undefined')page='ledger167';
+   document.getElementById('ttl').textContent='Sổ theo dõi công nhân tăng/giảm';
+   document.getElementById('sub').textContent='Theo dõi quân số công nhân cơ hữu tại KTX Hóc Môn';
+   window.scrollTo(0,0);return;
+  }
+  document.getElementById('ledger167')?.classList.add('hide');
+  return prevGo.apply(this,arguments);
+ };
+})();
+</script>
 </html>

@@ -1,8 +1,8 @@
-const CACHE_NAME = 'ktx-hoc-mon-STEP162-meal-utilhub';
+const CACHE_NAME = 'ktx-hoc-mon-STEP167-ledger';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
-  './qr-form.html', './attendance-form.html', './cccd-scan.js', './qr-config.js', './bien-ban-su-vu.html'
+  './so-tang-giam.html', './qr-form.html', './attendance-form.html', './cccd-scan.js', './qr-config.js', './bien-ban-su-vu.html'
 ];
 
 self.addEventListener('install', event => {
