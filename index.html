@@ -4416,6 +4416,26 @@ function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)retu
  window.addEventListener('DOMContentLoaded',init);
 })();
 </script>
+
+<style id="step155-sidebar-full-column">
+/* STEP155: sidebar full-height, anchored bottom auth bar, no visible sidebar scrollbar */
+@media (min-width:861px){
+  html,body{height:100%!important;min-height:100dvh!important}
+  body{display:flex!important;flex-direction:row!important;align-items:stretch!important;min-height:100dvh!important}
+  body>nav{align-self:stretch!important;position:sticky!important;top:0!important;left:0!important;height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;padding:0!important;margin:0!important}
+  body>nav>.brand{flex:0 0 auto!important}
+  body>nav>#step146NavScroll{flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;padding:2px 0 10px!important;margin:0!important;scrollbar-width:none!important;-ms-overflow-style:none!important}
+  body>nav>#step146NavScroll::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+  body>nav>#authUserbar{position:static!important;order:99!important;flex:0 0 auto!important;margin-top:auto!important;margin-left:8px!important;margin-right:8px!important;margin-bottom:8px!important;width:auto!important;max-width:none!important;left:auto!important;right:auto!important;bottom:auto!important;box-sizing:border-box!important;z-index:5!important}
+  body>nav>#authUserbar #aubOut{margin-bottom:0!important}
+  body>nav>#ft{display:none!important}
+  body>main{min-height:100dvh!important}
+}
+@media (max-width:860px){
+  body>nav{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
+}
+</style>
+
 </body>
 <style id="step131SystemGroupPackingStyle">
 /* STEP131 — các cụm hệ thống bám sát từ trái sang phải, chỉ xuống hàng khi hết chiều ngang */
@@ -5169,6 +5189,26 @@ setTimeout(init,700);
 })();
 
 </script>
+
+<style id="step155-sidebar-full-column">
+/* STEP155: sidebar full-height, anchored bottom auth bar, no visible sidebar scrollbar */
+@media (min-width:861px){
+  html,body{height:100%!important;min-height:100dvh!important}
+  body{display:flex!important;flex-direction:row!important;align-items:stretch!important;min-height:100dvh!important}
+  body>nav{align-self:stretch!important;position:sticky!important;top:0!important;left:0!important;height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;padding:0!important;margin:0!important}
+  body>nav>.brand{flex:0 0 auto!important}
+  body>nav>#step146NavScroll{flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;padding:2px 0 10px!important;margin:0!important;scrollbar-width:none!important;-ms-overflow-style:none!important}
+  body>nav>#step146NavScroll::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+  body>nav>#authUserbar{position:static!important;order:99!important;flex:0 0 auto!important;margin-top:auto!important;margin-left:8px!important;margin-right:8px!important;margin-bottom:8px!important;width:auto!important;max-width:none!important;left:auto!important;right:auto!important;bottom:auto!important;box-sizing:border-box!important;z-index:5!important}
+  body>nav>#authUserbar #aubOut{margin-bottom:0!important}
+  body>nav>#ft{display:none!important}
+  body>main{min-height:100dvh!important}
+}
+@media (max-width:860px){
+  body>nav{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
+}
+</style>
+
 </body>
 
 <style id="step129SystemLayoutStyle">
