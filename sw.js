@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ktx-hoc-mon-step150-password-min6';
+const CACHE_NAME = 'ktx-hoc-mon-step151-attendance-sidebar';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
