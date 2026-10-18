@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ktx-hoc-mon-pwa-step137-spacing-sidebar';
+const CACHE_NAME = 'ktx-hoc-mon-pwa-step139';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',

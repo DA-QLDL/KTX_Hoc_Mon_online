@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ký túc xá Hóc Môn</title>
-<meta name="app-version" content="KTX-STEP137-SIDEBAR-SPACING">
+<meta name="app-version" content="KTX-STEP138-RESIDENCE-UTILITY-HUB">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -672,7 +672,7 @@ table{font-size:12.8px!important}th{font-size:11.5px!important;font-weight:700!i
     <button data-p="home" class="on"><svg class="i"><use href="#i-home"/></svg>Tổng quan</button>
     <button data-p="work"><svg class="i"><use href="#i-users"/></svg>Quản lý công nhân <span class="pill" id="np">0</span></button>
     <button data-p="meal"><svg class="i"><use href="#i-log"/></svg>Báo cáo suất ăn</button>
-    <button data-p="t6"><svg class="i"><use href="#i-id"/></svg>Tạm trú tạm vắng</button>
+    <button data-p="t6"><svg class="i"><use href="#i-id"/></svg>Đăng ký tạm trú</button>
     <button data-p="qr"><svg class="i"><use href="#i-qr"/></svg>Mã QR · Điểm danh</button>
     <button data-p="arc"><svg class="i"><use href="#i-out"/></svg>Điều chuyển · Nghỉ việc</button>
     <button data-p="reports"><svg class="i"><use href="#i-dl"/></svg>Trung tâm báo cáo</button>
@@ -2554,7 +2554,7 @@ function enforceSystemHubSidebar(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',enforceSystemHubSidebar,{once:true});else enforceSystemHubSidebar();
 setTimeout(enforceSystemHubSidebar,300);
-const T={sysfunc:['Chức năng hệ thống','Tất cả công cụ quản trị, đồng bộ, giám sát và bảo trì trong một trang'],alerts:['Trung tâm cảnh báo','Các vấn đề cần xử lý trong dữ liệu KTX'],reports:['Trung tâm báo cáo','Báo cáo ngày, tuần, tháng và các báo cáo quản trị KTX'],home:['Tổng quan','Trung tâm dữ liệu và vận hành ký túc xá'],meal:['Báo cáo suất ăn','Tạo báo cáo suất ăn theo buổi sáng, trưa, chiều từ thực đơn nhà cung cấp'],work:['Quản lý công nhân','Tìm kiếm, lọc, thêm, sửa, xóa, import/export'],log:['Nhật ký hệ thống','Lịch sử thao tác'],activity:['Hoạt động người dùng','Theo dõi thao tác quan trọng theo từng tài khoản và thời gian'],adminboard:['Dashboard quản trị','Tổng hợp sức khỏe hệ thống, đồng bộ, backup, cảnh báo dữ liệu và hoạt động người dùng'],access:['Phân quyền & truy cập','Ma trận quyền, phạm vi phụ trách và cảnh báo cấu hình truy cập'],incidents:['Trung tâm sự cố','Lỗi đồng bộ, import, PWA và lỗi ứng dụng theo thời gian'],security:['Phiên đăng nhập & bảo mật','Theo dõi phiên hiện tại, hoạt động tài khoản và các dấu hiệu cần rà soát'],opsboard:['Dashboard vận hành','Tình hình KTX trong ngày và các đầu việc cần xử lý'],reportauto:['Báo cáo định kỳ','Lưu chốt số liệu ngày, tuần và tháng khi ứng dụng hoạt động'],standards:['Chuẩn hóa dữ liệu','Rà soát và chuẩn hóa định dạng dữ liệu an toàn'],maintenance:['Bảo trì & lưu trữ','Dọn dữ liệu cũ và giữ ứng dụng nhẹ theo thời gian'],qa:['Nghiệm thu Production','Checklist kiểm thử và trạng thái sẵn sàng vận hành'],release:['Phát hành v1.0','Thông tin bản phát hành chính thức và hướng dẫn vận hành'],t2:['Lọc trùng','Tự động quét trùng trong danh sách công nhân hiện tại, có thể thêm file khác để so sánh'],t3:['Tách địa chỉ','Tách cột Tỉnh/TP thành Thôn, Xã, Huyện, Tỉnh'],t4:['Gộp địa chỉ','Gộp các phần thành một địa chỉ'],t5:['PDF → ảnh','Chuyển file PDF thành ảnh PNG/JPG'],t6:['Tạm trú tạm vắng','Theo dõi khai báo tạm trú và công nhân tạm vắng'],qr:['Mã QR · Đăng ký vào/ra','Tạo mã QR, duyệt đăng ký vào KTX và duyệt đăng ký ra khỏi KTX'],acc:['Quản lý tài khoản','Tài khoản nhân viên, vai trò, phạm vi phụ trách và dữ liệu dùng chung'],backup:['Sao lưu dữ liệu','Sao lưu thủ công, tự động hàng ngày và khôi phục dữ liệu'],sync:['Đồng bộ Supabase','Đồng bộ dữ liệu thật giữa nhiều máy qua Supabase'],health:['Sức khỏe hệ thống','Kiểm tra nhanh kết nối, đồng bộ, backup, PWA và dung lượng trình duyệt'],dataaudit:['Kiểm tra toàn bộ dữ liệu','Quét chất lượng dữ liệu, trùng lặp, phòng và trạng thái cư trú'],safety:['An toàn dữ liệu','Chống xóa nhầm, tạo điểm khôi phục trước thao tác lớn'],arc:['Điều chuyển · Nghỉ việc','Danh sách theo dõi công nhân đã điều chuyển, nghỉ việc hoặc chuyển ra ngoài ở (đã chuyển khỏi danh sách chính)'],t7:['Lưu trữ tài liệu','Lưu và quản lý hợp đồng, công văn, biên bản và các tài liệu khác']};
+const T={sysfunc:['Chức năng hệ thống','Tất cả công cụ quản trị, đồng bộ, giám sát và bảo trì trong một trang'],alerts:['Trung tâm cảnh báo','Các vấn đề cần xử lý trong dữ liệu KTX'],reports:['Trung tâm báo cáo','Báo cáo ngày, tuần, tháng và các báo cáo quản trị KTX'],home:['Tổng quan','Trung tâm dữ liệu và vận hành ký túc xá'],meal:['Báo cáo suất ăn','Tạo báo cáo suất ăn theo buổi sáng, trưa, chiều từ thực đơn nhà cung cấp'],work:['Quản lý công nhân','Tìm kiếm, lọc, thêm, sửa, xóa, import/export'],log:['Nhật ký hệ thống','Lịch sử thao tác'],activity:['Hoạt động người dùng','Theo dõi thao tác quan trọng theo từng tài khoản và thời gian'],adminboard:['Dashboard quản trị','Tổng hợp sức khỏe hệ thống, đồng bộ, backup, cảnh báo dữ liệu và hoạt động người dùng'],access:['Phân quyền & truy cập','Ma trận quyền, phạm vi phụ trách và cảnh báo cấu hình truy cập'],incidents:['Trung tâm sự cố','Lỗi đồng bộ, import, PWA và lỗi ứng dụng theo thời gian'],security:['Phiên đăng nhập & bảo mật','Theo dõi phiên hiện tại, hoạt động tài khoản và các dấu hiệu cần rà soát'],opsboard:['Dashboard vận hành','Tình hình KTX trong ngày và các đầu việc cần xử lý'],reportauto:['Báo cáo định kỳ','Lưu chốt số liệu ngày, tuần và tháng khi ứng dụng hoạt động'],standards:['Chuẩn hóa dữ liệu','Rà soát và chuẩn hóa định dạng dữ liệu an toàn'],maintenance:['Bảo trì & lưu trữ','Dọn dữ liệu cũ và giữ ứng dụng nhẹ theo thời gian'],qa:['Nghiệm thu Production','Checklist kiểm thử và trạng thái sẵn sàng vận hành'],release:['Phát hành v1.0','Thông tin bản phát hành chính thức và hướng dẫn vận hành'],t2:['Lọc trùng','Tự động quét trùng trong danh sách công nhân hiện tại, có thể thêm file khác để so sánh'],t3:['Tách địa chỉ','Tách cột Tỉnh/TP thành Thôn, Xã, Huyện, Tỉnh'],t4:['Gộp địa chỉ','Gộp các phần thành một địa chỉ'],t5:['PDF → ảnh','Chuyển file PDF thành ảnh PNG/JPG'],t6:['Đăng ký tạm trú','Theo dõi tình trạng và ngày đăng ký tạm trú của công nhân'],qr:['Mã QR · Đăng ký vào/ra','Tạo mã QR, duyệt đăng ký vào KTX và duyệt đăng ký ra khỏi KTX'],acc:['Quản lý tài khoản','Tài khoản nhân viên, vai trò, phạm vi phụ trách và dữ liệu dùng chung'],backup:['Sao lưu dữ liệu','Sao lưu thủ công, tự động hàng ngày và khôi phục dữ liệu'],sync:['Đồng bộ Supabase','Đồng bộ dữ liệu thật giữa nhiều máy qua Supabase'],health:['Sức khỏe hệ thống','Kiểm tra nhanh kết nối, đồng bộ, backup, PWA và dung lượng trình duyệt'],dataaudit:['Kiểm tra toàn bộ dữ liệu','Quét chất lượng dữ liệu, trùng lặp, phòng và trạng thái cư trú'],safety:['An toàn dữ liệu','Chống xóa nhầm, tạo điểm khôi phục trước thao tác lớn'],arc:['Điều chuyển · Nghỉ việc','Danh sách theo dõi công nhân đã điều chuyển, nghỉ việc hoặc chuyển ra ngoài ở (đã chuyển khỏi danh sách chính)'],t7:['Lưu trữ tài liệu','Lưu và quản lý hợp đồng, công văn, biên bản và các tài liệu khác']};
 function syncTopActions(){const ids=['xt','fxb','undoImport','xw','aw','xr','bs','bn','mnb2','wd','ds2','dsall','gk','imode'];if(page=='home'){ids.forEach(id=>{const e=$(id);if(e)e.classList.toggle('hide',!['fxb','xw','xr','gk'].includes(id))});if($('gk')){$('gk').classList.add('home-ktx-select')}}else if(page=='work'){ids.forEach(id=>{const e=$(id);if(e)e.classList.toggle('hide',['gk'].includes(id))});if($('gk'))$('gk').classList.remove('home-ktx-select')}}
 function all(){pill();const fnName={home:'home',sysfunc:null,alerts:'alertCenterPage',reports:'managementReportsPage',meal:'mealPage',work:'work',log:'logp',activity:'userActivityPage',adminboard:'adminDashboardPage',access:'accessControlPage',incidents:'incidentCenterPage',security:'securityPage',opsboard:'opsBoardPage',reportauto:'reportAutoPage',standards:'standardsPage',maintenance:'maintenancePage',qa:'qaPage',release:'releasePage',t6:'tttv',t7:'docsPage',arc:'arcPage',acc:'accPage',backup:'backupPage',sync:'syncPage',health:'systemHealthPage',dataaudit:'dataAuditPage',safety:'safetyPage',qr:'qrPage'}[page];const f=fnName&&window[fnName];if(typeof f==='function')f();if(window.DEDUP_ON&&$('go')&&$('go').onclick)$('go').onclick();if(typeof applyPerms==='function')applyPerms();if(typeof syncTopActions==='function')syncTopActions();if(typeof updateAlertBadges==='function')updateAlertBadges();if(page!='qr'&&typeof QCAM!=='undefined'&&QCAM&&typeof camStop==='function')camStop()}
 const GN={sysfunc:'Hệ thống',alerts:'Hệ thống',reports:'Ký túc xá',home:'Ký túc xá',meal:'Ký túc xá',work:'Ký túc xá',t6:'Ký túc xá',t2:'Tiện ích',t3:'Tiện ích',t4:'Tiện ích',t5:'Tiện ích',log:'Hệ thống',activity:'Hệ thống',adminboard:'Hệ thống',access:'Hệ thống',incidents:'Hệ thống',security:'Hệ thống',opsboard:'Hệ thống',reportauto:'Hệ thống',standards:'Hệ thống',maintenance:'Hệ thống',qa:'Hệ thống',release:'Hệ thống',acc:'Hệ thống',backup:'Hệ thống',sync:'Hệ thống',health:'Hệ thống',dataaudit:'Hệ thống',safety:'Hệ thống',qr:'Ký túc xá',arc:'Ký túc xá',t7:'Tiện ích'};
@@ -5694,4 +5694,100 @@ nav .auth-userbar button,nav .user-card button{background:#fff!important;color:#
 @media(max-width:600px){main{padding-left:12px!important;padding-right:12px!important}#work .worker-panel,#meal>.card,#t6>.card,#reports>.card,#qr .card{padding:12px!important}.top{padding-top:13px!important}#reports .rc96-controls{grid-template-columns:1fr!important}}
 </style>
 
+
+<style id="step138-layout">
+/* STEP138: bốn nhóm hệ thống trên một hàng, tự thu nhỏ để không rơi hàng ở desktop */
+@media(min-width:861px){
+ #sysfunc .sysfunc-wrap{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;align-items:start!important}
+ #sysfunc .sysfunc-intro,#sysfunc .sysfunc-footer{grid-column:1/-1!important;flex-basis:auto!important;width:100%!important}
+ #sysfunc .sysfunc-group,#sysfunc .sysfunc-group:nth-of-type(n){min-width:0!important;width:100%!important;max-width:100%!important;flex-basis:auto!important;margin:0!important;padding:10px!important}
+ #sysfunc .sysfunc-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ #sysfunc .sysfunc-btn{min-width:0!important;padding:7px 6px!important;gap:5px!important}
+ #sysfunc .sysfunc-btn .sficon{width:23px!important;height:23px!important;flex-basis:23px!important}
+ #sysfunc .sysfunc-btn b{font-size:9.5px!important;white-space:normal!important;overflow-wrap:anywhere!important}
+}
+@media(max-width:860px) and (min-width:521px){#sysfunc .sysfunc-group{width:calc(50% - 6px)!important;min-width:0!important;flex-basis:calc(50% - 6px)!important}}
+/* Tiện ích: Back hiển thị trên từng trang công cụ */
+#step138UtilBack{display:flex;align-items:center;gap:7px;margin:0 0 12px;padding:8px 13px;border:1px solid #b9cee9;background:#fff;color:#245d9f;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;box-shadow:0 2px 7px #173d6510}
+#step138UtilBack:hover{background:#eef5ff;border-color:#75a8ed}
+/* Tạm trú: bỏ phần chỉ số Tạm vắng, dàn đều ba chỉ số còn lại */
+#t6>.g4{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#t6>.g4>.card:last-child:nth-child(4){display:none!important}
+#t6 button[data-tb]{display:none!important}
+#t6 #tn{margin-left:0!important}
+#t6 .tt-pill-yes,#t6 .tt-yes{color:#087d4a!important;background:#ddf6e8!important;border:1px solid #91d7b0!important;border-radius:999px!important}
+#t6 .tt-pill-no,#t6 .tt-no{color:#b35d06!important;background:#fff0d4!important;border:1px solid #f2cc86!important;border-radius:999px!important}
+@media(max-width:650px){#t6>.g4{grid-template-columns:1fr!important}}
+</style>
+<script id="step138-flow">
+(function(){
+ const utilities=new Set(['t2','t5','t7']);
+ function refreshUtilBack(){
+  const old=document.getElementById('step138UtilBack');if(old)old.remove();
+  if(!utilities.has(window.page||page))return;
+  const section=document.getElementById(page);if(!section||section.classList.contains('hide'))return;
+  const b=document.createElement('button');b.id='step138UtilBack';b.type='button';b.textContent='← Quay lại Tiện ích';
+  b.onclick=function(){window.go('utilhub')};
+  section.insertBefore(b,section.firstChild);
+ }
+ function refreshResidence(){
+  const side=document.querySelector('nav button[data-p="t6"]');if(side)side.innerHTML=side.innerHTML.replace(/Tạm trú tạm vắng|Tạm trú · Tạm vắng/g,'Đăng ký tạm trú');
+  if(typeof T!=='undefined')T.t6=['Đăng ký tạm trú','Theo dõi tình trạng và ngày đăng ký tạm trú của công nhân'];
+  if(typeof TS!=='undefined'&&TS.tab!=='tt'){TS.tab='tt';TS.f='';TS.sel.clear()}
+  if(page==='t6'){
+   const title=document.getElementById('ttl'),desc=document.getElementById('sub');
+   if(title)title.textContent='Đăng ký tạm trú';if(desc)desc.textContent='Theo dõi tình trạng và ngày đăng ký tạm trú của công nhân';
+  }
+ }
+ const previousGo=window.go;
+ window.go=function(p){
+  if(p==='t6'&&typeof TS!=='undefined'){TS.tab='tt';TS.f='';}
+  const result=previousGo.apply(this,arguments);
+  refreshResidence();refreshUtilBack();return result;
+ };
+ if(typeof window.tttv==='function'){
+  const prevResidence=window.tttv;
+  window.tttv=function(){if(typeof TS!=='undefined')TS.tab='tt';const result=prevResidence.apply(this,arguments);refreshResidence();return result};
+ }
+ document.addEventListener('DOMContentLoaded',()=>{refreshResidence();refreshUtilBack()});
+ window.addEventListener('load',()=>{refreshResidence();refreshUtilBack()});
+})();
+</script>
+
+
+<style id="step139-room-filter-fix">
+/* STEP139: phòng không khớp lọc phải thật sự ẩn, kể cả khi CSS gốc dùng display:flex!important */
+#home .room-cell.ktx-room-filter-hidden{display:none!important}
+#home .room-day.ktx-room-filter-empty{display:none!important}
+#home details.kd.ktx-room-filter-empty{display:none!important}
+#home .room-filterbar [data-rf].on{background:#2576e9!important;color:white!important;border-color:#2576e9!important;box-shadow:0 4px 12px #2576e930!important}
+#home .room-filter-empty-message{padding:14px 16px;margin-top:10px;border:1px dashed #b7cbed;border-radius:10px;color:#516a8e;background:#f8fbff;font-size:12px}
+</style>
+<script id="step139-room-filter-fix-script">
+(function(){
+  function updateRoomFilter139(){
+    const root=document.getElementById('home');if(!root)return;
+    const mode=typeof ROOM_FILTER!=='undefined'?ROOM_FILTER:'all';
+    root.querySelectorAll('.room-filterbar [data-rf]').forEach(b=>{const active=b.dataset.rf===mode;b.classList.toggle('on',active);b.setAttribute('aria-pressed',String(active))});
+    let visible=0;
+    root.querySelectorAll('.room-cell[data-k][data-d][data-r]').forEach(c=>{
+      const k=c.dataset.k,d=c.dataset.d,r=c.dataset.r;
+      const count=W.reduce((n,w)=>n+(K(w)===k&&D(w)===d&&String(R(w))===String(r)?1:0),0);
+      const spare=Math.max(0,CAP-count);
+      const show=mode==='all'||mode==='free5'&&spare>=5||mode==='low'&&spare>=1&&spare<=3||mode==='full'&&count===CAP||mode==='over'&&count>CAP;
+      c.classList.toggle('ktx-room-filter-hidden',!show);
+      if(show)visible++;
+    });
+    root.querySelectorAll('.room-day').forEach(d=>d.classList.toggle('ktx-room-filter-empty',!d.querySelector('.room-cell:not(.ktx-room-filter-hidden)')));
+    root.querySelectorAll('details.kd').forEach(d=>d.classList.toggle('ktx-room-filter-empty',!d.querySelector('.room-day:not(.ktx-room-filter-empty)')));
+    let msg=root.querySelector('.room-filter-empty-message');
+    if(!visible&&root.querySelector('.room-filterbar')){
+      if(!msg){msg=document.createElement('div');msg.className='room-filter-empty-message';root.querySelector('.roommap-card')?.appendChild(msg)}
+      msg.textContent='Không có phòng phù hợp với bộ lọc đã chọn. Vui lòng chọn “Tất cả” hoặc bộ lọc khác.';
+    }else if(msg)msg.remove();
+  }
+  // Giữ nguyên trình xử lý ban đầu, chỉ nâng cấp cách ẩn và trạng thái rỗng.
+  window.applyRoomFilter73=updateRoomFilter139;
+})();
+</script>
 </html>
