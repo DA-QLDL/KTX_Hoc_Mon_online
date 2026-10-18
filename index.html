@@ -3835,7 +3835,7 @@ async function pwaInstall(){if(pwaStandalone())return pwaOpenInstall();if(!PWA_P
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();PWA_PROMPT=e;pwaUpdateUI()});
 window.addEventListener('appinstalled',()=>{PWA_PROMPT=null;pwaUpdateUI();if($('pwaInstallDlg')&&$('pwaInstallDlg').open)$('pwaInstallDlg').close()});
 if($('pwaInstallNav'))$('pwaInstallNav').onclick=pwaOpenInstall;if($('pwaInstallGo'))$('pwaInstallGo').onclick=pwaInstall;if($('pwaInstallClose'))$('pwaInstallClose').onclick=()=>$('pwaInstallDlg').close();
-if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=109',{scope:'./'});reg.update().catch(()=>{})}catch(e){console.warn('PWA service worker:',e)}pwaUpdateUI();const lp=new URLSearchParams(location.search).get('page');if(['home','work','meal','t6','qr','arc','reports'].includes(lp)){setTimeout(()=>{try{go(lp)}catch(e){}},350)}});
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',async()=>{try{const reg=await navigator.serviceWorker.register('./sw.js?v=140',{scope:'./'});reg.update().catch(()=>{})}catch(e){console.warn('PWA service worker:',e)}pwaUpdateUI();const lp=new URLSearchParams(location.search).get('page');if(['home','work','meal','t6','qr','arc','reports'].includes(lp)){setTimeout(()=>{try{go(lp)}catch(e){}},350)}});
 else window.addEventListener('load',pwaUpdateUI);
 setTimeout(()=>{updateAlertBadges();if(page==='home')home();pwaUpdateUI()},80);
 </script>
@@ -5788,6 +5788,92 @@ nav .auth-userbar button,nav .user-card button{background:#fff!important;color:#
   }
   // Giữ nguyên trình xử lý ban đầu, chỉ nâng cấp cách ẩn và trạng thái rỗng.
   window.applyRoomFilter73=updateRoomFilter139;
+})();
+</script>
+<style id="step140-ui">
+/* STEP140 — KTX modern enterprise authentication & accounts */
+#authHubGate.auth-gate2{background:radial-gradient(circle at 50% 5%,#dae9ff,#eff5fd 58%,#e6eef9)!important;padding:20px!important}
+#authHubGate .auth-card2{max-width:420px!important;width:min(420px,95vw)!important;border-radius:19px!important;padding:28px 30px 24px!important;border:1px solid #d6e3f4!important;box-shadow:0 24px 76px #18396425!important;background:#fff!important}
+#authHubGate .auth-brand2{margin-bottom:12px!important;gap:13px!important}
+#authHubGate .auth-logo2{width:48px!important;height:48px!important;border-radius:13px!important;background:linear-gradient(145deg,#267beb,#165bd0)!important;color:#fff!important}
+#authHubGate .auth-brand2 h2{font-size:18px!important;font-weight:850!important}
+#authHubGate .auth-card2 .mut{font-size:11px!important}
+#authHubGate .auth-tabs2{margin:15px 0!important;gap:7px!important;border-bottom:1px solid #e7eef7!important;padding-bottom:11px!important}
+#authHubGate .auth-tabs2 button{flex:1!important;font-size:11px!important;background:#f8fbff!important;border:1px solid #d7e3f4!important;padding:10px 7px!important;color:#526782!important;border-radius:9px!important}
+#authHubGate .auth-tabs2 button.on{color:#fff!important;background:#246bdf!important;border-color:#246bdf!important;box-shadow:0 5px 13px #246bdf26!important}
+#authHubGate .auth-field2{margin:12px 0!important}
+#authHubGate .auth-field2 input{width:100%!important;height:44px!important;background:#fcfdff!important;padding:0 12px!important;border:1px solid #d3dfef!important;border-radius:10px!important}
+#authHubGate .auth-mainbtn2{height:45px!important;background:#246bdf!important;color:#fff!important;border:1px solid #246bdf!important;border-radius:10px!important;font-weight:800!important;box-shadow:0 6px 16px #246bdf30!important}
+#authHubGate .auth-mainbtn2:hover{background:#185bc8!important;color:#fff!important}
+#authHubGate .auth-foot2{text-align:center!important;font-size:10px!important}
+#authHubGate .auth-intro140{margin:10px 0 4px;color:#697e99;font-size:11px;line-height:1.55}
+#authHubGate .auth-login-title140{font-size:20px;color:#1b3152;font-weight:850}
+#authHubGate .auth-eye140{position:absolute;right:8px;top:28px;background:transparent;border:0;color:#7387a2;padding:7px;cursor:pointer}
+#authHubGate .auth-field2.auth-pass140{position:relative}
+#authHubGate .auth-pass140 input{padding-right:50px!important}
+#authHubGate .auth-forgot140{display:block;border:0;background:none;color:#236bd7;font-size:11px;font-weight:750;text-align:right;margin:2px 0 10px auto;cursor:pointer}
+#acc .ac140-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-bottom:14px}
+#acc .ac140-stat{background:#fff;border:1px solid #dce6f3;border-radius:13px;padding:13px 15px;box-shadow:0 4px 14px #2350870d}
+#acc .ac140-stat small{display:block;font-size:10px;color:#7689a4;font-weight:800;text-transform:uppercase}#acc .ac140-stat strong{display:block;font-size:24px;color:#1d3b65}
+#acc .ac140-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+#acc .ac140-search{display:grid;grid-template-columns:minmax(180px,1fr) 160px 145px auto;gap:8px;margin-bottom:10px}
+#acc .ac140-search input,#acc .ac140-search select{width:100%;height:39px;border:1px solid #d7e2f0;border-radius:9px;background:#fff;padding:8px 11px;font:inherit;font-size:12px}
+#acc .ac140-table{width:100%;min-width:740px;border-collapse:collapse}#acc .ac140-table th{text-align:left;background:#f6f9fe;color:#5b7292;font-size:10px;padding:11px}#acc .ac140-table td{white-space:normal;padding:11px;color:#2d4464;font-size:11px;border-bottom:1px solid #eaf0f7}
+#acc .ac140-table td small{display:block;color:#8493aa;font-size:9.5px;margin-top:3px}
+#acc .ac140-badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:800;background:#e6f8ee;color:#128750;border:1px solid #b9e8cc}
+#acc .ac140-badge.off{background:#fff0f1;border-color:#f2cbd0;color:#b84456}
+#acc .ac140-pill{display:inline-block;background:#edf4ff;color:#255fae;padding:5px 8px;border-radius:8px;font-weight:700;font-size:10px}
+#acc .ac140-request{display:grid;grid-template-columns:minmax(130px,1fr) 160px 125px auto;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #e6edf5}
+#acc .ac140-request small{color:#71839d}
+#acc .ac140-modal{border:0;border-radius:16px;padding:0;width:min(590px,95vw);max-height:90vh;box-shadow:0 20px 75px #12284755}
+#acc .ac140-modal::backdrop{background:#12243b95}
+#acc .ac140-modal-head{padding:17px 21px;border-bottom:1px solid #e4eaf3;display:flex;align-items:center;justify-content:space-between}
+#acc .ac140-modal-body{padding:17px 21px;overflow:auto;max-height:62vh}
+#acc .ac140-modal-foot{display:flex;gap:8px;justify-content:flex-end;padding:14px 21px;border-top:1px solid #e4eaf3}
+#acc .ac140-fields{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+#acc .ac140-fields label{display:grid;gap:5px;white-space:normal;color:#61748e;font-size:11px}
+#acc .ac140-fields input,#acc .ac140-fields select{min-height:40px;width:100%;border:1px solid #d7e3f1;border-radius:9px;background:#fff;padding:8px 10px}
+#acc .ac140-perms{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;background:#f8fbff;border:1px solid #e2eaf4;padding:12px;border-radius:11px;margin-top:13px;font-size:11px}
+#acc .ac140-perms label{white-space:normal;margin:0;display:flex;align-items:center;gap:7px}
+#acc .ac140-perms input{accent-color:#246bdf}
+@media(max-width:800px){#acc .ac140-stats{grid-template-columns:repeat(2,1fr)}#acc .ac140-search{grid-template-columns:1fr 1fr}}
+@media(max-width:530px){#acc .ac140-search,#acc .ac140-fields,#acc .ac140-perms{grid-template-columns:1fr}#acc .ac140-request{grid-template-columns:1fr 1fr}#authHubGate .auth-card2{padding:22px!important}}
+</style>
+<script id="step140-behavior">
+(function(){
+ function enhanceGate(){
+   const card=document.querySelector('#authHubGate .auth-card2');if(!card||card.dataset.step140)return;
+   card.dataset.step140='1';
+   const tabs=card.querySelector('.auth-tabs2');if(tabs){tabs.insertAdjacentHTML('beforebegin','<div class="auth-login-title140">Đăng nhập hệ thống</div><div class="auth-intro140">Vui lòng xác thực để truy cập các chức năng được phân quyền của KTX Hóc Môn.</div>');}
+   const pass=document.getElementById('ahPass');if(pass){pass.closest('label').classList.add('auth-pass140');const btn=document.createElement('button');btn.type='button';btn.className='auth-eye140';btn.textContent='Hiện';btn.setAttribute('aria-label','Hiện hoặc ẩn mật khẩu');btn.onclick=()=>{pass.type=pass.type==='password'?'text':'password';btn.textContent=pass.type==='password'?'Hiện':'Ẩn'};pass.closest('label').append(btn)}
+   const login=document.getElementById('ahLogin');if(login&&!document.getElementById('authForgot140')){let btn=document.createElement('button');btn.type='button';btn.id='authForgot140';btn.className='auth-forgot140';btn.textContent='Quên mật khẩu?';btn.onclick=async()=>{const email=(document.getElementById('ahEmail')?.value||'').trim();const msg=document.getElementById('ahMsg');if(!email){msg.textContent='Vui lòng nhập email trước khi yêu cầu đặt lại mật khẩu.';return}try{const sb=syncClient();if(!sb){msg.textContent='Chưa cấu hình Supabase';return}const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});msg.textContent=error?'Không thể gửi yêu cầu: '+error.message:'Nếu email tồn tại, hướng dẫn đặt lại mật khẩu sẽ được gửi tới hộp thư.'}catch(e){msg.textContent='Lỗi: '+e.message}};login.insertBefore(btn,document.getElementById('ahLoginBtn'))}
+ }
+ function esc140(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+ let selection=null;
+ window.accPage=async function(){
+  const el=document.getElementById('acc');if(!el)return;if(!can('acct')){el.innerHTML='<div class="card">Chỉ Quản trị được quản lý tài khoản.</div>';return}
+  await authLoadAdminData();const accounts=AUTHC.accounts||[], reqs=(AUTHC.requests||[]).filter(r=>r.status==='pending');
+  const q=window.__ac140Q||'', role=window.__ac140Role||'', stat=window.__ac140State||'';
+  const filtered=accounts.filter(a=>(!q||[a.display_name,a.email,a.role,(a.ktx||[]).join(' '),(a.days||[]).join(' ')].join(' ').toLowerCase().includes(q.toLowerCase()))&&(!role||a.role===role)&&(!stat||(stat==='active'&&a.enabled)||(stat==='locked'&&!a.enabled)));
+  const byid=id=>accounts.find(a=>String(a.user_id)===String(id));
+  el.innerHTML=`<div class="ac140-stats"><div class="ac140-stat"><small>Tổng tài khoản</small><strong>${accounts.length}</strong></div><div class="ac140-stat"><small>Đang hoạt động</small><strong>${accounts.filter(a=>a.enabled).length}</strong></div><div class="ac140-stat"><small>Đã khóa</small><strong>${accounts.filter(a=>!a.enabled).length}</strong></div><div class="ac140-stat"><small>Chờ duyệt</small><strong>${reqs.length}</strong></div></div>
+  <div class="card"><div class="ac140-top"><div><h3 style="margin:0">Tài khoản người dùng</h3><p class="mut" style="font-size:11px;margin:3px 0 0">Quản lý vai trò, phạm vi phụ trách và trạng thái kích hoạt.</p></div><button class="btn" id="ac140Create">+ Tạo / yêu cầu tài khoản</button></div>
+  <div class="ac140-search"><input id="ac140Q" placeholder="Tìm họ tên, email, KTX, Dãy..." value="${esc140(q)}"><select id="ac140Role"><option value="">Tất cả vai trò</option>${Object.entries(ROLES).map(([id,n])=>`<option value="${esc140(id)}" ${id===role?'selected':''}>${esc140(n)}</option>`).join('')}</select><select id="ac140State"><option value="">Tất cả trạng thái</option><option value="active" ${stat==='active'?'selected':''}>Đang hoạt động</option><option value="locked" ${stat==='locked'?'selected':''}>Đã khóa</option></select><button class="btn s" id="ac140Refresh">Làm mới</button></div>
+  <div class="wrap"><table class="ac140-table"><thead><tr><th>NGƯỜI DÙNG</th><th>VAI TRÒ</th><th>PHẠM VI</th><th>TRẠNG THÁI</th><th>THAO TÁC</th></tr></thead><tbody>${filtered.map(a=>`<tr><td><b>${esc140(a.display_name||a.email)}</b><small>${esc140(a.email)}</small></td><td><span class="ac140-pill">${esc140(ROLES[a.role]||a.role)}</span></td><td>${esc140((a.ktx||[]).join(', ')||'Tất cả KTX')}<small>${esc140((a.days||[]).join(', ')||'Tất cả Dãy')}</small></td><td><span class="ac140-badge ${a.enabled?'':'off'}">${a.enabled?'Hoạt động':'Đã khóa'}</span></td><td><button class="btn s sm" data-ac140-edit="${esc140(a.user_id)}">Chỉnh sửa</button></td></tr>`).join('')||'<tr><td colspan="5">Không tìm thấy tài khoản phù hợp.</td></tr>'}</tbody></table></div></div>
+  <div class="card"><h3>Yêu cầu cấp quyền chờ duyệt (${reqs.length})</h3>${reqs.map(r=>`<div class="ac140-request" data-req="${esc140(r.user_id)}"><div><b>${esc140(r.display_name||r.email)}</b><small style="display:block">${esc140(r.email)}</small></div><select data-req-role>${Object.entries(ROLES).map(([k,v])=>`<option value="${k}" ${k==='viewer'?'selected':''}>${esc140(v)}</option>`).join('')}</select><small>${r.requested_at?new Date(r.requested_at).toLocaleString('vi-VN'):'—'}</small><div class="row"><button class="btn sm" data-ac140-approve>Duyệt</button><button class="btn s sm" data-ac140-reject>Từ chối</button></div></div>`).join('')||'<p class="mut">Không có yêu cầu chờ duyệt.</p>'}</div>
+  <dialog class="ac140-modal" id="ac140Modal"><div class="ac140-modal-head"><h3 style="margin:0">Chỉnh sửa tài khoản</h3><button class="btn s sm" id="ac140Close">Đóng</button></div><div class="ac140-modal-body"><div class="ac140-fields"><label>Họ và tên<input id="ac140Name" disabled></label><label>Email<input id="ac140Email" disabled><small>Thông tin xác thực do Supabase Auth quản lý</small></label><label>Vai trò<select id="ac140EditRole">${Object.entries(ROLES).map(([k,v])=>`<option value="${k}">${esc140(v)}</option>`).join('')}</select></label><label>Trạng thái<select id="ac140Enabled"><option value="true">Hoạt động</option><option value="false">Đã khóa</option></select></label><label>Phạm vi KTX<input id="ac140Ktx" placeholder="KTX 1, KTX 2"></label><label>Phạm vi Dãy<input id="ac140Days" placeholder="Dãy 1, Dãy 2"></label></div><h3 style="margin:17px 0 4px">Quyền theo vai trò</h3><p class="mut" style="font-size:11px;margin:0">Quyền được áp dụng theo vai trò đang chọn và kiểm tra trên máy chủ.</p><div class="ac140-perms" id="ac140Perms"></div></div><div class="ac140-modal-foot"><button class="btn s" id="ac140Cancel">Hủy</button><button class="btn" id="ac140Save">Lưu thay đổi</button></div></dialog>`;
+  let timer;document.getElementById('ac140Q').oninput=e=>{const v=e.target.value;clearTimeout(timer);timer=setTimeout(()=>{window.__ac140Q=v;accPage()},280)};
+  document.getElementById('ac140Role').onchange=e=>{window.__ac140Role=e.target.value;accPage()};document.getElementById('ac140State').onchange=e=>{window.__ac140State=e.target.value;accPage()};document.getElementById('ac140Refresh').onclick=()=>accPage();
+  document.getElementById('ac140Create').onclick=()=>alert('Để bảo mật, tài khoản đăng nhập mới phải được tạo tại màn hình “Tạo yêu cầu tài khoản” của Supabase Auth. Sau đó Quản trị duyệt vai trò và phạm vi ngay tại trang này. Không tạo mật khẩu trực tiếp trên phiên quản trị.');
+  const modal=document.getElementById('ac140Modal');const close=()=>modal.close();document.getElementById('ac140Close').onclick=close;document.getElementById('ac140Cancel').onclick=close;
+  const renderPerms=()=>{const rr=document.getElementById('ac140EditRole').value,pr=ROLE_PERMS[rr]||{};const labels={view:'Xem dữ liệu',add:'Thêm hồ sơ',editw:'Sửa hồ sơ',transfer:'Chuyển phòng',residence:'Tạm trú',attendance:'Vào/Ra',del:'Xóa',restore:'Khôi phục',qrApprove:'Duyệt QR',import:'Nhập Excel',report:'Xuất báo cáo',backup:'Sao lưu',acct:'Quản lý tài khoản'};document.getElementById('ac140Perms').innerHTML=Object.entries(labels).map(([k,n])=>`<label><input type="checkbox" ${pr[k]?'checked':''} disabled>${esc140(n)}</label>`).join('')};
+  document.getElementById('ac140EditRole').onchange=renderPerms;
+  el.querySelectorAll('[data-ac140-edit]').forEach(b=>b.onclick=()=>{const a=byid(b.dataset.ac140Edit);if(!a)return;selection=a.user_id;document.getElementById('ac140Name').value=a.display_name||'';document.getElementById('ac140Email').value=a.email||'';document.getElementById('ac140EditRole').value=a.role;document.getElementById('ac140Enabled').value=String(!!a.enabled);document.getElementById('ac140Ktx').value=(a.ktx||[]).join(', ');document.getElementById('ac140Days').value=(a.days||[]).join(', ');renderPerms();modal.showModal()});
+  document.getElementById('ac140Save').onclick=async()=>{const a=byid(selection);if(!a)return;const save=document.getElementById('ac140Save');save.disabled=true;const row=document.createElement('div');row.innerHTML='<select data-role></select><input data-enabled type="checkbox"><input data-ktx><input data-days>';row.querySelector('[data-role]').value=document.getElementById('ac140EditRole').value;row.querySelector('[data-role]').innerHTML=Object.entries(ROLES).map(([k,v])=>`<option value="${k}">${esc140(v)}</option>`).join('');row.querySelector('[data-role]').value=document.getElementById('ac140EditRole').value;row.querySelector('[data-enabled]').checked=document.getElementById('ac140Enabled').value==='true';row.querySelector('[data-ktx]').value=document.getElementById('ac140Ktx').value;row.querySelector('[data-days]').value=document.getElementById('ac140Days').value;try{await saveAccountRow(selection,row);close();await accPage()}catch(e){alert('Không thể cập nhật: '+e.message)}finally{save.disabled=false}};
+  el.querySelectorAll('[data-ac140-approve]').forEach(b=>b.onclick=()=>reviewRequest(b.closest('[data-req]').dataset.req,true));el.querySelectorAll('[data-ac140-reject]').forEach(b=>b.onclick=()=>reviewRequest(b.closest('[data-req]').dataset.req,false));
+ };
+ const originalGate=window.authHubShow;if(typeof originalGate==='function')window.authHubShow=function(){const result=originalGate.apply(this,arguments);enhanceGate();return result};
+ document.addEventListener('DOMContentLoaded',enhanceGate);setTimeout(enhanceGate,0);
 })();
 </script>
 </html>
