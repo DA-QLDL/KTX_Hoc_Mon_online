@@ -6623,8 +6623,6 @@ window.addEventListener('unhandledrejection',e=>{const m=String(e.reason&&e.reas
     var toolbar=document.createElement('div');toolbar.className='qr166-tools';
     function tool(label,fn){var b=document.createElement('button');b.className='btn s sm';b.type='button';b.textContent=label;b.onclick=fn;toolbar.appendChild(b)}
     if(can('qrApprove')){tool('Duyệt đăng ký vào',function(){QT='regin';qrPage()});tool('Duyệt đăng ký ra',function(){QT='regout';qrPage()})}
-    if(can('view'))tool('Danh sách điểm danh / Xuất Excel',function(){QT='attendance';qrPage()});
-    if(can('attendance'))tool('Xác nhận vào / ra thủ công',function(){QT='scan';qrPage()});
     if(QT==='make'&&selected==='att'&&can('attendance'))tool('Xem yêu cầu điểm danh chờ duyệt',function(){var b=document.getElementById('qr160load');if(b)b.click()});
     host.insertBefore(toolbar,document.getElementById('qb'));
     if(QT==='make'){
