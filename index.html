@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ký túc xá Hóc Môn</title>
-<meta name="app-version" content="KTX-STEP138-RESIDENCE-UTILITY-HUB">
+<meta name="app-version" content="KTX-STEP144-RESPONSIBLE-DAYS">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1696,7 +1696,7 @@ const SD={db:null,U:null,on:false,last:{},rev:{},loaded:{},timer:0,ACC:{},REQ:[]
 let WORK_SEARCH_CACHE=new WeakMap();
 const resetWorkSearchCache=()=>{WORK_SEARCH_CACHE=new WeakMap()};
 const workSearchText=w=>{if(!w||typeof w!=='object')return '';let v=WORK_SEARCH_CACHE.get(w);if(v!==undefined)return v;v=sa([w.name,w.mnv,w.leader,w.cccd,w.sdt,R(w),K(w),D(w),w.unit,w.td,w.tinh,w.xa,w.thon].join(' '));WORK_SEARCH_CACHE.set(w,v);return v};
-const sv=()=>{resetWorkSearchCache();try{localStorage.setItem('ktx_w',JSON.stringify(W));localStorage.setItem('ktx_l',JSON.stringify(LOG.slice(0,5000)));localStorage.setItem('ktx_arc',JSON.stringify(ARC));localStorage.setItem('ktx_att',JSON.stringify(ATT.slice(0,5000)));localStorage.setItem('ktx_reg',JSON.stringify(REG));localStorage.setItem('ktx_room_meta',JSON.stringify(ROOMMETA))}catch(e){}if(SD.on)schedFlush();if(window.KTX_SUPA_SYNC&&!window.KTX_SUPA_SYNC.applying)window.KTX_SUPA_SYNC.schedulePush()};
+const sv=()=>{resetWorkSearchCache();if(W.length&&window.KTX143_BACKUP)window.KTX143_BACKUP.save().catch(console.warn);try{localStorage.setItem('ktx_w',JSON.stringify(W));localStorage.setItem('ktx_l',JSON.stringify(LOG.slice(0,5000)));localStorage.setItem('ktx_arc',JSON.stringify(ARC));localStorage.setItem('ktx_att',JSON.stringify(ATT.slice(0,5000)));localStorage.setItem('ktx_reg',JSON.stringify(REG));localStorage.setItem('ktx_room_meta',JSON.stringify(ROOMMETA))}catch(e){}if(SD.on)schedFlush();if(window.KTX_SUPA_SYNC&&!window.KTX_SUPA_SYNC.applying)window.KTX_SUPA_SYNC.schedulePush()};
 W=ld('ktx_w',[]);LOG=ld('ktx_l',[]);ARC=ld('ktx_arc',[]);ATT=ld('ktx_att',[]);REG=ld('ktx_reg',[]);CAP=20;
 const isNam=g=>{const k=sa(g);return k.startsWith('nam')||k=='m'}; const isNu=g=>{const k=sa(g);return k.startsWith('nu')||k=='f'};
 const iso=v=>{if(v==null||v==='')return '';if(v instanceof Date){if(isNaN(v))return '';return v.getFullYear()+'-'+String(v.getMonth()+1).padStart(2,'0')+'-'+String(v.getDate()).padStart(2,'0')}if(typeof v==='number')return new Date(Math.round((v-25569)*864e5)).toISOString().slice(0,10);
@@ -1745,7 +1745,7 @@ function home(){const L=vis(),RS=rooms(L),tot=L.length;if(!W.length){$('home').i
   </div>
  </div>
  <div class="card roommap-card"><div class="roommap-head"><div><h3 style="margin:0">Sơ đồ phòng <span class="mut">· ${days} dãy · ${RN} phòng</span></h3><div class="roommap-legend"><span><i class="lg-dot free"></i>Còn trống</span><span><i class="lg-dot full"></i>Đầy 100%</span><span><i class="lg-dot over"></i>Quá tải</span><span><i class="lg-ring female"></i>Phòng nữ</span><span><i class="lg-ring mix"></i>Hỗn hợp</span></div></div><div class="day-filter">${['',...[...new Set(L.map(w=>D(w)))].sort(num)].map(d=>`<button class="day-chip ${HOMEDAY==d?'on':''}" data-hday="${esc(d)}">${d||'Tất cả dãy'}</button>`).join('')}</div></div>
-  ${(sk?[sk,...ks.filter(x=>x!=sk)]:ks).map(k=>{const l=byK[k],byD={};const rsK=rooms(l);rsK.forEach(r=>{(byD[r.day]=byD[r.day]||[]).push(r)});const shown=Object.keys(byD).sort(num).filter(d=>!HOMEDAY||d==HOMEDAY);return `<details class="kd" data-k="${esc(k)}" ${COLL.has(k)&&k!=sk?'':'open'}><summary><svg class="i"><use href="#i-ch"/></svg><b>${esc(k)}</b><span class="mut">${fm(l.length)} công nhân · ${nRoom(k,rsK)} phòng</span></summary><div class="dg">${shown.map(d=>{const rs=byD[d].sort((a,b)=>num(a.room,b.room)),n=rs.reduce((s,r)=>s+r.n,0),cap=rs.length*CAP,p=Math.round(n/(cap||1)*100),freeN=rs.reduce((x,r)=>x+Math.max(0,CAP-r.n),0),fullN=rs.filter(r=>r.n==CAP).length,overN=rs.filter(r=>r.n>CAP).length;return `<div class="dy room-day"><div class="room-day-head"><div><b>${esc(d)}</b><span class="mut"> · ${rs.length} phòng</span></div><div class="room-day-kpis"><span>${n}/${cap}</span><b class="${p>100?'rd':p==100?'am':'gr'}">${p}%</b></div></div><div class="bar"><i style="width:${Math.min(100,p)}%;background:${p>100?'var(--rd)':p==100?'var(--am)':'var(--gr)'}"></i></div><div class="room-mini-stats"><span class="tag g">Trống ${freeN}</span><span class="tag a">Đầy ${fullN}</span>${overN?`<span class="tag r">Quá tải ${overN}</span>`:''}</div><div class="rm">${rs.map(r=>{const rp=Math.round(r.n/CAP*100),md=roomMode(k,d,r.room,r.l),sexCls=md=='female'?'f':md=='mix'?'m':'',sexIcon=md=='female'?'<em class="sex f">♀</em>':md=='mix'?'<em class="sex mix">↔</em>':'<em class="sex m">♂</em>',typeLabel=roomTypeText(md);return `<button class="r room-cell ${sexCls} ${r.n>CAP?'over':r.n==CAP?'full':'ok'}" data-k="${esc(k)}" data-d="${esc(d)}" data-r="${esc(r.room)}" title="${esc(k)} · ${esc(d)} · Phòng ${esc(r.room)} · ${esc(typeLabel)} · ${r.n}/${CAP} (${rp}%)"><span class="room-no"><b>P.${esc(r.room)}</b>${sexIcon}</span><span class="room-occ"><b>${r.n}/${CAP}</b><small>${rp}%</small></span></button>`}).join('')}</div></div>`}).join('')||'<div class="mut" style="padding:12px">Không có phòng thuộc dãy đã chọn.</div>'}</div></details>`}).join('')}</div
+  ${(sk?[sk,...ks.filter(x=>x!=sk)]:ks).map(k=>{const l=byK[k],byD={};const rsK=rooms(l);rsK.forEach(r=>{(byD[r.day]=byD[r.day]||[]).push(r)});const shown=Object.keys(byD).sort(num).filter(d=>!HOMEDAY||d==HOMEDAY);return `<details class="kd" data-k="${esc(k)}" ${COLL.has(k)&&k!=sk?'':'open'}><summary><svg class="i"><use href="#i-ch"/></svg><b>${esc(k)}</b><span class="mut">${fm(l.length)} công nhân · ${nRoom(k,rsK)} phòng</span></summary><div class="dg">${shown.map(d=>{const rs=byD[d].sort((a,b)=>num(a.room,b.room)),n=rs.reduce((s,r)=>s+r.n,0),cap=rs.length*CAP,p=Math.round(n/(cap||1)*100),freeN=rs.reduce((x,r)=>x+Math.max(0,CAP-r.n),0),fullN=rs.filter(r=>r.n==CAP).length,overN=rs.filter(r=>r.n>CAP).length;return `<div class="dy room-day"><div class="room-day-head"><div><b>${esc(d)}</b><span class="mut"> · ${rs.length} phòng</span></div><div class="room-day-kpis"><span>${n}/${cap}</span><b class="${p>100?'rd':p==100?'am':'gr'}">${p}%</b></div></div><div class="ktx-day-owner" data-owner-ktx="${esc(k)}" data-owner-day="${esc(d)}">Phụ trách: <b class="ktx-owner-name">Chưa phân công</b></div><div class="bar"><i style="width:${Math.min(100,p)}%;background:${p>100?'var(--rd)':p==100?'var(--am)':'var(--gr)'}"></i></div><div class="room-mini-stats"><span class="tag g">Trống ${freeN}</span><span class="tag a">Đầy ${fullN}</span>${overN?`<span class="tag r">Quá tải ${overN}</span>`:''}</div><div class="rm">${rs.map(r=>{const rp=Math.round(r.n/CAP*100),md=roomMode(k,d,r.room,r.l),sexCls=md=='female'?'f':md=='mix'?'m':'',sexIcon=md=='female'?'<em class="sex f">♀</em>':md=='mix'?'<em class="sex mix">↔</em>':'<em class="sex m">♂</em>',typeLabel=roomTypeText(md);return `<button class="r room-cell ${sexCls} ${r.n>CAP?'over':r.n==CAP?'full':'ok'}" data-k="${esc(k)}" data-d="${esc(d)}" data-r="${esc(r.room)}" title="${esc(k)} · ${esc(d)} · Phòng ${esc(r.room)} · ${esc(typeLabel)} · ${r.n}/${CAP} (${rp}%)"><span class="room-no"><b>P.${esc(r.room)}</b>${sexIcon}</span><span class="room-occ"><b>${r.n}/${CAP}</b><small>${rp}%</small></span></button>`}).join('')}</div></div>`}).join('')||'<div class="mut" style="padding:12px">Không có phòng thuộc dãy đã chọn.</div>'}</div></details>`}).join('')}</div
 `;
  document.querySelectorAll('#home .kr[data-ks]').forEach(e=>{const t=()=>{SELK=SELK==e.dataset.ks?'':e.dataset.ks;home()};e.onclick=t;e.onkeydown=ev=>{if(ev.key=='Enter'||ev.key==' '){ev.preventDefault();t()}}});
  const kx=$('ksx');if(kx)kx.onclick=()=>{SELK='';home()};
@@ -3986,7 +3986,7 @@ async function syncLoadAccount(){const sb=syncClient();if(!sb||!SUPA_SYNC.sessio
 function syncCanWrite(kind){const r=(SUPA_SYNC.account&&SUPA_SYNC.account.role)||ME.role||'viewer';if(kind==='workers'||kind==='logs'||kind==='resStatus'||kind==='resHistory')return ['admin','manager','staff'].includes(r)||kind==='logs';if(kind==='archive'||kind==='registrations'||kind==='rooms')return ['admin','manager'].includes(r);if(kind==='attendance')return ['admin','manager','guard'].includes(r);if(kind==='state')return r==='admin';return false}
 function syncCanDelete(kind){const r=(SUPA_SYNC.account&&SUPA_SYNC.account.role)||ME.role||'viewer';if(kind==='workers'||kind==='archive'||kind==='registrations'||kind==='rooms')return ['admin','manager'].includes(r);if(kind==='attendance')return r==='admin';if(kind==='resStatus'||kind==='resHistory')return ['admin','manager'].includes(r);return false}
 function syncRows(kind){const now=syncStamp(),by=syncActor();if(kind==='workers')return W.map((o,i)=>({record_id:syncRecordId('w',o,i),payload:syncClone(o),updated_at:now,updated_by:by}));if(kind==='archive')return ARC.map((o,i)=>({record_id:syncRecordId('a',o,i),payload:syncClone(o),updated_at:now,updated_by:by}));if(kind==='logs')return LOG.slice(0,5000).map((o,i)=>({record_id:syncRecordId('l',o,i),payload:syncClone(o),event_at:syncSafeISO(o.at,Date.now()),created_by:by}));if(kind==='attendance')return ATT.slice(0,5000).map((o,i)=>({record_id:syncRecordId('t',o,i),payload:syncClone(o),updated_at:now,updated_by:by}));if(kind==='registrations')return REG.map((o,i)=>({record_id:syncRecordId('r',o,i),payload:syncClone(o),updated_at:now,updated_by:by}));if(kind==='rooms')return Object.entries(ROOMMETA||{}).map(([k,v])=>({room_key:k,payload:syncClone(v),updated_at:now,updated_by:by}));if(kind==='resStatus')return W.map(w=>({worker_id:String(w.id),payload:{tt:w.tt||'',tv:syncClone(w.tv||null),ktx:K(w),day:D(w),room:R(w)||''},updated_at:now,updated_by:by}));if(kind==='resHistory'){const z=[];W.forEach(w=>(Array.isArray(w.history)?w.history:[]).forEach((h,i)=>z.push({record_id:`${w.id}_${h.at||h.day||i}_${syncHash(h)}`,worker_id:String(w.id),payload:syncClone(h),event_at:syncSafeISO(h.at||((h.day||ldy())+'T00:00:00+07:00'),Date.now()),updated_by:by})));return z}return[]}
-async function syncUpsert(kind){if(!syncCanWrite(kind))return;const sb=syncClient(),table=SYNC_TABLES[kind],rows=syncRows(kind);if(!table)return;const idCol=kind==='rooms'?'room_key':kind==='resStatus'?'worker_id':'record_id';const prev=SUPA_SYNC.hashes[kind]||{};const next={};const changed=[];for(const r of rows){const id=String(r[idCol]),h=syncHash(r.payload);next[id]=h;if(prev[id]!==h)changed.push(r)}for(let i=0;i<changed.length;i+=400){const {error}=await sb.from(table).upsert(changed.slice(i,i+400),{onConflict:idCol});if(error)throw error}const remote=SUPA_SYNC.remoteIds[kind]||new Set();if(syncCanDelete(kind)&&remote.size){const current=new Set(Object.keys(next)),gone=[...remote].filter(id=>!current.has(id));for(let i=0;i<gone.length;i+=200){const {error}=await sb.from(table).delete().in(idCol,gone.slice(i,i+200));if(error)throw error}}SUPA_SYNC.hashes[kind]=next;SUPA_SYNC.remoteIds[kind]=new Set(Object.keys(next))}
+async function syncUpsert(kind){if(!syncCanWrite(kind))return;const sb=syncClient(),table=SYNC_TABLES[kind],rows=syncRows(kind);if(!table)return;const idCol=kind==='rooms'?'room_key':kind==='resStatus'?'worker_id':'record_id';const prev=SUPA_SYNC.hashes[kind]||{};const next={};const changed=[];for(const r of rows){const id=String(r[idCol]),h=syncHash(r.payload);next[id]=h;if(prev[id]!==h)changed.push(r)}for(let i=0;i<changed.length;i+=400){const {error}=await sb.from(table).upsert(changed.slice(i,i+400),{onConflict:idCol});if(error)throw error}const remote=SUPA_SYNC.remoteIds[kind]||new Set();if(kind==='workers'&&!rows.length&&remote.size){throw new Error('Bảo vệ dữ liệu: danh sách trên máy đang trống, không được xóa công nhân trên Supabase. Hãy kiểm tra dữ liệu/khôi phục trước khi đồng bộ.')}if(syncCanDelete(kind)&&remote.size){const current=new Set(Object.keys(next)),gone=[...remote].filter(id=>!current.has(id));for(let i=0;i<gone.length;i+=200){const {error}=await sb.from(table).delete().in(idCol,gone.slice(i,i+200));if(error)throw error}}SUPA_SYNC.hashes[kind]=next;SUPA_SYNC.remoteIds[kind]=new Set(Object.keys(next))}
 async function syncPushAlertReads(){if(!SUPA_SYNC.ready||!SUPA_SYNC.session)return;const sb=syncClient(),uid=SUPA_SYNC.session.user.id;let sigs=[];try{sigs=JSON.parse(localStorage.getItem(ALERT_READ_KEY)||'[]')}catch(e){}const rows=sigs.map(s=>({user_id:uid,alert_sig:String(s),read_at:syncStamp()}));if(rows.length){for(let i=0;i<rows.length;i+=300){const {error}=await sb.from('ktx_alert_reads').upsert(rows.slice(i,i+300),{onConflict:'user_id,alert_sig'});if(error)throw error}}}
 async function syncPushState(){if(!syncCanWrite('state'))return;const sb=syncClient(),rows=[{state_key:'backup_config',payload:syncClone(bkCfg()),updated_at:syncStamp(),updated_by:syncActor()},{state_key:'browser_auto_backups',payload:syncClone(bkAutos()),updated_at:syncStamp(),updated_by:syncActor()},{state_key:'workspace_ready',payload:{ready:true,updatedAt:syncStamp()},updated_at:syncStamp(),updated_by:syncActor()}];const {error}=await sb.from('ktx_sync_state').upsert(rows,{onConflict:'state_key'});if(error)throw error}
 async function syncPushAll(){
@@ -4020,7 +4020,7 @@ async function syncHasSafetySnapshot(){try{const db=await syncOpenSafetyDB();ret
 async function syncSaveSafetySnapshot(snapshot){try{if(await syncHasSafetySnapshot())return true;const db=await syncOpenSafetyDB();await new Promise((resolve,reject)=>{const tx=db.transaction('snapshots','readwrite');tx.objectStore('snapshots').put(snapshot,'before_supabase_sync');tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||new Error('Không lưu được bản sao an toàn'))});try{localStorage.setItem('ktx_before_supabase_sync_marker',String(Date.now()))}catch(e){}return true}catch(e){console.warn('Không lưu được snapshot IndexedDB',e);return false}}
 async function syncReadSafetySnapshot(){try{const db=await syncOpenSafetyDB();return await new Promise((resolve,reject)=>{const tx=db.transaction('snapshots','readonly'),r=tx.objectStore('snapshots').get('before_supabase_sync');r.onsuccess=()=>resolve(r.result||null);r.onerror=()=>reject(r.error)})}catch(e){return null}}
 
-async function syncPullAll(render=true){if(!SUPA_SYNC.ready||SUPA_SYNC.pulling)return;SUPA_SYNC.pulling=true;SUPA_SYNC.applying=true;try{const localBackup={W:syncClone(W),ARC:syncClone(ARC),LOG:syncClone(LOG.slice(0,500)),ATT:syncClone(ATT.slice(0,500)),REG:syncClone(REG),ROOMMETA:syncClone(ROOMMETA),at:Date.now()};const saved=await syncSaveSafetySnapshot(localBackup);if(!saved)console.warn('Không tạo được bản sao an toàn cục bộ trước khi tải Supabase. Tiếp tục đồng bộ nhưng không chặn thao tác.');const kinds=['workers','archive','logs','attendance','registrations','rooms'];for(const k of kinds){const table=SYNC_TABLES[k],cols=k==='rooms'?'room_key,payload':'record_id,payload',rows=await syncFetchAll(table,cols);syncApplyRows(k,rows)}await syncPullAlertReads();await syncPullState();try{localStorage.setItem('ktx_w',JSON.stringify(W));localStorage.setItem('ktx_l',JSON.stringify(LOG));localStorage.setItem('ktx_arc',JSON.stringify(ARC));localStorage.setItem('ktx_att',JSON.stringify(ATT));localStorage.setItem('ktx_reg',JSON.stringify(REG));localStorage.setItem('ktx_room_meta',JSON.stringify(ROOMMETA))}catch(e){console.warn('LocalStorage đầy, dữ liệu cloud vẫn đã tải vào bộ nhớ phiên hiện tại.',e)}SUPA_SYNC.lastSync=Date.now();SUPA_SYNC.lastError='';syncSetStatus('Đã tải dữ liệu mới nhất từ Supabase','ok');if(render)all()}catch(e){SUPA_SYNC.lastError=e.message||String(e);syncSetStatus('Không tải được dữ liệu: '+SUPA_SYNC.lastError,'bad')}finally{SUPA_SYNC.applying=false;SUPA_SYNC.pulling=false;if(page==='sync')syncPage();syncFooter()}}
+async function syncPullAll(render=true){if(!SUPA_SYNC.ready||SUPA_SYNC.pulling)return;SUPA_SYNC.pulling=true;SUPA_SYNC.applying=true;try{const localBackup={W:syncClone(W),ARC:syncClone(ARC),LOG:syncClone(LOG.slice(0,500)),ATT:syncClone(ATT.slice(0,500)),REG:syncClone(REG),ROOMMETA:syncClone(ROOMMETA),at:Date.now()};const saved=await syncSaveSafetySnapshot(localBackup);if(!saved)console.warn('Không tạo được bản sao an toàn cục bộ trước khi tải Supabase. Tiếp tục đồng bộ nhưng không chặn thao tác.');const kinds=['workers','archive','logs','attendance','registrations','rooms'];for(const k of kinds){const table=SYNC_TABLES[k],cols=k==='rooms'?'room_key,payload':'record_id,payload',rows=await syncFetchAll(table,cols);if(k==='workers'&&rows.length===0&&W.length>0)throw new Error('Supabase trả về 0 công nhân trong khi máy hiện có '+W.length+' hồ sơ. Đã chặn ghi đè. Hãy kiểm tra quyền RLS/kết nối trước khi đồng bộ.');syncApplyRows(k,rows)}await syncPullAlertReads();await syncPullState();try{localStorage.setItem('ktx_w',JSON.stringify(W));localStorage.setItem('ktx_l',JSON.stringify(LOG));localStorage.setItem('ktx_arc',JSON.stringify(ARC));localStorage.setItem('ktx_att',JSON.stringify(ATT));localStorage.setItem('ktx_reg',JSON.stringify(REG));localStorage.setItem('ktx_room_meta',JSON.stringify(ROOMMETA))}catch(e){console.warn('LocalStorage đầy, dữ liệu cloud vẫn đã tải vào bộ nhớ phiên hiện tại.',e)}SUPA_SYNC.lastSync=Date.now();SUPA_SYNC.lastError='';syncSetStatus('Đã tải dữ liệu mới nhất từ Supabase','ok');if(render)all()}catch(e){SUPA_SYNC.lastError=e.message||String(e);syncSetStatus('Không tải được dữ liệu: '+SUPA_SYNC.lastError,'bad')}finally{SUPA_SYNC.applying=false;SUPA_SYNC.pulling=false;if(page==='sync')syncPage();syncFooter()}}
 function syncSetStatus(msg,kind='warn'){SUPA_SYNC.statusMsg=msg;SUPA_SYNC.statusKind=kind}
 function syncFooter(){const f=$('ft'),dot=$('syncNavDot');if(!f)return;if(SUPA_SYNC.ready&&SUPA_SYNC.enabled){f.textContent='Supabase · đồng bộ nhiều máy';if(dot)dot.style.display='inline-grid'}else{f.textContent='Dữ liệu lưu trên trình duyệt này';if(dot)dot.style.display='none'}}
 function syncScheduleReload(){if(!SUPA_SYNC.enabled||SUPA_SYNC.applying||SUPA_SYNC.pushing)return;clearTimeout(SUPA_SYNC.reloadTimer);SUPA_SYNC.reloadTimer=setTimeout(()=>syncPullAll(true),700)}
@@ -6011,6 +6011,100 @@ body.auth-locked #alertFloat,body.auth-locked #alertQuickDrawer,body.auth-locked
  window.addEventListener('load',cleanup);
  const obs=new MutationObserver(cleanup);obs.observe(document.body,{attributes:true,attributeFilter:['class']});
  setTimeout(cleanup,0);
+})();
+</script>
+
+
+<style id="ktx-step143-style">
+/* STEP143: footer chuẩn hóa, không làm mất thông tin vai trò */
+nav #authUserbar, nav .auth-userbar{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important;padding:11px!important;margin:9px 5px 0!important;background:#f7faff!important;border:1px solid #dbe6f3!important;border-radius:12px!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
+nav #authUserbar>div{min-width:0!important;max-width:100%!important;overflow:hidden!important}
+nav #authUserbar b{display:block!important;max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;color:#243a59!important;font-size:11px!important}
+nav #authUserbar small{display:block!important;color:#7486a0!important;font-size:10px!important;white-space:normal!important}
+nav #aubOut{width:100%!important;min-height:38px!important;margin:0!important;padding:8px 11px!important;display:flex!important;justify-content:center!important;align-items:center!important;gap:8px!important;background:#fff!important;border:1px solid #c9d9ef!important;border-radius:9px!important;color:#245a9e!important;font:700 12px/1.3 'Be Vietnam Pro',sans-serif!important;box-shadow:0 2px 6px #234a7012!important;cursor:pointer!important;white-space:nowrap!important}
+nav #aubOut:hover{background:#edf4ff!important;border-color:#8fb4e8!important;color:#1766cb!important}
+nav #aubOut svg{width:15px;height:15px;flex:none}
+#ktx143Recovery{display:none;position:relative;z-index:20;background:#fff9ed;color:#694c14;border:1px solid #efca7d;border-radius:12px;padding:12px 14px;margin:10px 0;font-size:12px}
+#ktx143Recovery.show{display:block}
+#ktx143Recovery .btn{margin-top:8px}
+</style>
+<script id="ktx-step143-script">
+(function(){
+  const key='latest_good';
+  let dbp;
+  function db(){return dbp||(dbp=new Promise((resolve,reject)=>{
+    if(!window.indexedDB){reject(new Error('IndexedDB không được hỗ trợ'));return}
+    const r=indexedDB.open('KTX_Durable_Backup_143',1);
+    r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains('snapshots'))r.result.createObjectStore('snapshots')};
+    r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error||new Error('Không mở được IndexedDB'));
+  }))}
+  async function writeSnapshot(snapshot){const database=await db();await new Promise((resolve,reject)=>{
+    const tx=database.transaction('snapshots','readwrite');tx.objectStore('snapshots').put(snapshot,key);
+    tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);
+  })}
+  async function readSnapshot(){const database=await db();return await new Promise((resolve,reject)=>{
+    const tx=database.transaction('snapshots','readonly'),req=tx.objectStore('snapshots').get(key);
+    req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error);
+  })}
+  let saving=false;
+  async function save(){if(saving||!Array.isArray(W)||!W.length)return; saving=true;try{
+    const v={at:Date.now(),W:JSON.parse(JSON.stringify(W)),ARC:JSON.parse(JSON.stringify(ARC)),LOG:JSON.parse(JSON.stringify(LOG)),ATT:JSON.parse(JSON.stringify(ATT)),REG:JSON.parse(JSON.stringify(REG)),ROOMMETA:JSON.parse(JSON.stringify(ROOMMETA))};
+    await writeSnapshot(v);
+  }finally{saving=false}}
+  window.KTX143_BACKUP={save,read:readSnapshot};
+  async function recoveryCheck(){
+    if(typeof W==='undefined'||W.length){if(W.length)await save();return}
+    let prev;
+    try{prev=await readSnapshot()}catch(e){return}
+    if(!prev||!Array.isArray(prev.W)||!prev.W.length)return;
+    const host=document.querySelector('main')||document.body;
+    if(document.getElementById('ktx143Recovery'))return;
+    const el=document.createElement('div');el.id='ktx143Recovery';el.className='show';
+    el.innerHTML='<b>Phát hiện dữ liệu công nhân đã lưu dự phòng ('+prev.W.length.toLocaleString('vi-VN')+' hồ sơ).</b><div>Danh sách đang hiển thị trống. Có thể khôi phục dữ liệu từ bản sao trên thiết bị này; thao tác không xóa bản dự phòng.</div><button type="button" class="btn s" id="ktx143Restore">Khôi phục dữ liệu</button>';
+    host.prepend(el);
+    el.querySelector('#ktx143Restore').onclick=()=>{
+      if(W.length){alert('Dữ liệu hiện tại đã được nạp. Hãy kiểm tra lại trước khi khôi phục.');return}
+      if(!confirm('Khôi phục '+prev.W.length+' hồ sơ công nhân từ bản lưu trên thiết bị này?'))return;
+      W=prev.W;ARC=prev.ARC||[];LOG=prev.LOG||[];ATT=prev.ATT||[];REG=prev.REG||[];ROOMMETA=prev.ROOMMETA||{};
+      sv();all();el.remove();alert('Đã khôi phục dữ liệu trên thiết bị này.');
+    };
+  }
+  function logoutStyle(){const btn=document.getElementById('aubOut');if(!btn)return;
+    btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/></svg><span>Đăng xuất</span>';
+    btn.setAttribute('aria-label','Đăng xuất khỏi tài khoản hiện tại');
+  }
+  document.addEventListener('DOMContentLoaded',()=>{logoutStyle();setTimeout(recoveryCheck,1200)});
+  window.addEventListener('load',()=>{logoutStyle();setTimeout(recoveryCheck,2600)});
+})();
+</script>
+
+
+<style id="step144-owner-style">
+#home .ktx-day-owner{font-size:10.2px;color:#627792;font-weight:700;line-height:1.35;padding:3px 0 5px;min-height:18px;overflow-wrap:anywhere}
+#home .ktx-owner-name{color:#2364bd;font-weight:800}
+#home .ktx-day-owner.unassigned .ktx-owner-name{color:#8c99ac;font-style:italic;font-weight:600}
+</style>
+<script id="step144-owner-script">
+(()=>{
+ const n=v=>String(v??'').normalize('NFC').trim().toLocaleLowerCase('vi').replace(/\s+/g,' ');
+ const a=v=>Array.isArray(v)?v:typeof v==='string'?v.split(',').map(x=>x.trim()).filter(Boolean):[];
+ function getRecords(){
+  const all=(window.AUTHC?.accounts||[]).slice();
+  if(typeof ME!=='undefined'&&ME.acct&&ME.id&&!all.some(x=>x.user_id===ME.id))all.push({...ME.acct,user_id:ME.id,display_name:ME.name});
+  return all;
+ }
+ function refresh(){
+  document.querySelectorAll('#home .ktx-day-owner').forEach(el=>{
+   const k=n(el.dataset.ownerKtx),d=n(el.dataset.ownerDay);
+   const names=[...new Set(getRecords().filter(x=>x.enabled!==false&&x.role!=='admin'&&a(x.ktx).length&&a(x.days).length&&a(x.ktx).some(v=>n(v)===k)&&a(x.days).some(v=>n(v)===d)).map(x=>String(x.display_name||x.email||'').trim()).filter(Boolean))];
+   const b=el.querySelector('.ktx-owner-name');if(b)b.textContent=names.join(', ')||'Chưa phân công';
+   el.classList.toggle('unassigned',!names.length);
+  });
+ }
+ window.ktxUpdateDayOwners=refresh;
+ if(typeof window.home==='function'){const old=window.home;window.home=function(){const result=old.apply(this,arguments);refresh();return result}}
+ if(typeof window.authLoadAdminData==='function'){const old=window.authLoadAdminData;window.authLoadAdminData=async function(){const result=await old.apply(this,arguments);refresh();return result}}
+ document.addEventListener('DOMContentLoaded',refresh);
 })();
 </script>
 
