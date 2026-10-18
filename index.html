@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ký túc xá Hóc Môn</title>
-<meta name="app-version" content="KTX-STEP154-LAYOUT-REPAIR">
+<meta name="app-version" content="KTX-STEP144-RESPONSIBLE-DAYS">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -637,37 +637,6 @@ table{font-size:12.8px!important}th{font-size:11.5px!important;font-weight:700!i
 #adminboard .adm-status .btn{min-width:84px;justify-content:center;padding:6px 10px!important}
 #adminboard .adm-actions .btn{width:100%;justify-content:flex-start;padding:9px 11px!important;min-height:38px}
 #adminboard .adm-head .btn{padding:6px 10px!important}
-</style>
-
-<style id="step153-sidebar-fullheight-no-scrollbar">
-/* STEP153: thanh sidebar chạm đáy viewport; menu không lộ thanh cuộn */
-@media (min-width:861px){
- body>nav{height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;top:0!important;bottom:0!important;padding-bottom:12px!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
- body>nav>#step146NavScroll{flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;padding:2px 0 6px!important;margin-bottom:0!important;scrollbar-width:none!important;-ms-overflow-style:none!important}
- body>nav>#step146NavScroll::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
- body>nav>#authUserbar{position:static!important;order:20!important;flex:0 0 auto!important;bottom:auto!important;left:auto!important;right:auto!important;width:calc(100% - 4px)!important;margin:0 2px!important;z-index:3!important}
-}
-</style>
-
-<style id="step154-layout-repair">
-/* STEP154: restore a stable two-column application frame. */
-@media (min-width:861px){
- html,body{width:100%!important;min-width:0!important}
- body{display:flex!important;flex-direction:row!important;align-items:stretch!important}
- body>nav{width:188px!important;min-width:188px!important;max-width:188px!important;flex:0 0 188px!important;height:100dvh!important;max-height:100dvh!important;position:sticky!important;top:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
- body>nav>#step146NavScroll{flex:1 1 auto!important;min-width:0!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding:2px 0 6px!important;scrollbar-width:none!important}
- body>nav>#step146NavScroll::-webkit-scrollbar{display:none!important}
- body>nav>#authUserbar{position:static!important;order:20!important;flex:0 0 auto!important;width:calc(100% - 4px)!important;max-width:calc(100% - 4px)!important;margin:0 2px!important;bottom:auto!important;left:auto!important;right:auto!important;z-index:3!important}
- body>main{display:block!important;flex:1 1 calc(100vw - 188px)!important;width:calc(100vw - 188px)!important;max-width:none!important;min-width:0!important;margin:0!important;box-sizing:border-box!important}
- body>main>#utilhub{display:block;max-width:100%;width:100%;min-width:0}
- body>main>#utilhub.hide{display:none!important}
- #utilhub .utilhub-wrap,#utilhub .sysfunc-intro,#utilhub .sysfunc-group{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
- #utilhub .sysfunc-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;width:100%!important;min-width:0!important;gap:12px!important}
- #utilhub .sysfunc-btn{min-width:0!important;width:100%!important;box-sizing:border-box!important;white-space:normal!important;overflow-wrap:break-word!important}
-}
-@media(min-width:861px) and (max-width:1100px){#utilhub .sysfunc-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-@media(max-width:860px){body>main{width:100%!important;flex:1 1 auto!important;min-width:0!important}#utilhub .sysfunc-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-@media(max-width:580px){#utilhub .sysfunc-grid{grid-template-columns:1fr!important}}
 </style>
 </head>
 <body>
@@ -4375,67 +4344,6 @@ function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)retu
 </style>
 </head><body><h1>${esc(d.title)}</h1><p>Kỳ báo cáo: ${esc(vn(RC96.from))} - ${esc(vn(RC96.to))} · ${esc(RC96.ktx||'Tất cả KTX')}</p><table><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${d.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')}</table><!-- KTX-STABLE-101 · Production baseline -->
 <!-- STEP105_PERFORMANCE_OPTIMIZATION -->
-
-<style id="step152IncidentStyles">
-#incident152{min-width:0}#incident152 .incident152-shell{background:#fff;border:1px solid #d7e3f3;border-radius:14px;padding:14px;margin-top:12px}#incident152 iframe{display:block;border:1px solid #dce7f5;border-radius:12px;width:100%;height:calc(100vh - 250px);min-height:660px;background:#eef4fc}#incident152 .incident152-note{font-size:12px;color:#617492;margin-top:8px}#incident152 .incident152-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-</style>
-<script id="step152IncidentFeature">
-(function(){
- function init(){
-  if(!document.getElementById('incident152')){
-   const el=document.createElement('section');el.id='incident152';el.className='hide';el.innerHTML=`<div class="incident152-actions"><button class="btn s" type="button" id="incident152Back">← Quay lại Tiện ích</button><b>Biên bản sự vụ</b></div><div class="incident152-shell"><iframe title="Ứng dụng Biên bản sự vụ" id="incident152Frame" loading="lazy" src="./bien-ban-su-vu.html"></iframe><p class="incident152-note">Biên bản sự vụ được kế thừa từ ứng dụng gốc, lưu riêng dữ liệu biên bản trong trình duyệt. Không chỉnh sửa danh sách công nhân hay tài khoản của ứng dụng chính.</p></div>`;
-   document.querySelector('main').appendChild(el);
-   document.getElementById('incident152Back').onclick=()=>window.go('utilhub');
-  }
-  if(typeof T!=='undefined'&&!T.incident152)T.incident152=['Biên bản sự vụ','Lập biên bản, lựa chọn phương án xử lý, tính tiền và xuất Word'];
-  if(typeof GN!=='undefined')GN.incident152='Tiện ích';
-  const hub=document.getElementById('utilhub');
-  if(hub&&!hub.querySelector('[data-util-go="incident152"]')){
-   const grid=hub.querySelector('.sysfunc-grid');if(grid){
-    const btn=document.createElement('button');btn.type='button';btn.className='sysfunc-btn sf-purple';btn.dataset.utilGo='incident152';btn.innerHTML='<span class="sficon"><svg class="i"><use href="#i-log"></use></svg></span><span><b>Biên bản sự vụ</b><small>Lập biên bản, xử lý vi phạm và tải Word.</small></span>';btn.onclick=()=>window.go('incident152');grid.appendChild(btn);
-   }
-  }
- }
- const baseGo=window.go;
- window.go=function(page){
-  init();
-  if(page==='incident152'){
-    document.body.dataset.page=page;
-    if(typeof T!=='undefined')Object.keys(T).forEach(k=>{let e=document.getElementById(k);if(e)e.classList.toggle('hide',k!==page)});
-    const element=document.getElementById('incident152');element.classList.remove('hide');
-    const t=document.getElementById('ttl'), sub=document.getElementById('sub'), eb=document.getElementById('eb');
-    if(t)t.textContent='Biên bản sự vụ';if(sub)sub.textContent='Công cụ lập biên bản KTX';if(eb)eb.textContent='TIỆN ÍCH';
-    const tools=document.getElementById('tools');if(tools)tools.classList.add('hide');
-    document.querySelectorAll('nav button[data-p]').forEach(b=>b.classList.remove('on'));
-    window.scrollTo(0,0);return;
-  }
-  document.getElementById('incident152')?.classList.add('hide');
-  const result=baseGo.apply(this,arguments);
-  init();return result;
- };
- window.addEventListener('DOMContentLoaded',init);
-})();
-</script>
-
-<style id="step155-sidebar-full-column">
-/* STEP155: sidebar full-height, anchored bottom auth bar, no visible sidebar scrollbar */
-@media (min-width:861px){
-  html,body{height:100%!important;min-height:100dvh!important}
-  body{display:flex!important;flex-direction:row!important;align-items:stretch!important;min-height:100dvh!important}
-  body>nav{align-self:stretch!important;position:sticky!important;top:0!important;left:0!important;height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;padding:0!important;margin:0!important}
-  body>nav>.brand{flex:0 0 auto!important}
-  body>nav>#step146NavScroll{flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;padding:2px 0 10px!important;margin:0!important;scrollbar-width:none!important;-ms-overflow-style:none!important}
-  body>nav>#step146NavScroll::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
-  body>nav>#authUserbar{position:static!important;order:99!important;flex:0 0 auto!important;margin-top:auto!important;margin-left:8px!important;margin-right:8px!important;margin-bottom:8px!important;width:auto!important;max-width:none!important;left:auto!important;right:auto!important;bottom:auto!important;box-sizing:border-box!important;z-index:5!important}
-  body>nav>#authUserbar #aubOut{margin-bottom:0!important}
-  body>nav>#ft{display:none!important}
-  body>main{min-height:100dvh!important}
-}
-@media (max-width:860px){
-  body>nav{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
-}
-</style>
-
 </body>
 <style id="step131SystemGroupPackingStyle">
 /* STEP131 — các cụm hệ thống bám sát từ trái sang phải, chỉ xuống hàng khi hết chiều ngang */
@@ -5189,26 +5097,6 @@ setTimeout(init,700);
 })();
 
 </script>
-
-<style id="step155-sidebar-full-column">
-/* STEP155: sidebar full-height, anchored bottom auth bar, no visible sidebar scrollbar */
-@media (min-width:861px){
-  html,body{height:100%!important;min-height:100dvh!important}
-  body{display:flex!important;flex-direction:row!important;align-items:stretch!important;min-height:100dvh!important}
-  body>nav{align-self:stretch!important;position:sticky!important;top:0!important;left:0!important;height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;padding:0!important;margin:0!important}
-  body>nav>.brand{flex:0 0 auto!important}
-  body>nav>#step146NavScroll{flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;padding:2px 0 10px!important;margin:0!important;scrollbar-width:none!important;-ms-overflow-style:none!important}
-  body>nav>#step146NavScroll::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
-  body>nav>#authUserbar{position:static!important;order:99!important;flex:0 0 auto!important;margin-top:auto!important;margin-left:8px!important;margin-right:8px!important;margin-bottom:8px!important;width:auto!important;max-width:none!important;left:auto!important;right:auto!important;bottom:auto!important;box-sizing:border-box!important;z-index:5!important}
-  body>nav>#authUserbar #aubOut{margin-bottom:0!important}
-  body>nav>#ft{display:none!important}
-  body>main{min-height:100dvh!important}
-}
-@media (max-width:860px){
-  body>nav{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
-}
-</style>
-
 </body>
 
 <style id="step129SystemLayoutStyle">
@@ -6472,4 +6360,59 @@ window.addEventListener('unhandledrejection',e=>{const m=String(e.reason&&e.reas
 })();
 </script>
 
-</html>
+
+<style id="step152IncidentStyles">
+#incident152{min-width:0}#incident152 .incident152-shell{background:#fff;border:1px solid #d7e3f3;border-radius:14px;padding:14px;margin-top:12px}#incident152 iframe{display:block;border:1px solid #dce7f5;border-radius:12px;width:100%;height:calc(100vh - 250px);min-height:660px;background:#eef4fc}#incident152 .incident152-note{font-size:12px;color:#617492;margin-top:8px}#incident152 .incident152-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+</style>
+<script id="step152IncidentFeature">
+(function(){
+ function init(){
+  if(!document.getElementById('incident152')){
+   const el=document.createElement('section');el.id='incident152';el.className='hide';el.innerHTML=`<div class="incident152-actions"><button class="btn s" type="button" id="incident152Back">← Quay lại Tiện ích</button><b>Biên bản sự vụ</b></div><div class="incident152-shell"><iframe title="Ứng dụng Biên bản sự vụ" id="incident152Frame" loading="lazy" src="./bien-ban-su-vu.html"></iframe><p class="incident152-note">Biên bản sự vụ được kế thừa từ ứng dụng gốc, lưu riêng dữ liệu biên bản trong trình duyệt. Không chỉnh sửa danh sách công nhân hay tài khoản của ứng dụng chính.</p></div>`;
+   document.querySelector('main').appendChild(el);
+   document.getElementById('incident152Back').onclick=()=>window.go('utilhub');
+  }
+  if(typeof T!=='undefined'&&!T.incident152)T.incident152=['Biên bản sự vụ','Lập biên bản, lựa chọn phương án xử lý, tính tiền và xuất Word'];
+  if(typeof GN!=='undefined')GN.incident152='Tiện ích';
+  const hub=document.getElementById('utilhub');
+  if(hub&&!hub.querySelector('[data-util-go="incident152"]')){
+   const grid=hub.querySelector('.sysfunc-grid');if(grid){
+    const btn=document.createElement('button');btn.type='button';btn.className='sysfunc-btn sf-purple';btn.dataset.utilGo='incident152';btn.innerHTML='<span class="sficon"><svg class="i"><use href="#i-log"></use></svg></span><span><b>Biên bản sự vụ</b><small>Lập biên bản, xử lý vi phạm và tải Word.</small></span>';btn.onclick=()=>window.go('incident152');grid.appendChild(btn);
+   }
+  }
+ }
+ const baseGo=window.go;
+ window.go=function(page){
+  init();
+  if(page==='incident152'){
+    document.body.dataset.page=page;
+    if(typeof T!=='undefined')Object.keys(T).forEach(k=>{let e=document.getElementById(k);if(e)e.classList.toggle('hide',k!==page)});
+    const element=document.getElementById('incident152');element.classList.remove('hide');
+    const t=document.getElementById('ttl'), sub=document.getElementById('sub'), eb=document.getElementById('eb');
+    if(t)t.textContent='Biên bản sự vụ';if(sub)sub.textContent='Công cụ lập biên bản KTX';if(eb)eb.textContent='TIỆN ÍCH';
+    const tools=document.getElementById('tools');if(tools)tools.classList.add('hide');
+    document.querySelectorAll('nav button[data-p]').forEach(b=>b.classList.remove('on'));
+    window.scrollTo(0,0);return;
+  }
+  document.getElementById('incident152')?.classList.add('hide');
+  const result=baseGo.apply(this,arguments);
+  init();return result;
+ };
+ window.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+
+<style id="step157-sidebar">
+@media (min-width:861px){
+ html,body{min-height:100%!important}
+ body{display:flex!important;flex-direction:row!important;align-items:stretch!important;min-height:100dvh!important}
+ body>nav{height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;position:sticky!important;top:0!important;display:flex!important;flex-direction:column!important;align-self:stretch!important;overflow:hidden!important;padding-bottom:0!important}
+ body>nav>.brand{flex:0 0 auto!important}
+ body>nav>#step146NavScroll{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding:2px 0 4px!important;scrollbar-width:none!important;-ms-overflow-style:none!important}
+ body>nav>#step146NavScroll::-webkit-scrollbar{display:none!important;width:0!important}
+ body>nav>#authUserbar{position:static!important;order:99!important;flex:0 0 auto!important;bottom:auto!important;left:auto!important;right:auto!important;width:calc(100% - 16px)!important;max-width:none!important;margin:auto 8px 8px!important;z-index:4!important}
+ body>nav>#ft{display:none!important}
+ body>main{display:block!important;flex:1 1 auto!important;min-width:0!important;max-width:none!important;width:calc(100% - 188px)!important;margin:0!important}
+}
+@media(max-width:860px){body>nav{height:auto!important;min-height:0!important;max-height:none!important;overflow-x:auto!important}}
+</style></html>
