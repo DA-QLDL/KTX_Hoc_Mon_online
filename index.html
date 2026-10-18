@@ -6368,7 +6368,7 @@ window.addEventListener('unhandledrejection',e=>{const m=String(e.reason&&e.reas
 (function(){
  function init(){
   if(!document.getElementById('incident152')){
-   const el=document.createElement('section');el.id='incident152';el.className='hide';el.innerHTML=`<div class="incident152-actions"><button class="btn s" type="button" id="incident152Back">← Quay lại Tiện ích</button><b>Biên bản sự vụ</b></div><div class="incident152-shell"><iframe title="Ứng dụng Biên bản sự vụ" id="incident152Frame" loading="lazy" src="./bien-ban-su-vu.html"></iframe><p class="incident152-note">Biên bản sự vụ được kế thừa từ ứng dụng gốc, lưu riêng dữ liệu biên bản trong trình duyệt. Không chỉnh sửa danh sách công nhân hay tài khoản của ứng dụng chính.</p></div>`;
+   const el=document.createElement('section');el.id='incident152';el.className='hide';el.innerHTML=`<div class="incident152-actions"><button class="btn s" type="button" id="incident152Back">← Quay lại Tiện ích</button><b>Biên bản sự vụ</b></div><div class="incident152-shell"><iframe title="Ứng dụng Biên bản sự vụ" id="incident152Frame" loading="lazy" src="./bien-ban-su-vu.html"></iframe><p class="incident152-note">Biên bản sự vụ được tách riêng dữ liệu trong trình duyệt; chưa tự đồng bộ lên Supabase. Kiểm tra số liệu và mẫu Word trước khi ký.</p></div>`;
    document.querySelector('main').appendChild(el);
    document.getElementById('incident152Back').onclick=()=>window.go('utilhub');
   }

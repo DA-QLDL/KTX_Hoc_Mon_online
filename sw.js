@@ -1,8 +1,8 @@
-const CACHE_NAME = 'ktx-hoc-mon-STEP157-attendance-sidebar';
+const CACHE_NAME = 'ktx-hoc-mon-STEP158-incident-module';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
-  './qr-form.html', './qr-config.js'
+  './qr-form.html', './qr-config.js', './bien-ban-su-vu.html'
 ];
 
 self.addEventListener('install', event => {
