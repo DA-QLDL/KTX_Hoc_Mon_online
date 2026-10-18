@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ktx-hoc-mon-step146-bottom-logout';
+const CACHE_NAME = 'ktx-hoc-mon-step147-admin-accounts';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
