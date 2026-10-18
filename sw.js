@@ -1,8 +1,8 @@
-const CACHE_NAME = 'ktx-hoc-mon-STEP170-qr-sessions';
+const CACHE_NAME = 'ktx-hoc-mon-STEP172-excel-import';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
-  './so-tang-giam.html', './qr-sessions.js', './qr-form.html', './attendance-form.html', './cccd-scan.js', './qr-config.js', './bien-ban-su-vu.html'
+  './excel-import.js', './cosovatchat.html', './vs-vpp.html', './vipham-ncc.html', './pccc.html', './so-tang-giam.html', './qr-sessions.js', './qr-form.html', './attendance-form.html', './cccd-scan.js', './qr-config.js', './bien-ban-su-vu.html'
 ];
 
 self.addEventListener('install', event => {
