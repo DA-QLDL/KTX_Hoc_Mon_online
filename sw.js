@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ktx-hoc-mon-STEP158-incident-module';
+const CACHE_NAME = 'ktx-hoc-mon-STEP159-qr-attendance-xlsx';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
@@ -13,7 +13,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil((async()=>{
     const keys = await caches.keys();
-    await Promise.all(keys.filter(k => k.startsWith('ktx-hoc-mon-pwa-') && k !== CACHE_NAME).map(k => caches.delete(k)));
+    await Promise.all(keys.filter(k => k.startsWith('ktx-hoc-mon-') && k !== CACHE_NAME).map(k => caches.delete(k)));
     await self.clients.claim();
   })());
 });
