@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ktx-hoc-mon-step153-attendance-sidebar';
+const CACHE_NAME = 'ktx-step154-layout-repair';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
