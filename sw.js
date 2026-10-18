@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ktx-hoc-mon-STEP168-qr-sessions';
+const CACHE_NAME = 'ktx-hoc-mon-STEP169-qr-sessions';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
