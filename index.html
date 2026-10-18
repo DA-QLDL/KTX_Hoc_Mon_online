@@ -6243,8 +6243,8 @@ window.addEventListener('unhandledrejection',e=>{const m=String(e.reason&&e.reas
    window.authHubHide();await window.authLoadAdminData();updateUserbar();applyPerms();all();
    if(data.user?.user_metadata?.change_password_required){
     // First-login change happens via the logged-in client's updateUser API.
-    const newPass=prompt('Lần đăng nhập đầu: đặt mật khẩu mới (ít nhất 12 ký tự). Chọn Hủy để đổi sau.');
-    if(newPass!==null){if(newPass.length<12){alert('Mật khẩu phải có ít nhất 12 ký tự');return}
+    const newPass=prompt('Lần đăng nhập đầu: đặt mật khẩu mới (ít nhất 6 ký tự). Chọn Hủy để đổi sau.');
+    if(newPass!==null){if(newPass.length<6){alert('Mật khẩu phải có ít nhất 6 ký tự');return}
       const upd=await sb.auth.updateUser({password:newPass,data:{change_password_required:false}});
       if(upd.error)alert('Chưa đổi được mật khẩu: '+upd.error.message);
       else alert('Đã đổi mật khẩu.');}
@@ -6267,7 +6267,7 @@ window.addEventListener('unhandledrejection',e=>{const m=String(e.reason&&e.reas
    dialog.innerHTML=`<div class="ac140-modal-head"><h3>Admin tạo tài khoản nhân viên</h3><button type="button" class="btn s" id="ac147Close">Đóng</button></div><div class="ac140-modal-body"><form id="ac147Form" autocomplete="off">
     <label class="ac147-label">Họ và tên<input name="display_name" required minlength="2" maxlength="100"></label>
     <label class="ac147-label">Tên đăng nhập<input name="username" pattern="[a-z][a-z0-9._-]{2,31}" required placeholder="nv001" autocomplete="off"></label>
-    <label class="ac147-label">Mật khẩu tạm thời<input name="password" type="password" minlength="12" required autocomplete="new-password"></label>
+    <label class="ac147-label">Mật khẩu tạm thời<input name="password" type="password" minlength="6" required autocomplete="new-password"></label>
     <label class="ac147-label">Vai trò<select name="role"><option value="staff">Nhập liệu</option><option value="manager">Quản lý</option><option value="guard">Bảo vệ</option><option value="viewer">Chỉ xem</option></select></label>
     <div class="ac147-all"><span class="ac147-label">KTX được phân công</span><div class="ac147-pick">${['KTX 1','KTX 2'].map(x=>`<label><input type="checkbox" name="ktx" value="${x}">${x}</label>`).join('')}</div></div>
     <div class="ac147-all"><span class="ac147-label">Dãy được phân công</span><div class="ac147-pick">${['Dãy 1','Dãy 2','Dãy 3','Dãy 4','Dãy 5','Dãy 6'].map(x=>`<label><input type="checkbox" name="days" value="${x}">${x}</label>`).join('')}</div></div>
