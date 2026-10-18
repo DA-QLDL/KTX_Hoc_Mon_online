@@ -3,5 +3,5 @@
 // Bạn chỉ cần dán Publishable key vào dòng key bên dưới.
 window.KTX_QR_CONFIG = {
   url: 'https://ojyamqpkmhmhqjfcudhy.supabase.co',
-  key: 'PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY'
+  key: 'sb_publishable_TfczErIbZKv_nMdRu_wUWg_n-h6uDSq'
 };
