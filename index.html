@@ -1869,7 +1869,19 @@ $('fx').onchange=async e=>{if(!can('import')){alert('Bạn không có quyền Im
   add('IMPORT',`Import (cập nhật) từ ${f.name}: ${up} người cập nhật, ${nw} người thêm mới`);alert(`Đã cập nhật ${up} công nhân và thêm mới ${nw} công nhân.`)}
  sel.clear();sv();all();if(ASN)alert('Đã tự động tách địa chỉ cho '+ASN+' công nhân thành Thôn/Xóm, Xã/Phường, Tỉnh/TP.')}catch(x){alert('Không đọc được file: '+x.message)}e.target.value=''};
 
-function dlBrowser(name,data,type){try{const blob=data instanceof Blob?data:new Blob([data],{type:type||'application/octet-stream'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500);return true}catch(e){return false}}
+function dlBrowser(name,data,type){
+ try{
+ const blob=data instanceof Blob?data:new Blob([data],{type:type||'application/octet-stream'});
+ const ordinary=()=>{const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000)};
+ if(typeof window.showSaveFilePicker==='function' && window.isSecureContext){
+   const ext=(name.match(/\.[a-z0-9]+$/i)||[''])[0].toLowerCase();
+   const mime=type||({'xlsx':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','.docx':'application/vnd.openxmlformats-officedocument.wordprocessingml.document','.pdf':'application/pdf'}[ext]||'application/octet-stream');
+   // Hien dialog ngay trong thao tac nhan nut. Ghi file bat dong bo, khong cham vao du lieu cu.
+   window.showSaveFilePicker({suggestedName:name}).then(async handle=>{try{const writable=await handle.createWritable();await writable.write(blob);await writable.close()}catch(err){alert('Khong luu duoc file: '+(err.message||err))}}).catch(err=>{if(err&&err.name==='AbortError')return;ordinary()});
+ }else ordinary();
+ return true;
+ }catch(e){alert('Khong the tai file: '+(e.message||e));return false}
+}
 async function save(aoa,name,sheet){try{const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(aoa),sheet);const data=XLSX.write(wb,{type:'array',bookType:'xlsx'});let ok=false;if(window.claude&&claude.use)try{const dl=await claude.use('downloads');if(dl){await dl.save({filename:name,data});ok=true}}catch(e){if(e&&e.code=='declined')return}if(!ok&&!dlBrowser(name,data,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'))throw new Error('Trình duyệt không cho phép tải file.')}catch(e){alert('Không lưu được: '+(e&&e.message||e))}}
 const gtN=g=>isNu(g)?'Nữ':isNam(g)?'Nam':(g||'');
 const ttSt=w=>w.tv?(w.tv.reg?'Đã đăng ký tạm vắng':'Tạm vắng (chưa đăng ký)'):(w.tt?'Đã đăng ký tạm trú':'Chưa đăng ký');
@@ -4387,6 +4399,39 @@ function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)retu
 
 
 
+
+<style id="step141-four-columns">
+/* STEP141: 4 nhom nam ngang tren desktop, doc lap moi quy tac flex/grid cu. */
+@media (min-width:1000px){
+#sysfunc .sysfunc-wrap,
+#sysfunc #sysfuncForcedContent{
+ display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ grid-auto-flow:row!important;gap:10px!important;align-items:stretch!important;
+ width:100%!important;max-width:100%!important;
+}
+#sysfunc .sysfunc-wrap>.sysfunc-intro,
+#sysfunc #sysfuncForcedContent>.sysfunc-intro,
+#sysfunc .sysfunc-wrap>.sysfunc-footer,
+#sysfunc #sysfuncForcedContent>.sysfunc-footer{grid-column:1/-1!important;width:100%!important}
+#sysfunc .sysfunc-wrap>.sysfunc-group,
+#sysfunc #sysfuncForcedContent>.sysfunc-group{
+ grid-column:auto!important;grid-row:auto!important;display:block!important;
+ flex:initial!important;flex-basis:auto!important;min-width:0!important;
+ width:100%!important;max-width:100%!important;margin:0!important;
+ padding:10px!important;align-self:stretch!important;
+}
+#sysfunc .sysfunc-group .sysfunc-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+#sysfunc .sysfunc-group .sysfunc-grid>.sysfunc-btn{width:100%!important;min-width:0!important;max-width:100%!important;min-height:42px!important;padding:7px!important;gap:6px!important}
+#sysfunc .sysfunc-btn .sficon{width:23px!important;height:23px!important;flex:0 0 23px!important}
+#sysfunc .sysfunc-btn b{font-size:9.4px!important;white-space:normal!important;overflow-wrap:anywhere!important}
+}
+@media (min-width:620px) and (max-width:999px){
+#sysfunc .sysfunc-wrap,#sysfunc #sysfuncForcedContent{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+#sysfunc .sysfunc-wrap>.sysfunc-intro,#sysfunc .sysfunc-wrap>.sysfunc-footer,
+#sysfunc #sysfuncForcedContent>.sysfunc-intro,#sysfunc #sysfuncForcedContent>.sysfunc-footer{grid-column:1/-1!important}
+#sysfunc .sysfunc-group{width:100%!important;max-width:100%!important;min-width:0!important;flex-basis:auto!important}
+}
+</style>
 </html>`);w.document.close();setTimeout(()=>{w.focus();w.print()},250)}
 managementReportsPage=function(){
  if(!RC96.from||!RC96.to){const r=rc96Range(RC96.preset||'month');RC96.from=r[0];RC96.to=r[1]}
@@ -5876,4 +5921,97 @@ nav .auth-userbar button,nav .user-card button{background:#fff!important;color:#
  document.addEventListener('DOMContentLoaded',enhanceGate);setTimeout(enhanceGate,0);
 })();
 </script>
+
+<style id="step141-four-columns">
+/* STEP141: 4 nhom nam ngang tren desktop, doc lap moi quy tac flex/grid cu. */
+@media (min-width:1000px){
+#sysfunc .sysfunc-wrap,
+#sysfunc #sysfuncForcedContent{
+ display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ grid-auto-flow:row!important;gap:10px!important;align-items:stretch!important;
+ width:100%!important;max-width:100%!important;
+}
+#sysfunc .sysfunc-wrap>.sysfunc-intro,
+#sysfunc #sysfuncForcedContent>.sysfunc-intro,
+#sysfunc .sysfunc-wrap>.sysfunc-footer,
+#sysfunc #sysfuncForcedContent>.sysfunc-footer{grid-column:1/-1!important;width:100%!important}
+#sysfunc .sysfunc-wrap>.sysfunc-group,
+#sysfunc #sysfuncForcedContent>.sysfunc-group{
+ grid-column:auto!important;grid-row:auto!important;display:block!important;
+ flex:initial!important;flex-basis:auto!important;min-width:0!important;
+ width:100%!important;max-width:100%!important;margin:0!important;
+ padding:10px!important;align-self:stretch!important;
+}
+#sysfunc .sysfunc-group .sysfunc-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+#sysfunc .sysfunc-group .sysfunc-grid>.sysfunc-btn{width:100%!important;min-width:0!important;max-width:100%!important;min-height:42px!important;padding:7px!important;gap:6px!important}
+#sysfunc .sysfunc-btn .sficon{width:23px!important;height:23px!important;flex:0 0 23px!important}
+#sysfunc .sysfunc-btn b{font-size:9.4px!important;white-space:normal!important;overflow-wrap:anywhere!important}
+}
+@media (min-width:620px) and (max-width:999px){
+#sysfunc .sysfunc-wrap,#sysfunc #sysfuncForcedContent{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+#sysfunc .sysfunc-wrap>.sysfunc-intro,#sysfunc .sysfunc-wrap>.sysfunc-footer,
+#sysfunc #sysfuncForcedContent>.sysfunc-intro,#sysfunc #sysfuncForcedContent>.sysfunc-footer{grid-column:1/-1!important}
+#sysfunc .sysfunc-group{width:100%!important;max-width:100%!important;min-width:0!important;flex-basis:auto!important}
+}
+</style>
+
+<style id="step142-login-layout-fix">
+/* STEP142: form dang nhap doc lap, nhat quan, khong bi CSS trang noi dung de len */
+html:has(body.auth-locked),html:has(body.auth-locked) body{overflow:hidden!important}
+body.auth-locked{display:block!important;zoom:1!important;margin:0!important;min-height:100dvh!important;overflow:hidden!important}
+body.auth-locked > *:not(#authHubGate):not(script):not(style){visibility:hidden!important;pointer-events:none!important}
+body.auth-locked #authHubGate,body.auth-locked #authHubGate *{visibility:visible!important}
+body.auth-locked #alertFloat,body.auth-locked #alertQuickDrawer,body.auth-locked .alert-quick-drawer,body.auth-locked .toast{display:none!important}
+#authHubGate.auth-gate2{position:fixed!important;inset:0!important;z-index:2147483000!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important;overflow-y:auto!important;padding:clamp(14px,3vh,32px) 16px!important;width:100vw!important;height:100dvh!important;max-height:none!important;zoom:1!important;background:linear-gradient(155deg,#ecf4ff 0%,#e3edfb 55%,#f5f8fe 100%)!important}
+#authHubGate.auth-gate2.hide:not(body.auth-locked #authHubGate){display:none!important}
+#authHubGate .auth-card2{display:block!important;position:relative!important;flex:0 0 auto!important;box-sizing:border-box!important;width:min(440px,100%)!important;max-width:440px!important;min-width:0!important;margin:auto!important;padding:28px 30px 22px!important;border-radius:20px!important;border:1px solid #d7e3f1!important;background:#fff!important;box-shadow:0 20px 65px rgba(29,69,120,.15)!important;overflow:visible!important;text-align:left!important}
+#authHubGate .auth-card2 *,#authHubGate .auth-card2 *::before,#authHubGate .auth-card2 *::after{box-sizing:border-box!important}
+#authHubGate .auth-brand2{display:flex!important;align-items:center!important;gap:12px!important;margin:0 0 15px!important;min-width:0!important}
+#authHubGate .auth-brand2>div:last-child{min-width:0!important}
+#authHubGate .auth-logo2{flex:0 0 46px!important;width:46px!important;height:46px!important;display:grid!important;place-items:center!important;background:linear-gradient(145deg,#267beb,#165bd0)!important;color:#fff!important;border-radius:13px!important}
+#authHubGate .auth-brand2 h2{font-size:18px!important;line-height:1.3!important;white-space:normal!important}
+#authHubGate .auth-login-title140{margin:12px 0 0!important;font-size:21px!important;line-height:1.4!important}
+#authHubGate .auth-intro140{margin:7px 0 14px!important;line-height:1.55!important}
+#authHubGate .auth-tabs2{display:grid!important;grid-template-columns:1fr 1fr!important;width:100%!important;margin:14px 0 17px!important;padding:4px!important;gap:5px!important;background:#f4f7fc!important;border:1px solid #e0e8f4!important;border-radius:11px!important}
+#authHubGate .auth-tabs2 button{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-width:0!important;min-height:39px!important;margin:0!important;padding:8px 7px!important;font-size:11.3px!important;line-height:1.3!important;white-space:normal!important;text-align:center!important}
+#authHubGate .auth-tabs2 button.on{background:#246bdf!important;color:#fff!important;border-color:#246bdf!important}
+#authHubGate #ahLogin,#authHubGate #ahReq{width:100%!important;min-width:0!important;margin:0!important;padding:0!important}
+#authHubGate #ahLogin.hide,#authHubGate #ahReq.hide{display:none!important}
+#authHubGate .auth-field2,#authHubGate label.auth-field2{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:6px!important;width:100%!important;max-width:100%!important;min-width:0!important;margin:0 0 14px!important;padding:0!important;white-space:normal!important}
+#authHubGate .auth-field2 span{display:block!important;position:static!important;width:100%!important;text-align:left!important;margin:0!important;font-size:12px!important;line-height:1.4!important;color:#465d7e!important}
+#authHubGate .auth-field2 input{display:block!important;position:static!important;width:100%!important;min-width:0!important;max-width:100%!important;height:45px!important;min-height:45px!important;margin:0!important;padding:0 12px!important;border:1px solid #cfdced!important;border-radius:10px!important;background:#fbfdff!important;color:#182f50!important;font:500 13px/1.4 'Be Vietnam Pro',sans-serif!important;box-shadow:none!important}
+#authHubGate .auth-field2 input:focus{outline:0!important;border-color:#3379e2!important;box-shadow:0 0 0 3px #246bdf21!important}
+#authHubGate .auth-field2.auth-pass140{position:relative!important}
+#authHubGate .auth-pass140 input{padding-right:54px!important}
+#authHubGate .auth-eye140{position:absolute!important;top:auto!important;right:7px!important;bottom:5px!important;display:grid!important;place-items:center!important;width:38px!important;height:35px!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;color:#4c6c94!important;font-size:11px!important}
+#authHubGate .auth-forgot140{display:block!important;width:max-content!important;max-width:100%!important;margin:0 0 10px auto!important;padding:2px 0!important;border:0!important;background:none!important;box-shadow:none!important;font-size:11px!important;text-align:right!important;color:#1768dc!important}
+#authHubGate .auth-mainbtn2{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-width:0!important;height:45px!important;margin:12px 0 0!important;padding:0 15px!important;border-radius:10px!important;background:#246bdf!important;color:#fff!important;border:1px solid #246bdf!important;text-align:center!important;line-height:1.2!important;font-weight:800!important;box-shadow:0 6px 16px #246bdf2e!important}
+#authHubGate .auth-mainbtn2:hover{background:#185bc8!important;color:#fff!important}
+#authHubGate .auth-msg2{display:block!important;width:100%!important;min-height:0!important;margin:10px 0 0!important;line-height:1.5!important;font-size:11px!important;overflow-wrap:anywhere!important}
+#authHubGate .auth-msg2:empty{display:none!important}
+#authHubGate .auth-foot2{width:100%!important;margin:15px 0 0!important;padding:12px 0 0!important;border-top:1px solid #e6edf7!important;text-align:center!important;font-size:10px!important;line-height:1.55!important;color:#8191a8!important}
+@media(max-height:700px){#authHubGate.auth-gate2{justify-content:flex-start!important}#authHubGate .auth-card2{margin:auto!important;padding-top:20px!important;padding-bottom:18px!important}#authHubGate .auth-brand2{margin-bottom:10px!important}#authHubGate .auth-field2{margin-bottom:10px!important}}
+@media(max-width:480px){#authHubGate.auth-gate2{padding:12px!important}#authHubGate .auth-card2{padding:22px 18px 19px!important;width:100%!important}#authHubGate .auth-tabs2 button{font-size:10.5px!important}}
+</style>
+<script id="step142-login-cleanup">
+(function(){
+ function cleanup(){
+  const locked=document.body.classList.contains('auth-locked');
+  const gate=document.getElementById('authHubGate');
+  if(locked){
+   if(gate){gate.classList.remove('hide');gate.setAttribute('role','dialog');gate.setAttribute('aria-modal','true');gate.setAttribute('aria-label','Đăng nhập KTX Hóc Môn')}
+   for(const id of ['alertFloat','alertQuickDrawer']){const el=document.getElementById(id);if(el)el.style.setProperty('display','none','important')}
+   // Xóa các text node bị chèn nhầm literal \n\n bên ngoài khung đăng nhập.
+   [...document.body.childNodes].filter(n=>n.nodeType===3 && /^\s*(?:\\n)+\s*$/.test(n.textContent||'')).forEach(n=>n.remove());
+  }else{
+   for(const id of ['alertFloat','alertQuickDrawer']){const el=document.getElementById(id);if(el)el.style.removeProperty('display')}
+  }
+ }
+ document.addEventListener('DOMContentLoaded',cleanup);
+ window.addEventListener('load',cleanup);
+ const obs=new MutationObserver(cleanup);obs.observe(document.body,{attributes:true,attributeFilter:['class']});
+ setTimeout(cleanup,0);
+})();
+</script>
+
 </html>
