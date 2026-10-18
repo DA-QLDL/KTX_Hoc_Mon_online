@@ -1,8 +1,8 @@
-const CACHE_NAME = 'ktx-hoc-mon-STEP159-qr-attendance-xlsx';
+const CACHE_NAME = 'ktx-hoc-mon-STEP161-cccd-qr-scan';
 const APP_SHELL = [
   './', './index.html', './manifest.webmanifest',
   './pwa-icon-192.png', './pwa-icon-512.png',
-  './qr-form.html', './qr-config.js', './bien-ban-su-vu.html'
+  './qr-form.html', './attendance-form.html', './cccd-scan.js', './qr-config.js', './bien-ban-su-vu.html'
 ];
 
 self.addEventListener('install', event => {
