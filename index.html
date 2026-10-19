@@ -2385,19 +2385,57 @@ function mealCards(){mealWeek();const on=NCCS.filter(n=>RP.on.has(n));
 async function mealCopy(){const t=mealText();try{await navigator.clipboard.writeText(t);alert('Đã sao chép báo cáo.');return}catch(e){}
  try{const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();const ok=document.execCommand('copy');a.remove();if(ok){alert('Đã sao chép báo cáo.');return}}catch(e){}
  alert('Không sao chép tự động được. Hãy bôi đen nội dung báo cáo rồi bấm Ctrl+C, hoặc dùng nút Xuất báo cáo.')}
-async function mealImport(files){const pick=$('mp_ni').value,out=[],bad=[];let any=false;
+/* STEP186 - publish approved Excel weekly menu to Cloud for PC/mobile shared viewing. */
+function mealStandard186(name){
+ const s=String(name||'');
+ // Only extract an explicit weight/volume printed in the source; never invent grams.
+ const found=s.match(/(?:\d+(?:[.,]\d+)?\s*(?:[-–~]\s*\d+(?:[.,]\d+)?)?\s*(?:g|gram|kg|ml|lít|lit)\b)/ig);
+ return found?found.join('; '):'Chưa có định lượng trong file Excel';
+}
+async function mealCloudPublish186(records){
+ const client=typeof syncClient==='function'?syncClient():null;
+ if(!client)throw Error('Không kết nối được Supabase. Thực đơn mới chỉ lưu trên máy này.');
+ const userResult=await client.auth.getUser();const user=userResult?.data?.user;
+ if(userResult?.error||!user)throw Error('Phiên đăng nhập chưa hợp lệ. Hãy đăng nhập rồi Import Excel lại.');
+ if(typeof ME==='undefined'||!['admin','manager'].includes(ME.role))throw Error('Tài khoản cần quyền Quản trị hoặc Quản lý để đưa thực đơn lên Cloud.');
+ const today=new Date().toISOString();let uploaded=0;const failures=[];
+ for(const r of records){
+  const dishes=(r.dishes||[]).map(v=>({name:String(v),standard:mealStandard186(v)}));
+  if(!dishes.length)continue;
+  const payload={meal_date:r.date,meal_period:r.period,vendor:r.vendor,menu_type:r.kind,dishes,updated_at:today,updated_by:user.id};
+  try{
+   // Preserve previously curated quantities where the Excel sheet only provides dish names.
+   const old=await client.from('ktx_meal_menus').select('dishes').eq('meal_date',r.date).eq('meal_period',r.period).eq('vendor',r.vendor).eq('menu_type',r.kind).maybeSingle();
+   if(old.error)throw old.error;
+   const standards=new Map((old.data?.dishes||[]).filter(x=>x?.name).map(x=>[String(x.name).trim().toLowerCase(),String(x.standard||'')]));
+   for(const x of dishes)if(x.standard==='Chưa có định lượng trong file Excel'){
+    const v=standards.get(x.name.trim().toLowerCase());if(v&&v!=='Chưa có định lượng trong file Excel')x.standard=v;
+   }
+   const res=await client.from('ktx_meal_menus').upsert(payload,{onConflict:'meal_date,meal_period,vendor,menu_type'});
+   if(res.error)throw res.error;
+   uploaded++;
+  }catch(e){failures.push(`${r.vendor} · ${r.date} · ${r.period} · ${r.kind}: ${e.message||e}`);}
+ }
+ return{uploaded,failures};
+}
+async function mealImport(files){const pick=$('mp_ni').value,out=[],bad=[],cloudRecords=[];let any=false;
  try{if(!window.XLSX)throw new Error('Chưa tải được thư viện đọc Excel (cần kết nối mạng tới cdnjs).');
   for(const file of files){try{const wb=XLSX.read(await file.arrayBuffer(),{type:'array'});
     const head=(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:false,defval:''})||[]).slice(0,4).flat().join(' ');
     const ncc=pick||mealDetect(file.name+' '+head);if(!ncc){bad.push(`${file.name}: không nhận ra nhà cung cấp, hãy chọn tên nhà cung cấp ở ô bên cạnh rồi nhập lại`);continue}
     let nm=0,nc=0,lo='9999',hi='0000';
     for(const sn of wb.SheetNames){const rows=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:false,defval:''}),r=menuParse(rows,sn);if(!r)continue;
-     const dst=((MENU[ncc]=MENU[ncc]||{})[r.kind]=MENU[ncc][r.kind]||{});for(const iso in r.days){dst[iso]=r.days[iso];r.kind=='man'?nm++:nc++;if(iso<lo)lo=iso;if(iso>hi)hi=iso}}
+     const dst=((MENU[ncc]=MENU[ncc]||{})[r.kind]=MENU[ncc][r.kind]||{});for(const iso in r.days){dst[iso]=r.days[iso];for(const period of ['sang','trua','chieu']){const dishes=r.days[iso][period]||[];if(dishes.length)cloudRecords.push({date:iso,period,vendor:ncc,kind:r.kind,dishes})}r.kind=='man'?nm++:nc++;if(iso<lo)lo=iso;if(iso>hi)hi=iso}}
     if(!nm&&!nc){bad.push(`${file.name}: không thấy bảng thực đơn đúng mẫu (cột SÁNG / TRƯA / TỐI theo từng ngày). Phần đầu file: ${menuDiag(wb)}`);continue}
     const f=i=>i.slice(8)+'/'+i.slice(5,7);out.push(`${ncc}: ${nm} ngày mặn, ${nc} ngày chay (${f(lo)} – ${f(hi)})`);any=true;add('UPDATE',`Nhập thực đơn ${ncc}: ${nm} ngày mặn, ${nc} ngày chay`)}
    catch(e){bad.push(`${file.name}: ${e&&e.message||e}`)}}
   if(any){try{localStorage.setItem('ktx_menu',JSON.stringify(MENU))}catch(e){}mealFill();mealCards()}
-  const msg=(out.length?'Đã nhập thực đơn:\n'+out.join('\n'):'Không nhập được thực đơn.')+(bad.length?'\nBỏ qua:\n'+bad.join('\n'):'');
+  let cloudNote='';if(cloudRecords.length){
+   const im=$('mp_im');if(im)im.textContent='Đã đọc Excel. Đang đồng bộ '+cloudRecords.length+' bảng thực đơn lên Supabase…';
+   try{const result=await mealCloudPublish186(cloudRecords);cloudNote=`\nCloud: đã cập nhật ${result.uploaded}/${cloudRecords.length} bảng.`+(result.failures.length?'\nLỗi Cloud ('+result.failures.length+'): '+result.failures.slice(0,8).join(' | '):'\nMở ứng dụng bằng điện thoại để xem cùng thực đơn.');}
+   catch(e){cloudNote='\nCHƯA ĐỒNG BỘ CLOUD: '+(e.message||e)+'\nThực đơn vẫn có trên trình duyệt PC hiện tại.';}
+  }
+  const msg=(out.length?'Đã nhập thực đơn:\n'+out.join('\n'):'Không nhập được thực đơn.')+(bad.length?'\nBỏ qua:\n'+bad.join('\n'):'')+cloudNote;
   const im=$('mp_im');if(im)im.textContent=msg;alert(msg)}
  catch(e){alert('Không nhập được thực đơn: '+(e&&e.message||e))}}
 function mealPage(){const el=$('meal');
@@ -2653,7 +2691,7 @@ function qrPoster(t,sub,text){const cv=document.createElement('canvas');cv.width
 function qrSave(cv,name){return new Promise((resolve,reject)=>cv.toBlob(b=>{if(!b)return reject(new Error('Không tạo được ảnh QR'));dlBrowser(name,b,'image/png');resolve()},'image/png'))}
 const slug=t=>sa(t).replace(/\s+/g,'-').slice(0,40)||'qr';
 function qrCfg(){const c=(typeof syncCfg==='function'?syncCfg():null)||window.KTX_QR_CONFIG||{};return{url:String(c.url||''),key:String(c.key||'')}}
-function qrSb(){const c=qrCfg();if(typeof syncClient==='function'){const s=syncClient();if(s)return s}if(!window.supabase||!/^https:\/\//.test(c.url)||!c.key||/PASTE_|YOUR_/i.test(c.key))return null;if(!window.__KTX_QR_SB)window.__KTX_QR_SB=window.supabase.createClient(c.url,c.key,{auth:{persistSession:false,autoRefreshToken:true,detectSessionInUrl:false}});return window.__KTX_QR_SB}
+function qrSb(){const c=qrCfg();if(typeof syncClient==='function'){const s=syncClient();if(s)return s}if(!window.supabase||!/^https:\/\//.test(c.url)||!c.key||/PASTE_|YOUR_/i.test(c.key))return null;if(!window.__KTX_QR_SB)window.__KTX_QR_SB=window.supabase.createClient(c.url,c.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});return window.__KTX_QR_SB}
 function qrFormUrl(mode){const base=location.origin+(location.pathname.endsWith('/')?location.pathname:location.pathname.replace(/\/[^/]*$/,'/'));return new URL('qr-form.html?mode='+mode,base).href}
 function qrPage(){const el=$('qr');const tabs=[['make','Tạo mã QR'],...(can('view')?[['attendance','Điểm danh bằng QR · Xuất Excel']]:[]),...(can('attendance')?[['scan','Xác nhận vào/ra']]:[]),...(can('qrApprove')?[['regin','Duyệt đăng ký vào'],['regout','Duyệt đăng ký ra']]:[])];if(!tabs.some(t=>t[0]==QT))QT='make';el.innerHTML=`<div class="row" style="margin-bottom:14px">${tabs.map(t=>`<button class="btn ${QT==t[0]?'':'s'}" data-qt="${t[0]}">${t[1]}${t[0]=='regin'&&QRREQ.filter(x=>x.request_type=='in'&&x.status=='pending').length?` <span class="pill">${QRREQ.filter(x=>x.request_type=='in'&&x.status=='pending').length}</span>`:''}${t[0]=='regout'&&QRREQ.filter(x=>x.request_type=='out'&&x.status=='pending').length?` <span class="pill" style="background:linear-gradient(135deg,#d99019,#f0ab2b)">${QRREQ.filter(x=>x.request_type=='out'&&x.status=='pending').length}</span>`:''}</button>`).join('')}</div><div id="qb"></div>`;el.querySelectorAll('[data-qt]').forEach(b=>b.onclick=()=>{QT=b.dataset.qt;qrPage()});({make:qrMake,attendance:()=>window.ktxAttendancePage(),scan:qrAttendancePage,regin:()=>qrApprovePage('in'),regout:()=>qrApprovePage('out')})[QT]()}
 function qrMake(){const lin=qrFormUrl('in'),lout=qrFormUrl('out');$('qb').innerHTML=`<div class="g2"><div class="card"><h3>Đăng ký vào KTX</h3><p class="mut" style="font-size:12.5px">Công nhân quét mã → điền biểu mẫu → hồ sơ chuyển vào <b>Duyệt đăng ký vào</b>. Chỉ sau khi quản lý duyệt mới thêm vào danh sách tổng.</p><canvas id="qrin" style="width:100%;max-width:330px;display:block;margin:10px auto;border:2px solid #2f6fe8;border-radius:12px;box-shadow:0 0 0 4px rgba(47,111,232,.08)"></canvas><div class="row" style="justify-content:center"><button class="btn g" id="qrinp">${ico2('dl')}Tải áp phích</button><button class="btn s" id="qrinq">${ico2('dl')}Tải mã QR</button></div><label class="fl">Link biểu mẫu<input value="${esc(lin)}" readonly onclick="this.select()"></label></div><div class="card"><h3>Đăng ký ra khỏi KTX</h3><p class="mut" style="font-size:12.5px">Công nhân nhập <b>Họ tên · CCCD · Dãy · Phòng</b>; Mã nhân viên và SĐT không bắt buộc. Yêu cầu chuyển vào <b>Duyệt đăng ký ra</b>; sau khi duyệt người đó được chuyển khỏi danh sách tổng.</p><canvas id="qrout" style="width:100%;max-width:330px;display:block;margin:10px auto;border:2px solid #ef4444;border-radius:12px;box-shadow:0 0 0 4px rgba(239,68,68,.08)"></canvas><div class="row" style="justify-content:center"><button class="btn" id="qroutp">${ico2('dl')}Tải áp phích</button><button class="btn s" id="qroutq">${ico2('dl')}Tải mã QR</button></div><label class="fl">Link biểu mẫu<input value="${esc(lout)}" readonly onclick="this.select()"></label></div></div><div class="card"><h3>Trạng thái kết nối</h3><div id="qrcfg"></div></div>`;
@@ -4123,7 +4161,7 @@ const syncLs=(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.p
 const syncCfg=()=>{const q=window.KTX_QR_CONFIG||{};return{url:syncLs('ktx_sb_sync_url',q.url||''),key:syncLs('ktx_sb_sync_key',(!/PASTE_|YOUR_/i.test(q.key||'')?q.key:'')),email:syncLs('ktx_sb_sync_email','')}};
 function syncSaveCfg(){const g=i=>($(i)&&$(i).value||'').trim();localStorage.setItem('ktx_sb_sync_url',JSON.stringify(g('sy_url')));localStorage.setItem('ktx_sb_sync_key',JSON.stringify(g('sy_key')));localStorage.setItem('ktx_sb_sync_email',JSON.stringify(g('sy_email')))}
 function syncValidCfg(c=syncCfg()){return /^https:\/\//.test(c.url||'')&&!!c.key&&!/PASTE_|YOUR_/i.test(c.key)}
-function syncClient(){const c=syncCfg();if(!syncValidCfg(c)||!window.supabase)return null;if(SUPA_SYNC.client&&SUPA_SYNC._url===c.url&&SUPA_SYNC._key===c.key)return SUPA_SYNC.client;SUPA_SYNC.client=window.supabase.createClient(c.url,c.key,{auth:{persistSession:false,autoRefreshToken:true,detectSessionInUrl:false}});SUPA_SYNC._url=c.url;SUPA_SYNC._key=c.key;return SUPA_SYNC.client}
+function syncClient(){const c=syncCfg();if(!syncValidCfg(c)||!window.supabase)return null;if(SUPA_SYNC.client&&SUPA_SYNC._url===c.url&&SUPA_SYNC._key===c.key)return SUPA_SYNC.client;SUPA_SYNC.client=window.supabase.createClient(c.url,c.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});SUPA_SYNC._url=c.url;SUPA_SYNC._key=c.key;return SUPA_SYNC.client}
 function syncActor(){return SUPA_SYNC.session&&SUPA_SYNC.session.user&&SUPA_SYNC.session.user.id||null}
 function syncStamp(){return new Date().toISOString()}
 function syncSafeISO(v,fallback){
