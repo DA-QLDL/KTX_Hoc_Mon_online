@@ -23,7 +23,52 @@ $('saveMenu').disabled=true;info('Đang lưu thực đơn lên Cloud…');try{co
 
 // STEP187: Import a workbook directly in the viewer. This is independent of the weekly batch.
 let directLoaded=false;
-function parsedRowsToDishes(names){return (names||[]).map(n=>({name:String(n).trim(),standard:(String(n).match(/\d+(?:[.,]\d+)?\s*(?:[-–~]\s*\d+(?:[.,]\d+)?)?\s*(?:g|gram|kg|ml|lít|lit)\b/i)||[])[0]||'Chưa có định lượng trong file Excel'})).filter(x=>x.name)}
+// STEP189: Only use the "Trọng lượng thành phẩm" value as standard serving weight.
+// No extrapolation from ingredient amounts or numeric fragments inside the dish name.
+const normalizeMealText=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').toLowerCase().replace(/\s+/g,' ').trim();
+const productionWeightHeader=s=>/trong\s*luong\s*(?:thanh\s*pham|tp)\b/.test(normalizeMealText(s));
+const measurePattern=/\b\d+(?:[.,]\d+)?\s*(?:[-–~]\s*\d+(?:[.,]\d+)?\s*)?(?:g|gram|kg|ml|lit|lít)\b/i;
+function explicitFinishedWeight(raw){
+ const txt=String(raw??'').trim();if(!txt)return '';
+ // Pure numeric cell means grams. Never treat dates or amounts as a weight.
+ if(/^\d+(?:[.,]\d+)?$/.test(txt)){const num=Number(txt.replace(',','.'));return num>0&&num<=5000?txt+'g':''}
+ const match=txt.match(measurePattern);return match?match[0].replace(/\s+/g,' ').trim():'';
+}
+function finishedWeightLookup(sheets){
+ const found=new Map(),clean=v=>String(v??'').replace(/\s+/g,' ').trim();
+ for(const sheet of sheets){const rows=sheet.rows||[];
+   for(let r=0;r<Math.min(rows.length,100);r++){
+    for(let c=0;c<(rows[r]||[]).length;c++){
+     if(!productionWeightHeader(rows[r][c]))continue;
+     // Standard tabular format: dish-name column plus finished-weight column.
+     // Prefer a column explicitly marked "Tên món", "Món ăn", or "Tên thực phẩm".
+     const headers=rows[r]||[];
+     let nameCol=headers.findIndex((v,i)=>i!==c&&/^(ten mon|mon an|ten mon an|ten thuc pham)$/.test(normalizeMealText(v)));
+     if(nameCol<0){nameCol=headers.findIndex((v,i)=>i!==c&&/\b(ten mon|mon an)\b/.test(normalizeMealText(v)))}
+     if(nameCol<0)nameCol=c>0?c-1:-1;
+     if(nameCol<0)continue;
+     for(let k=r+1;k<rows.length;k++){
+      const row=rows[k]||[],name=clean(row[nameCol]),weight=explicitFinishedWeight(row[c]);
+      if(productionWeightHeader(row[c]))break;
+      if(!name||!weight||/^\d+$/.test(name))continue;
+      const key=normalizeMealText(name);if(key&&!found.has(key))found.set(key,weight);
+     }
+    }
+   }
+   // Alternate form: a single cell containing both dish name and labeled finished weight.
+   for(const row of rows)for(const raw of (row||[])){
+    const txt=clean(raw),m=txt.match(/(.+?)[\s:–-]+trọng\s*lượng\s*thành\s*phẩm\s*[:：-]\s*([^;\n]+)/i);
+    if(m){const weight=explicitFinishedWeight(m[2]),key=normalizeMealText(m[1]);if(key&&weight&&!found.has(key))found.set(key,weight)}
+   }
+ }
+ return found;
+}
+function parsedRowsToDishes(names,weights){return (names||[]).map(n=>{
+ const name=String(n).trim(),key=normalizeMealText(name);
+ // Exact normalized dish-name match; avoid silently assigning another dish's quantity.
+ const standard=weights.get(key)||'Chưa có trọng lượng thành phẩm trong file Excel';
+ return {name,standard};
+}).filter(x=>x.name)}
 $('directFile').addEventListener('change',async e=>{
  const files=Array.from(e.target.files||[]);e.target.value='';if(!files.length)return;
  directLoaded=false;const batch=$('batchResult');batch.hidden=false;batch.textContent='Đang đọc '+files.length+' file Excel…';
@@ -37,12 +82,12 @@ $('directFile').addEventListener('change',async e=>{
  for(let i=0;i<files.length;i++){
   const f=files[i];batch.textContent='Đang đọc '+(i+1)+'/'+files.length+': '+f.name;
   try{
-   const sheets=await window.KTX_READ_XLSX(f);let matched=0,scanned=0,others=[];
+   const sheets=await window.KTX_READ_XLSX(f);const weights=finishedWeightLookup(sheets);let matched=0,scanned=0,others=[];
    for(const sheet of sheets){const r=parser(sheet.rows,sheet.name);if(!r)continue;scanned++;
     const detected=vendorNames.filter(n=>norm(f.name+' '+sheet.name).includes(norm(n)));
     if(detected.length===1&&detected[0]!==vendor){others.push(detected[0]);continue}
     const dishes=r.days?.[iso]?.[period]||[];
-    for(const item of parsedRowsToDishes(dishes)){const key=norm(item.name);if(!key)continue;const old=combined[r.kind].get(key);if(!old||old.standard.startsWith('Chưa có'))combined[r.kind].set(key,item);matched++}
+    for(const item of parsedRowsToDishes(dishes,weights)){const key=norm(item.name);if(!key)continue;const old=combined[r.kind].get(key);if(!old||old.standard.startsWith('Chưa có'))combined[r.kind].set(key,item);matched++}
    }
    if(matched)good.push(f.name+' ('+matched+' món)');else bad.push(f.name+': '+(others.length?'thực đơn thuộc NCC '+Array.from(new Set(others)).join(', '):scanned?'không có món cho ngày/bữa đã chọn':'không nhận dạng được sheet thực đơn'));
   }catch(err){bad.push(f.name+': '+(err.message||err))}
