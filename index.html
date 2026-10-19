@@ -6835,7 +6835,7 @@ window.addEventListener('unhandledrejection',e=>{const m=String(e.reason&&e.reas
     items.forEach(function(it){var b=document.createElement('button');b.type='button';b.dataset.mode=it[0];b.className=selected===it[0]?'active':'';
       var icon=document.createElement('span');icon.className='qr166-ico';icon.textContent=it[1];b.appendChild(icon);
       var txt=document.createElement('span');txt.textContent=it[2];var sm=document.createElement('small');sm.textContent=it[3];txt.appendChild(sm);b.appendChild(txt);
-      b.onclick=function(){selected=it[0];QT='make';qrPage()};switcher.appendChild(b)});
+      b.onclick=function(){selected=it[0];QT='make';qrPage();if(window.matchMedia('(max-width:860px)').matches){requestAnimationFrame(function(){var target=document.querySelector('#qr #qb');if(target){target.scrollIntoView({behavior:'smooth',block:'start'});}})}};switcher.appendChild(b)});
     host.insertBefore(switcher,legacy||host.firstChild);
     var toolbar=document.createElement('div');toolbar.className='qr166-tools';
     function tool(label,fn){var b=document.createElement('button');b.className='btn s sm';b.type='button';b.textContent=label;b.onclick=fn;toolbar.appendChild(b)}
@@ -7033,4 +7033,19 @@ window.addEventListener('resize',refresh);window.addEventListener('pageshow',ref
 setTimeout(refresh,400);setTimeout(refresh,1500);let tries=0;const timer=setInterval(()=>{if(!mobile()){if(++tries>50)clearInterval(timer);return}if(workers().length){clearInterval(timer);render();return}tryCloudRead();if(++tries>80)clearInterval(timer)},1700);
 })();
 </script>
+
+<style id="step199-qr-mobile-focus">
+@media(max-width:860px){
+ #qr.m196-mounted{min-width:0!important;width:100%!important;}
+ #qr.m196-mounted .qr166-head{display:none!important;}
+ #qr.m196-mounted .qr166-switch{gap:8px!important;margin:0 0 10px!important;}
+ #qr.m196-mounted .qr166-switch button{min-height:55px!important;padding:10px 12px!important;}
+ #qr.m196-mounted .qr166-tools{display:flex!important;flex-wrap:wrap!important;gap:7px!important;margin:8px 0 14px!important;}
+ #qr.m196-mounted #qb{scroll-margin-top:16px!important;}
+ #qr.m196-mounted #qb>.g2{grid-template-columns:minmax(0,1fr)!important;}
+ #qr.m196-mounted #qb .card{min-width:0!important;max-width:100%!important;overflow-wrap:anywhere!important;}
+ #qr.m196-mounted img,#qr.m196-mounted canvas{max-width:100%!important;height:auto;}
+ #qr.m196-mounted input,#qr.m196-mounted select{max-width:100%!important;min-width:0!important;}
+}
+</style>
 </html>
