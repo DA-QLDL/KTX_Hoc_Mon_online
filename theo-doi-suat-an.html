@@ -34,48 +34,54 @@ function explicitFinishedWeight(raw){
  if(/^\d+(?:[.,]\d+)?$/.test(txt)){const num=Number(txt.replace(',','.'));return num>0&&num<=5000?txt+'g':''}
  const match=txt.match(measurePattern);return match?match[0].replace(/\s+/g,' ').trim():'';
 }
-// STEP190: Match each dish with the adjacent "Trọng lượng thành phẩm" cell ON THE SAME ROW.
-// The sheet can have multiple pairs: B/C (Sáng), D/E (Trưa), F/G (Tối).
-// Day anchors ("Thứ 2 (19/10)") delimit consecutive meal sections.
-function finishedWeightLookup(sheets,selectedDate,selectedPeriod){
- const found=new Map(),clean=v=>String(v??'').replace(/\s+/g,' ').trim();
- const dayWanted=String(selectedDate||'').slice(8,10)+'/'+String(selectedDate||'').slice(5,7);
- const fallbackDate=String(selectedDate||'').slice(0,4);
- const groups={sang:0,trua:1,chieu:2,toi:2};
- const wantedGroup=groups[selectedPeriod];
+// STEP191: Read each dish and its "Trọng lượng thành phẩm" from the same Excel row.
+// Supports sheet-specific column positions (e.g. Mặn lunch D/E, Chay lunch E/F).
+function readFinishedMenuRows(sheets, selectedDate, selectedPeriod){
+ const result={man:[],chay:[]},diagnostics=[];
+ const dayWanted=String(selectedDate).slice(8,10)+'/'+String(selectedDate).slice(5,7);
+ const yearWanted=String(selectedDate).slice(0,4);
+ const periods={sang:0,trua:1,chieu:2,toi:2};
+ const groupWanted=periods[selectedPeriod];
+ const clean=v=>String(v??'').replace(/\s+/g,' ').trim();
+ const headerName=v=>/^(mon|mon an|ten mon|ten mon an)$/.test(normalizeMealText(v));
  for(const sheet of sheets){
-  const rows=sheet.rows||[];let activeDay='',pairHeaders=[],lastHeader=-1;
-  for(let r=0;r<rows.length;r++){
-   const row=rows[r]||[];
-   // Header columns may repeat in the sheet, keep pairs in left-to-right order.
-   const candidate=[];
+  const kind=/chay/i.test(normalizeMealText(sheet.name))?'chay':'man';
+  const rows=sheet.rows||[];
+  let columns=[],active=false,matchedDays=0,added=0;
+  const seen=new Set();
+  // Prefer headings defined over each meal section; the sheet may repeat those headings.
+  for(let i=0;i<rows.length;i++){
+   const row=rows[i]||[];
+   const pairs=[];
    for(let c=0;c<row.length-1;c++){
-    if(/^(mon|mon an|ten mon|ten mon an)$/.test(normalizeMealText(row[c])) && productionWeightHeader(row[c+1]))candidate.push({name:c,weight:c+1});
+    if(headerName(row[c])&&productionWeightHeader(row[c+1]))pairs.push([c,c+1]);
    }
-   if(candidate.length){pairHeaders=candidate;lastHeader=r;continue}
-   // Explicit weekday/day label identifies boundaries between weekly blocks.
-   const dayCell=clean(row[0]);
-   const match=dayCell.match(/(?:^|\D)(\d{1,2})\s*[\/.-]\s*(\d{1,2})(?:\s*[\/.-]\s*(\d{4}))?/);
-   if(match && /thu|chu nhat|cn\b|ngay/i.test(normalizeMealText(dayCell))){
-    activeDay=String(match[1]).padStart(2,'0')+'/'+String(match[2]).padStart(2,'0');
-    if(match[3]&&match[3]!==fallbackDate)activeDay='';
+   if(pairs.length){columns=pairs;continue}
+   const lead=clean(row[0]),lower=normalizeMealText(lead);
+   // Date starts a new day block, and later blank leading cells belong to this block.
+   const m=lead.match(/(?:^|[^\d])(\d{1,2})\s*[\/.-]\s*(\d{1,2})(?:\s*[\/.-]\s*(\d{4}))?/);
+   if(m&&/(?:thu|chu nhat|\bcn\b|ngay)/.test(lower)){
+    const day=String(m[1]).padStart(2,'0')+'/'+String(m[2]).padStart(2,'0');
+    active=day===dayWanted&&(!m[3]||m[3]===yearWanted);
+    if(active)matchedDays++;
    }
-   if(activeDay!==dayWanted||wantedGroup===undefined||r<=lastHeader)continue;
-   const pair=pairHeaders[wantedGroup];if(!pair)continue;
-   const name=clean(row[pair.name]),weight=clean(row[pair.weight]);
-   if(!name||!weight||productionWeightHeader(weight)||/^(tong|ghi chu|ky ten)$/i.test(normalizeMealText(name)))continue;
+   if(!active||groupWanted===undefined||!columns[groupWanted])continue;
+   const [nameCol,weightCol]=columns[groupWanted];
+   const name=clean(row[nameCol]);const rawWeight=clean(row[weightCol]);
+   if(!name||headerName(name)||/^(tong|ghi chu|ky ten|mon|thuc don)$/i.test(normalizeMealText(name)))continue;
    const key=normalizeMealText(name);
-   if(key&&!found.has(key))found.set(key,weight);
+   if(seen.has(key))continue;
+   seen.add(key);
+   // Keep the FULL original finished-weight cell, including ingredient-specific ranges.
+   // Only allow meaningful non-empty quantities, not date or table headings.
+   let standard='Chưa có trọng lượng thành phẩm trong file Excel';
+   if(rawWeight&&(/\d/.test(rawWeight))&&!productionWeightHeader(rawWeight))standard=rawWeight;
+   result[kind].push({name,standard});added++;
   }
+  diagnostics.push(`${sheet.name}: ${matchedDays?'đúng ngày':'không thấy ngày'}; ${columns.length} nhóm cột; ${added} món ${kind==='man'?'mặn':'chay'}`);
  }
- return found;
+ return {dishes:result,diagnostics};
 }
-function parsedRowsToDishes(names,weights){return (names||[]).map(n=>{
- const name=String(n).trim(),key=normalizeMealText(name);
- // Exact normalized dish-name match; avoid silently assigning another dish's quantity.
- const standard=weights.get(key)||'Chưa có trọng lượng thành phẩm trong file Excel';
- return {name,standard};
-}).filter(x=>x.name)}
 $('directFile').addEventListener('change',async e=>{
  const files=Array.from(e.target.files||[]);e.target.value='';if(!files.length)return;
  directLoaded=false;const batch=$('batchResult');batch.hidden=false;batch.textContent='Đang đọc '+files.length+' file Excel…';
@@ -89,14 +95,24 @@ $('directFile').addEventListener('change',async e=>{
  for(let i=0;i<files.length;i++){
   const f=files[i];batch.textContent='Đang đọc '+(i+1)+'/'+files.length+': '+f.name;
   try{
-   const sheets=await window.KTX_READ_XLSX(f);const weights=finishedWeightLookup(sheets,iso,period);let matched=0,scanned=0,others=[];
-   for(const sheet of sheets){const r=parser(sheet.rows,sheet.name);if(!r)continue;scanned++;
-    const detected=vendorNames.filter(n=>norm(f.name+' '+sheet.name).includes(norm(n)));
-    if(detected.length===1&&detected[0]!==vendor){others.push(detected[0]);continue}
-    const dishes=r.days?.[iso]?.[period]||[];
-    for(const item of parsedRowsToDishes(dishes,weights)){const key=norm(item.name);if(!key)continue;const old=combined[r.kind].get(key);if(!old||old.standard.startsWith('Chưa có'))combined[r.kind].set(key,item);matched++}
+   const sheets=await window.KTX_READ_XLSX(f);
+   const detected=vendorNames.filter(n=>norm(f.name+' '+sheets.map(x=>x.name).join(' ')).includes(norm(n)));
+   if(detected.length===1 && detected[0]!==vendor){bad.push(f.name+': phát hiện NCC '+detected[0]+' khác NCC đang chọn '+vendor);continue}
+   const direct=readFinishedMenuRows(sheets,iso,period);
+   let matched=0;
+   for(const type of ['man','chay'])for(const item of direct.dishes[type]){
+    const key=norm(item.name);if(!key)continue;
+    const old=combined[type].get(key);
+    if(!old||old.standard.startsWith('Chưa có'))combined[type].set(key,item);
+    matched++;
    }
-   if(matched)good.push(f.name+' ('+matched+' món)');else bad.push(f.name+': '+(others.length?'thực đơn thuộc NCC '+Array.from(new Set(others)).join(', '):scanned?'không có món cho ngày/bữa đã chọn':'không nhận dạng được sheet thực đơn'));
+   // Compatibility fallback for weekly-name-only files, only when no structured rows matched.
+   if(!matched){for(const sheet of sheets){const r=parser(sheet.rows,sheet.name);if(!r)continue;
+     const list=r.days?.[iso]?.[period]||[];
+     for(const name of list){const key=norm(name);if(key&&!combined[r.kind].has(key)){combined[r.kind].set(key,{name:String(name),standard:'Chưa có trọng lượng thành phẩm trong file Excel'});matched++}}
+    }}
+   if(matched)good.push(f.name+' ('+matched+' món; '+direct.diagnostics.join(' | ')+')');
+   else bad.push(f.name+': không tìm thấy dữ liệu cho '+iso+' / '+period+'; '+direct.diagnostics.join(' | '));
   }catch(err){bad.push(f.name+': '+(err.message||err))}
  }
  const found={man:[...combined.man.values()],chay:[...combined.chay.values()]};
