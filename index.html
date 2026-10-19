@@ -2408,7 +2408,7 @@ function mealPage(){const el=$('meal');
    <label class="fl">Đơn giá<input id="mp_p" value="${esc(RP.price)}" placeholder="VD: 40.000đ" style="width:140px"></label><span class="row" style="margin-left:auto"><button class="btn meal-report-btn" id="mp_w">${ico('dl')}Xuất báo cáo</button><button class="btn meal-copy-btn" id="mp_c">${ico('copy')}Sao chép báo cáo</button></span></div>
    <div id="mp_wk" style="margin-top:14px"></div>
    <div class="meal-suppliers"><div class="meal-supplier-label">Nhà cung cấp</div><div class="meal-supplier-list">${NCCS.map(n=>`<label class="meal-supplier"><input type="checkbox" data-c="${esc(n)}" checked><span class="meal-check">✓</span><span>${esc(n)}</span></label>`).join('')}</div></div>
-   <div class="row" style="margin-top:12px;justify-content:flex-end"><span class="row"><span class="mut">Nhập thực đơn tuần của</span><select id="mp_ni"><option value="">Tự nhận diện nhà cung cấp</option>${NCCS.map(n=>`<option>${esc(n)}</option>`).join('')}</select><label class="btn sm meal-import-btn" style="cursor:pointer">${ico('ul')}Chọn file Excel<input type="file" id="mp_f" accept=".xlsx,.xls" multiple hidden></label></span></div><div class="mut" id="mp_im" style="white-space:pre-line;font-size:12.5px;margin-top:8px"></div></div>
+   <div class="row" style="margin-top:12px;justify-content:flex-end"><span class="row"><span class="mut">Nhập thực đơn tuần của</span><select id="mp_ni"><option value="">Tự nhận diện nhà cung cấp</option>${NCCS.map(n=>`<option>${esc(n)}</option>`).join('')}</select><button type="button" class="btn sm" id="mp_menu_shared" style="background:#eaf3ff;color:#165fc1;border:1px solid #a9c9f4">✎ Nhập thực đơn mặn/chay</button><label class="btn sm meal-import-btn" style="cursor:pointer">${ico('ul')}Chọn file Excel<input type="file" id="mp_f" accept=".xlsx,.xls" multiple hidden></label></span></div><div class="mut" id="mp_im" style="white-space:pre-line;font-size:12.5px;margin-top:8px"></div></div>
   <div class="g2" id="mp_cards"></div>
   <div class="card"><div class="row" style="justify-content:space-between;margin-bottom:8px"><h3 style="margin:0">Nội dung báo cáo</h3><span class="mut" style="font-size:12px">Xem trước, cập nhật ngay khi bạn nhập</span></div><pre id="mp_o"></pre></div>`;
   RP.f=RP.A[mkey()]=RP.A[mkey()]||{};const redo=mealSwitch;
@@ -2417,7 +2417,7 @@ function mealPage(){const el=$('meal');
   $('mp_k').onchange=e=>{RP.ktx=e.target.value;mealPrev()};$('mp_p').oninput=e=>{RP.price=e.target.value;mealPrev()};
   el.querySelectorAll('[data-c]').forEach(c=>c.onchange=()=>{c.checked?RP.on.add(c.dataset.c):RP.on.delete(c.dataset.c);mealCards()});
   $('mp_f').onchange=async e=>{const fs=[...e.target.files];e.target.value='';if(fs.length)await mealImport(fs)};
-  $('mp_c').onclick=mealCopy;$('mp_w').onclick=()=>saveDocx(mealText().split('\n'),`bao-cao-suat-an-${RP.ses}-${RP.date}.docx`)}
+  $('mp_menu_shared').onclick=()=>{window.openMealMonitor({edit:true})};$('mp_c').onclick=mealCopy;$('mp_w').onclick=()=>saveDocx(mealText().split('\n'),`bao-cao-suat-an-${RP.ses}-${RP.date}.docx`)}
  mealCards()}
 // ---- Cập nhật mã nhân viên từ file Excel
 const noCode=w=>!String(w.mnv||'').trim()||/^cho ma/.test(sa(w.mnv)),pad0=(v,n)=>v&&v.length==n-1?'0'+v:v;
@@ -5322,10 +5322,27 @@ setTimeout(init,700);
 (function(){
 window.KTX_MEAL_BRIDGE={get client(){return typeof SUPA_SYNC!=='undefined'?SUPA_SYNC.client:null},get session(){return typeof SUPA_SYNC!=='undefined'?SUPA_SYNC.session:null},get ready(){return typeof SUPA_SYNC!=='undefined'&&SUPA_SYNC.ready},get role(){return typeof ME!=='undefined'?ME.role:null},get vendors(){return typeof NCCS!=='undefined'?NCCS:[]}};
 const ov=document.getElementById('mealMonitor182'),frame=document.getElementById('mealMonitor182Frame');
-window.openMealMonitor=function(){if(!ov)return;ov.classList.add('open');if(!frame.getAttribute('src'))frame.src=frame.dataset.url;};
+window.openMealMonitor=function(options){if(!ov)return;ov.classList.add('open');if(!frame.getAttribute('src'))frame.src=frame.dataset.url;if(options&&options.edit){const invoke=()=>{try{frame.contentWindow.openMealMenuEditor&&frame.contentWindow.openMealMenuEditor()}catch(e){console.warn('Menu editor:',e)}};if(frame.contentDocument&&frame.contentDocument.readyState==='complete')setTimeout(invoke,400);else frame.addEventListener('load',()=>setTimeout(invoke,700),{once:true})}};
 function close(){ov.classList.remove('open')}
 document.getElementById('mealMonitor182Back').addEventListener('click',close);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contains('open'))close()});
+})();
+</script>
+
+<!-- KTX STEP183: pin account to sidebar -->
+<style id="step183-pin-user">
+@media(min-width:861px){
+ body>nav{position:sticky!important;top:0!important;height:100dvh!important;min-height:100dvh!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+ body>nav>#authUserbar{position:relative!important;inset:auto!important;order:999!important;flex:0 0 auto!important;margin:auto 8px 10px!important;width:calc(100% - 16px)!important;max-width:none!important;display:flex!important;flex-direction:column!important;gap:7px!important;z-index:15!important;visibility:visible!important}
+ body>nav>#authUserbar button{width:100%!important}
+ main .top #authUserbar,main #headerAccountArea #authUserbar{display:none!important}
+}
+</style>
+<script id="step183-user-placement">
+(()=>{function place(){const nav=document.querySelector('body>nav'),bar=document.getElementById('authUserbar');if(nav&&bar&&bar.parentElement!==nav)nav.appendChild(bar)}
+ document.addEventListener('DOMContentLoaded',place);window.addEventListener('load',place);
+ // Recheck only on user interaction or page navigation; do not alter authentication state.
+ document.addEventListener('click',()=>queueMicrotask(place),true);
 })();
 </script>
 </body>
