@@ -5,11 +5,11 @@
 :root{--ui-space:10px}button,input,select,textarea{box-sizing:border-box}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #2563eb;outline-offset:2px}input,select,textarea{max-width:100%}button{min-height:34px}main,section,.card{min-width:0}@media(max-width:640px){body{overflow-x:hidden}table{max-width:100%}}
 </style><style id="step178-utility-height">
 html{min-height:100%;scrollbar-gutter:stable}
-body{min-height:100dvh;padding:12px!important;background:#f1f6ff}
+body{min-height:0;padding:12px!important;background:#f1f6ff}
 #impPreview{max-height:min(48dvh,550px)!important;min-height:170px;overflow:auto!important;overscroll-behavior:contain}
 #impMap{grid-template-columns:repeat(auto-fit,minmax(175px,1fr))!important}
-.tablewrap{max-height:calc(100dvh - 285px);overflow:auto;overscroll-behavior:contain}
-@media(max-width:760px){#impMap{grid-template-columns:repeat(2,minmax(0,1fr))!important}.tablewrap{max-height:60dvh}}
+.tablewrap{max-height:none;overflow-x:auto;overflow-y:visible;overscroll-behavior:contain}
+@media(max-width:760px){#impMap{grid-template-columns:repeat(2,minmax(0,1fr))!important}.tablewrap{max-height:none}}
 @media(max-width:500px){#impMap{grid-template-columns:1fr!important}}
 </style></head><body><main><header><div><h1>SỔ THEO DÕI CẬP NHẬT QUÂN SỐ CNCH TĂNG/GIẢM NQCN TẠI KTX HÓC MÔN</h1><small>Ghi nhận từng ngày • Đối chiếu quân số hiện tại • Xuất Excel</small></div></header>
 <div class="stats"><div class="stat"><span>TỔNG QUÂN SỐ HIỆN TẠI</span><b id="sTotal">—</b></div><div class="stat"><span>CÔNG NHÂN NAM</span><b id="sMale">—</b></div><div class="stat"><span>CÔNG NHÂN NỮ</span><b id="sFemale">—</b></div><div class="stat"><span>VIN ALPHA (TRONG TỔNG QUÂN SỐ)</span><b id="sAlpha">—</b></div></div>

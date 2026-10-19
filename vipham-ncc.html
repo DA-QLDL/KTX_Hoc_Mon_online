@@ -4,11 +4,11 @@
 :root{--ui-space:10px}button,input,select,textarea{box-sizing:border-box}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #2563eb;outline-offset:2px}input,select,textarea{max-width:100%}button{min-height:34px}main,section,.card{min-width:0}@media(max-width:640px){body{overflow-x:hidden}table{max-width:100%}}
 </style><style id="step178-utility-height">
 html{min-height:100%;scrollbar-gutter:stable}
-body{min-height:100dvh;padding:12px!important;background:#f1f6ff}
+body{min-height:0;padding:12px!important;background:#f1f6ff}
 #impPreview{max-height:min(48dvh,550px)!important;min-height:170px;overflow:auto!important;overscroll-behavior:contain}
 #impMap{grid-template-columns:repeat(auto-fit,minmax(175px,1fr))!important}
-.tablewrap{max-height:calc(100dvh - 285px);overflow:auto;overscroll-behavior:contain}
-@media(max-width:760px){#impMap{grid-template-columns:repeat(2,minmax(0,1fr))!important}.tablewrap{max-height:60dvh}}
+.tablewrap{max-height:none;overflow-x:auto;overflow-y:visible;overscroll-behavior:contain}
+@media(max-width:760px){#impMap{grid-template-columns:repeat(2,minmax(0,1fr))!important}.tablewrap{max-height:none}}
 @media(max-width:500px){#impMap{grid-template-columns:1fr!important}}
 </style></head><body><div class="card"><h2>Sổ theo dõi vi phạm NCC</h2><p>Quản lý hồ sơ theo mẫu đã cung cấp, có thể thêm, sửa, xóa dòng và xuất Excel.</p><div class="summary" id="summary"></div><div class="toolbar"><button class="btn primary" id="add">+ Thêm bản ghi</button><button class="btn" id="export">↓ Xuất Excel</button><button class="btn" id="backup">↓ Sao lưu JSON</button><button class="btn" id="restore">↑ Nhập JSON</button><input class="hide" type="file" id="jsonFile" accept=".json"><input class="filter" id="search" placeholder="Tìm kiếm trong sổ..."></div><div class="note">Dữ liệu tiện ích hiện lưu trên thiết bị đang sử dụng, chưa đồng bộ Supabase. Hãy sao lưu JSON hoặc xuất Excel định kỳ. Các file Excel gốc được đính kèm riêng trong bản ZIP để đối chiếu.</div></div><div class="card"><div id="editor" class="hide"><h3 id="editTitle">Thêm bản ghi</h3><div class="fields" id="fields"></div><div class="toolbar"><button class="btn primary" id="save">Lưu bản ghi</button><button class="btn" id="cancel">Hủy</button></div></div><div class="tablewrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div><p class="hint" id="msg"></p></div>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="excel-import.js"></script><script>
