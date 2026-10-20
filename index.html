@@ -7188,4 +7188,57 @@ setTimeout(refresh,400);setTimeout(refresh,1500);let tries=0;const timer=setInte
  #qr.m196-mounted input,#qr.m196-mounted select{max-width:100%!important;min-width:0!important;}
 }
 </style>
+
+<style id="step220-transfer-layout">
+/* STEP220: isolated responsive layout for transfer dialog; no changes to occupancy logic. */
+#transferDlg.transfer-pro-dialog{width:min(840px,calc(100vw - 32px))!important;max-width:calc(100vw - 32px)!important;max-height:calc(100dvh - 28px)!important;overflow:hidden!important;border-radius:18px!important}
+#transferDlg .transfer-pro{padding:18px 22px!important;gap:12px!important;max-height:calc(100dvh - 28px)!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+#transferDlg .ph{display:grid!important;grid-template-columns:minmax(0,1fr) 36px!important;align-items:center!important;gap:12px!important;margin:0!important;padding:0 0 12px!important;border-bottom:1px solid #dbe7f5!important;flex:0 0 auto!important}
+#transferDlg .ph>div{min-width:0!important;display:flex!important;align-items:baseline!important;flex-wrap:wrap!important;column-gap:12px!important;row-gap:3px!important}
+#transferDlg .ph h3{font-size:19px!important;line-height:1.2!important;white-space:nowrap!important;color:#103b7a!important}
+#transferDlg .ph #transferSub{font-size:12px!important;line-height:1.35!important;overflow-wrap:anywhere!important}
+#transferDlg .ph #transferX{position:static!important;grid-column:2!important;grid-row:1!important;justify-self:end!important;display:grid!important;place-items:center!important;width:34px!important;height:34px!important;min-width:34px!important;border:1px solid #c6d9f0!important;border-radius:10px!important;background:#eef5ff!important;color:#1554ad!important;font-size:22px!important;line-height:1!important;padding:0!important;cursor:pointer!important;visibility:visible!important;opacity:1!important}
+#transferDlg .transfer-current{margin:0!important;padding:10px 12px!important}
+#transferDlg .transfer-selectors{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;margin:0!important}
+#transferDlg .transfer-room-head{margin:0!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:9px!important;flex-wrap:wrap!important}
+#transferDlg .transfer-room-head>div{display:flex!important;flex-wrap:wrap!important;gap:5px 10px!important;align-items:center!important}
+#transferDlg .transfer-room-head b{font-size:13px!important}
+#transferDlg .transfer-room-grid{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:9px!important;padding:3px!important;max-height:min(43dvh,340px)!important;overflow-y:auto!important;overflow-x:hidden!important;flex:0 1 auto!important}
+#transferDlg .transfer-room-card{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;min-width:0!important;min-height:90px!important;padding:10px 11px!important;border-radius:13px!important;border:1px solid #bed4ed!important;background:#f7fbff!important;box-shadow:0 2px 7px #164e8910!important;transform:none!important}
+#transferDlg .transfer-room-card strong{font-size:15px!important;line-height:1.25!important;color:#173d72!important}
+#transferDlg .transfer-room-card span{font-size:11px!important;line-height:1.35!important;color:#47617f!important;margin-top:3px!important}
+#transferDlg .transfer-room-card em{font-size:10px!important;line-height:1.2!important;margin-top:6px!important;padding:4px 7px!important;white-space:normal!important}
+#transferDlg .transfer-room-card.tr218-empty{background:#e9f9ef!important;border-color:#9ad6b4!important}
+#transferDlg .transfer-room-card.tr218-low{background:#fff5dc!important;border-color:#e7bd69!important}
+#transferDlg .transfer-room-card.tr218-disabled{background:#f7eeee!important;border-color:#e0babc!important;opacity:.74!important}
+#transferDlg .transfer-room-card.on{background:#dbeaff!important;border:2px solid #2465df!important;box-shadow:0 0 0 2px #2465df1f!important}
+#transferDlg .transfer-target-info{margin:0!important;min-height:32px!important}
+#transferDlg .transfer-note-label{margin:0!important;display:flex!important;flex-direction:column!important;gap:5px!important}
+#transferDlg .pf{display:flex!important;justify-content:flex-end!important;align-items:center!important;gap:10px!important;margin:0!important;padding:12px 0 0!important;border-top:1px solid #e1e9f5!important;flex:0 0 auto!important}
+#transferDlg .pf .btn{min-width:125px!important;min-height:40px!important}
+#transferDlg .pf #transferGo{min-width:210px!important}
+@media(max-width:700px){
+ #transferDlg.transfer-pro-dialog{position:fixed!important;inset:env(safe-area-inset-top) 0 0!important;margin:auto 0 0!important;width:100vw!important;max-width:100vw!important;height:calc(100dvh - env(safe-area-inset-top))!important;max-height:calc(100dvh - env(safe-area-inset-top))!important;border-radius:18px 18px 0 0!important}
+ #transferDlg .transfer-pro{padding:13px 14px calc(12px + env(safe-area-inset-bottom))!important;gap:10px!important;height:100%!important;max-height:100%!important;overflow-y:auto!important}
+ #transferDlg .ph{grid-template-columns:minmax(0,1fr) 34px!important;gap:7px!important;padding-bottom:9px!important}
+ #transferDlg .ph>div{display:block!important}
+ #transferDlg .ph h3{font-size:17px!important;white-space:normal!important}
+ #transferDlg .ph #transferSub{font-size:11px!important;margin-top:4px!important}
+ #transferDlg .ph #transferX{width:33px!important;height:33px!important;min-width:33px!important}
+ #transferDlg .transfer-current{padding:8px 10px!important}
+ #transferDlg .transfer-selectors{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ #transferDlg .transfer-room-head{gap:6px!important}
+ #transferDlg .transfer-room-head b{font-size:12px!important}
+ #transferDlg .transfer-cap{font-size:10px!important}
+ #transferDlg .transfer-room-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;max-height:37dvh!important;overflow-y:auto!important;padding:3px!important}
+ #transferDlg .transfer-room-card{min-height:78px!important;padding:8px!important;border-radius:11px!important}
+ #transferDlg .transfer-room-card strong{font-size:14px!important}
+ #transferDlg .transfer-room-card span{font-size:10px!important}
+ #transferDlg .transfer-room-card em{font-size:9px!important;margin-top:4px!important;padding:3px 5px!important}
+ #transferDlg .pf{position:sticky!important;bottom:0!important;z-index:2!important;background:#fff!important;justify-content:space-between!important;gap:8px!important;padding:10px 0 calc(5px + env(safe-area-inset-bottom))!important}
+ #transferDlg .pf .btn{flex:1 1 auto!important;min-width:0!important;min-height:42px!important;font-size:12px!important;padding:8px!important}
+ #transferDlg .pf #transferGo{flex:1.8 1 auto!important;min-width:0!important}
+}
+@media(max-width:360px){#transferDlg .transfer-room-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+</style>
 </html>
