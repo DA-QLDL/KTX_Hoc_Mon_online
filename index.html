@@ -2095,7 +2095,7 @@ const selUi=()=>{{const m2=$('mnn');if(m2){const n=W.filter(noCode).length;m2.te
 const gkey=(w,m)=>m=='ktx'?K(w):m=='day'?K(w)+'|'+D(w):K(w)+'|'+D(w)+'|'+(R(w)||'—');
 function sgrp(){const m=$('sm').value,v=$('sx').value;return m=='all'?W:W.filter(w=>gkey(w,m)==v)}
 function fillSv(){const m=$('sm').value,x=$('sx'),c={};if(m=='all')x.classList.add('hide');else{x.classList.remove('hide');W.forEach(w=>{const k=gkey(w,m);c[k]=(c[k]||0)+1});const cur=x.value;x.innerHTML=Object.keys(c).sort(num).map(k=>`<option value="${esc(k)}" ${k==cur?'selected':''}>${esc(k.replace(/\|/g,' · '))} (${c[k]})</option>`).join('')}selUi()}
-function delWorkers(list,inf){if(!list.length)return;const qrFlow=!!(inf&&inf.source==='qr');if(!can('del')&&!(qrFlow&&can('qrApprove'))){alert('Bạn không có quyền chuyển công nhân ra khỏi danh sách.');return}inf=inf||{mode:'archive',reason:'Khác',date:ldy(),note:''};
+function delWorkers(list,inf){if(!list.length)return;const qrFlow=!!(inf&&inf.source==='qr');if(!can('del')&&!(qrFlow&&can('qrApprove'))){alert('Bạn không có quyền chuyển công nhân ra khỏi danh sách.');return}if(list.some(w=>!inScope(w))){alert('Danh sách chứa công nhân ngoài KTX/Dãy được phân quyền. Không có dữ liệu nào bị xóa.');return}inf=inf||{mode:'archive',reason:'Khác',date:ldy(),note:''};
  if(inf.mode==='purge'){const ids=new Set(list.map(w=>w.id)),now=new Date().toLocaleString('vi-VN');W=W.filter(w=>!ids.has(w.id));ids.forEach(i=>sel.delete(i));LOG.unshift({t:now,a:'PURGE',d:list.length==1?`Xóa hẳn công nhân: ${list[0].name}${list[0].mnv?' (Mã NV: '+list[0].mnv+')':''}`:`Xóa hẳn ${list.length} công nhân khỏi danh sách chính`,n:list.length,day:ldy()});sv();all();alert(`Đã xóa hẳn ${list.length.toLocaleString('vi-VN')} công nhân. Dữ liệu không được chuyển sang “Điều chuyển · Nghỉ việc”.`);return}
  const now=new Date().toLocaleString('vi-VN'),day=inf.date||ldy(),at=Date.now(),by={};
  list.forEach(w=>{const k=K(w);(by[k]=by[k]||[]).push(w);ARC.unshift({id:w.id,w:JSON.parse(JSON.stringify(w)),reason:inf.reason,date:day,note:inf.note||'',at})});
@@ -2128,7 +2128,7 @@ function view(w){if(!w)return;if(!can('view',w)){alert('Bạn không có quyền
  const cl=()=>$('vdl').close(),ed=()=>{cl();edit(w)};
  $('vc').onclick=$('vc2').onclick=cl;$('ve2').onclick=ed;
  $('vx').onclick=async()=>{const inf=await askLeave([w]);if(!inf)return;cl();delWorkers([w],inf)};
- $('ve2').classList.toggle('hide',!can('editw',w));$('vx').classList.toggle('hide',!can('del'));$('vdl').showModal()}
+ $('ve2').classList.toggle('hide',!can('editw',w));$('vx').classList.toggle('hide',!can('del',w));$('vdl').showModal()}
 let EW=null;
 const FLB={name:'Họ và tên',mnv:'Mã NV',gt:'Giới tính',dob:'Ngày sinh',sdt:'Số điện thoại',cccd:'CCCD',thon:'Thôn/Xóm',xa:'Xã/Phường',tinh:'Tỉnh/TP (hoặc địa chỉ hộ khẩu đầy đủ)',ktx:'KTX',day:'Dãy',room:'Phòng',bed:'Giường',unit:'Đơn vị',td:'Tiểu đoàn',date:'Ngày vào KTX',out:'Ngày ra KTX',leader:'Họ tên tổ trưởng',lsdt:'SĐT tổ trưởng'};
 const SEC=[['Thông tin cá nhân','users',[['name','s2'],['mnv'],['gt'],['dob'],['sdt'],['cccd'],['thon'],['xa'],['tinh','s2']]],['Thông tin KTX','bld',[['ktx'],['day'],['room'],['bed'],['unit'],['td'],['date'],['out']]],['Tổ trưởng','id',[['leader'],['lsdt']]]];
@@ -2140,6 +2140,7 @@ function edit(w){if(w&&!can('editw',w)){alert('Bạn không có quyền sửa h�
 $('dx').onclick=()=>$('dlg').close();
 $('dc').onclick=()=>$('dlg').close();
 $('ds').onclick=async()=>{const o={};F.forEach(([f])=>o[f]=$('f_'+f).value.trim());if(!o.name){alert('Hãy nhập họ và tên công nhân.');$('f_name').focus();return}o.sdt=o.sdt.replace(/\D/g,'');o.cccd=o.cccd.replace(/\D/g,'');if(!EW||!(EW.thon||EW.xa))autoSplit(o);normW(o);
+ if(ME.role!=='admin'&&(!inScope(o)||(EW&&!inScope(EW)))){alert('Không được thêm/sửa công nhân ngoài KTX/Dãy được phân quyền.');return}
  if(EW){const dv=F.filter(([f])=>(EW[f]||'')!==o[f]);if(!dv.length){$('dlg').close();alert('Không có thay đổi nào để lưu.');return}
   const fm=(f,v)=>(f=='dob'||f=='date'||f=='out')?(vn(v)||'trống'):(v||'trống'),ln=dv.slice(0,8).map(([f])=>`• ${FLB[f]}: ${fm(f,EW[f]||'')} → ${fm(f,o[f])}`).join('\n')+(dv.length>8?`\n… và ${dv.length-8} thay đổi khác`:'');
   if(!await ask(`Bạn có chắc muốn lưu thay đổi cho "${EW.name}"?\n${ln}`,{title:'Xác nhận sửa',ok:'Lưu thay đổi',cls:''}))return;
@@ -2682,7 +2683,12 @@ const ROLE_PERMS={
 };
 const SENSITIVE_PERMS=['purge','backup','acct','qrApprove','import'];
 const inScope=w=>{if(!w)return true;const r=ME.role||'viewer';if(r==='admin')return true;const a=ME.acct;if(!a)return true;const k=Array.isArray(a.ktx)?a.ktx:[],d=Array.isArray(a.days)?a.days:[];return(!k.length||k.includes(K(w)))&&(!d.length||d.includes(D(w)))};
-const can=(a,w)=>{const r=ME.role||'viewer',P=ROLE_PERMS[r]||ROLE_PERMS.viewer;let ok=!!P[a];if(w&&['manager','staff','guard','viewer'].includes(r)&&['view','editw','edit','add','transfer','residence','attendance'].includes(a))ok=ok&&inScope(w);return ok};
+const ktxDesktopView=()=>window.matchMedia('(min-width: 861px)').matches;
+const can=(a,w)=>{const r=ME.role||'viewer',P=ROLE_PERMS[r]||ROLE_PERMS.viewer;let ok=!!P[a];
+ // STEP236: PC được xem toàn bộ, mobile giữ quyền xem theo dãy; quyền ghi luôn theo dãy.
+ if(a==='view'&&ktxDesktopView())return ok;
+ if(w&&['manager','staff','guard','viewer'].includes(r)&&['view','editw','edit','add','del','transfer','residence','attendance'].includes(a))ok=ok&&inScope(w);
+ return ok};
 function applyPerms(){document.documentElement.classList.toggle('ktx-subaccount',Boolean(ME.id)&&ME.role!=='admin');const e=can('edit'),d=can('del'),sh=(q,on)=>document.querySelectorAll(q).forEach(x=>x.classList.toggle('hide',!on)),id=(i,on)=>{const x=$(i);if(x)x.classList.toggle('hide',!on)};
  sh('nav button[data-p=acc]',can('acct'));sh('nav button[data-p=activity]',can('acct'));sh('nav button[data-p=adminboard]',can('acct'));sh('nav button[data-p=access]',can('acct'));['incidents','security','maintenance','qa','release'].forEach(p=>sh(`nav button[data-p=${p}]`,can('acct')));['opsboard','reportauto','standards'].forEach(p=>sh(`nav button[data-p=${p}]`,can('report')));sh('nav button[data-p=backup]',can('backup'));
  ['aw'].forEach(i=>id(i,can('add')));['tA','tB','tC','tD','dk_nf'].forEach(i=>id(i,can('residence')||e));['bs','bn','mnb2','imode'].forEach(i=>id(i,can('bulk')));id('ds2',d);id('dsall',d);id('xr',can('report'));
@@ -5743,6 +5749,27 @@ window.ktxLoadPublicConfig = async function(force){
 // Warm the connection on opening the application; login also awaits it on demand.
 window.addEventListener('DOMContentLoaded',()=>{window.ktxLoadPublicConfig().catch(()=>{});});
 </script>
+
+<script>
+/* STEP235: Notifications always honor the signed-in user's scoped workers.
+   For non-admin users, unattributed/ambiguous alerts are intentionally excluded. */
+(function(){
+  if(typeof issueList!=='function')return;
+  const original235=issueList;
+  function alertInScope235(x){
+    if(typeof ME==='undefined'||!ME||!ME.id)return false;
+    if(ME.role==='admin')return true;
+    if(!x||!x.w)return false; // never leak unscoped audit/global alerts
+    try{return typeof can==='function' && can('view',x.w)===true;}catch(e){return false;}
+  }
+  issueList=function(){
+    const list=original235();
+    return Array.isArray(list)?list.filter(alertInScope235):[];
+  };
+  /* Recalculate unread counts after roles / worker scope change. */
+  window.addEventListener('focus',()=>{try{if(typeof updateAlertBadges==='function')updateAlertBadges()}catch(e){}});
+})();
+</script>
 </body>
 
 <style id="step129SystemLayoutStyle">
@@ -7379,7 +7406,7 @@ function dayman(){
  ks.forEach(k=>ds.forEach(d=>addDay(k,d)));
  A.forEach(w=>{const k=K(w),d=D(w);if(!allowed(k,d))return;addDay(k,d);const g=groups.get(norm(k)+'|'+norm(d)),roomNum=String(R(w)||'').match(/\d+/)?.[0];g.count++;if(roomNum){const n=parseInt(roomNum,10);if(n>=1&&n<=15)g.rooms.set(n,(g.rooms.get(n)||0)+1)}});
  const entries=[...groups.values()].sort((a,b)=>(a.k+a.d).localeCompare(b.k+b.d,'vi',{numeric:true}));
- return `<h2 class="mtitle">Quản lý dãy</h2><div class="msub">${admin?'Tổng quan tất cả KTX và dãy':'Các dãy đã được phân quyền'} · ${entries.length} dãy</div><div class="step230-day-list">${entries.map(g=>{
+ return `<button type="button" class="mback" data-mobile="home">← Quay lại Tổng quan</button><h2 class="mtitle">Quản lý dãy</h2><div class="msub">${admin?'Tổng quan tất cả KTX và dãy':'Các dãy đã được phân quyền'} · ${entries.length} dãy</div><div class="step230-day-list">${entries.map(g=>{
  const rooms=[...g.rooms.entries()].sort((a,b)=>a[0]-b[0]).map(([n,used])=>({n,used}));const total=g.count;const pct=rooms.length?Math.min(100,Math.round(total/(rooms.length*cap)*100)):0;const full=rooms.filter(r=>r.used>=cap).length,empty=rooms.filter(r=>r.used===0).length,near=rooms.filter(r=>r.used>=cap*.9&&r.used<cap).length;
  return `<section class="step230-day-card"><div class="step230-day-top"><div><b>${escapeHtml(g.d)}</b><small>${escapeHtml(g.k)} · ${rooms.length} phòng</small></div><strong>${total}/${rooms.length*cap} <small>${pct}%</small></strong></div><div class="step230-bar"><i style="width:${pct}%"></i></div><div class="step230-counts"><span class="free">Trống ${empty}</span><span class="near">Sắp đầy ${near}</span><span class="full">Đầy ${full}</span></div><div class="step230-rooms">${rooms.map(r=>{const pctR=Math.min(100,Math.round(r.used/cap*100));const cls=r.used>=cap?'full':r.used>=cap*.9?'near':r.used===0?'empty':'normal';return `<button class="step230-room ${cls}" type="button" data-day-ktx="${escapeHtml(g.k)}" data-day-name="${escapeHtml(g.d)}" data-day-room="${r.n}" aria-label="${escapeHtml(g.d)}, phòng ${r.n}, ${r.used} trên ${cap} người"><b>P.${r.n}</b><span>${r.used}/${cap}</span><small>${pctR}%</small></button>`}).join('')}</div><button class="step230-open-day" type="button" data-day-ktx="${escapeHtml(g.k)}" data-day-name="${escapeHtml(g.d)}">Xem công nhân dãy này →</button></section>`}).join('')||'<section class="mpanel"><div class="mempty">Tài khoản chưa được phân công KTX/Dãy.</div></section>'}</div>`;
 }
