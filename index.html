@@ -1033,6 +1033,44 @@ button.ktx-action:disabled,.ktx-action[aria-disabled=true]{filter:saturate(.5)!i
 @media(max-width:700px){button.ktx-action,.btn.ktx-action,a.ktx-action,label.ktx-action{min-height:42px!important;box-sizing:border-box!important}}
 @media(prefers-reduced-motion:reduce){.ktx-action{transition:none!important}.ktx-action:not(:disabled):hover,.ktx-action:not(:disabled):active{transform:none!important}}
 </style>
+
+<style id="step251-room-status-colors">
+/* STEP251: màu trạng thái dễ nhận biết trên cả PC và Mobile. Giữ nguyên logic / quyền. */
+#mobile180 .step230-counts span,
+#home .room-mini-stats .tag{
+ display:inline-flex!important;align-items:center;justify-content:center;
+ border-radius:999px!important;font-weight:850!important;
+ line-height:1.35!important;letter-spacing:.01em;
+ padding:4px 9px!important;font-size:10px!important;
+ border:1px solid rgba(255,255,255,.5)!important;
+ box-shadow:0 3px 0 rgba(30,40,75,.11),0 5px 12px rgba(25,39,89,.12),inset 0 1px rgba(255,255,255,.45)!important;
+ white-space:nowrap;transition:transform .15s ease,box-shadow .15s ease;
+}
+/* Trống = aqua; sắp đầy = vàng; đầy = đỏ; quá tải = đỏ đậm */
+#mobile180 .step230-counts .free,
+#home .room-mini-stats .tag.g{background:linear-gradient(145deg,#00e7eb,#00b9d2)!important;color:#003f50!important;border-color:#5ef9ff!important}
+#mobile180 .step230-counts .near{background:linear-gradient(145deg,#fff742,#ffda00)!important;color:#644500!important;border-color:#fff8a4!important}
+#mobile180 .step230-counts .full,
+#home .room-mini-stats .tag.a{background:linear-gradient(145deg,#ff3658,#e9002d)!important;color:#fff!important;border-color:#ff91a5!important}
+#home .room-mini-stats .tag.r{background:linear-gradient(145deg,#ec0031,#a90023)!important;color:#fff!important;border-color:#ff7a93!important}
+/* Các thẻ phòng đồng bộ ngữ nghĩa: phòng còn nhiều chỗ = lime, sắp đầy = vàng, đầy/quá tải = đỏ */
+#mobile180 .step230-room,
+#home .room-cell{box-shadow:0 2px 0 rgba(31,56,100,.08),0 4px 11px rgba(30,55,100,.09)!important;transition:transform .15s ease,box-shadow .15s ease!important}
+#mobile180 .step230-room.empty{background:linear-gradient(155deg,#d8ffe7,#b2fac7)!important;border-color:#47d27e!important;color:#07582e!important}
+#mobile180 .step230-room.normal{background:linear-gradient(155deg,#f6fff9,#e8fbf1)!important;border-color:#9bdac0!important;color:#176449!important}
+#mobile180 .step230-room.near{background:linear-gradient(155deg,#fff8cb,#ffe49d)!important;border-color:#f4b537!important;color:#6a4400!important}
+#mobile180 .step230-room.full{background:linear-gradient(155deg,#ffe3e8,#ffb9c5)!important;border-color:#f15d78!important;color:#88152e!important}
+#mobile180 .step230-room:active,#home .room-cell:active{transform:translateY(2px)!important;box-shadow:0 1px 3px rgba(31,56,100,.12)!important}
+#home .room-cell.ok{background:linear-gradient(155deg,#e9fff0,#d6f9e4)!important;border-color:#75d8a0!important}
+#home .room-cell.full{background:linear-gradient(155deg,#fff3c9,#ffe5a6)!important;border-color:#eebd4b!important}
+#home .room-cell.over{background:linear-gradient(155deg,#ffe4e8,#ffc3cd)!important;border-color:#f46882!important}
+#home .room-filterbar button[data-rf="free5"]{border-color:#42d5db!important;color:#036377!important;background:#d8fcff!important}
+#home .room-filterbar button[data-rf="low"]{border-color:#ecc23d!important;color:#805900!important;background:#fff5bd!important}
+#home .room-filterbar button[data-rf="full"]{border-color:#f0788b!important;color:#a60c2e!important;background:#ffe5ea!important}
+#home .room-filterbar button[data-rf="over"]{border-color:#d83853!important;color:#fff!important;background:#d62543!important}
+#home .room-filterbar button[data-rf].on{outline:2px solid #326eff;outline-offset:1px;box-shadow:0 4px 11px rgba(28,75,157,.19)!important}
+@media(max-width:760px){#mobile180 .step230-counts span{font-size:9px!important;padding:3px 7px!important}#mobile180 .step230-rooms{gap:5px}}
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
