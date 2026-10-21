@@ -11,6 +11,45 @@
 #ncc171-root .ncc171-preview{white-space:pre-wrap;font-family:'Times New Roman',serif;line-height:1.65;border:1px solid #d7e1f2;background:#f8fbff;border-radius:10px;padding:18px;font-size:15px}
 @media(max-width:860px){#ncc171-root .ncc171-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){#ncc171-root .ncc171-grid,#ncc171-root .ncc171-grid.two,#ncc171-root .ncc171-summary{grid-template-columns:1fr}}
+
+
+/* STEP241: Responsive incident report utility. Preserves original JS and data logic. */
+html{scroll-behavior:smooth}body{overflow-x:hidden}
+.container,main,.card,.item{min-width:0}
+button,input,select,textarea{touch-action:manipulation}
+.btn:focus-visible,.tab:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #80b6ff;outline-offset:2px}
+@media(max-width:760px){
+ header{padding:14px 14px 10px;gap:6px;align-items:flex-start}
+ header h1{font-size:21px;line-height:1.25}
+ header>.badge{display:none}
+ .container{padding:10px 10px max(24px,env(safe-area-inset-bottom,0px))}
+ .tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:0 0 12px}
+ .tab{min-height:46px;font-size:12.5px;line-height:1.28;padding:9px 8px;text-align:center;white-space:normal;overflow-wrap:anywhere}
+ .tabs .tab:nth-child(2){grid-column:1/-1;grid-row:3}
+ .card{padding:13px 12px;margin-bottom:12px;border-radius:13px}
+ .grid,.grid.two,.people,.catalog-edit{grid-template-columns:minmax(0,1fr)}
+ .line{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .line>.field:first-child,.line>.field:nth-child(2){grid-column:auto}
+ .field{font-size:12.5px;line-height:1.4}
+ input,select,textarea{font-size:16px!important;min-height:44px;padding:10px 11px}
+ textarea{min-height:95px}
+ .btn{min-height:43px;padding:10px 12px;text-align:center;white-space:normal}
+ .row{gap:8px}
+ .item{padding:10px}
+ .item-head{align-items:flex-start;flex-wrap:wrap}
+ .total{font-size:15px;line-height:1.5}
+ .preview{padding:12px;font-size:14px;line-height:1.55;min-height:120px}
+ #export .row{align-items:stretch}
+ #export .row .row{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ #choose>.row:last-child .btn{width:100%}
+ #catalog .row>.btn,#catalog .row>label.btn{flex:1 1 145px}
+ .notice{font-size:12px;line-height:1.45}
+ #ncc171-root .ncc171-grid,#ncc171-root .ncc171-grid.two{grid-template-columns:minmax(0,1fr)}
+ #ncc171-root .ncc171-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #ncc171-root .ncc171-buttons>*{flex:1 1 135px;min-height:42px}
+ table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+@media(max-width:390px){.tabs{grid-template-columns:1fr 1fr}.tab{font-size:12px}.line{grid-template-columns:1fr}.tabs .tab:nth-child(2){grid-row:auto}#ncc171-root .ncc171-summary{grid-template-columns:1fr}}
 </style><style id="step173-utility-visual-standard">
 :root{--ui-space:10px}button,input,select,textarea{box-sizing:border-box}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #2563eb;outline-offset:2px}input,select,textarea{max-width:100%}button{min-height:34px}main,section,.card{min-width:0}@media(max-width:640px){body{overflow-x:hidden}table{max-width:100%}}
 </style></head><body><header><div><div class="muted">KÝ TÚC XÁ HÓC MÔN · TIỆN ÍCH</div><h1>Biên bản sự vụ</h1><div class="muted">Danh mục → Chọn lỗi → Tính tiền → Xuất văn bản</div></div><span class="badge">Mô-đun độc lập · Không sửa dữ liệu công nhân</span></header><div class="container"><div class="tabs" id="tabs"><button class="tab active" data-tab="choose">1. Chọn & lập biên bản</button><button class="tab" data-tab="nccsheet">NCC suất ăn · Tính & lập biên bản</button><button class="tab" data-tab="catalog">2. Danh mục lỗi</button><button class="tab" data-tab="export">3. Xuất văn bản</button><button class="tab" data-tab="template">4. Văn bản mẫu</button></div><main>
