@@ -2,8 +2,8 @@
 module.exports = async function handler(req,res){
   res.setHeader('Cache-Control','no-store');
   if(req.method!=='POST')return res.status(405).json({error:'Method not allowed'});
-  const base=(process.env.SUPABASE_URL||'').replace(/\/$/,'');
-  const key=process.env.SUPABASE_SERVICE_ROLE_KEY||'';
+  const base=(process.env.SUPABASE_URL||'https://ojyamqpkmhmhqjfcudhy.supabase.co').replace(/\/$/,'');
+  const key=process.env.SUPABASE_SERVICE_ROLE_KEY||'sb_publishable_TfczErIbZKv_nMdRu_wUWg_n-h6uDSq';
   if(!base||!key)return res.status(503).json({error:'Thiếu SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY trên Vercel.'});
   const bearer=(req.headers.authorization||'').match(/^Bearer\s+(.+)$/i)?.[1];
   const id=req.body?.user_id;
