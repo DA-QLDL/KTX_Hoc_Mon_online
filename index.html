@@ -7922,3 +7922,65 @@ setTimeout(refresh,400);setTimeout(refresh,1500);let tries=0;const timer=setInte
 </style>
 </html>
 <script id="step238-system-nav-guard">(function(){function hide(){var sub=typeof ME!=='undefined'&&ME.id&&ME.role!=='admin';document.querySelectorAll('nav button[data-p="sysfunc"],nav .system-hub-nav').forEach(function(b){b.style.display=sub?'none':''});}document.addEventListener('click',function(){setTimeout(hide,0)},true);setTimeout(hide,400);})();</script>
+
+<style id="step253-flat-readable-rooms-and-headers">
+/* STEP253 — Remove raised effects from room map + worker table headers only.
+   Dark text on light backgrounds for readability; keeps status meaning and JS intact. */
+#home .room-cell,#home .r.room-cell,
+#mobile180 .step230-room{
+  background-image:none!important;
+  background-color:#f2f8ff!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  filter:none!important;
+  transform:none!important;
+  border:1px solid #c8dcf1!important;
+  transition:background-color .15s,border-color .15s!important;
+  color:#18375d!important;
+}
+#home .room-cell.ok,#mobile180 .step230-room.normal,#mobile180 .step230-room.empty{
+  background:#e9f8f0!important;border-color:#82d9a9!important;color:#145333!important;
+}
+#home .room-cell.full,#mobile180 .step230-room.near{
+  background:#fff4d8!important;border-color:#efc45d!important;color:#71500d!important;
+}
+#home .room-cell.over,#mobile180 .step230-room.full{
+  background:#ffe8ec!important;border-color:#ec95a3!important;color:#8c1c31!important;
+}
+#home .room-cell :is(.room-no,.room-occ,b,small),
+#mobile180 .step230-room :is(b,small,span,strong){color:inherit!important;text-shadow:none!important;box-shadow:none!important}
+#home .room-cell .sex{color:#214b89!important;background:#dfeeff!important;text-shadow:none!important}
+#home .room-cell .sex.f{color:#9a215b!important;background:#ffe7f3!important}
+#home .room-mini-stats .tag,#mobile180 .step230-counts span{
+  background-image:none!important;box-shadow:none!important;text-shadow:none!important;
+  border-width:1px!important;font-weight:750!important;transform:none!important;
+}
+#home .room-mini-stats .tag.g,#mobile180 .step230-counts .free{
+  background:#dbf9fb!important;color:#075968!important;border-color:#9ce9ef!important;
+}
+#mobile180 .step230-counts .near{background:#fff2c7!important;color:#795500!important;border-color:#ecca62!important}
+#home .room-mini-stats .tag.a,#mobile180 .step230-counts .full{
+  background:#ffebef!important;color:#9e2440!important;border-color:#f5a9b9!important;
+}
+#home .room-mini-stats .tag.r{
+  background:#ffe3e9!important;color:#961b38!important;border-color:#eb8ea4!important;
+}
+#home .room-cell:active,#mobile180 .step230-room:active{transform:none!important;box-shadow:none!important}
+/* Remove individual floating/white header chips. Flat header with dark readable labels. */
+#work #wl .cmp2 th,#work .cmp2 th{
+  background:#eaf2fd!important;background-image:none!important;
+  color:#17365c!important;box-shadow:none!important;text-shadow:none!important;
+  border-top:0!important;border-bottom:1px solid #cedef1!important;
+  border-right:1px solid #e1e9f4!important;
+  filter:none!important;transform:none!important;
+}
+#work #wl .cmp2 th :is(button,.thbtn,span,b,small,div),
+#work .cmp2 th :is(button,.thbtn,span,b,small,div){
+  background:transparent!important;background-image:none!important;
+  color:#17365c!important;border:0!important;
+  box-shadow:none!important;text-shadow:none!important;
+  filter:none!important;transform:none!important;
+}
+#work .cmp2 th .thbtn.active,#work .cmp2 th .thbtn.active *{color:#0759bc!important}
+#work .cmp2 th .thbtn:hover{color:#0759bc!important}
+</style>
