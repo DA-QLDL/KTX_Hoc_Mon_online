@@ -832,7 +832,7 @@ body #dlg .vf button{min-width:88px!important;min-height:43px!important;border-r
   #mobile180 .m195-menu{margin-top:12px!important;line-height:1.5}
 }
 </style>
-</head>
+<style id="step223-delete-style">#acc .ac223-actions{display:flex;align-items:center;flex-wrap:wrap;gap:6px}#acc .ac223-delete{border-color:#fecaca;color:#b91c1c;background:#fff6f6}#acc .ac223-delete:hover{background:#fee2e2}#acc .ac223-delete:disabled{opacity:.35;cursor:not-allowed}@media(max-width:650px){#acc .ac223-actions{flex-direction:column;align-items:stretch}}</style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-home" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
@@ -6331,7 +6331,7 @@ nav .auth-userbar button,nav .user-card button{background:#fff!important;color:#
   el.innerHTML=`<div class="ac140-stats"><div class="ac140-stat"><small>Tổng tài khoản</small><strong>${accounts.length}</strong></div><div class="ac140-stat"><small>Đang hoạt động</small><strong>${accounts.filter(a=>a.enabled).length}</strong></div><div class="ac140-stat"><small>Đã khóa</small><strong>${accounts.filter(a=>!a.enabled).length}</strong></div><div class="ac140-stat"><small>Chờ duyệt</small><strong>${reqs.length}</strong></div></div>
   <div class="card"><div class="ac140-top"><div><h3 style="margin:0">Tài khoản người dùng</h3><p class="mut" style="font-size:11px;margin:3px 0 0">Quản lý vai trò, phạm vi phụ trách và trạng thái kích hoạt.</p></div><button class="btn" id="ac140Create">+ Tạo / yêu cầu tài khoản</button></div>
   <div class="ac140-search"><input id="ac140Q" placeholder="Tìm họ tên, email, KTX, Dãy..." value="${esc140(q)}"><select id="ac140Role"><option value="">Tất cả vai trò</option>${Object.entries(ROLES).map(([id,n])=>`<option value="${esc140(id)}" ${id===role?'selected':''}>${esc140(n)}</option>`).join('')}</select><select id="ac140State"><option value="">Tất cả trạng thái</option><option value="active" ${stat==='active'?'selected':''}>Đang hoạt động</option><option value="locked" ${stat==='locked'?'selected':''}>Đã khóa</option></select><button class="btn s" id="ac140Refresh">Làm mới</button></div>
-  <div class="wrap"><table class="ac140-table"><thead><tr><th>NGƯỜI DÙNG</th><th>VAI TRÒ</th><th>PHẠM VI</th><th>TRẠNG THÁI</th><th>THAO TÁC</th></tr></thead><tbody>${filtered.map(a=>`<tr><td><b>${esc140(a.display_name||a.email)}</b><small>${esc140(a.email)}</small></td><td><span class="ac140-pill">${esc140(ROLES[a.role]||a.role)}</span></td><td>${esc140((a.ktx||[]).join(', ')||'Tất cả KTX')}<small>${esc140((a.days||[]).join(', ')||'Tất cả Dãy')}</small></td><td><span class="ac140-badge ${a.enabled?'':'off'}">${a.enabled?'Hoạt động':'Đã khóa'}</span></td><td><button class="btn s sm" data-ac140-edit="${esc140(a.user_id)}">Chỉnh sửa</button></td></tr>`).join('')||'<tr><td colspan="5">Không tìm thấy tài khoản phù hợp.</td></tr>'}</tbody></table></div></div>
+  <div class="wrap"><table class="ac140-table"><thead><tr><th>NGƯỜI DÙNG</th><th>VAI TRÒ</th><th>PHẠM VI</th><th>TRẠNG THÁI</th><th>THAO TÁC</th></tr></thead><tbody>${filtered.map(a=>`<tr><td><b>${esc140(a.display_name||a.email)}</b><small>${esc140(a.email)}</small></td><td><span class="ac140-pill">${esc140(ROLES[a.role]||a.role)}</span></td><td>${esc140((a.ktx||[]).join(', ')||'Tất cả KTX')}<small>${esc140((a.days||[]).join(', ')||'Tất cả Dãy')}</small></td><td><span class="ac140-badge ${a.enabled?'':'off'}">${a.enabled?'Hoạt động':'Đã khóa'}</span></td><td><div class="ac223-actions"><button class="btn s sm" data-ac140-edit="${esc140(a.user_id)}">Chỉnh sửa</button><button type="button" class="btn s sm ac223-delete" data-ac223-delete="${esc140(a.user_id)}" ${String(a.user_id)===String(SUPA_SYNC.session?.user?.id)?'disabled title="Không thể xóa tài khoản đang đăng nhập"':''}>Xóa</button></div></td></tr>`).join('')||'<tr><td colspan="5">Không tìm thấy tài khoản phù hợp.</td></tr>'}</tbody></table></div></div>
   <div class="card"><h3>Yêu cầu cấp quyền chờ duyệt (${reqs.length})</h3>${reqs.map(r=>`<div class="ac140-request" data-req="${esc140(r.user_id)}"><div><b>${esc140(r.display_name||r.email)}</b><small style="display:block">${esc140(r.email)}</small></div><select data-req-role>${Object.entries(ROLES).map(([k,v])=>`<option value="${k}" ${k==='viewer'?'selected':''}>${esc140(v)}</option>`).join('')}</select><small>${r.requested_at?new Date(r.requested_at).toLocaleString('vi-VN'):'—'}</small><div class="row"><button class="btn sm" data-ac140-approve>Duyệt</button><button class="btn s sm" data-ac140-reject>Từ chối</button></div></div>`).join('')||'<p class="mut">Không có yêu cầu chờ duyệt.</p>'}</div>
   <dialog class="ac140-modal" id="ac140Modal"><div class="ac140-modal-head"><h3 style="margin:0">Chỉnh sửa tài khoản</h3><button class="btn s sm" id="ac140Close">Đóng</button></div><div class="ac140-modal-body"><div class="ac140-fields"><label>Họ và tên<input id="ac140Name" disabled></label><label>Email<input id="ac140Email" disabled><small>Thông tin xác thực do Supabase Auth quản lý</small></label><label>Vai trò<select id="ac140EditRole">${Object.entries(ROLES).map(([k,v])=>`<option value="${k}">${esc140(v)}</option>`).join('')}</select></label><label>Trạng thái<select id="ac140Enabled"><option value="true">Hoạt động</option><option value="false">Đã khóa</option></select></label><label>Phạm vi KTX<input id="ac140Ktx" placeholder="KTX 1, KTX 2"></label><label>Phạm vi Dãy<input id="ac140Days" placeholder="Dãy 1, Dãy 2"></label></div><h3 style="margin:17px 0 4px">Quyền theo vai trò</h3><p class="mut" style="font-size:11px;margin:0">Quyền được áp dụng theo vai trò đang chọn và kiểm tra trên máy chủ.</p><div class="ac140-perms" id="ac140Perms"></div></div><div class="ac140-modal-foot"><button class="btn s" id="ac140Cancel">Hủy</button><button class="btn" id="ac140Save">Lưu thay đổi</button></div></dialog>`;
   let timer;document.getElementById('ac140Q').oninput=e=>{const v=e.target.value;clearTimeout(timer);timer=setTimeout(()=>{window.__ac140Q=v;accPage()},280)};
@@ -6342,6 +6342,25 @@ nav .auth-userbar button,nav .user-card button{background:#fff!important;color:#
   document.getElementById('ac140EditRole').onchange=renderPerms;
   el.querySelectorAll('[data-ac140-edit]').forEach(b=>b.onclick=()=>{const a=byid(b.dataset.ac140Edit);if(!a)return;selection=a.user_id;document.getElementById('ac140Name').value=a.display_name||'';document.getElementById('ac140Email').value=a.email||'';document.getElementById('ac140EditRole').value=a.role;document.getElementById('ac140Enabled').value=String(!!a.enabled);document.getElementById('ac140Ktx').value=(a.ktx||[]).join(', ');document.getElementById('ac140Days').value=(a.days||[]).join(', ');renderPerms();modal.showModal()});
   document.getElementById('ac140Save').onclick=async()=>{const a=byid(selection);if(!a)return;const save=document.getElementById('ac140Save');save.disabled=true;const row=document.createElement('div');row.innerHTML='<select data-role></select><input data-enabled type="checkbox"><input data-ktx><input data-days>';row.querySelector('[data-role]').value=document.getElementById('ac140EditRole').value;row.querySelector('[data-role]').innerHTML=Object.entries(ROLES).map(([k,v])=>`<option value="${k}">${esc140(v)}</option>`).join('');row.querySelector('[data-role]').value=document.getElementById('ac140EditRole').value;row.querySelector('[data-enabled]').checked=document.getElementById('ac140Enabled').value==='true';row.querySelector('[data-ktx]').value=document.getElementById('ac140Ktx').value;row.querySelector('[data-days]').value=document.getElementById('ac140Days').value;try{await window.saveAccountRow(selection,row);close();await accPage()}catch(e){alert('Không thể cập nhật: '+e.message)}finally{save.disabled=false}};
+  // STEP223: account deletion must be performed by authenticated server-side API.
+  el.querySelectorAll('[data-ac223-delete]').forEach(button=>button.onclick=async()=>{
+    if(ME.role!=='admin'){alert('Chỉ Quản trị được xóa tài khoản.');return}
+    const target=byid(button.dataset.ac223Delete);if(!target)return;
+    const label=target.display_name||target.email||target.user_id;
+    const answer=prompt('XÓA VĨNH VIỄN tài khoản "'+label+'"\nEmail: '+(target.email||'')+'\n\nGõ XOA để xác nhận. Hành động không thể hoàn tác.');
+    if(answer!=='XOA')return;
+    button.disabled=true;
+    try{
+      const sb=syncClient();if(!sb)throw Error('Chưa kết nối Supabase.');
+      const {data,error}=await sb.auth.getSession();
+      if(error||!data?.session?.access_token)throw Error('Phiên Quản trị đã hết hạn.');
+      const response=await fetch('/api/admin-delete-user',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+data.session.access_token},body:JSON.stringify({user_id:target.user_id})});
+      const payload=await response.json().catch(()=>({}));
+      if(!response.ok)throw Error(payload.error||'Máy chủ từ chối xóa tài khoản (HTTP '+response.status+').');
+      alert('Đã xóa tài khoản đăng nhập: '+label);await authLoadAdminData();await accPage();
+    }catch(e){alert('Chưa xóa tài khoản: '+(e.message||e)+'\nKiểm tra API và cấu hình Vercel.');}
+    finally{button.disabled=false}
+  });
   el.querySelectorAll('[data-ac140-approve]').forEach(b=>b.onclick=()=>window.reviewRequest(b.closest('[data-req]').dataset.req,true));el.querySelectorAll('[data-ac140-reject]').forEach(b=>b.onclick=()=>window.reviewRequest(b.closest('[data-req]').dataset.req,false));
  };
  const originalGate=window.authHubShow;if(typeof originalGate==='function')window.authHubShow=function(){const result=originalGate.apply(this,arguments);enhanceGate();return result};
@@ -6680,16 +6699,36 @@ window.addEventListener('unhandledrejection',e=>{const m=String(e.reason&&e.reas
    const dialog=document.createElement('dialog');dialog.id='ac147Dialog';dialog.className='ac140-modal';
    dialog.innerHTML=`<div class="ac140-modal-head"><h3>Admin tạo tài khoản nhân viên</h3><button type="button" class="btn s" id="ac147Close">Đóng</button></div><div class="ac140-modal-body"><form id="ac147Form" autocomplete="off">
     <label class="ac147-label">Họ và tên<input name="display_name" required minlength="2" maxlength="100"></label>
-    <label class="ac147-label">Tên đăng nhập<input name="username" pattern="[a-z][a-z0-9._-]{2,31}" required placeholder="nv001" autocomplete="off"></label>
+    <label class="ac147-label">Tên đăng nhập<input name="username" pattern="[a-z][a-z0-9_]{2,31}" required placeholder="Ví dụ: ktx_hoc_mon" maxlength="32" autocapitalize="none" spellcheck="false" autocomplete="off"></label>
     <label class="ac147-label">Mật khẩu tạm thời<input name="password" type="password" minlength="6" required autocomplete="new-password"></label>
     <label class="ac147-label">Vai trò<select name="role"><option value="staff">Nhập liệu</option><option value="manager">Quản lý</option><option value="guard">Bảo vệ</option><option value="viewer">Chỉ xem</option></select></label>
     <div class="ac147-all"><span class="ac147-label">KTX được phân công</span><div class="ac147-pick">${['KTX 1','KTX 2'].map(x=>`<label><input type="checkbox" name="ktx" value="${x}">${x}</label>`).join('')}</div></div>
     <div class="ac147-all"><span class="ac147-label">Dãy được phân công</span><div class="ac147-pick">${['Dãy 1','Dãy 2','Dãy 3','Dãy 4','Dãy 5','Dãy 6'].map(x=>`<label><input type="checkbox" name="days" value="${x}">${x}</label>`).join('')}</div></div>
     <div class="ac147-all" id="ac147Message" role="status">Không cần email cá nhân. Admin tạo tài khoản nội bộ và cấp quyền trực tiếp. Nhân viên cần đổi mật khẩu sau lần đăng nhập đầu.</div></form></div><div class="ac140-modal-foot"><button type="button" class="btn s" id="ac147Cancel">Hủy</button><button type="button" class="btn" id="ac147Save">Tạo tài khoản</button></div>`;
    document.getElementById('acc').appendChild(dialog);dialog.showModal();
+   // STEP222: Consistent client/server username rules. Only ASCII [a-z0-9_] reaches API.
+   const usernameInput=dialog.querySelector('input[name="username"]');
+   const usernameHint=dialog.querySelector('#ac222UsernameHint');
+   function normalizeAccountName(v){
+     return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[đĐ]/g,'d')
+       .toLowerCase().trim().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'').slice(0,32);
+   }
+   usernameInput.addEventListener('input',()=>{
+     const value=normalizeAccountName(usernameInput.value);
+     usernameHint.textContent=value ? 'Tên đăng nhập sẽ dùng: '+value : '3–32 ký tự: a–z, 0–9, _; bắt đầu bằng chữ.';
+     usernameInput.setCustomValidity('');
+   });
+   usernameInput.addEventListener('blur',()=>{usernameInput.value=normalizeAccountName(usernameInput.value);});
    const close=()=>dialog.close();dialog.querySelector('#ac147Close').onclick=close;dialog.querySelector('#ac147Cancel').onclick=close;
    dialog.querySelector('#ac147Save').onclick=async()=>{
-    const form=dialog.querySelector('form');if(!form.reportValidity())return;
+    const form=dialog.querySelector('form');
+    usernameInput.value=normalizeAccountName(usernameInput.value);
+    if(!/^[a-z][a-z0-9_]{2,31}$/.test(usernameInput.value)){
+      usernameInput.setCustomValidity('Tên đăng nhập phải có 3–32 ký tự, bắt đầu bằng chữ a–z; chỉ dùng a–z, 0–9 hoặc dấu _.');
+      usernameInput.reportValidity();return;
+    }
+    usernameInput.setCustomValidity('');
+    if(!form.reportValidity())return;
     const values=new FormData(form);const msg=dialog.querySelector('#ac147Message'),save=dialog.querySelector('#ac147Save');
     const ktx=values.getAll('ktx'),days=values.getAll('days');
     if(!ktx.length||!days.length){msg.textContent='Hãy chọn ít nhất một KTX và một Dãy.';return}
