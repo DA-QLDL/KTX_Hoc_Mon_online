@@ -896,7 +896,19 @@ body #dlg .vf button{min-width:88px!important;min-height:43px!important;border-r
 #mobile180 .step230-room.full{background:#ffedf0;border-color:#e6adb6;color:#a13c49}
 #mobile180 .step230-open-day{display:block;width:100%;border:1px solid #c4d6f2;background:#f5f9ff;color:#2161a8;border-radius:9px;padding:9px;margin-top:9px;font-weight:700;font-size:12px}
 @media(max-width:370px){#mobile180 .step230-rooms{grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}#mobile180 .step230-room{padding:5px 2px}#mobile180 .step230-room b{font-size:10px}}
-</style></head>
+</style><style id="step231-mobile-overview">
+@media(max-width:760px){
+ #mobile180 .step231-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ #mobile180 .step231-summary .mstat{min-width:0;padding:12px!important;overflow:hidden}
+ #mobile180 .step231-summary .mstat b{font-size:24px!important;line-height:1.2}
+ #mobile180 .step231-summary .mstat small{font-size:11px!important;line-height:1.35;overflow-wrap:anywhere}
+ #mobile180 .step231-summary .step231-main{background:#e9f1ff;border:1px solid #b8d3fa}
+ #mobile180 .step231-summary .step231-male{background:#eaf3ff;border:1px solid #c9dcfb}
+ #mobile180 .step231-summary .step231-female{background:#fff0f6;border:1px solid #f7cddd}
+ #mobile180 .step231-unknown{font-size:11px;padding:9px;color:#795d20;background:#fff8e7;border-radius:9px;margin:9px 0}
+}
+</style>
+</head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-home" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
@@ -7328,9 +7340,19 @@ const male=w=>String(w.gt||'').toLowerCase().includes('nam')?'Nam':String(w.gt||
 const missing=w=>!(String(w.cccd||'').trim()&&String(w.sdt||'').trim());
 const fmt=n=>Number(n||0).toLocaleString('vi-VN');
 const page=x=>{screen=x;limit=35;render();window.scrollTo(0,0);if(x==='list'||x==='home')tryCloudRead()};
-function stats(){const A=workers();const rs=new Map();A.forEach(w=>{const k=loc(w);rs.set(k,(rs.get(k)||0)+1)});return{A,over:[...rs.values()].filter(v=>v>(typeof CAP==='number'?CAP:20)).length}};
+function stats(){
+ const A=workers(),rs=new Map(),days=new Set(),ktxs=new Set();let men=0,women=0,unknown=0;
+ A.forEach(w=>{const k=loc(w);rs.set(k,(rs.get(k)||0)+1);
+   const ktx=typeof K==='function'?K(w):w.ktx||'',day=typeof D==='function'?D(w):w.day||'';
+   if(ktx)ktxs.add(ktx);if(ktx&&day)days.add(ktx+'|'+day);
+   const sex=String(w.gt||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
+   if(sex==='nam'||sex==='m'||sex==='male')men++;else if(sex==='nu'||sex==='f'||sex==='female')women++;else unknown++;
+ });
+ // Never treat empty rooms as occupied; counts reflect actual accessible worker data.
+ return{A,over:[...rs.values()].filter(v=>v>(typeof CAP==='number'?CAP:20)).length,occupiedRooms:rs.size,days:days.size,ktxs:ktxs.size,men,women,unknown};
+}
 function shell(content){return `<header class="mbar"><div class="mbrand"><i>▣</i><span>KTX Hóc Môn</span></div><button class="mavatar" data-mobile="account" aria-label="Tài khoản">♙</button></header><div class="mpage">${content}</div><div class="mbottom"><button data-mobile="home" class="${screen==='home'?'active':''}"><span>⌂</span>Tổng quan</button><button data-mobile="list" class="${['list','detail'].includes(screen)?'active':''}"><span>♟</span>Công nhân</button><button data-mobile="qr" class="${screen==='qr'?'active':''}"><span>▦</span>QR code</button></div>`}
-function summary(){const s=stats();return `<h2 class="mtitle">Tổng quan</h2><div class="msub">Quản lý công nhân KTX Hóc Môn</div><div class="mstats"><div class="mstat"><span>👥</span><b>${fmt(s.A.length)}</b><small>Tổng công nhân</small></div><div class="mstat red"><span>⚠️</span><b>${fmt(s.over)}</b><small>Phòng quá tải</small></div><div class="mstat green"><span>🏠</span><b>${fmt([...new Set(s.A.map(loc))].length)}</b><small>Phòng có người</small></div></div>${!s.A.length?`<div class="mcloudwarn">Chưa có dữ liệu công nhân trên thiết bị. Mở Công nhân → Tải Cloud để kiểm tra kết nối.</div>`:''}<section class="mpanel"><h3>Thao tác thường dùng</h3><div class="mactions"><button class="maction" data-mobile="list"><i>👥</i>Danh sách công nhân →</button><button class="maction green" data-mobile="add" ${typeof can==='function'&&can('add')?'':'style="display:none"'}><i>✚</i>Thêm công nhân →</button><button class="maction amber" onclick="window.openKiemTraMenuNCC()"><i>🍽️</i>Xem thực đơn →</button><button class="maction amber" data-mobile="meal" ${typeof can==='function'&&can('report')?'':'style="display:none"'}><i>📊</i>BC suất ăn →</button><button class="maction" data-mobile="qr"><i>▦</i>QR code →</button><button class="maction" data-mobile="dayman"><i>🏘️</i>Quản lý dãy →</button></div></section><section class="mpanel"><h3>Thao tác gần đây</h3>${(typeof LOG!=='undefined'&&Array.isArray(LOG)?LOG:[]).slice(0,4).map(x=>`<div class="mrecent"><b>${escapeHtml(x.a||'Cập nhật')}</b><br>${escapeHtml(x.d||'')}<div class="mtiny">${escapeHtml(x.t||'')}</div></div>`).join('')||'<div class="mempty">Chưa có hoạt động</div>'}</section>`}
+function summary(){const s=stats();return `<h2 class="mtitle">Tổng quan</h2><div class="msub">Quản lý công nhân KTX Hóc Môn</div><div class="mstats step231-summary"><div class="mstat step231-main"><span>👥</span><b>${fmt(s.A.length)}</b><small>Tổng quân số</small></div><div class="mstat"><span>🏢</span><b>${fmt(s.ktxs)}</b><small>KTX có người</small></div><div class="mstat"><span>🏘️</span><b>${fmt(s.days)}</b><small>Dãy có người</small></div><div class="mstat green"><span>🚪</span><b>${fmt(s.occupiedRooms)}</b><small>Phòng có người</small></div><div class="mstat step231-male"><span>♂</span><b>${fmt(s.men)}</b><small>Nam</small></div><div class="mstat step231-female"><span>♀</span><b>${fmt(s.women)}</b><small>Nữ</small></div><div class="mstat red"><span>⚠️</span><b>${fmt(s.over)}</b><small>Phòng quá tải</small></div></div>${s.unknown?`<div class="step231-unknown">${fmt(s.unknown)} hồ sơ chưa xác định giới tính.</div>`:""}${!s.A.length?`<div class="mcloudwarn">Chưa có dữ liệu công nhân trên thiết bị. Mở Công nhân → Tải Cloud để kiểm tra kết nối.</div>`:''}<section class="mpanel"><h3>Thao tác thường dùng</h3><div class="mactions"><button class="maction" data-mobile="list"><i>👥</i>Danh sách công nhân →</button><button class="maction green" data-mobile="add" ${typeof can==='function'&&can('add')?'':'style="display:none"'}><i>✚</i>Thêm công nhân →</button><button class="maction amber" onclick="window.openKiemTraMenuNCC()"><i>🍽️</i>Xem thực đơn →</button><button class="maction amber" data-mobile="meal" ${typeof can==='function'&&can('report')?'':'style="display:none"'}><i>📊</i>BC suất ăn →</button><button class="maction" data-mobile="qr"><i>▦</i>QR code →</button><button class="maction" data-mobile="dayman"><i>🏘️</i>Quản lý dãy →</button></div></section><section class="mpanel"><h3>Thao tác gần đây</h3>${(typeof LOG!=='undefined'&&Array.isArray(LOG)?LOG:[]).slice(0,4).map(x=>`<div class="mrecent"><b>${escapeHtml(x.a||'Cập nhật')}</b><br>${escapeHtml(x.d||'')}<div class="mtiny">${escapeHtml(x.t||'')}</div></div>`).join('')||'<div class="mempty">Chưa có hoạt động</div>'}</section>`}
 const opts=(values,val,title)=>`<option value="">${title}</option>`+[...new Set(values.map(String))].filter(Boolean).sort((a,b)=>a.localeCompare(b,'vi',{numeric:true})).map(v=>`<option value="${escapeHtml(v)}" ${v===val?'selected':''}>${escapeHtml(v)}</option>`).join('');
 function dayman(){
  const A=workers(), groups=new Map(), cap=typeof CAP==='number'&&CAP>0?CAP:20;
@@ -7431,7 +7453,12 @@ function bind(){
 async function refreshMeal213(){
  if(typeof RP==='undefined'||typeof window.KTX213_PULL_MENUS!=='function')return;
  const date=RP.date,period=RP.ses;
- const out=await window.KTX213_PULL_MENUS(date,period);
+ let out=await window.KTX213_PULL_MENUS(date,period);
+ if(!out.ok&&String(out.error||'').includes('Chưa kết nối')){
+  // Connection often becomes ready after the Mobile page has already rendered.
+  await new Promise(resolve=>setTimeout(resolve,1100));
+  if(screen==='meal'&&RP.date===date&&RP.ses===period)out=await window.KTX213_PULL_MENUS(date,period);
+ }
  if(screen!=='meal'||RP.date!==date||RP.ses!==period)return;
  const el=root.querySelector('#m213CloudStatus');if(el)el.textContent=out.ok?(out.count?'Đã tải '+out.count+' bảng Mặn/Chay từ Cloud.':'Cloud chưa có thực đơn cho ngày/bữa này.'):'Không tải được thực đơn Cloud: '+out.error;
  if(out.ok){const active=root.contains(document.activeElement)&&document.activeElement?.matches('input,select,textarea');if(!active)render();}
