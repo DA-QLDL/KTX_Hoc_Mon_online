@@ -15,6 +15,15 @@
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="./qr-config.js?v=ktx228"></script>
+<script id="ktx234-production-public-config">
+/* STEP234 — public publishable configuration only. No service-role or secret key. */
+(function(){
+  const builtIn={url:'https://ojyamqpkmhmhqjfcudhy.supabase.co',key:'sb_publishable_TfczErIbZKv_nMdRu_wUWg_n-h6uDSq'};
+  const valid=c=>c && /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(String(c.url||'')) && /^(sb_publishable_|eyJ)/.test(String(c.key||'')) && !/sb_secret_|service_role/i.test(String(c.key||''));
+  if(!valid(window.KTX_QR_CONFIG)) window.KTX_QR_CONFIG=builtIn;
+  window.__KTX_PUBLIC_CONFIG={url:window.KTX_QR_CONFIG.url,key:window.KTX_QR_CONFIG.key};
+})();
+</script>
 <style>
 :root{--bg:#070c17;--pn:#0f192d;--pn2:#15213a;--ln:#1f2e4a;--ink:#eaf0ff;--mut:#8d9dbd;--bl:#4f8cff;--bl2:#7c5cff;--gr:#2fd48a;--am:#ffb02e;--rd:#ff5d6c;--pk:#ff6fb1;--grbg:#0d2e24;--ambg:#33270f;--rdbg:#3a161c;--bd:var(--ln);--hl:var(--ambg);--sh:0 10px 30px #0006;--gl:#4f8cff26;--gl2:#7c5cff1f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#eef2fa;--pn:#fff;--pn2:#f3f6fc;--ln:#dbe3f0;--ink:#13203a;--mut:#5b6c8a;--bl:#2f6fe8;--bl2:#6d4bf0;--gr:#12935c;--am:#b45f00;--rd:#cf2a3b;--pk:#c2185b;--grbg:#dff5e9;--ambg:#fdeccb;--rdbg:#fde0e2;--sh:0 8px 24px #1b2f5a18;--gl:#2f6fe81f;--gl2:#6d4bf01a}}
@@ -5720,28 +5729,16 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contai
 /* STEP226 - public client config comes from server environment; no user keys or per-device configuration. */
 window.__KTX_PUBLIC_CONFIG = null;
 window.ktxLoadPublicConfig = async function(force){
+  const c=window.KTX_QR_CONFIG || window.__KTX_PUBLIC_CONFIG;
   const valid=c=>c && /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(String(c.url||'')) && /^(sb_publishable_|eyJ)/.test(String(c.key||'')) && !/sb_secret_|service_role/i.test(String(c.key||''));
-  // Official production branch already publishes qr-config.js. Use it on every device,
-  // without relying on any browser-local keys or separate serverless function.
-  const bundled=window.KTX_QR_CONFIG;
-  if(valid(bundled)){
-    const obj={url:String(bundled.url).replace(/\/$/,''),key:bundled.key};
-    window.__KTX_PUBLIC_CONFIG=obj;
-    return obj;
+  if(!valid(c)) throw new Error('Chưa có cấu hình Supabase hợp lệ trong bản phát hành. Liên hệ Quản trị.');
+  const next={url:String(c.url).replace(/\/$/,''),key:String(c.key)};
+  const prior=window.__KTX_PUBLIC_CONFIG;
+  window.__KTX_PUBLIC_CONFIG=next;
+  if(typeof SUPA_SYNC!=='undefined' && (force||!prior||prior.url!==next.url||prior.key!==next.key)){
+    SUPA_SYNC.client=null;SUPA_SYNC._url=null;SUPA_SYNC._key=null;
   }
-  if(window.__KTX_PUBLIC_CONFIG && valid(window.__KTX_PUBLIC_CONFIG) && !force)return window.__KTX_PUBLIC_CONFIG;
-  if(window.__KTX_CONFIG_REQUEST && !force)return window.__KTX_CONFIG_REQUEST;
-  window.__KTX_CONFIG_REQUEST=(async()=>{
-    const res=await fetch('/api/client-config',{cache:'no-store',credentials:'same-origin'});
-    if(!res.ok)throw new Error('Chưa tải được cấu hình Supabase. Kiểm tra file qr-config.js hoặc API (HTTP '+res.status+').');
-    const c=await res.json();
-    if(!valid(c))throw new Error('Cấu hình Supabase trên máy chủ không hợp lệ. Liên hệ Quản trị.');
-    const obj={url:String(c.url).replace(/\/$/,''),key:c.key};
-    window.__KTX_PUBLIC_CONFIG=obj;
-    if(typeof SUPA_SYNC!=='undefined'){SUPA_SYNC.client=null;SUPA_SYNC._url=null;SUPA_SYNC._key=null;}
-    return obj;
-  })();
-  try{return await window.__KTX_CONFIG_REQUEST}finally{window.__KTX_CONFIG_REQUEST=null}
+  return next;
 };
 // Warm the connection on opening the application; login also awaits it on demand.
 window.addEventListener('DOMContentLoaded',()=>{window.ktxLoadPublicConfig().catch(()=>{});});
