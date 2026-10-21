@@ -1,2 +1,5 @@
-// STEP221: Optional QR configuration. Set public Supabase URL and anon/publishable key via app settings. Never put service_role here.
-window.KTX_QR_CONFIG=window.KTX_QR_CONFIG||{url:'',key:''};
+// KTX STEP145 — Publishable key public, khong luu service_role o client.
+window.KTX_QR_CONFIG = {
+  url: 'https://ojyamqpkmhmhqjfcudhy.supabase.co',
+  key: 'sb_publishable_TfczErIbZKv_nMdRu_wUWg_n-h6uDSq'
+};

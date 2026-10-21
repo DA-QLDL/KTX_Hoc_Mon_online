@@ -14,7 +14,7 @@
 <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./qr-config.js"></script>
+<script src="./qr-config.js?v=ktx228"></script>
 <style>
 :root{--bg:#070c17;--pn:#0f192d;--pn2:#15213a;--ln:#1f2e4a;--ink:#eaf0ff;--mut:#8d9dbd;--bl:#4f8cff;--bl2:#7c5cff;--gr:#2fd48a;--am:#ffb02e;--rd:#ff5d6c;--pk:#ff6fb1;--grbg:#0d2e24;--ambg:#33270f;--rdbg:#3a161c;--bd:var(--ln);--hl:var(--ambg);--sh:0 10px 30px #0006;--gl:#4f8cff26;--gl2:#7c5cff1f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#eef2fa;--pn:#fff;--pn2:#f3f6fc;--ln:#dbe3f0;--ink:#13203a;--mut:#5b6c8a;--bl:#2f6fe8;--bl2:#6d4bf0;--gr:#12935c;--am:#b45f00;--rd:#cf2a3b;--pk:#c2185b;--grbg:#dff5e9;--ambg:#fdeccb;--rdbg:#fde0e2;--sh:0 8px 24px #1b2f5a18;--gl:#2f6fe81f;--gl2:#6d4bf01a}}
@@ -4249,7 +4249,7 @@ setTimeout(()=>{updateAlertBadges();if(page==='alerts')alertCenterPage();if(page
 const SUPA_SYNC={client:null,session:null,account:null,ready:false,enabled:false,applying:false,pushing:false,pulling:false,pushTimer:0,reloadTimer:0,channel:null,lastError:'',lastSync:0,remoteIds:{},hashes:{},counts:{},pending:false};
 const SYNC_TABLES={workers:'ktx_workers',archive:'ktx_archived_workers',logs:'ktx_audit_logs',attendance:'ktx_attendance',registrations:'ktx_registrations',rooms:'ktx_room_meta',resStatus:'ktx_residence_status',resHistory:'ktx_residence_history'};
 const syncLs=(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}};
-const syncCfg=()=>{const q=window.__KTX_PUBLIC_CONFIG||window.KTX_QR_CONFIG||{};return{url:q.url||syncLs('ktx_sb_sync_url',''),key:q.key||syncLs('ktx_sb_sync_key',''),email:syncLs('ktx_sb_sync_email','')}};
+const syncCfg=()=>{const q=window.KTX_QR_CONFIG||window.__KTX_PUBLIC_CONFIG||{};return{url:q.url||syncLs('ktx_sb_sync_url',''),key:q.key||syncLs('ktx_sb_sync_key',''),email:syncLs('ktx_sb_sync_email','')}};
 function syncSaveCfg(){const g=i=>($(i)&&$(i).value||'').trim();localStorage.setItem('ktx_sb_sync_url',JSON.stringify(g('sy_url')));localStorage.setItem('ktx_sb_sync_key',JSON.stringify(g('sy_key')));localStorage.setItem('ktx_sb_sync_email',JSON.stringify(g('sy_email')))}
 function syncValidCfg(c=syncCfg()){return /^https:\/\//.test(c.url||'')&&!!c.key&&!/PASTE_|YOUR_/i.test(c.key)}
 function syncClient(){const c=syncCfg();if(!syncValidCfg(c)||!window.supabase)return null;if(SUPA_SYNC.client&&SUPA_SYNC._url===c.url&&SUPA_SYNC._key===c.key)return SUPA_SYNC.client;SUPA_SYNC.client=window.supabase.createClient(c.url,c.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});SUPA_SYNC._url=c.url;SUPA_SYNC._key=c.key;return SUPA_SYNC.client}
@@ -5670,16 +5670,26 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contai
 /* STEP226 - public client config comes from server environment; no user keys or per-device configuration. */
 window.__KTX_PUBLIC_CONFIG = null;
 window.ktxLoadPublicConfig = async function(force){
-  if(window.__KTX_PUBLIC_CONFIG && !force)return window.__KTX_PUBLIC_CONFIG;
+  const valid=c=>c && /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(String(c.url||'')) && /^(sb_publishable_|eyJ)/.test(String(c.key||'')) && !/sb_secret_|service_role/i.test(String(c.key||''));
+  // Official production branch already publishes qr-config.js. Use it on every device,
+  // without relying on any browser-local keys or separate serverless function.
+  const bundled=window.KTX_QR_CONFIG;
+  if(valid(bundled)){
+    const obj={url:String(bundled.url).replace(/\/$/,''),key:bundled.key};
+    window.__KTX_PUBLIC_CONFIG=obj;
+    return obj;
+  }
+  if(window.__KTX_PUBLIC_CONFIG && valid(window.__KTX_PUBLIC_CONFIG) && !force)return window.__KTX_PUBLIC_CONFIG;
   if(window.__KTX_CONFIG_REQUEST && !force)return window.__KTX_CONFIG_REQUEST;
   window.__KTX_CONFIG_REQUEST=(async()=>{
     const res=await fetch('/api/client-config',{cache:'no-store',credentials:'same-origin'});
-    if(!res.ok)throw new Error('Máy chủ chưa có cấu hình Supabase (HTTP '+res.status+'). Liên hệ Quản trị.');
+    if(!res.ok)throw new Error('Chưa tải được cấu hình Supabase. Kiểm tra file qr-config.js hoặc API (HTTP '+res.status+').');
     const c=await res.json();
-    if(!/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(c.url||'')||!c.key||!/^(sb_publishable_|eyJ)/.test(c.key))throw new Error('Cấu hình kết nối trên máy chủ không hợp lệ. Liên hệ Quản trị.');
-    window.__KTX_PUBLIC_CONFIG={url:c.url.replace(/\/$/,''),key:c.key};
+    if(!valid(c))throw new Error('Cấu hình Supabase trên máy chủ không hợp lệ. Liên hệ Quản trị.');
+    const obj={url:String(c.url).replace(/\/$/,''),key:c.key};
+    window.__KTX_PUBLIC_CONFIG=obj;
     if(typeof SUPA_SYNC!=='undefined'){SUPA_SYNC.client=null;SUPA_SYNC._url=null;SUPA_SYNC._key=null;}
-    return window.__KTX_PUBLIC_CONFIG;
+    return obj;
   })();
   try{return await window.__KTX_CONFIG_REQUEST}finally{window.__KTX_CONFIG_REQUEST=null}
 };
