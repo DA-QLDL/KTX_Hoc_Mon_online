@@ -4249,7 +4249,7 @@ setTimeout(()=>{updateAlertBadges();if(page==='alerts')alertCenterPage();if(page
 const SUPA_SYNC={client:null,session:null,account:null,ready:false,enabled:false,applying:false,pushing:false,pulling:false,pushTimer:0,reloadTimer:0,channel:null,lastError:'',lastSync:0,remoteIds:{},hashes:{},counts:{},pending:false};
 const SYNC_TABLES={workers:'ktx_workers',archive:'ktx_archived_workers',logs:'ktx_audit_logs',attendance:'ktx_attendance',registrations:'ktx_registrations',rooms:'ktx_room_meta',resStatus:'ktx_residence_status',resHistory:'ktx_residence_history'};
 const syncLs=(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}};
-const syncCfg=()=>{const q=window.KTX_QR_CONFIG||{};return{url:syncLs('ktx_sb_sync_url',q.url||''),key:syncLs('ktx_sb_sync_key',(!/PASTE_|YOUR_/i.test(q.key||'')?q.key:'')),email:syncLs('ktx_sb_sync_email','')}};
+const syncCfg=()=>{const q=window.__KTX_PUBLIC_CONFIG||window.KTX_QR_CONFIG||{};return{url:q.url||syncLs('ktx_sb_sync_url',''),key:q.key||syncLs('ktx_sb_sync_key',''),email:syncLs('ktx_sb_sync_email','')}};
 function syncSaveCfg(){const g=i=>($(i)&&$(i).value||'').trim();localStorage.setItem('ktx_sb_sync_url',JSON.stringify(g('sy_url')));localStorage.setItem('ktx_sb_sync_key',JSON.stringify(g('sy_key')));localStorage.setItem('ktx_sb_sync_email',JSON.stringify(g('sy_email')))}
 function syncValidCfg(c=syncCfg()){return /^https:\/\//.test(c.url||'')&&!!c.key&&!/PASTE_|YOUR_/i.test(c.key)}
 function syncClient(){const c=syncCfg();if(!syncValidCfg(c)||!window.supabase)return null;if(SUPA_SYNC.client&&SUPA_SYNC._url===c.url&&SUPA_SYNC._key===c.key)return SUPA_SYNC.client;SUPA_SYNC.client=window.supabase.createClient(c.url,c.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});SUPA_SYNC._url=c.url;SUPA_SYNC._key=c.key;return SUPA_SYNC.client}
@@ -5627,35 +5627,25 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contai
  };
 })();
 </script>
-<script>
-/* STEP225: thiết lập kết nối riêng cho thiết bị mới, chỉ lưu URL + publishable/anon key. */
-(function(){
- function ensureConfig(){
-   var gate=document.getElementById('authHubGate');if(!gate)return;
-   var card=gate.querySelector('.auth-card2');if(!card||document.getElementById('s225ConfigWrap'))return;
-   var foot=card.querySelector('.auth-foot2');
-   var wrap=document.createElement('section');wrap.id='s225ConfigWrap';wrap.className='s225-config';
-   wrap.innerHTML='<button type="button" class="s225-config-toggle" id="s225ConfigToggle">⚙ Thiết lập kết nối Supabase <span>▾</span></button><div id="s225ConfigBody" class="s225-config-body" hidden><label>Project URL<input id="s225Url" type="url" autocapitalize="off" spellcheck="false" placeholder="https://xxxxx.supabase.co"></label><label>Publishable / anon key<input id="s225Key" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="sb_publishable_... hoặc anon key"></label><button type="button" id="s225Save" class="s225-config-save">Lưu cấu hình và kết nối</button><p id="s225ConfigStatus" role="status">Chỉ sử dụng publishable/anon key, không nhập service_role key.</p></div>';
-   if(foot)card.insertBefore(wrap,foot);else card.appendChild(wrap);
-   var body=wrap.querySelector('#s225ConfigBody'),status=wrap.querySelector('#s225ConfigStatus');
-   wrap.querySelector('#s225ConfigToggle').onclick=function(){body.hidden=!body.hidden;};
-   try{var c=typeof syncCfg==='function'?syncCfg():{};wrap.querySelector('#s225Url').value=c.url||'';wrap.querySelector('#s225Key').value=c.key||'';if(typeof syncValidCfg==='function'&&!syncValidCfg(c))body.hidden=false;}catch(e){body.hidden=false;}
-   wrap.querySelector('#s225Save').onclick=async function(){
-     var url=wrap.querySelector('#s225Url').value.trim().replace(/\/+$/,''),key=wrap.querySelector('#s225Key').value.trim();
-     if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)){status.textContent='Project URL không đúng định dạng Supabase.';return;}
-     if(!key||/service.role|service_role|sb_secret_/i.test(key)){status.textContent='Chỉ nhập publishable/anon key; tuyệt đối không sử dụng secret/service role.';return;}
-     try{localStorage.setItem('ktx_sb_sync_url',JSON.stringify(url));localStorage.setItem('ktx_sb_sync_key',JSON.stringify(key));
-     if(typeof SUPA_SYNC!=='undefined'){SUPA_SYNC.client=null;SUPA_SYNC._url=null;SUPA_SYNC._key=null;}
-     var sb=typeof syncClient==='function'?syncClient():null;if(!sb)throw Error('Không khởi tạo được Supabase.');
-     var res=await sb.auth.getSession();if(res.error)throw res.error;
-     status.textContent='Đã thiết lập kết nối. Anh có thể đăng nhập bằng tên đăng nhập và mật khẩu.';body.hidden=true;
-     }catch(e){status.textContent='Không thể khởi tạo kết nối: '+(e.message||e)}
-   };
- }
- var old=window.authHubShow;
- if(typeof old==='function')window.authHubShow=function(){var r=old.apply(this,arguments);ensureConfig();return r;};
- document.addEventListener('DOMContentLoaded',function(){ensureConfig();});
-})();
+<script id="step226-central-supabase">
+/* STEP226 - public client config comes from server environment; no user keys or per-device configuration. */
+window.__KTX_PUBLIC_CONFIG = null;
+window.ktxLoadPublicConfig = async function(force){
+  if(window.__KTX_PUBLIC_CONFIG && !force)return window.__KTX_PUBLIC_CONFIG;
+  if(window.__KTX_CONFIG_REQUEST && !force)return window.__KTX_CONFIG_REQUEST;
+  window.__KTX_CONFIG_REQUEST=(async()=>{
+    const res=await fetch('/api/client-config',{cache:'no-store',credentials:'same-origin'});
+    if(!res.ok)throw new Error('Máy chủ chưa có cấu hình Supabase (HTTP '+res.status+'). Liên hệ Quản trị.');
+    const c=await res.json();
+    if(!/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(c.url||'')||!c.key||!/^(sb_publishable_|eyJ)/.test(c.key))throw new Error('Cấu hình kết nối trên máy chủ không hợp lệ. Liên hệ Quản trị.');
+    window.__KTX_PUBLIC_CONFIG={url:c.url.replace(/\/$/,''),key:c.key};
+    if(typeof SUPA_SYNC!=='undefined'){SUPA_SYNC.client=null;SUPA_SYNC._url=null;SUPA_SYNC._key=null;}
+    return window.__KTX_PUBLIC_CONFIG;
+  })();
+  try{return await window.__KTX_CONFIG_REQUEST}finally{window.__KTX_CONFIG_REQUEST=null}
+};
+// Warm the connection on opening the application; login also awaits it on demand.
+window.addEventListener('DOMContentLoaded',()=>{window.ktxLoadPublicConfig().catch(()=>{});});
 </script>
 </body>
 
@@ -6820,7 +6810,7 @@ window.addEventListener('unhandledrejection',e=>{const m=String(e.reason&&e.reas
   patchGate();const msg=document.getElementById('ahMsg');const val=document.getElementById('ahEmail')?.value.trim()||'';
   const password=document.getElementById('ahPass')?.value||'';
   if(!val||!password){msg.textContent='Nhập tên đăng nhập và mật khẩu.';return}
-  const email=makeEmail(val);const sb=syncClient();if(!sb){msg.textContent='Chưa kết nối Supabase';return}
+  const email=makeEmail(val);msg.textContent='Đang kết nối máy chủ...';try{await window.ktxLoadPublicConfig()}catch(e){msg.textContent=e.message||'Không kết nối được máy chủ';return}const sb=syncClient();if(!sb){msg.textContent='Không thể khởi tạo kết nối Supabase. Liên hệ Quản trị.';return}
   msg.textContent='Đang đăng nhập...';
   try{
    const {data,error}=await sb.auth.signInWithPassword({email,password});if(error)throw error;
