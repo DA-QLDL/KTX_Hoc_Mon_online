@@ -85,6 +85,60 @@ header .ktx-heading-row{flex:1 1 auto}
 </style>
 <link rel="icon" type="image/png" href="./pwa-icon-192.png"/>
 <meta name="theme-color" content="#2765ea"/>
+<style id="step248-button-palette">
+/* STEP248 – shared vivid action palette: visible text, consistent semantic actions. */
+:root{--act-blue:#1769ed;--act-blue-h:#0950c4;--act-green:#087c53;--act-green-h:#066542;--act-red:#cb2439;--act-red-h:#a71429;--act-amber:#a75a00;--act-purple:#6843d9;--act-ink:#193b70;--act-light:#e9f2ff;--act-outline:#b4cdec}
+button.ktx-action, .btn.ktx-action, a.ktx-action, label.ktx-action{border-radius:11px!important;font-weight:750!important;line-height:1.28!important;letter-spacing:0!important;transition:background-color .14s, box-shadow .14s, transform .14s!important;text-shadow:none!important;cursor:pointer}
+.ktx-action[data-action-tone=primary]{background:#1769ed!important;border-color:#1769ed!important;color:#fff!important;box-shadow:0 3px 10px #1769ed25!important}
+.ktx-action[data-action-tone=primary]:hover{background:#0950c4!important;border-color:#0950c4!important}
+.ktx-action[data-action-tone=success]{background:#087c53!important;border-color:#087c53!important;color:#fff!important;box-shadow:0 3px 10px #087c5322!important}
+.ktx-action[data-action-tone=success]:hover{background:#066542!important}
+.ktx-action[data-action-tone=danger]{background:#cb2439!important;border-color:#cb2439!important;color:#fff!important;box-shadow:0 3px 10px #cb243927!important}
+.ktx-action[data-action-tone=danger]:hover{background:#a71429!important}
+.ktx-action[data-action-tone=warning]{background:#a75a00!important;border-color:#a75a00!important;color:#fff!important}
+.ktx-action[data-action-tone=accent]{background:#6843d9!important;border-color:#6843d9!important;color:#fff!important}
+.ktx-action[data-action-tone=secondary]{background:#e9f2ff!important;border:1px solid #b4cdec!important;color:#193b70!important;box-shadow:none!important}
+.ktx-action[data-action-tone=secondary]:hover{background:#d6e8ff!important}
+.ktx-action[data-action-tone=neutral]{background:#fff!important;border:1px solid #c5d4eb!important;color:#183b6d!important;box-shadow:none!important}
+.ktx-action[data-action-tone=neutral]:hover{background:#eff5ff!important}
+.ktx-action:focus-visible{outline:3px solid #ffbf4b!important;outline-offset:2px!important}
+.ktx-action:disabled,.ktx-action[aria-disabled=true]{opacity:.48!important;box-shadow:none!important;cursor:not-allowed!important;transform:none!important}
+.ktx-action svg,.ktx-action .i{color:inherit!important;stroke:currentColor!important}
+@media(hover:hover){.ktx-action:not(:disabled):not([aria-disabled=true]):hover{transform:translateY(-1px)}}
+@media(max-width:700px){button.ktx-action,.btn.ktx-action,a.ktx-action{min-height:38px;white-space:normal;overflow-wrap:anywhere}button.ktx-action.ktx-long{font-size:12px!important}}
+@media(prefers-reduced-motion:reduce){.ktx-action{transition:none!important}.ktx-action:hover{transform:none!important}}
+</style>
+<style id="step249-raised-buttons">
+/* STEP249 - Đồng bộ nút nổi khối / phối màu nhận diện KTX PC và Mobile */
+:root{
+  --ktx-royal:#2776f2;--ktx-violet:#6b53ed;--ktx-emerald:#0f9f73;
+  --ktx-coral:#d82e49;--ktx-sun:#bd710b;--ktx-ink:#153a70;
+  --ktx-soft:#eaf2ff;--ktx-raised-edge:inset 0 1px 0 rgba(255,255,255,.34);
+}
+button.ktx-action,.btn.ktx-action,a.ktx-action,label.ktx-action{
+  border-radius:12px!important;
+  border:1px solid rgba(255,255,255,.17)!important;
+  box-shadow:var(--ktx-raised-edge),0 3px 0 rgba(21,40,85,.19),0 8px 15px rgba(35,67,133,.16)!important;
+  text-shadow:0 1px 1px rgba(0,0,0,.09)!important;
+  transition:transform .14s ease,box-shadow .14s ease,filter .14s ease!important;
+}
+.ktx-action[data-action-tone=primary]{background:linear-gradient(140deg,#237df5,#3261e6 58%,#6950ea)!important;color:#fff!important}
+.ktx-action[data-action-tone=success]{background:linear-gradient(145deg,#13b889,#05865c)!important;color:#fff!important}
+.ktx-action[data-action-tone=danger]{background:linear-gradient(145deg,#f04a62,#c51f3b)!important;color:#fff!important}
+.ktx-action[data-action-tone=warning]{background:linear-gradient(145deg,#df9020,#ad5d06)!important;color:#fff!important}
+.ktx-action[data-action-tone=accent]{background:linear-gradient(140deg,#9071f4,#6946df)!important;color:#fff!important}
+.ktx-action[data-action-tone=secondary]{background:linear-gradient(160deg,#f7faff,#dbeaff)!important;color:#173e76!important;border:1px solid #bed3f2!important;text-shadow:none!important;box-shadow:inset 0 1px 0 #fff,0 2px 0 #bfd3eb,0 6px 12px rgba(31,69,120,.12)!important}
+.ktx-action[data-action-tone=neutral]{background:linear-gradient(160deg,#fff,#edf4ff)!important;color:#173b70!important;border:1px solid #c5d8ef!important;text-shadow:none!important;box-shadow:inset 0 1px 0 #fff,0 2px 0 #cbd8e8,0 6px 12px rgba(31,69,120,.11)!important}
+.ktx-action[data-action-tone=danger] *, .ktx-action[data-action-tone=primary] *, .ktx-action[data-action-tone=success] *, .ktx-action[data-action-tone=accent] *, .ktx-action[data-action-tone=warning] *{color:inherit!important}
+button.ktx-action:disabled,.ktx-action[aria-disabled=true]{filter:saturate(.5)!important;opacity:.52!important;transform:none!important;box-shadow:none!important}
+@media (hover:hover){.ktx-action:not(:disabled):not([aria-disabled=true]):hover{filter:brightness(1.06)!important;transform:translateY(-2px)!important;box-shadow:var(--ktx-raised-edge),0 5px 0 rgba(21,40,85,.18),0 12px 20px rgba(35,67,133,.22)!important}}
+.ktx-action:not(:disabled):active{transform:translateY(2px)!important;filter:brightness(.98)!important;box-shadow:inset 0 2px 6px rgba(8,29,74,.15),0 1px 1px rgba(21,40,85,.16)!important}
+.ktx-action:focus-visible{outline:3px solid #ffc654!important;outline-offset:3px!important}
+/* Nút chính của biểu mẫu độc lập cũng nổi khối, kể cả khi không dùng class ktx-action */
+#send:not(.ktx-action),button[type=submit]:not(.ktx-action){box-shadow:inset 0 1px 0 #ffffff57,0 4px 0 #2449a7,0 9px 18px #223f8433!important;border-radius:12px!important}
+@media(max-width:700px){button.ktx-action,.btn.ktx-action,a.ktx-action,label.ktx-action{min-height:42px!important;box-sizing:border-box!important}}
+@media(prefers-reduced-motion:reduce){.ktx-action{transition:none!important}.ktx-action:not(:disabled):hover,.ktx-action:not(:disabled):active{transform:none!important}}
+</style>
 </head><body><header><div class="ktx-heading-row"><img class="ktx-page-logo" src="./ktx-logo.png" alt="Logo KTX Hóc Môn"><div><div class="muted">KÝ TÚC XÁ HÓC MÔN · TIỆN ÍCH</div><h1>Biên bản sự vụ</h1><div class="muted">Mẫu biên bản sự việc · Thành phần tham gia · Nội dung · Kết luận · Ký tên</div></div></div><span class="badge">Mô-đun độc lập · Không sửa dữ liệu công nhân</span></header><div class="container"><div class="tabs" id="tabs"><button class="tab active" data-tab="choose">1. Chọn & lập biên bản</button><button class="tab" data-tab="nccsheet">NCC suất ăn · Tính & lập biên bản</button><button class="tab" data-tab="catalog">2. Danh mục lỗi</button><button class="tab" data-tab="export">3. Xuất văn bản</button><button class="tab" data-tab="template">4. Văn bản mẫu</button></div><main>
 <section id="choose"><div class="card"><div class="row" style="justify-content:space-between"><h2>Thông tin biên bản</h2><label class="field" style="min-width:210px">Loại biên bản<select id="kind"><option value="ncc">Nhà cung cấp suất ăn</option><option value="cn">Sự việc công nhân</option></select></label></div><div class="grid" id="basic"></div><h3 style="margin-top:16px">I. Chúng tôi gồm</h3><p class="muted">Mỗi nhóm gồm tối đa 02 người theo mẫu biên bản anh cung cấp.</p><div class="people" id="people"></div><div class="grid two" style="margin-top:12px"><label class="field">II. Nội dung sự việc<textarea data-key="summary" placeholder="Ghi nội dung sự việc, thời gian và địa điểm..."></textarea></label><label class="field">Kết luận<textarea data-key="conclusion" placeholder="Ý kiến xử lý, thời hạn thực hiện, bên chịu trách nhiệm..."></textarea></label></div></div><div class="card"><h2>Chọn vi phạm và phương án xử lý</h2><div class="muted">Tick vào lỗi, sau đó chọn phương án. Đơn giá, số lượng và hệ số có thể sửa ngay tại dòng xử lý.</div><div id="choices" class="items" style="margin-top:12px"></div><div class="total" id="total"></div></div><div class="row"><button class="btn primary" id="goExport">Xem và xuất biên bản →</button><span class="status" id="saved">Dữ liệu biểu mẫu lưu tạm trong trình duyệt.</span></div></section>
 <section id="nccsheet" class="hidden"><div id="ncc171-root"></div></section>
@@ -165,4 +219,39 @@ $('#downloadSample').onclick=async()=>{try{await saveBlob(new Blob([Uint8Array.f
 function showTemplate(){const t=tpl[state.kind];$('#templateState').textContent=t?'Mẫu đang dùng: '+t.name+' ('+t.kind+')':'Đang sử dụng mẫu mặc định của ứng dụng.'}$('#templateFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const obj={name:f.name,kind:/\.docx$/i.test(f.name)?'docx':'txt'};if(obj.kind==='docx'){if(!window.JSZip)throw Error('Cần Internet để tải thư viện DOCX');const b=await f.arrayBuffer();const z=await JSZip.loadAsync(b);if(!z.file('word/document.xml'))throw Error('Tệp DOCX không hợp lệ');const a=new Uint8Array(b);let binary='';for(let i=0;i<a.length;i+=8192)binary+=String.fromCharCode(...a.slice(i,i+8192));obj.data=btoa(binary);obj.text=plainFromXml(await z.file('word/document.xml').async('string'))}else obj.text=await f.text();if(!/\{\{[A-Z_]+\}\}/.test(obj.text))throw Error('Mẫu chưa có trường {{...}}. Thêm các trường theo hướng dẫn trước khi import.');tpl[state.kind]=obj;localStorage.setItem(CUR,JSON.stringify(tpl));showTemplate();alert('Đã lưu mẫu.')}catch(e){alert('Không nhập được mẫu: '+e.message)}};$('#clearTemplate').onclick=()=>{delete tpl[state.kind];localStorage.setItem(CUR,JSON.stringify(tpl));showTemplate()};
 function renderCatalog(){$('#catalogList').innerHTML=state.catalog.filter(x=>x.kind===state.kind).map(x=>`<div class="catalog-row"><div class="row"><input style="flex:1" data-name="${esc(x.id)}" value="${esc(x.name)}"><button class="btn" data-addopt="${esc(x.id)}">+ Phương án</button><button class="btn danger" data-delinc="${esc(x.id)}">Xóa lỗi</button></div><div style="margin-top:10px">${x.options.map(o=>`<div class="catalog-edit" style="margin-bottom:8px"><input aria-label="Tên phương án" data-oc="${esc(x.id)}|${esc(o.id)}|name" value="${esc(o.name)}">${state.kind==='cn'?'':`<input aria-label="Công thức" data-oc="${esc(x.id)}|${esc(o.id)}|formula" value="${esc(o.formula||'')}"><input aria-label="Đơn giá" type="number" data-oc="${esc(x.id)}|${esc(o.id)}|price" value="${esc(o.price||0)}"><input aria-label="Hệ số" type="number" step="0.01" data-oc="${esc(x.id)}|${esc(o.id)}|hs" value="${esc(o.hs??1)}">`}<button class="btn danger" data-delopt="${esc(x.id)}|${esc(o.id)}">Xóa</button></div>`).join('')}</div></div>`).join('')||'<p class="muted">Chưa có lỗi.</p>';$$('[data-name]').forEach(el=>el.onchange=()=>{state.catalog.find(x=>x.id===el.dataset.name).name=el.value;persist();renderChoices()});$$('[data-addopt]').forEach(el=>el.onclick=()=>{state.catalog.find(x=>x.id===el.dataset.addopt).options.push({id:id(),name:'Phương án mới',formula:state.kind==='cn'?'':'SL*DG',price:0,hs:1});persist();renderCatalog()});$$('[data-delinc]').forEach(el=>el.onclick=()=>{if(confirm('Xóa lỗi này khỏi danh mục?')){state.catalog=state.catalog.filter(x=>x.id!==el.dataset.delinc);delete state.sel[el.dataset.delinc];persist();renderCatalog();renderChoices()}});$$('[data-oc]').forEach(el=>el.onchange=()=>{const [k,o,f]=el.dataset.oc.split('|');const item=state.catalog.find(x=>x.id===k)?.options.find(x=>x.id===o);if(item)item[f]=['price','hs'].includes(f)?Number(el.value):el.value;persist();renderChoices()});$$('[data-delopt]').forEach(el=>el.onclick=()=>{const [k,o]=el.dataset.delopt.split('|');let x=state.catalog.find(x=>x.id===k);x.options=x.options.filter(p=>p.id!==o);persist();renderCatalog();renderChoices()})}
 $('#newIncident').onclick=()=>{const name=prompt('Tên lỗi/vi phạm mới:');if(!name?.trim())return;state.catalog.push({id:id(),kind:state.kind,name:name.trim(),options:[{id:id(),name:'Phương án xử lý',formula:'',price:0,hs:1}]});persist();renderCatalog();renderChoices()};$('#resetCatalog').onclick=()=>{if(confirm('Khôi phục danh mục gợi ý? Các lỗi tự thêm sẽ bị thay thế.')){state.catalog=structuredClone(seed);state.sel={};persist();renderCatalog();renderChoices()}};$('#exportCatalog').onclick=()=>saveBlob(new Blob([JSON.stringify(state.catalog,null,2)],{type:'application/json'}),'Danh_muc_su_vu_KTX.json','application/json');$('#importCatalog').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const data=JSON.parse(await f.text());if(!Array.isArray(data)||!data.every(x=>x.id&&x.kind&&x.name&&Array.isArray(x.options)))throw Error('Cấu trúc danh mục không hợp lệ');if(confirm('Thay danh mục đang có bằng dữ liệu trong file?')){state.catalog=data;state.sel={};persist();renderCatalog();renderChoices()}}catch(e){alert('Không nhập được danh mục: '+e.message)}};$('#downloadCatalogGuide').onclick=()=>saveBlob(new Blob(['Công thức hợp lệ: SL*DG, SL*DG*HS+PP, SL*DG*8%, (SL+1)*DG.\nSL = Số lượng; DG = Đơn giá; HS = Hệ số; PP = Phụ phí.\nDanh mục mẫu cần được người quản trị kiểm tra theo hợp đồng/nội quy trước khi áp dụng.'],{type:'text/plain;charset=utf-8'}),'Huong_dan_cong_thuc_KTX.txt','text/plain');renderChoices();updateKindLabels();})();
-</script><script src="ncc-suat-an.js"></script></body></html>
+</script><script src="ncc-suat-an.js"></script><script id="step248-button-behavior">
+/* STEP248 – classify action buttons by meaning, including dynamically rendered dialogs. */
+(function(){
+ const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').trim();
+ function tone(el){
+   if(el.dataset.actionTone) return el.dataset.actionTone;
+   const label=norm((el.innerText||el.textContent||'').replace(/[\s\u00a0]+/g,' '));
+   const cls=' '+String(el.className||'')+' ';
+   if(/(^|\s)(danger|sf-danger|r)(\s|$)/.test(cls)||/\b(xoa|xoa han|huy bo|tu choi|khoi phuc mac dinh|dat lai|delete|remove)\b/.test(label))return 'danger';
+   if(/\b(hoan tac|canh bao|khoa)\b/.test(label))return 'warning';
+   if(/(^|\s)(primary|sf-green|g)(\s|$)/.test(cls)||/^(xac nhan|luu|duyet|tao |them |dang nhap|gui |hoan thanh|cap nhat|ap dung|chuyen phong)/.test(label))return 'success';
+   if(/\b(xuat|tai |import|chon file|chon nhieu|scan|quet|trich xuat|xem va xuat)\b/.test(label))return 'primary';
+   if(/\b(chinh sua|sua |nhap |chon|tiep theo|phuong an)\b/.test(label))return 'accent';
+   if(/\b(quay lai|dong|huy$|tro ve|back)\b/.test(label))return 'secondary';
+   return 'neutral';
+ }
+ function eligible(el){
+   if(!(el instanceof HTMLElement)) return false;
+   if(el.closest('nav,aside,.sidebar,.tabs,.tabbar,.bottom-nav,.mobile-nav,.m-nav,.system-hub-nav,.sysfunc-grid,.sysfunc-btn')) return false;
+   if(el.matches('[data-ui-no-tone],.sysfunc-btn,.tab,.alert-float,[role=tab]')) return false;
+   if(el.classList.contains('ib') && !el.getAttribute('aria-label') && !el.getAttribute('title'))return false;
+   return true;
+ }
+ function apply(el){
+   if(!eligible(el))return;
+   // Keep styled dashboard tiles and external component buttons intact.
+   if(el.classList.contains('ktx-action'))return;
+   const t=tone(el);el.classList.add('ktx-action');el.dataset.actionTone=t;
+   if((el.textContent||'').length>45)el.classList.add('ktx-long');
+ }
+ function scan(root){if(root.matches&&root.matches('button,.btn,a.btn,label.upload'))apply(root);if(root.querySelectorAll)root.querySelectorAll('button,.btn,a.btn,label.upload').forEach(apply)}
+ function start(){scan(document.body);const observer=new MutationObserver(ms=>{for(const m of ms){if(m.type==='childList')for(const n of m.addedNodes)if(n.nodeType===1)scan(n);}});observer.observe(document.body,{childList:true,subtree:true});}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+</script>
+</body></html>
