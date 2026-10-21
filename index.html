@@ -832,7 +832,49 @@ body #dlg .vf button{min-width:88px!important;min-height:43px!important;border-r
   #mobile180 .m195-menu{margin-top:12px!important;line-height:1.5}
 }
 </style>
-<style id="step223-delete-style">#acc .ac223-actions{display:flex;align-items:center;flex-wrap:wrap;gap:6px}#acc .ac223-delete{border-color:#fecaca;color:#b91c1c;background:#fff6f6}#acc .ac223-delete:hover{background:#fee2e2}#acc .ac223-delete:disabled{opacity:.35;cursor:not-allowed}@media(max-width:650px){#acc .ac223-actions{flex-direction:column;align-items:stretch}}</style></head>
+<style id="step223-delete-style">#acc .ac223-actions{display:flex;align-items:center;flex-wrap:wrap;gap:6px}#acc .ac223-delete{border-color:#fecaca;color:#b91c1c;background:#fff6f6}#acc .ac223-delete:hover{background:#fee2e2}#acc .ac223-delete:disabled{opacity:.35;cursor:not-allowed}@media(max-width:650px){#acc .ac223-actions{flex-direction:column;align-items:stretch}}</style><style>
+/* STEP225: bố cục chuyển phòng gọn, tránh nút thao tác bị che */
+#transferDlg.transfer-pro-dialog{width:min(720px,96vw)!important;max-height:min(94dvh,94vh)!important;overflow:hidden!important;padding:0!important}
+#transferDlg .pd.transfer-pro{display:flex!important;flex-direction:column!important;max-height:min(94dvh,94vh)!important;overflow:hidden!important;padding:12px 16px 0!important;gap:7px!important}
+#transferDlg .ph{flex-shrink:0!important;margin-bottom:3px!important}
+#transferDlg .transfer-selectors{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}
+#transferDlg .transfer-selectors label{display:flex!important;flex-direction:row!important;align-items:center!important;gap:8px!important;min-width:0!important;font-size:12px!important;font-weight:700!important}
+#transferDlg .transfer-selectors select{flex:1!important;min-width:0!important;height:34px!important;min-height:34px!important;padding:4px 8px!important;font-size:12px!important}
+#transferDlg .transfer-room-grid{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:6px!important;overflow-y:auto!important;max-height:min(29dvh,228px)!important;min-height:0!important;padding:4px!important;align-content:start!important}
+#transferDlg .transfer-room-card{min-height:63px!important;padding:5px 7px!important;border-radius:9px!important;gap:0!important;line-height:1.3!important}
+#transferDlg .transfer-room-card strong{font-size:12px!important}
+#transferDlg .transfer-room-card span,#transferDlg .transfer-room-card em{font-size:10px!important;line-height:1.3!important}
+#transferDlg .transfer-current{padding:7px 9px!important;flex-shrink:0!important}
+#transferDlg .transfer-room-head{gap:7px!important;flex-shrink:0!important}
+#transferDlg .transfer-target-info{min-height:25px!important;padding:6px 8px!important;font-size:11px!important}
+#transferDlg .transfer-note-label{flex-shrink:0!important;font-size:11px!important}
+#transferDlg .transfer-note-label input{height:34px!important;min-height:34px!important}
+#transferDlg .pf{position:sticky!important;bottom:0!important;z-index:10!important;background:var(--pn,#fff)!important;display:flex!important;justify-content:flex-end!important;gap:8px!important;margin:0 -16px!important;padding:10px 16px max(11px,env(safe-area-inset-bottom))!important;border-top:1px solid var(--ln,#dfe7f1)!important;flex-shrink:0!important}
+#transferDlg .pf button{height:36px!important;min-height:36px!important;font-size:12px!important}
+#transferDlg .transfer-empty-hint{grid-column:1/-1;font-size:12px;padding:12px;color:#845900;background:#fff8df;border-radius:8px}
+.s225-config{margin:8px 0 0;padding:6px 0;border-top:1px solid #dbe4f1}
+.s225-config-toggle{width:100%;background:transparent;border:0;color:#2864bc;padding:9px 6px;text-align:left;font:600 13px inherit;cursor:pointer}
+.s225-config-toggle span{float:right}.s225-config-body[hidden]{display:none!important}
+.s225-config-body{padding:8px;border-radius:10px;background:#f5f8fe;display:grid;gap:8px}
+.s225-config-body label{font-size:12px;color:#415675;display:grid;gap:4px;font-weight:600}
+.s225-config-body input{box-sizing:border-box;width:100%;padding:9px;border:1px solid #c6d8eb;border-radius:8px;font-size:13px}
+.s225-config-save{background:#2469dc;border:0;border-radius:8px;color:#fff;padding:10px;font-weight:700}
+#s225ConfigStatus{margin:0;font-size:11px;color:#465b7a}
+@media(max-width:600px){
+#transferDlg.transfer-pro-dialog{width:96vw!important;max-height:94dvh!important}
+#transferDlg .pd.transfer-pro{max-height:94dvh!important;padding:10px 10px 0!important;gap:5px!important}
+#transferDlg .ph h3{font-size:15px!important}
+#transferDlg .transfer-room-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;max-height:min(30dvh,190px)!important;gap:5px!important}
+#transferDlg .transfer-room-card{min-height:58px!important;padding:5px!important}
+#transferDlg .transfer-selectors label{font-size:11px!important;gap:5px!important}
+#transferDlg .transfer-selectors select{height:33px!important;min-height:33px!important;font-size:11px!important}
+#transferDlg .pf{margin:0 -10px!important;padding:9px 10px max(12px,env(safe-area-inset-bottom))!important}
+#transferDlg .pf button{flex:1!important;font-size:12px!important}
+#transferDlg .transfer-room-head b{font-size:12px!important}
+#transferDlg .transfer-cap{font-size:10px!important}
+}
+</style>
+</head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-home" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
@@ -4052,7 +4094,7 @@ function tr218Norm(v){return sa(String(v||''));}
 function tr218Room(v){const t=tr218Norm(v).replace(/^(phong|p)\s*/, '').replace(/\s+/g,'');return /^0*\d+$/.test(t)?String(parseInt(t,10)):t;}
 function tr218People(k,d,r,excludeId){return W.filter(x=>x&&x.id!==excludeId&&tr218Norm(K(x))===tr218Norm(k)&&tr218Norm(D(x))===tr218Norm(d)&&tr218Room(R(x))===tr218Room(r));}
 function transferRoomCandidates(k,d,w){const out=[];for(let i=1;i<=15;i++){const r=String(i),people=tr218People(k,d,r,w&&w.id),n=people.length,free=Math.max(0,CAP-n),locked=roomLocked(k,d,r),mode=roomMode(k,d,r,people),mismatch=!!(w&&((mode==='male'&&isNu(w.gt))||(mode==='female'&&isNam(w.gt))));out.push({r,n,free,locked,mode,mismatch})}return out}
-function renderTransferRooms(){if(!TRANSFER_W)return;const k=$('trKtx').value,d=$('trDay').value,grid=$('trRoomGrid'),sum=$('trRoomSummary'),cur=$('trRoom').value,list=transferRoomCandidates(k,d,TRANSFER_W),canUse=x=>!x.locked&&x.free>0;if(sum)sum.textContent=`${list.filter(canUse).length} phòng còn chỗ / ${list.length} phòng`;const cap=$('trCapText');if(cap)cap.textContent=`Định mức ${CAP||20} người/phòng`;if(!list.some(x=>x.r===cur&&canUse(x)))$('trRoom').value='';grid.innerHTML=list.map(x=>{const unavailable=!canUse(x),status=x.locked?'Đang khóa':x.free<=0?'Đã đầy':x.n===0?'Phòng trống':x.free<=3?'Sắp đầy':roomTypeText(x.mode);return `<button type="button" class="transfer-room-card ${$('trRoom').value===x.r?'on':''} ${unavailable?'tr218-disabled':''} ${x.n===0?'tr218-empty':x.free<=3?'tr218-low':''} ${x.mismatch?'compat-warn':''}" data-tr-room="${x.r}" ${unavailable?'disabled':''} title="P.${x.r} · ${x.n}/${CAP} người · còn ${x.free} giường"><strong>P.${x.r}</strong><span>${x.n}/${CAP} người</span><span>Trống ${x.free}</span><em>${x.mismatch?'⚠ ':''}${esc(status)}</em></button>`}).join('');grid.querySelectorAll('[data-tr-room]').forEach(b=>b.onclick=()=>{$('trRoom').value=b.dataset.trRoom;renderTransferRooms()});transferInfo()}
+function renderTransferRooms(){if(!TRANSFER_W)return;const k=$('trKtx').value,d=$('trDay').value,grid=$('trRoomGrid'),sum=$('trRoomSummary'),cur=$('trRoom').value,list=transferRoomCandidates(k,d,TRANSFER_W),visible=list.filter(x=>x.n>0),canUse=x=>!x.locked&&x.free>0;if(sum)sum.textContent=`${visible.filter(canUse).length} phòng còn chỗ đang có người / ${list.length} phòng`;const cap=$('trCapText');if(cap)cap.textContent=`Định mức ${CAP||20} người/phòng`;if(!visible.some(x=>x.r===cur&&canUse(x)))$('trRoom').value='';grid.innerHTML=(visible.length?visible:[]).map(x=>{const unavailable=!canUse(x),status=x.locked?'Đang khóa':x.free<=0?'Đã đầy':x.n===0?'Phòng trống':x.free<=3?'Sắp đầy':roomTypeText(x.mode);return `<button type="button" class="transfer-room-card ${$('trRoom').value===x.r?'on':''} ${unavailable?'tr218-disabled':''} ${x.n===0?'tr218-empty':x.free<=3?'tr218-low':''} ${x.mismatch?'compat-warn':''}" data-tr-room="${x.r}" ${unavailable?'disabled':''} title="P.${x.r} · ${x.n}/${CAP} người · còn ${x.free} giường"><strong>P.${x.r}</strong><span>${x.n}/${CAP} người</span><span>Trống ${x.free}</span><em>${x.mismatch?'⚠ ':''}${esc(status)}</em></button>`}).join('')||(visible.length?'':'<div class="transfer-empty-hint">Dãy này chưa có phòng nào đang có người. Không có phòng đích phù hợp để chuyển.</div>');grid.querySelectorAll('[data-tr-room]').forEach(b=>b.onclick=()=>{$('trRoom').value=b.dataset.trRoom;renderTransferRooms()});transferInfo()}
 async function openTransfer(w){if(!can('transfer',w))return alert('Bạn không có quyền chuyển phòng công nhân này.');if(typeof SUPA_SYNC!=='undefined'&&SUPA_SYNC.ready&&!SUPA_SYNC.pulling&&!SUPA_SYNC.pushing){try{await syncPullAll(false)}catch(e){console.warn('Không làm mới được danh sách phòng',e)}w=W.find(x=>x.id===w.id)||w}TRANSFER_W=w;const old=`${K(w)} · ${D(w)} · P.${R(w)||'—'}`;$('transferSub').textContent=`${w.name}${w.mnv?' · MNV '+w.mnv:''}`;$('transferCurrent').innerHTML=`<div><b>Phòng hiện tại</b><span>${esc(old)}</span></div><span>${esc(w.gt||'Chưa xác định giới tính')}</span>`;$('trKtx').value=K(w);$('trDay').value=D(w);$('trRoom').value='';$('trNote').value='';renderTransferRooms();const dlg=$('transferDlg');if(!dlg.open)dlg.showModal()}
 function transferInfo(){if(!TRANSFER_W)return;const k=$('trKtx').value,d=$('trDay').value,r=$('trRoom').value,info=$('trInfo');if(!r){info.className='transfer-target-info';info.innerHTML='Chọn một phòng còn chỗ để xem thông tin bố trí.';$('transferGo').disabled=true;return}const people=tr218People(k,d,r,TRANSFER_W.id),n=people.length,free=Math.max(0,CAP-n),mode=roomMode(k,d,r,people),mismatch=(mode==='male'&&isNu(TRANSFER_W.gt))||(mode==='female'&&isNam(TRANSFER_W.gt));const unavailable=roomLocked(k,d,r)||free<=0; $('transferGo').disabled=unavailable;info.className='transfer-target-info '+(unavailable?'warn':mismatch?'warn':'ok');info.innerHTML=`Phòng đích <b>${esc(k)} · ${esc(d)} · P.${esc(r)}</b> hiện có <b>${n}/${CAP}</b> người · còn <b>${free}</b> giường · ${esc(roomTypeText(mode))}.${mismatch?' <b>⚠ Công năng phòng chưa phù hợp giới tính công nhân.</b>':''}`}
 ['trKtx','trDay'].forEach(id=>{const e=$(id);if(e)e.onchange=()=>{$('trRoom').value='';renderTransferRooms()}});$('transferX').onclick=$('transferCancel').onclick=()=>$('transferDlg').close();$('transferGo').onclick=async()=>{const w=TRANSFER_W;if(!w)return;const k=$('trKtx').value,d=$('trDay').value,r=$('trRoom').value,note=$('trNote').value.trim();if(!r)return alert('Hãy chọn phòng còn chỗ.');if(!['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15'].includes(tr218Room(r))){renderTransferRooms();return alert('Phòng đích không hợp lệ.');}if(tr218Norm(K(w))===tr218Norm(k)&&tr218Norm(D(w))===tr218Norm(d)&&tr218Room(R(w))===tr218Room(r))return alert('Công nhân đang ở đúng phòng này.');if(roomLocked(k,d,r)){renderTransferRooms();return alert('Phòng đích vừa được khóa. Hãy chọn phòng khác.')}const n=tr218People(k,d,r,w.id).length;if(n>=CAP){renderTransferRooms();return alert(`Phòng ${r} hiện đã đủ hoặc vượt ${CAP} người. Hãy chọn phòng còn chỗ khác.`)}const people=tr218People(k,d,r,w.id),mode=roomMode(k,d,r,people),mismatch=(mode==='male'&&isNu(w.gt))||(mode==='female'&&isNam(w.gt));if(mismatch&&!await ask(`Phòng ${r} đang được phân loại ${roomTypeText(mode)}, trong khi công nhân là ${w.gt||'chưa xác định giới tính'}. Bạn vẫn muốn chuyển?`,{title:'Cảnh báo công năng phòng',ok:'Vẫn chuyển'}))return;const before=workerSnapshot(w),oldK=K(w),oldD=D(w),oldR=R(w)||'',old=`${oldK} · ${oldD} · P.${oldR||'—'}`;w.ktx=k;w.day=d;w.room=r;const tp=oldK!==k?'TRANSFER_KTX':'MOVE',newLoc=`${k} · ${d} · P.${r}`;addHistory(w,tp,`${tp==='TRANSFER_KTX'?'Chuyển KTX':'Chuyển phòng'}: ${old} → ${newLoc}${note?' · '+note:''}`,{from:{ktx:oldK,day:oldD,room:oldR},to:{ktx:k,day:d,room:r},note});auditPush(tp,`${tp==='TRANSFER_KTX'?'Chuyển KTX':'Chuyển phòng'} ${w.name}: ${old} → ${newLoc}`,{workerId:w.id,before,after:workerSnapshot(w),note});sv();$('transferDlg').close();all();alert(`Đã chuyển ${w.name} đến ${newLoc} và lưu lịch sử cư trú.`)};
@@ -4608,6 +4650,48 @@ function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)retu
  #transferDlg .pf button{flex:1!important;min-width:0!important;font-size:12px!important;padding:10px 6px!important}
 }
 @media(max-width:350px){#transferDlg .transfer-room-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+</style>
+<style>
+/* STEP225: bố cục chuyển phòng gọn, tránh nút thao tác bị che */
+#transferDlg.transfer-pro-dialog{width:min(720px,96vw)!important;max-height:min(94dvh,94vh)!important;overflow:hidden!important;padding:0!important}
+#transferDlg .pd.transfer-pro{display:flex!important;flex-direction:column!important;max-height:min(94dvh,94vh)!important;overflow:hidden!important;padding:12px 16px 0!important;gap:7px!important}
+#transferDlg .ph{flex-shrink:0!important;margin-bottom:3px!important}
+#transferDlg .transfer-selectors{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}
+#transferDlg .transfer-selectors label{display:flex!important;flex-direction:row!important;align-items:center!important;gap:8px!important;min-width:0!important;font-size:12px!important;font-weight:700!important}
+#transferDlg .transfer-selectors select{flex:1!important;min-width:0!important;height:34px!important;min-height:34px!important;padding:4px 8px!important;font-size:12px!important}
+#transferDlg .transfer-room-grid{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:6px!important;overflow-y:auto!important;max-height:min(29dvh,228px)!important;min-height:0!important;padding:4px!important;align-content:start!important}
+#transferDlg .transfer-room-card{min-height:63px!important;padding:5px 7px!important;border-radius:9px!important;gap:0!important;line-height:1.3!important}
+#transferDlg .transfer-room-card strong{font-size:12px!important}
+#transferDlg .transfer-room-card span,#transferDlg .transfer-room-card em{font-size:10px!important;line-height:1.3!important}
+#transferDlg .transfer-current{padding:7px 9px!important;flex-shrink:0!important}
+#transferDlg .transfer-room-head{gap:7px!important;flex-shrink:0!important}
+#transferDlg .transfer-target-info{min-height:25px!important;padding:6px 8px!important;font-size:11px!important}
+#transferDlg .transfer-note-label{flex-shrink:0!important;font-size:11px!important}
+#transferDlg .transfer-note-label input{height:34px!important;min-height:34px!important}
+#transferDlg .pf{position:sticky!important;bottom:0!important;z-index:10!important;background:var(--pn,#fff)!important;display:flex!important;justify-content:flex-end!important;gap:8px!important;margin:0 -16px!important;padding:10px 16px max(11px,env(safe-area-inset-bottom))!important;border-top:1px solid var(--ln,#dfe7f1)!important;flex-shrink:0!important}
+#transferDlg .pf button{height:36px!important;min-height:36px!important;font-size:12px!important}
+#transferDlg .transfer-empty-hint{grid-column:1/-1;font-size:12px;padding:12px;color:#845900;background:#fff8df;border-radius:8px}
+.s225-config{margin:8px 0 0;padding:6px 0;border-top:1px solid #dbe4f1}
+.s225-config-toggle{width:100%;background:transparent;border:0;color:#2864bc;padding:9px 6px;text-align:left;font:600 13px inherit;cursor:pointer}
+.s225-config-toggle span{float:right}.s225-config-body[hidden]{display:none!important}
+.s225-config-body{padding:8px;border-radius:10px;background:#f5f8fe;display:grid;gap:8px}
+.s225-config-body label{font-size:12px;color:#415675;display:grid;gap:4px;font-weight:600}
+.s225-config-body input{box-sizing:border-box;width:100%;padding:9px;border:1px solid #c6d8eb;border-radius:8px;font-size:13px}
+.s225-config-save{background:#2469dc;border:0;border-radius:8px;color:#fff;padding:10px;font-weight:700}
+#s225ConfigStatus{margin:0;font-size:11px;color:#465b7a}
+@media(max-width:600px){
+#transferDlg.transfer-pro-dialog{width:96vw!important;max-height:94dvh!important}
+#transferDlg .pd.transfer-pro{max-height:94dvh!important;padding:10px 10px 0!important;gap:5px!important}
+#transferDlg .ph h3{font-size:15px!important}
+#transferDlg .transfer-room-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;max-height:min(30dvh,190px)!important;gap:5px!important}
+#transferDlg .transfer-room-card{min-height:58px!important;padding:5px!important}
+#transferDlg .transfer-selectors label{font-size:11px!important;gap:5px!important}
+#transferDlg .transfer-selectors select{height:33px!important;min-height:33px!important;font-size:11px!important}
+#transferDlg .pf{margin:0 -10px!important;padding:9px 10px max(12px,env(safe-area-inset-bottom))!important}
+#transferDlg .pf button{flex:1!important;font-size:12px!important}
+#transferDlg .transfer-room-head b{font-size:12px!important}
+#transferDlg .transfer-cap{font-size:10px!important}
+}
 </style>
 </head><body><h1>${esc(d.title)}</h1><p>Kỳ báo cáo: ${esc(vn(RC96.from))} - ${esc(vn(RC96.to))} · ${esc(RC96.ktx||'Tất cả KTX')}</p><table><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${d.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')}</table><!-- KTX-STABLE-101 · Production baseline -->
 <!-- STEP105_PERFORMANCE_OPTIMIZATION -->
@@ -5541,6 +5625,36 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contai
     qrPage();
   }catch(e){alert('Duyệt không thành công: '+(e.message||e))}
  };
+})();
+</script>
+<script>
+/* STEP225: thiết lập kết nối riêng cho thiết bị mới, chỉ lưu URL + publishable/anon key. */
+(function(){
+ function ensureConfig(){
+   var gate=document.getElementById('authHubGate');if(!gate)return;
+   var card=gate.querySelector('.auth-card2');if(!card||document.getElementById('s225ConfigWrap'))return;
+   var foot=card.querySelector('.auth-foot2');
+   var wrap=document.createElement('section');wrap.id='s225ConfigWrap';wrap.className='s225-config';
+   wrap.innerHTML='<button type="button" class="s225-config-toggle" id="s225ConfigToggle">⚙ Thiết lập kết nối Supabase <span>▾</span></button><div id="s225ConfigBody" class="s225-config-body" hidden><label>Project URL<input id="s225Url" type="url" autocapitalize="off" spellcheck="false" placeholder="https://xxxxx.supabase.co"></label><label>Publishable / anon key<input id="s225Key" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="sb_publishable_... hoặc anon key"></label><button type="button" id="s225Save" class="s225-config-save">Lưu cấu hình và kết nối</button><p id="s225ConfigStatus" role="status">Chỉ sử dụng publishable/anon key, không nhập service_role key.</p></div>';
+   if(foot)card.insertBefore(wrap,foot);else card.appendChild(wrap);
+   var body=wrap.querySelector('#s225ConfigBody'),status=wrap.querySelector('#s225ConfigStatus');
+   wrap.querySelector('#s225ConfigToggle').onclick=function(){body.hidden=!body.hidden;};
+   try{var c=typeof syncCfg==='function'?syncCfg():{};wrap.querySelector('#s225Url').value=c.url||'';wrap.querySelector('#s225Key').value=c.key||'';if(typeof syncValidCfg==='function'&&!syncValidCfg(c))body.hidden=false;}catch(e){body.hidden=false;}
+   wrap.querySelector('#s225Save').onclick=async function(){
+     var url=wrap.querySelector('#s225Url').value.trim().replace(/\/+$/,''),key=wrap.querySelector('#s225Key').value.trim();
+     if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)){status.textContent='Project URL không đúng định dạng Supabase.';return;}
+     if(!key||/service.role|service_role|sb_secret_/i.test(key)){status.textContent='Chỉ nhập publishable/anon key; tuyệt đối không sử dụng secret/service role.';return;}
+     try{localStorage.setItem('ktx_sb_sync_url',JSON.stringify(url));localStorage.setItem('ktx_sb_sync_key',JSON.stringify(key));
+     if(typeof SUPA_SYNC!=='undefined'){SUPA_SYNC.client=null;SUPA_SYNC._url=null;SUPA_SYNC._key=null;}
+     var sb=typeof syncClient==='function'?syncClient():null;if(!sb)throw Error('Không khởi tạo được Supabase.');
+     var res=await sb.auth.getSession();if(res.error)throw res.error;
+     status.textContent='Đã thiết lập kết nối. Anh có thể đăng nhập bằng tên đăng nhập và mật khẩu.';body.hidden=true;
+     }catch(e){status.textContent='Không thể khởi tạo kết nối: '+(e.message||e)}
+   };
+ }
+ var old=window.authHubShow;
+ if(typeof old==='function')window.authHubShow=function(){var r=old.apply(this,arguments);ensureConfig();return r;};
+ document.addEventListener('DOMContentLoaded',function(){ensureConfig();});
 })();
 </script>
 </body>
