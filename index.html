@@ -5817,6 +5817,38 @@ window.addEventListener('DOMContentLoaded',()=>{window.ktxLoadPublicConfig().cat
  };}
 })();
 </script>
+
+<style id="step243-desktop-sidebar-viewport-fix">
+/* STEP243: desktop left navigation fills the visible viewport; account stays at its bottom.
+   This deliberately overrides older STEP146/151/157/173 sidebar rules. */
+@media (min-width:861px){
+  html{min-height:100%!important}
+  body{min-height:100dvh!important;display:block!important}
+  body>nav{
+    position:fixed!important;left:0!important;top:0!important;bottom:0!important;
+    height:100vh!important;height:100dvh!important;min-height:100dvh!important;
+    max-height:100dvh!important;width:188px!important;max-width:188px!important;
+    display:flex!important;flex-direction:column!important;align-items:stretch!important;
+    overflow:hidden!important;box-sizing:border-box!important;padding:10px 7px 12px!important;
+    background:#fff!important;border-right:1px solid #dfe7f3!important;z-index:20!important;
+  }
+  body>nav>.brand{flex:0 0 auto!important;min-height:0!important}
+  body>nav>#step146NavScroll{
+    display:block!important;flex:1 1 0!important;min-height:0!important;
+    overflow-x:hidden!important;overflow-y:auto!important;padding:0 0 8px!important;
+    margin:0!important;scrollbar-width:thin!important;
+  }
+  body>nav>#authUserbar{
+    position:relative!important;top:auto!important;bottom:auto!important;left:auto!important;right:auto!important;
+    order:99!important;display:flex!important;flex-direction:column!important;flex:0 0 auto!important;
+    width:calc(100% - 8px)!important;max-width:calc(100% - 8px)!important;
+    margin:8px 4px 0!important;padding:8px!important;box-sizing:border-box!important;
+    z-index:2!important;
+  }
+  body>nav>#authUserbar #aubOut{width:100%!important;min-height:36px!important}
+  body>main{margin:0 0 0 188px!important;width:calc(100% - 188px)!important;max-width:none!important;min-width:0!important;flex:none!important}
+}
+</style>
 </body>
 
 <style id="step129SystemLayoutStyle">
