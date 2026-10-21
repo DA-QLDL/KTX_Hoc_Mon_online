@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ký túc xá Hóc Môn</title>
-<meta name="app-version" content="KTX-STEP173-FINAL-UI-CANDIDATE">
+<meta name="app-version" content="KTX-STEP245-UI-UNIFIED">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -943,6 +943,39 @@ html.ktx-subaccount nav .system-hub-nav,html.ktx-subaccount #sysfunc{display:non
 #mobile180 .step238-dedup #t2{display:block!important;width:100%!important;min-width:0!important;overflow-x:auto!important}
 #mobile180 .step238-dedup{overflow-x:auto;max-width:100%}
 </style>
+<style id="ktx-step245-design">
+/* STEP245 - shared design system. Presentation only, no business logic. */
+:root{--ktx-brand:#2765ea;--ktx-purple:#6755ef;--ktx-brand-soft:#edf3ff;--ktx-success:#0c9a65;--ktx-danger:#d83a4d;--ktx-warning:#c97917;--ktx-ui-radius:11px;--ktx-ui-shadow:0 3px 12px rgba(30,70,145,.09)}
+button,a,input,select,textarea{font-family:inherit}
+button{touch-action:manipulation}
+button:not(:disabled){transition:background-color .16s,border-color .16s,box-shadow .16s,transform .13s,filter .13s}
+button:not(:disabled):active{transform:scale(.985)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ktx-brand);outline-offset:2px}
+input,textarea,select{min-width:0;box-sizing:border-box}
+.ktx-header-brand{display:inline-flex;align-items:center;gap:9px;min-width:0}
+.ktx-header-brand img{height:42px;width:42px;aspect-ratio:1;object-fit:cover;border-radius:12px;flex-shrink:0;box-shadow:0 3px 12px rgba(54,76,219,.15)}
+.ktx-page-logo{width:42px;height:42px;border-radius:12px;object-fit:cover;box-shadow:0 4px 12px rgba(40,65,190,.16)}
+.ktx-heading-row{display:flex;align-items:center;gap:11px;min-width:0}
+.ktx-heading-row h1{min-width:0;overflow-wrap:anywhere}
+@media(max-width:640px){.ktx-header-brand img,.ktx-page-logo{width:36px;height:36px;border-radius:10px}.ktx-heading-row{gap:9px}}
+
+/* Unified desktop + mobile: brand, action colors, button geometry. */
+nav .brand .logo{background:transparent!important;box-shadow:none!important;overflow:hidden;border-radius:12px}
+nav .brand .logo img{height:100%;width:100%;object-fit:cover;display:block}
+#mobile180 .mbrand i{background:transparent!important;box-shadow:none!important;padding:0!important;overflow:hidden;border-radius:12px}
+#mobile180 .mbrand i img{width:100%;height:100%;object-fit:cover;display:block;border-radius:12px}
+.btn,button.btn,#mobile180 button,#mobile180 .btn{border-radius:var(--ktx-ui-radius)}
+.btn:not(.s):not(.r):not(.g),button.btn:not(.s):not(.r):not(.g){background:linear-gradient(125deg,var(--ktx-brand),var(--ktx-purple));color:white}
+.btn.g,button.btn.g{background:linear-gradient(125deg,#0b9360,#19ba83)!important;color:#fff}
+.btn.r,button.btn.r{background:linear-gradient(125deg,#c92a46,#ed5865)!important;color:white}
+.btn.s,button.btn.s{background:#f5f8ff;color:#2455a3;border:1px solid #cbdcf8;box-shadow:var(--ktx-ui-shadow)}
+.btn.s:hover,button.btn.s:hover{background:#eaf2ff}
+nav button.on{border-radius:10px;background:linear-gradient(90deg,#e6efff,#f6f8ff)}
+/* Consistent mobile tiles - retain original semantic category colors. */
+#mobile180 .m-action-grid button,#mobile180 .mquick button,#mobile180 .mquick .item{border-radius:15px}
+/* Prevent fixed bottom nav overlap with action areas */
+@media(max-width:860px){#mobile180 .m-page,#mobile180 .mcontent{padding-bottom:max(88px,env(safe-area-inset-bottom,0px))}}
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -972,7 +1005,7 @@ html.ktx-subaccount nav .system-hub-nav,html.ktx-subaccount #sysfunc{display:non
 <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v3M14 21h3M21 21h-1"/></symbol>
 <symbol id="i-ch" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol></defs></svg>
 <nav>
-  <div class="brand"><div class="logo"><svg class="i"><use href="#i-bld"/></svg></div><div><b>KÝ TÚC XÁ</b><small>Hóc Môn</small></div></div>
+  <div class="brand"><div class="logo"><img src="./ktx-logo.png" alt="Logo KTX Hóc Môn" width="40" height="40"/></div><div><b>KÝ TÚC XÁ</b><small>Hóc Môn</small></div></div>
     <div class="grp open"><button class="gh"><svg class="i"><use href="#i-bld"/></svg>Ký túc xá<span class="ch"><svg class="i"><use href="#i-ch"/></svg></span></button><div class="gi">
     <button data-p="home" class="on"><svg class="i"><use href="#i-home"/></svg>Tổng quan</button>
     <button data-p="work"><svg class="i"><use href="#i-users"/></svg>Quản lý công nhân <span class="pill" id="np">0</span></button>
@@ -7481,7 +7514,7 @@ function stats(){
  // Never treat empty rooms as occupied; counts reflect actual accessible worker data.
  return{A,over:[...rs.values()].filter(v=>v>(typeof CAP==='number'?CAP:20)).length,occupiedRooms:rs.size,days:days.size,ktxs:ktxs.size,men,women,unknown};
 }
-function shell(content){return `<header class="mbar"><div class="mbrand"><i>▣</i><span>KTX Hóc Môn</span></div><button class="mavatar" data-mobile="account" aria-label="Tài khoản">♙</button></header><div class="mpage">${content}</div><div class="mbottom"><button data-mobile="home" class="${screen==='home'?'active':''}"><span>⌂</span>Tổng quan</button><button data-mobile="list" class="${['list','detail'].includes(screen)?'active':''}"><span>♟</span>Công nhân</button><button data-mobile="qr" class="${screen==='qr'?'active':''}"><span>▦</span>QR code</button></div>`}
+function shell(content){return `<header class="mbar"><div class="mbrand"><i><img src="./ktx-logo.png" alt="Logo KTX Hóc Môn"></i><span>KTX Hóc Môn</span></div><button class="mavatar" data-mobile="account" aria-label="Tài khoản">♙</button></header><div class="mpage">${content}</div><div class="mbottom"><button data-mobile="home" class="${screen==='home'?'active':''}"><span>⌂</span>Tổng quan</button><button data-mobile="list" class="${['list','detail'].includes(screen)?'active':''}"><span>♟</span>Công nhân</button><button data-mobile="qr" class="${screen==='qr'?'active':''}"><span>▦</span>QR code</button></div>`}
 function summary(){const s=stats(),sub=typeof ME!=='undefined'&&!!ME.id&&ME.role!=='admin';if(sub){const all=typeof W!=='undefined'&&Array.isArray(W)?W:[];return `<h2 class="mtitle">Tổng quan</h2><div class="msub">Quân số KTX và phạm vi được phân quyền</div><div class="mstats step231-summary step233-four"><div class="mstat step231-main"><span>👥</span><b>${fmt(all.length)}</b><small>Tổng quân số toàn KTX</small></div><div class="mstat"><span>📋</span><b>${fmt(s.A.length)}</b><small>Quân số được phân quyền</small></div><div class="mstat step231-male"><span>♂</span><b>${fmt(s.men)}</b><small>Nam</small></div><div class="mstat step231-female"><span>♀</span><b>${fmt(s.women)}</b><small>Nữ</small></div></div>${s.unknown?`<div class="step231-unknown">${fmt(s.unknown)} hồ sơ thuộc phạm vi chưa xác định giới tính.</div>`:''}<section class="mpanel"><h3>Thao tác thường dùng</h3><div class="mactions"><button class="maction" data-mobile="list"><i>👥</i>Danh sách công nhân →</button><button class="maction green" data-mobile="add" ${typeof can==='function'&&can('add')?'':'style="display:none"'}><i>✚</i>Thêm công nhân →</button><button class="maction amber" onclick="window.openKiemTraMenuNCC()"><i>🍽️</i>Xem thực đơn →</button><button class="maction amber" data-mobile="meal" ${typeof can==='function'&&can('report')?'':'style="display:none"'}><i>📊</i>BC suất ăn →</button><button class="maction" data-mobile="qr"><i>▦</i>QR code →</button><button class="maction" data-mobile="incident"><i>📝</i>Biên bản sự vụ →</button><button class="maction" data-mobile="dayman"><i>🏘️</i>Quản lý dãy →</button></div></section>`;}return summaryAdmin();}
 function summaryAdmin(){const s=stats();return `<h2 class="mtitle">Tổng quan</h2><div class="msub">Quản lý công nhân KTX Hóc Môn</div><div class="mstats step231-summary"><div class="mstat step231-main"><span>👥</span><b>${fmt(s.A.length)}</b><small>Tổng quân số</small></div><div class="mstat"><span>🏢</span><b>${fmt(s.ktxs)}</b><small>KTX có người</small></div><div class="mstat"><span>🏘️</span><b>${fmt(s.days)}</b><small>Dãy có người</small></div><div class="mstat green"><span>🚪</span><b>${fmt(s.occupiedRooms)}</b><small>Phòng có người</small></div><div class="mstat step231-male"><span>♂</span><b>${fmt(s.men)}</b><small>Nam</small></div><div class="mstat step231-female"><span>♀</span><b>${fmt(s.women)}</b><small>Nữ</small></div><div class="mstat red"><span>⚠️</span><b>${fmt(s.over)}</b><small>Phòng quá tải</small></div></div>${s.unknown?`<div class="step231-unknown">${fmt(s.unknown)} hồ sơ chưa xác định giới tính.</div>`:""}${!s.A.length?`<div class="mcloudwarn">Chưa có dữ liệu công nhân trên thiết bị. Mở Công nhân → Tải Cloud để kiểm tra kết nối.</div>`:''}<section class="mpanel"><h3>Thao tác thường dùng</h3><div class="mactions"><button class="maction" data-mobile="list"><i>👥</i>Danh sách công nhân →</button><button class="maction green" data-mobile="add" ${typeof can==='function'&&can('add')?'':'style="display:none"'}><i>✚</i>Thêm công nhân →</button><button class="maction amber" onclick="window.openKiemTraMenuNCC()"><i>🍽️</i>Xem thực đơn →</button><button class="maction amber" data-mobile="meal" ${typeof can==='function'&&can('report')?'':'style="display:none"'}><i>📊</i>BC suất ăn →</button><button class="maction" data-mobile="qr"><i>▦</i>QR code →</button><button class="maction" data-mobile="incident"><i>📝</i>Biên bản sự vụ →</button><button class="maction" data-mobile="dayman"><i>🏘️</i>Quản lý dãy →</button></div></section><section class="mpanel"><h3>Thao tác gần đây</h3>${(typeof LOG!=='undefined'&&Array.isArray(LOG)?LOG:[]).slice(0,4).map(x=>`<div class="mrecent"><b>${escapeHtml(x.a||'Cập nhật')}</b><br>${escapeHtml(x.d||'')}<div class="mtiny">${escapeHtml(x.t||'')}</div></div>`).join('')||'<div class="mempty">Chưa có hoạt động</div>'}</section>`}
 const opts=(values,val,title)=>`<option value="">${title}</option>`+[...new Set(values.map(String))].filter(Boolean).sort((a,b)=>a.localeCompare(b,'vi',{numeric:true})).map(v=>`<option value="${escapeHtml(v)}" ${v===val?'selected':''}>${escapeHtml(v)}</option>`).join('');

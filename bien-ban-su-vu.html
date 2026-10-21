@@ -58,7 +58,34 @@ button,input,select,textarea{touch-action:manipulation}
 @media(max-width:700px){.bb-second{grid-template-columns:1fr}.people{grid-template-columns:1fr}#choose .grid.two textarea{min-height:120px}.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style><style id="step173-utility-visual-standard">
 :root{--ui-space:10px}button,input,select,textarea{box-sizing:border-box}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #2563eb;outline-offset:2px}input,select,textarea{max-width:100%}button{min-height:34px}main,section,.card{min-width:0}@media(max-width:640px){body{overflow-x:hidden}table{max-width:100%}}
-</style></head><body><header><div><div class="muted">KÝ TÚC XÁ HÓC MÔN · TIỆN ÍCH</div><h1>Biên bản sự vụ</h1><div class="muted">Mẫu biên bản sự việc · Thành phần tham gia · Nội dung · Kết luận · Ký tên</div></div><span class="badge">Mô-đun độc lập · Không sửa dữ liệu công nhân</span></header><div class="container"><div class="tabs" id="tabs"><button class="tab active" data-tab="choose">1. Chọn & lập biên bản</button><button class="tab" data-tab="nccsheet">NCC suất ăn · Tính & lập biên bản</button><button class="tab" data-tab="catalog">2. Danh mục lỗi</button><button class="tab" data-tab="export">3. Xuất văn bản</button><button class="tab" data-tab="template">4. Văn bản mẫu</button></div><main>
+</style><style id="ktx-step245-design">
+/* STEP245 - shared design system. Presentation only, no business logic. */
+:root{--ktx-brand:#2765ea;--ktx-purple:#6755ef;--ktx-brand-soft:#edf3ff;--ktx-success:#0c9a65;--ktx-danger:#d83a4d;--ktx-warning:#c97917;--ktx-ui-radius:11px;--ktx-ui-shadow:0 3px 12px rgba(30,70,145,.09)}
+button,a,input,select,textarea{font-family:inherit}
+button{touch-action:manipulation}
+button:not(:disabled){transition:background-color .16s,border-color .16s,box-shadow .16s,transform .13s,filter .13s}
+button:not(:disabled):active{transform:scale(.985)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ktx-brand);outline-offset:2px}
+input,textarea,select{min-width:0;box-sizing:border-box}
+.ktx-header-brand{display:inline-flex;align-items:center;gap:9px;min-width:0}
+.ktx-header-brand img{height:42px;width:42px;aspect-ratio:1;object-fit:cover;border-radius:12px;flex-shrink:0;box-shadow:0 3px 12px rgba(54,76,219,.15)}
+.ktx-page-logo{width:42px;height:42px;border-radius:12px;object-fit:cover;box-shadow:0 4px 12px rgba(40,65,190,.16)}
+.ktx-heading-row{display:flex;align-items:center;gap:11px;min-width:0}
+.ktx-heading-row h1{min-width:0;overflow-wrap:anywhere}
+@media(max-width:640px){.ktx-header-brand img,.ktx-page-logo{width:36px;height:36px;border-radius:10px}.ktx-heading-row{gap:9px}}
+
+/* Report utility - consistent colorful active controls and sensible mobile spacing. */
+header{gap:12px;align-items:center}
+header .ktx-heading-row{flex:1 1 auto}
+.tab{border-radius:10px!important}
+.tab.active{background:linear-gradient(125deg,#2765ea,#6755ef)!important;color:white!important;border-color:transparent!important}
+.btn.primary,#goExport{background:linear-gradient(125deg,#2765ea,#6755ef)!important;color:white!important;border-radius:11px!important}
+.btn:not(.primary){border-radius:10px}
+@media(max-width:650px){header{padding:12px 14px!important}header .badge{font-size:10px}header h1{font-size:clamp(20px,5vw,26px)}.tabs{gap:6px!important}.tab{min-height:42px;flex:1 1 auto}.container{padding-inline:10px!important}input,select,textarea{font-size:16px!important}button{min-height:40px}}
+</style>
+<link rel="icon" type="image/png" href="./pwa-icon-192.png"/>
+<meta name="theme-color" content="#2765ea"/>
+</head><body><header><div class="ktx-heading-row"><img class="ktx-page-logo" src="./ktx-logo.png" alt="Logo KTX Hóc Môn"><div><div class="muted">KÝ TÚC XÁ HÓC MÔN · TIỆN ÍCH</div><h1>Biên bản sự vụ</h1><div class="muted">Mẫu biên bản sự việc · Thành phần tham gia · Nội dung · Kết luận · Ký tên</div></div></div><span class="badge">Mô-đun độc lập · Không sửa dữ liệu công nhân</span></header><div class="container"><div class="tabs" id="tabs"><button class="tab active" data-tab="choose">1. Chọn & lập biên bản</button><button class="tab" data-tab="nccsheet">NCC suất ăn · Tính & lập biên bản</button><button class="tab" data-tab="catalog">2. Danh mục lỗi</button><button class="tab" data-tab="export">3. Xuất văn bản</button><button class="tab" data-tab="template">4. Văn bản mẫu</button></div><main>
 <section id="choose"><div class="card"><div class="row" style="justify-content:space-between"><h2>Thông tin biên bản</h2><label class="field" style="min-width:210px">Loại biên bản<select id="kind"><option value="ncc">Nhà cung cấp suất ăn</option><option value="cn">Sự việc công nhân</option></select></label></div><div class="grid" id="basic"></div><h3 style="margin-top:16px">I. Chúng tôi gồm</h3><p class="muted">Mỗi nhóm gồm tối đa 02 người theo mẫu biên bản anh cung cấp.</p><div class="people" id="people"></div><div class="grid two" style="margin-top:12px"><label class="field">II. Nội dung sự việc<textarea data-key="summary" placeholder="Ghi nội dung sự việc, thời gian và địa điểm..."></textarea></label><label class="field">Kết luận<textarea data-key="conclusion" placeholder="Ý kiến xử lý, thời hạn thực hiện, bên chịu trách nhiệm..."></textarea></label></div></div><div class="card"><h2>Chọn vi phạm và phương án xử lý</h2><div class="muted">Tick vào lỗi, sau đó chọn phương án. Đơn giá, số lượng và hệ số có thể sửa ngay tại dòng xử lý.</div><div id="choices" class="items" style="margin-top:12px"></div><div class="total" id="total"></div></div><div class="row"><button class="btn primary" id="goExport">Xem và xuất biên bản →</button><span class="status" id="saved">Dữ liệu biểu mẫu lưu tạm trong trình duyệt.</span></div></section>
 <section id="nccsheet" class="hidden"><div id="ncc171-root"></div></section>
 <section id="catalog" class="hidden"><div class="card"><h2>Danh mục lỗi và phương án</h2><div class="notice">Lỗi mẫu được tham khảo từ các biên bản anh cung cấp. Mức tiền do người sử dụng quản lý và kiểm tra, không tự suy diễn từ chữ viết tay.</div><div class="row"><button class="btn primary" id="newIncident">+ Thêm lỗi</button><button class="btn" id="exportCatalog">Xuất danh mục JSON</button><label class="btn">Nhập danh mục JSON<input type="file" id="importCatalog" accept=".json" hidden></label><button class="btn danger" id="resetCatalog">Khôi phục danh mục gợi ý</button></div><div id="catalogList"></div></div></section>

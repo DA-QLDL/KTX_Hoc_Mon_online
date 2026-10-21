@@ -3,8 +3,33 @@
 /* STEP232: non-admin sees dishes and portions only, never Cloud diagnostics. */
 html.ktx-subaccount #menuAdminTools,html.ktx-subaccount #menuAdminHint,
 html.ktx-subaccount #status,html.ktx-subaccount #log{display:none!important;}
-</style></head>
-<body><main><h1>🍱 Xem thực đơn</h1><div class="muted">Tiện ích độc lập · Đọc thực đơn Mặn/Chay và định lượng chuẩn theo ngày, bữa, nhà cung cấp</div><section class="card"><div class="filters"><label>Ngày ăn<input id="date" type="date"></label><label>Bữa ăn<select id="meal"><option value="sang">Sáng</option><option value="trua">Trưa</option><option value="chieu">Tối</option></select></label><label>Nhà cung cấp<select id="vendor"></select></label></div><div class="tools" id="menuAdminTools"><label class="upload primary">📂 Chọn nhiều file Excel<input id="files" type="file" accept=".xlsx,.xls,.xlsm,.xlsb,.csv" multiple></label><button id="refresh" type="button">↻ Xem thực đơn</button><button id="cloudLoad" type="button">☁ Tải Menu Cloud</button><button id="cloudSave" type="button" style="display:none">☁ Lưu Menu Cloud (Quản trị)</button><button id="clear" type="button">Xóa dữ liệu xem trước</button></div><div class="status" id="status">Chọn một hoặc nhiều file Excel để xem thực đơn.</div><div class="log" id="log"></div><p class="hint" id="menuAdminHint">PC và Mobile chỉ dùng chung thực đơn sau khi Quản trị/Quản lý bấm “Lưu Menu Cloud” thành công. Khi mở trang, hệ thống tự tải bản Cloud của ngày/bữa đang chọn. Dữ liệu Excel chưa lưu Cloud chỉ nằm trên máy đã nhập. Chức năng này không sửa dữ liệu công nhân.</p></section><section class="card"><div class="head"><b id="heading">Thực đơn</b><span class="pill" id="count">0 món</span></div><div class="tabs"><button data-kind="man" class="active">🥩 Mặn</button><button data-kind="chay">🌿 Chay</button></div><div style="overflow:auto"><table><thead><tr><th style="width:50px">STT</th><th>Tên món ăn</th><th>Định lượng chuẩn</th></tr></thead><tbody id="rows"></tbody></table></div></section></main><script>
+</style><style id="ktx-step245-design">
+/* STEP245 - shared design system. Presentation only, no business logic. */
+:root{--ktx-brand:#2765ea;--ktx-purple:#6755ef;--ktx-brand-soft:#edf3ff;--ktx-success:#0c9a65;--ktx-danger:#d83a4d;--ktx-warning:#c97917;--ktx-ui-radius:11px;--ktx-ui-shadow:0 3px 12px rgba(30,70,145,.09)}
+button,a,input,select,textarea{font-family:inherit}
+button{touch-action:manipulation}
+button:not(:disabled){transition:background-color .16s,border-color .16s,box-shadow .16s,transform .13s,filter .13s}
+button:not(:disabled):active{transform:scale(.985)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ktx-brand);outline-offset:2px}
+input,textarea,select{min-width:0;box-sizing:border-box}
+.ktx-header-brand{display:inline-flex;align-items:center;gap:9px;min-width:0}
+.ktx-header-brand img{height:42px;width:42px;aspect-ratio:1;object-fit:cover;border-radius:12px;flex-shrink:0;box-shadow:0 3px 12px rgba(54,76,219,.15)}
+.ktx-page-logo{width:42px;height:42px;border-radius:12px;object-fit:cover;box-shadow:0 4px 12px rgba(40,65,190,.16)}
+.ktx-heading-row{display:flex;align-items:center;gap:11px;min-width:0}
+.ktx-heading-row h1{min-width:0;overflow-wrap:anywhere}
+@media(max-width:640px){.ktx-header-brand img,.ktx-page-logo{width:36px;height:36px;border-radius:10px}.ktx-heading-row{gap:9px}}
+
+h1{display:flex;align-items:center;gap:10px}
+.tools button,.tools .upload,button#refresh,button#cloudLoad,button#cloudSave{border-radius:10px!important;min-height:38px}
+button#refresh{background:#ebf2ff!important;color:#1c53af!important;border-color:#bbd0fa!important}
+button#cloudLoad{background:#eaf8f1!important;color:#096946!important;border-color:#b2e7cb!important}
+button#cloudSave{background:#2765ea!important;color:white!important}
+@media(max-width:640px){h1{font-size:clamp(20px,5vw,28px)!important}.tools{gap:7px!important}.tools button,.tools .upload{font-size:12px!important;min-height:44px;overflow-wrap:anywhere}input,select{font-size:16px!important}}
+</style>
+<link rel="icon" type="image/png" href="./pwa-icon-192.png"/>
+<meta name="theme-color" content="#2765ea"/>
+</head>
+<body><main><h1><img class="ktx-page-logo" src="./ktx-logo.png" alt="Logo KTX Hóc Môn"> Xem thực đơn</h1><div class="muted">Tiện ích độc lập · Đọc thực đơn Mặn/Chay và định lượng chuẩn theo ngày, bữa, nhà cung cấp</div><section class="card"><div class="filters"><label>Ngày ăn<input id="date" type="date"></label><label>Bữa ăn<select id="meal"><option value="sang">Sáng</option><option value="trua">Trưa</option><option value="chieu">Tối</option></select></label><label>Nhà cung cấp<select id="vendor"></select></label></div><div class="tools" id="menuAdminTools"><label class="upload primary">📂 Chọn nhiều file Excel<input id="files" type="file" accept=".xlsx,.xls,.xlsm,.xlsb,.csv" multiple></label><button id="refresh" type="button">↻ Xem thực đơn</button><button id="cloudLoad" type="button">☁ Tải Menu Cloud</button><button id="cloudSave" type="button" style="display:none">☁ Lưu Menu Cloud (Quản trị)</button><button id="clear" type="button">Xóa dữ liệu xem trước</button></div><div class="status" id="status">Chọn một hoặc nhiều file Excel để xem thực đơn.</div><div class="log" id="log"></div><p class="hint" id="menuAdminHint">PC và Mobile chỉ dùng chung thực đơn sau khi Quản trị/Quản lý bấm “Lưu Menu Cloud” thành công. Khi mở trang, hệ thống tự tải bản Cloud của ngày/bữa đang chọn. Dữ liệu Excel chưa lưu Cloud chỉ nằm trên máy đã nhập. Chức năng này không sửa dữ liệu công nhân.</p></section><section class="card"><div class="head"><b id="heading">Thực đơn</b><span class="pill" id="count">0 món</span></div><div class="tabs"><button data-kind="man" class="active">🥩 Mặn</button><button data-kind="chay">🌿 Chay</button></div><div style="overflow:auto"><table><thead><tr><th style="width:50px">STT</th><th>Tên món ăn</th><th>Định lượng chuẩn</th></tr></thead><tbody id="rows"></tbody></table></div></section></main><script>
 (()=>{'use strict';const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));const sa=s=>String(s??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
 const vendors=['Vina Story','Tám Phương','Thiên Hồng Phúc','Lim Dương','Hương Ngọc Phát','Nguyên Sài Gòn','Minh Long Food'];const keys={'Vina Story':['vina story','vina'],'Tám Phương':['tam phuong'],'Thiên Hồng Phúc':['thien hong phuc'],'Lim Dương':['lim duong'],'Hương Ngọc Phát':['huong ngoc phat'],'Nguyên Sài Gòn':['nguyen sai gon'],'Minh Long Food':['minh long']};const detect=s=>{const x=sa(s),a=vendors.filter(n=>keys[n].some(k=>x.includes(k)));return a.length===1?a[0]:null};
 function menuParse(rows,sheetName){
