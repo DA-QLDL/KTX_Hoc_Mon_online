@@ -525,15 +525,6 @@ table{font-size:12.8px!important}th{font-size:11.5px!important;font-weight:700!i
 @media(display-mode:standalone){body{overscroll-behavior-y:none}.pwa-only-browser{display:none!important}}
 @media(max-width:700px){.pwa-install-dialog{width:calc(100vw - 16px)}body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}}
 </style>
-<style id="ktx-step103-b1-integration">
-/* STEP103: dedicated B1 module shell; original STEP102 menu CSS preserved. */
-#b1-module-panel{min-width:0;width:100%;padding:0}
-#b1-module-panel.hide{display:none!important}
-#b1-module-panel .b1-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:10px 14px;border:1px solid var(--ln);border-radius:12px 12px 0 0;background:var(--pn)}
-#b1-module-panel .b1-toolbar a{color:var(--bl);font-weight:600;text-decoration:none}
-#b1-app-frame{display:block;width:100%;height:calc(100dvh - 210px);min-height:650px;border:1px solid var(--ln);border-top:0;background:#fff;border-radius:0 0 12px 12px}
-@media(max-width:900px){#b1-app-frame{height:calc(100dvh - 220px);min-height:520px}}
-</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -578,21 +569,6 @@ table{font-size:12.8px!important}th{font-size:11.5px!important;font-weight:700!i
     <button data-p="t5"><svg class="i"><use href="#i-img"/></svg>PDF → ảnh</button>
     <button data-p="t7"><svg class="i"><use href="#i-folder"/></svg>Lưu trữ tài liệu</button>
 </div></div>
-
-    <!-- STEP103: B1 modules, CSS isolated by iframe -->
-    <div class="grp" id="b1-module-group"><button class="gh" type="button"><svg class="i"><use href="#i-tool"/></svg>Ứng dụng V1.0.0-B1<span class="ch"><svg class="i"><use href="#i-ch"/></svg></span></button><div class="gi">
-      <button type="button" data-b1="b1-core"><svg class="i"><use href="#i-folder"/></svg>Ứng dụng B1 – Toàn bộ</button>
-      <button type="button" data-b1="b1-incident"><svg class="i"><use href="#i-folder"/></svg>Biên bản sự vụ</button>
-      <button type="button" data-b1="b1-attendance"><svg class="i"><use href="#i-folder"/></svg>Biểu mẫu điểm danh</button>
-      <button type="button" data-b1="b1-meal"><svg class="i"><use href="#i-folder"/></svg>Theo dõi suất ăn</button>
-      <button type="button" data-b1="b1-menu"><svg class="i"><use href="#i-folder"/></svg>Thực đơn</button>
-      <button type="button" data-b1="b1-ncc"><svg class="i"><use href="#i-folder"/></svg>Nhà cung cấp suất ăn</button>
-      <button type="button" data-b1="b1-ledger"><svg class="i"><use href="#i-folder"/></svg>Sổ tăng giảm</button>
-      <button type="button" data-b1="b1-pccc"><svg class="i"><use href="#i-folder"/></svg>Kiểm tra PCCC</button>
-      <button type="button" data-b1="b1-office"><svg class="i"><use href="#i-folder"/></svg>Vệ sinh văn phòng phẩm</button>
-      <button type="button" data-b1="b1-violation"><svg class="i"><use href="#i-folder"/></svg>Vi phạm NCC</button>
-      <button type="button" data-b1="b1-property"><svg class="i"><use href="#i-folder"/></svg>Cơ sở vật chất</button>
-    </div></div>
   <div class="grp"><button class="gh"><svg class="i"><use href="#i-cog"/></svg>Hệ thống<span class="ch"><svg class="i"><use href="#i-ch"/></svg></span></button><div class="gi">
     <button data-p="acc"><svg class="i"><use href="#i-key"/></svg>Quản lý tài khoản</button>
     <button data-p="log"><svg class="i"><use href="#i-log"/></svg>Nhật ký hệ thống</button>
@@ -631,7 +607,7 @@ table{font-size:12.8px!important}th{font-size:11.5px!important;font-weight:700!i
       <button class="btn r" id="ds2"><svg class="i"><use href="#i-trash"/></svg><span id="dst">Xóa mục đã chọn</span></button>
       <button class="btn r" id="dsall" title="Xóa toàn bộ công nhân khỏi danh sách hiện tại"><svg class="i"><use href="#i-trash"/></svg>Xóa tất cả</button>
     </div></div>
-  <section id="home"></section><section id="b1-module-panel" class="hide" aria-label="Các ứng dụng B1"><div class="b1-toolbar"><strong id="b1-caption">Ứng dụng V1.0.0-B1</strong><a id="b1-open" href="./b1/index.html" target="_blank" rel="noopener">Mở trang riêng ↗</a></div><iframe id="b1-app-frame" title="Ứng dụng B1" loading="lazy" referrerpolicy="same-origin"></iframe></section><section id="alerts" class="hide"></section><section id="reports" class="hide"></section><section id="meal" class="hide"></section><section id="work" class="hide"></section><section id="log" class="hide"></section><section id="t7" class="hide"></section><section id="arc" class="hide"></section><section id="acc" class="hide"></section><section id="backup" class="hide"></section><section id="sync" class="hide"></section><section id="qr" class="hide"></section><section id="t6" class="hide"></section>
+  <section id="home"></section><section id="alerts" class="hide"></section><section id="reports" class="hide"></section><section id="meal" class="hide"></section><section id="work" class="hide"></section><section id="log" class="hide"></section><section id="t7" class="hide"></section><section id="arc" class="hide"></section><section id="acc" class="hide"></section><section id="backup" class="hide"></section><section id="sync" class="hide"></section><section id="qr" class="hide"></section><section id="t6" class="hide"></section>
 <div id="t2" class="card hide dup-page">
 <div class="dup-head"><div><h3 style="margin:0">Lọc trùng dữ liệu</h3><div class="mut">Chọn nguồn và các trường cần so khớp.</div></div><div class="row"><label class="btn s sm dup-file-btn"><svg class="i"><use href="#i-ul"/></svg>Thêm file<input type="file" id="fb" accept=".xlsx,.xls,.csv" multiple hidden></label><button class="btn s sm" id="fbc">Xóa file</button></div></div>
 <div id="infob" class="dup-files"></div>
@@ -2387,13 +2363,7 @@ const T={alerts:['Trung tâm cảnh báo','Các vấn đề cần xử lý trong
 function syncTopActions(){const ids=['xt','fxb','undoImport','xw','aw','xr','bs','bn','mnb2','wd','ds2','dsall','gk','imode'];if(page=='home'){ids.forEach(id=>{const e=$(id);if(e)e.classList.toggle('hide',!['fxb','xw','xr','gk'].includes(id))});if($('gk')){$('gk').classList.add('home-ktx-select')}}else if(page=='work'){ids.forEach(id=>{const e=$(id);if(e)e.classList.toggle('hide',['gk'].includes(id))});if($('gk'))$('gk').classList.remove('home-ktx-select')}}
 function all(){pill();const f=({home,alerts:alertCenterPage,reports:managementReportsPage,meal:mealPage,work,log:logp,t6:tttv,t7:docsPage,arc:arcPage,acc:accPage,backup:backupPage,sync:syncPage,qr:qrPage})[page];f&&f();if(window.DEDUP_ON&&$('go').onclick)$('go').onclick();applyPerms();syncTopActions();updateAlertBadges();if(page!='qr'&&QCAM)camStop()}
 const GN={alerts:'Ký túc xá',reports:'Ký túc xá',home:'Ký túc xá',meal:'Ký túc xá',work:'Ký túc xá',t6:'Ký túc xá',t2:'Tiện ích',t3:'Tiện ích',t4:'Tiện ích',t5:'Tiện ích',log:'Hệ thống',acc:'Hệ thống',backup:'Hệ thống',sync:'Hệ thống',qr:'Ký túc xá',arc:'Ký túc xá',t7:'Tiện ích'};
-function go(p){
-  /* STEP103: release B1 panel on every original STEP102 navigation. */
-  const b1Panel103=document.getElementById('b1-module-panel');
-  if(b1Panel103)b1Panel103.classList.add('hide');
-  const b1Frame103=document.getElementById('b1-app-frame');
-  if(b1Frame103&&b1Frame103.dataset.active==='yes'){b1Frame103.dataset.active='no';b1Frame103.removeAttribute('src');}
-  document.querySelectorAll('nav button[data-b1]').forEach(b=>b.classList.remove('on'));if(p=='t3'||p=='t4')p='home';if(p==='acc'&&!can('acct')){alert('Bạn không có quyền Quản lý tài khoản.');p='home'}if(p==='backup'&&!can('backup')){alert('Bạn không có quyền Sao lưu dữ liệu.');p='home'}page=p;document.querySelectorAll('nav button[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p==p));Object.keys(T).forEach(k=>$(k).classList.toggle('hide',k!=p));$('ttl').textContent=T[p][0];$('sub').textContent=T[p][1];$('eb').textContent=GN[p]||'Ký túc xá';
+function go(p){if(p=='t3'||p=='t4')p='home';if(p==='acc'&&!can('acct')){alert('Bạn không có quyền Quản lý tài khoản.');p='home'}if(p==='backup'&&!can('backup')){alert('Bạn không có quyền Sao lưu dữ liệu.');p='home'}page=p;document.querySelectorAll('nav button[data-p]').forEach(b=>b.classList.toggle('on',b.dataset.p==p));Object.keys(T).forEach(k=>$(k).classList.toggle('hide',k!=p));$('ttl').textContent=T[p][0];$('sub').textContent=T[p][1];$('eb').textContent=GN[p]||'Ký túc xá';
  const hiddenPages=['alerts','reports','t2','t3','t4','t5','t6','t7','arc','acc','backup','sync','qr','log','meal'];$('tools').classList.toggle('hide',hiddenPages.includes(p));
  window.scrollTo(0,0);if(p=='t2')window.DEDUP_ON=true;applyPerms();syncTopActions();all()}
 document.querySelectorAll('nav button[data-p]').forEach(b=>b.onclick=()=>go(b.dataset.p));document.querySelectorAll('.gh').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
@@ -4155,36 +4125,7 @@ function rc96Data(){
 function rc96FileSlug(s){return sa(s).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'bao-cao'}
 function rc96SetPreset(p){RC96.preset=p;const [a,b]=rc96Range(p);RC96.from=a;RC96.to=b;managementReportsPage()}
 function rc96Preview(){const d=rc96Data(),pv=$('rc96Preview');if(!pv)return;pv.innerHTML=`<div class="rc96-preview-head"><b>${esc(d.title)}</b><span>${d.count.toLocaleString('vi-VN')} dòng · ${vn(RC96.from)} → ${vn(RC96.to)}</span></div><div class="wrap"><table><thead><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${d.rows.slice(0,300).map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')||`<tr><td colspan="${d.headers.length}" class="mut">Không có dữ liệu phù hợp.</td></tr>`}</tbody></table></div>${d.rows.length>300?`<div class="mut" style="padding:7px 10px">Hiển thị 300/${d.rows.length.toLocaleString('vi-VN')} dòng. File xuất chứa đầy đủ dữ liệu.</div>`:''}`}
-function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)return alert('Trình duyệt đang chặn cửa sổ in. Hãy cho phép pop-up rồi thử lại.');const css=`body{font-family:Arial,sans-serif;color:#172b4d;padding:24px}h1{font-size:20px;margin:0 0 5px}p{font-size:11px;color:#65758b}table{border-collapse:collapse;width:100%;font-size:10px;margin-top:14px}th,td{border:1px solid #cfd8e5;padding:5px;text-align:left}th{background:#eef4fb}@page{size:A4 landscape;margin:12mm}`;w.document.write(`<html><head><title>${esc(d.title)}</title><style>${css}</style></head><body><h1>${esc(d.title)}</h1><p>Kỳ báo cáo: ${esc(vn(RC96.from))} - ${esc(vn(RC96.to))} · ${esc(RC96.ktx||'Tất cả KTX')}</p><table><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${d.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')}</table><script id="ktx-step103-b1-navigation">
-(()=>{
-  'use strict';
-  const modules={"b1-core": ["Ứng dụng B1 – Toàn bộ", "index.html"], "b1-incident": ["Biên bản sự vụ", "bien-ban-su-vu.html"], "b1-attendance": ["Biểu mẫu điểm danh", "attendance-form.html"], "b1-meal": ["Theo dõi suất ăn", "theo-doi-suat-an.html"], "b1-menu": ["Thực đơn", "thuc-don-moi.html"], "b1-ncc": ["Nhà cung cấp suất ăn", "index.html"], "b1-ledger": ["Sổ tăng giảm", "so-tang-giam.html"], "b1-pccc": ["Kiểm tra PCCC", "pccc.html"], "b1-office": ["Vệ sinh văn phòng phẩm", "vs-vpp.html"], "b1-violation": ["Vi phạm NCC", "vipham-ncc.html"], "b1-property": ["Cơ sở vật chất", "cosovatchat.html"]};
-  const panel=document.getElementById('b1-module-panel'),frame=document.getElementById('b1-app-frame');
-  const caption=document.getElementById('b1-caption'),open=document.getElementById('b1-open');
-  const nav=document.querySelector('nav');
-  if(!panel||!frame||!nav)return;
-  nav.addEventListener('click',event=>{
-    const button=event.target.closest('button[data-b1]');
-    if(!button)return;
-    const mod=modules[button.dataset.b1];if(!mod)return;
-    event.preventDefault();event.stopImmediatePropagation();
-    document.querySelectorAll('nav button[data-p]').forEach(b=>b.classList.remove('on'));
-    document.querySelectorAll('nav button[data-b1]').forEach(b=>b.classList.toggle('on',b===button));
-    document.querySelectorAll('main section[id]').forEach(el=>{if(el!==panel)el.classList.add('hide')});
-    const tools=document.getElementById('tools');if(tools)tools.classList.add('hide');
-    panel.classList.remove('hide');
-    caption.textContent=mod[0];
-    const path='./b1/'+mod[1];
-    open.href=path;frame.src=path;frame.dataset.active='yes';
-    const ttl=document.getElementById('ttl'),sub=document.getElementById('sub'),eb=document.getElementById('eb');
-    if(ttl)ttl.textContent=mod[0];
-    if(sub)sub.textContent='Tích hợp V1.0.0-B1 • Độc lập CSS để không ảnh hưởng STEP102';
-    if(eb)eb.textContent='Ứng dụng B1';
-    window.scrollTo(0,0);
-  },true);
-})();
-</script>
-</body></html>`);w.document.close();setTimeout(()=>{w.focus();w.print()},250)}
+function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)return alert('Trình duyệt đang chặn cửa sổ in. Hãy cho phép pop-up rồi thử lại.');const css=`body{font-family:Arial,sans-serif;color:#172b4d;padding:24px}h1{font-size:20px;margin:0 0 5px}p{font-size:11px;color:#65758b}table{border-collapse:collapse;width:100%;font-size:10px;margin-top:14px}th,td{border:1px solid #cfd8e5;padding:5px;text-align:left}th{background:#eef4fb}@page{size:A4 landscape;margin:12mm}`;w.document.write(`<html><head><title>${esc(d.title)}</title><style>${css}</style></head><body><h1>${esc(d.title)}</h1><p>Kỳ báo cáo: ${esc(vn(RC96.from))} - ${esc(vn(RC96.to))} · ${esc(RC96.ktx||'Tất cả KTX')}</p><table><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${d.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')}</table></body></html>`);w.document.close();setTimeout(()=>{w.focus();w.print()},250)}
 managementReportsPage=function(){
  if(!RC96.from||!RC96.to){const r=rc96Range(RC96.preset||'month');RC96.from=r[0];RC96.to=r[1]}
  const L=rc96Base(),rs=rooms(L),free=rs.reduce((s,r)=>s+Math.max(0,CAP-r.n),0),over=rs.filter(r=>r.n>CAP).length,missing=L.filter(w=>!w.cccd||!w.sdt||!w.dob||!R(w)).length,away=L.filter(w=>isAwayOn(w)).length,inc=L.filter(w=>rc96InRange(w.date,RC96.from,RC96.to)).length,dec=rc96Arc().filter(a=>rc96InRange(a.date,RC96.from,RC96.to)).length,ks=[...new Set(W.map(K).filter(Boolean))].sort(num);
