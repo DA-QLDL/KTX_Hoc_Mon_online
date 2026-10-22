@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ký túc xá Hóc Môn</title>
-<meta name="app-version" content="KTX-STEP255-UNIFIED-STATUS-CHIPS">
+<meta name="app-version" content="KTX-STEP100-MASTER-EXTENDED-v1.0.1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,29 +15,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="./qr-config.js?v=ktx228"></script>
-<script id="ktx234-production-public-config" src="./assets/js/core/script-07.js?v=1.0.0"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<script id="ktx234-production-public-config" src="./assets/js/core/script-07.js?v=1.0.0-b"></script>
 
 
 <link rel="manifest" href="./manifest.webmanifest">
@@ -50,39 +28,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="./assets/css/app.css?v=1.0.0">
+<link rel="stylesheet" href="./assets/css/app.css?v=1.0.0-b">
+<link rel="stylesheet" href="./assets/css/step100-master.css?v=step100-master-1">
+<link rel="stylesheet" href="./assets/css/worker-table.css?v=step100-master-1">
+<link rel="stylesheet" href="./assets/css/step100-compat.css?v=step100-master-1">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -228,278 +177,182 @@
   <div class="roomd-body"><div id="rb"></div></div>
 </dialog>
 
-<script src="./assets/js/core/script-08.js?v=1.0.0"></script>
+<script src="./assets/js/core/script-08.js?v=1.0.0-b"></script>
 
 
-<script src="./assets/js/modules/workers/script-09.js?v=1.0.0"></script>
+<script src="./assets/js/modules/workers/script-09.js?v=1.0.0-b"></script>
 
 
-
-<script src="./assets/js/modules/workers/script-10.js?v=1.0.0"></script>
-
+<script src="./assets/js/modules/workers/script-10.js?v=1.0.0-b"></script>
 
 
-<script src="./assets/js/modules/workers/script-11.js?v=1.0.0"></script>
+<script src="./assets/js/modules/workers/script-11.js?v=1.0.0-b"></script>
 
 
+<script src="./assets/js/modules/reports/script-12.js?v=1.0.0-b"></script>
 
 
-
-<script src="./assets/js/modules/reports/script-12.js?v=1.0.0"></script>
-
-
-<script src="./assets/js/modules/workers/script-13.js?v=1.0.0"></script>
+<script src="./assets/js/modules/workers/script-13.js?v=1.0.0-b"></script>
 
 
+<script src="./assets/js/modules/residency/script-14.js?v=1.0.0-b"></script>
 
 
+<script src="./assets/js/modules/reports/script-15.js?v=1.0.0-b"></script>
 
 
-<script src="./assets/js/modules/residency/script-14.js?v=1.0.0"></script>
-
-
-
-
-
-
-<script src="./assets/js/modules/reports/script-15.js?v=1.0.0"></script>
-
-
-
-
-
-
-
-
-
-<script src="./assets/js/modules/residency/script-16.js?v=1.0.0"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<script src="./assets/js/modules/residency/script-16.js?v=1.0.0-b"></script>
 
 
 <!-- STEP 68 — Full logic/formula audit: local-date safety, bed vacancy math, active temporary absence, personnel movement logs, valid HTML structure. -->
 
 
-
 <dialog id="impPreviewDlg" style="width:min(920px,96vw);max-height:90vh"><div class="pd"><div class="ph"><div><h3 style="margin:0">Xem trước Import Excel</h3><div class="mut" id="impPrevSub"></div></div><button class="x" id="impPrevX">×</button></div><div id="impPrevBody"></div><div class="pf"><button class="btn s" id="impPrevCancel">Hủy</button><button class="btn g" id="impPrevGo">Xác nhận import</button></div></div></dialog>
 <dialog id="transferDlg" class="transfer-pro-dialog"><div class="pd transfer-pro"><div class="ph"><div><h3 style="margin:0">Chuyển phòng công nhân</h3><div class="mut" id="transferSub"></div></div><button class="x" id="transferX">×</button></div><div class="transfer-current" id="transferCurrent"></div><div class="transfer-grid transfer-selectors"><label>KTX<select id="trKtx"><option>KTX 1</option><option>KTX 2</option></select></label><label>Dãy<select id="trDay"><option>Dãy 1</option><option>Dãy 2</option><option>Dãy 3</option><option>Dãy 4</option><option>Dãy 5</option><option>Dãy 6</option></select></label></div><input id="trRoom" type="hidden"><div class="transfer-room-head"><div><b>Chọn phòng còn chỗ</b><span id="trRoomSummary" class="mut"></span></div><span class="transfer-cap" id="trCapText">Định mức 20 người/phòng</span></div><div id="trRoomGrid" class="transfer-room-grid"></div><div id="trInfo" class="transfer-target-info"></div><label class="transfer-note-label">Lý do / ghi chú<input id="trNote" placeholder="Ví dụ: điều chỉnh bố trí phòng"></label><div class="pf"><button class="btn s" id="transferCancel">Hủy</button><button class="btn g" id="transferGo">Xác nhận chuyển phòng</button></div></div></dialog>
 
-<script src="./assets/js/modules/admin/script-17.js?v=1.0.0"></script>
+<script src="./assets/js/modules/admin/script-17.js?v=1.0.0-b"></script>
 
 
+<script src="./assets/js/modules/workers/script-18.js?v=1.0.0-b"></script>
+
+<script src="./assets/js/modules/admin/script-19.js?v=1.0.0-b"></script>
 
 
-
-<script src="./assets/js/modules/workers/script-18.js?v=1.0.0"></script>
-
-<script src="./assets/js/modules/admin/script-19.js?v=1.0.0"></script>
+<script src="./assets/js/modules/admin/script-20.js?v=1.0.0-b"></script>
 
 
-
-<script src="./assets/js/modules/admin/script-20.js?v=1.0.0"></script>
-
+<script src="./assets/js/modules/residency/script-21.js?v=1.0.0-b"></script>
 
 
-<script src="./assets/js/modules/residency/script-21.js?v=1.0.0"></script>
+<script src="./assets/js/modules/overview/script-22.js?v=1.0.0-b"></script>
+
+\n<script src="./assets/js/modules/overview/script-23.js?v=1.0.0-b"></script>\n
+
+<script src="./assets/js/modules/reports/script-24.js?v=1.0.0-b"></script>
+
+<script src="./assets/js/modules/overview/script-25.js?v=1.0.0-b"></script>
 
 
-
-<script src="./assets/js/modules/overview/script-22.js?v=1.0.0"></script>
-
-\n<script src="./assets/js/modules/overview/script-23.js?v=1.0.0"></script>\n
-
-<script src="./assets/js/modules/reports/script-24.js?v=1.0.0"></script>
-
-<script src="./assets/js/modules/overview/script-25.js?v=1.0.0"></script>
+<script src="./assets/js/modules/admin/script-26.js?v=1.0.0-b"></script>
 
 
+<script src="./assets/js/modules/admin/script-27.js?v=1.0.0-b"></script>
 
 
+<script src="./assets/js/modules/admin/script-28.js?v=1.0.0-b"></script>
 
-<script src="./assets/js/modules/admin/script-26.js?v=1.0.0"></script>
-
-
-
-<script src="./assets/js/modules/admin/script-27.js?v=1.0.0"></script>
+<script src="./assets/js/modules/admin/script-29.js?v=1.0.0-b"></script>
 
 
-<script src="./assets/js/modules/admin/script-28.js?v=1.0.0"></script>
-
-<script src="./assets/js/modules/admin/script-29.js?v=1.0.0"></script>
+<script src="./assets/js/modules/admin/script-30.js?v=1.0.0-b"></script>
 
 
+<script src="./assets/js/modules/admin/script-31.js?v=1.0.0-b"></script>
 
 
-<script src="./assets/js/modules/admin/script-30.js?v=1.0.0"></script>
-
-
-<script src="./assets/js/modules/admin/script-31.js?v=1.0.0"></script>
-
-
-
-
-<script src="./assets/js/modules/workers/script-32.js?v=1.0.0"></script>
+<script src="./assets/js/modules/workers/script-32.js?v=1.0.0-b"></script>
 <!-- STEP109 — Nhật ký thay đổi chi tiết theo từng công nhân -->
 
 
-<script id="step110-user-activity-js" src="./assets/js/modules/admin/script-33.js?v=1.0.0"></script>
+<script id="step110-user-activity-js" src="./assets/js/modules/admin/script-33.js?v=1.0.0-b"></script>
 
 
-<script id="step111-admin-dashboard-js" src="./assets/js/modules/admin/script-34.js?v=1.0.0"></script>
+<script id="step111-admin-dashboard-js" src="./assets/js/modules/admin/script-34.js?v=1.0.0-b"></script>
 
 
-<script id="step125SystemHubFixScript" src="./assets/js/modules/admin/script-35.js?v=1.0.0"></script>
-<script id="auth-center-v2" src="./assets/js/modules/admin/script-36.js?v=1.0.0"></script>
+<script id="step125SystemHubFixScript" src="./assets/js/modules/admin/script-35.js?v=1.0.0-b"></script>
+<script id="auth-center-v2" src="./assets/js/modules/admin/script-36.js?v=1.0.0-b"></script>
 
 
-
-<script id="step178-viewport-fit-js" src="./assets/js/core/script-37.js?v=1.0.0"></script>
-<div id="menuNcc211" role="dialog" aria-modal="true" aria-label="Xem thực đơn" style="display:none;position:fixed;inset:0;background:#f0f5fe;z-index:2147482000;flex-direction:column"><div style="flex:none;display:flex;justify-content:space-between;align-items:center;padding:9px 13px;background:#fff;border-bottom:1px solid #dbe5f6;color:#164476;font-weight:700"><span aria-hidden="true"></span><button id="menuNcc211Close" type="button" style="background:#edf4ff;border:1px solid #bfd5f5;border-radius:7px;padding:8px 14px;color:#1654aa;font-weight:700;cursor:pointer">← Tổng quan</button></div><iframe id="menuNcc211Frame" title="Xem thực đơn" data-url="./kiem-tra-menu-ncc.html" style="flex:1;border:0;width:100%;min-height:0" loading="lazy"></iframe></div><script src="./assets/js/modules/meals/script-38.js?v=1.0.0"></script>
+<script id="step178-viewport-fit-js" src="./assets/js/core/script-37.js?v=1.0.0-b"></script>
+<div id="menuNcc211" role="dialog" aria-modal="true" aria-label="Xem thực đơn" style="display:none;position:fixed;inset:0;background:#f0f5fe;z-index:2147482000;flex-direction:column"><div style="flex:none;display:flex;justify-content:space-between;align-items:center;padding:9px 13px;background:#fff;border-bottom:1px solid #dbe5f6;color:#164476;font-weight:700"><span aria-hidden="true"></span><button id="menuNcc211Close" type="button" style="background:#edf4ff;border:1px solid #bfd5f5;border-radius:7px;padding:8px 14px;color:#1654aa;font-weight:700;cursor:pointer">← Tổng quan</button></div><iframe id="menuNcc211Frame" title="Xem thực đơn" data-url="./kiem-tra-menu-ncc.html" style="flex:1;border:0;width:100%;min-height:0" loading="lazy"></iframe></div><script src="./assets/js/modules/meals/script-38.js?v=1.0.0-b"></script>
 <div id="mealMonitor182" role="dialog" aria-modal="true" aria-label="Theo dõi suất ăn"><div class="head"><b>🍽️ Theo dõi suất ăn &amp; định lượng</b><button type="button" id="mealMonitor182Back">← Quay lại</button></div><iframe id="mealMonitor182Frame" title="Thực đơn suất ăn và định lượng" loading="lazy" data-url="./thuc-don-moi.html"></iframe></div>
-<script src="./assets/js/modules/meals/script-39.js?v=1.0.0"></script>
+<script src="./assets/js/modules/meals/script-39.js?v=1.0.0-b"></script>
 
 <!-- KTX STEP183: pin account to sidebar -->
 
-<script id="step183-user-placement" src="./assets/js/core/script-40.js?v=1.0.0"></script>
-<script id="step224-qr-review" src="./assets/js/modules/attendance/script-41.js?v=1.0.0"></script>
-<script id="step226-central-supabase" src="./assets/js/modules/admin/script-42.js?v=1.0.0"></script>
+<script id="step183-user-placement" src="./assets/js/core/script-40.js?v=1.0.0-b"></script>
+<script id="step224-qr-review" src="./assets/js/modules/attendance/script-41.js?v=1.0.0-b"></script>
+<script id="step226-central-supabase" src="./assets/js/modules/admin/script-42.js?v=1.0.0-b"></script>
 
-<script src="./assets/js/modules/admin/script-43.js?v=1.0.0"></script>
-
-
-<script src="./assets/js/modules/workers/script-44.js?v=1.0.0"></script>
+<script src="./assets/js/modules/admin/script-43.js?v=1.0.0-b"></script>
 
 
-<script id="step248-button-behavior" src="./assets/js/core/script-45.js?v=1.0.0"></script>
-</body>
+<script src="./assets/js/modules/workers/script-44.js?v=1.0.0-b"></script>
 
 
+<script id="step248-button-behavior" src="./assets/js/core/script-45.js?v=1.0.0-b"></script>
 
 
-<script id="step129SystemBackScript" src="./assets/js/modules/admin/script-46.js?v=1.0.0"></script>
-
-
-
-
-
+<script id="step129SystemBackScript" src="./assets/js/modules/admin/script-46.js?v=1.0.0-b"></script>
 
 
 <!-- STEP134 — AUTH-FIRST UI + UNIFIED WHITE BUTTON SYSTEM -->
 
-<script id="step134AuthFirstScript" src="./assets/js/modules/admin/script-47.js?v=1.0.0"></script>
-
+<script id="step134AuthFirstScript" src="./assets/js/modules/admin/script-47.js?v=1.0.0-b"></script>
 
 
 <!-- STEP135 — UNIFIED APPLICATION BUTTONS + ADMIN DASHBOARD CLEANUP -->
 
 
-
-<script id="step136-script" src="./assets/js/core/script-48.js?v=1.0.0"></script>
-
+<script id="step136-script" src="./assets/js/core/script-48.js?v=1.0.0-b"></script>
 
 
+<script id="step138-flow" src="./assets/js/core/script-49.js?v=1.0.0-b"></script>
 
 
+<script id="step139-room-filter-fix-script" src="./assets/js/modules/rooms/script-50.js?v=1.0.0-b"></script>
 
-<script id="step138-flow" src="./assets/js/core/script-49.js?v=1.0.0"></script>
-
-
-
-<script id="step139-room-filter-fix-script" src="./assets/js/modules/rooms/script-50.js?v=1.0.0"></script>
-
-<script id="step140-behavior" src="./assets/js/modules/admin/script-51.js?v=1.0.0"></script>
+<script id="step140-behavior" src="./assets/js/modules/admin/script-51.js?v=1.0.0-b"></script>
 
 
+<script id="step142-login-cleanup" src="./assets/js/modules/admin/script-52.js?v=1.0.0-b"></script>
 
 
-<script id="step142-login-cleanup" src="./assets/js/modules/admin/script-52.js?v=1.0.0"></script>
+<script id="ktx-step143-script" src="./assets/js/modules/admin/script-53.js?v=1.0.0-b"></script>
 
 
-
-<script id="ktx-step143-script" src="./assets/js/modules/admin/script-53.js?v=1.0.0"></script>
-
+<script id="step144-owner-script" src="./assets/js/modules/rooms/script-54.js?v=1.0.0-b"></script>
 
 
-<script id="step144-owner-script" src="./assets/js/modules/rooms/script-54.js?v=1.0.0"></script>
+<script id="step145-matrix-script" src="./assets/js/modules/admin/script-55.js?v=1.0.0-b"></script>
+<script id="step145-account-actions" src="./assets/js/core/script-56.js?v=1.0.0-b"></script>
 
 
-
-<script id="step145-matrix-script" src="./assets/js/modules/admin/script-55.js?v=1.0.0"></script>
-<script id="step145-account-actions" src="./assets/js/core/script-56.js?v=1.0.0"></script>
+<script id="step146-sidebar-script" src="./assets/js/core/script-57.js?v=1.0.0-b"></script>
 
 
-<script id="step146-sidebar-script" src="./assets/js/core/script-57.js?v=1.0.0"></script>
+<script id="step147-auth" src="./assets/js/modules/admin/script-58.js?v=1.0.0-b"></script>
 
 
-
-<script id="step147-auth" src="./assets/js/modules/admin/script-58.js?v=1.0.0"></script>
-
+<script id="step151-attendance-script" src="./assets/js/modules/attendance/script-59.js?v=1.0.0-b"></script>
 
 
-<script id="step151-attendance-script" src="./assets/js/modules/attendance/script-59.js?v=1.0.0"></script>
+<script id="step152IncidentFeature" src="./assets/js/modules/reports/script-60.js?v=1.0.0-b"></script>
 
 
-
-<script id="step152IncidentFeature" src="./assets/js/modules/reports/script-60.js?v=1.0.0"></script>
-
-
-<script id="step160-shared-qr" src="./assets/js/modules/attendance/script-61.js?v=1.0.0"></script>
+<script id="step160-shared-qr" src="./assets/js/modules/attendance/script-61.js?v=1.0.0-b"></script>
 
 
+<script id="step166-qr-hub-script" src="./assets/js/modules/attendance/script-62.js?v=1.0.0-b"></script>
 
 
-<script id="step166-qr-hub-script" src="./assets/js/modules/attendance/script-62.js?v=1.0.0"></script>
+<script id="step167-ledger-script" src="./assets/js/modules/reports/script-63.js?v=1.0.0-b"></script>
 
 
-<script id="step167-ledger-script" src="./assets/js/modules/reports/script-63.js?v=1.0.0"></script>
+<script id="step169-utility-script" src="./assets/js/modules/admin/script-64.js?v=1.0.0-b"></script>
 
-
-<script id="step169-utility-script" src="./assets/js/modules/admin/script-64.js?v=1.0.0"></script>
-
-<script id="step170-auth-clear" src="./assets/js/modules/admin/script-65.js?v=1.0.0"></script>
+<script id="step170-auth-clear" src="./assets/js/modules/admin/script-65.js?v=1.0.0-b"></script>
 <script src="./qr-sessions.js"></script>
 
 
-<script id="step213-meal-cloud-shared" src="./assets/js/modules/meals/script-67.js?v=1.0.0"></script>
-
-
+<script id="step213-meal-cloud-shared" src="./assets/js/modules/meals/script-67.js?v=1.0.0-b"></script>
 
 
 <div id="mobile180" aria-label="Quản lý công nhân trên điện thoại"></div>
-<script src="./assets/js/core/script-68.js?v=1.0.0"></script>
+<script src="./assets/js/core/script-68.js?v=1.0.0-b"></script>
 
 
-
-
+<script id="step238-system-nav-guard" src="./assets/js/modules/admin/script-69.js?v=1.0.0-b"></script>
+</body>
 </html>
-<script id="step238-system-nav-guard" src="./assets/js/modules/admin/script-69.js?v=1.0.0"></script>
-
-
-
-
-
-
-
