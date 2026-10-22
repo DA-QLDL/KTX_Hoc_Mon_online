@@ -284,97 +284,6 @@ html.ktx-subaccount .sync-offline-card,
 html.ktx-subaccount #menuAdminHint,
 html.ktx-subaccount #menuAdminTools,
 html.ktx-subaccount #menuCloudTechHelp {display:none!important;}
-
-/* STEP254 — checkbox/radio/nút chọn đồng bộ + Báo cáo suất ăn mobile đẹp hơn */
-:root{
-  --choice-bg:#ffffff;
-  --choice-bg-active:#eef5ff;
-  --choice-bd:#d6e2f2;
-  --choice-bd-active:#2f78ed;
-  --choice-text:#29466f;
-  --choice-text-active:#155cc7;
-  --choice-shadow:0 2px 7px rgba(27,67,124,.08);
-}
-main input[type=checkbox],main input[type=radio],#mobile180 input[type=checkbox],#mobile180 input[type=radio]{accent-color:#2f78ed}
-main input[type=checkbox]:not(.native),main input[type=radio]:not(.native),#mobile180 input[type=checkbox]:not(.native),#mobile180 input[type=radio]:not(.native){
-  -webkit-appearance:none;appearance:none;display:inline-grid;place-content:center;vertical-align:middle;flex:0 0 auto;
-  margin:0;width:18px;height:18px;background:#fff;border:1.8px solid #95add0;box-shadow:0 1px 2px rgba(20,46,90,.08);
-  cursor:pointer;transition:background .16s,border-color .16s,transform .16s,box-shadow .16s;
-}
-main input[type=checkbox]:not(.native),#mobile180 input[type=checkbox]:not(.native){border-radius:5px}
-main input[type=radio]:not(.native),#mobile180 input[type=radio]:not(.native){border-radius:50%}
-main input[type=checkbox]:not(.native)::before,#mobile180 input[type=checkbox]:not(.native)::before{
-  content:"";width:9px;height:5px;border:2px solid transparent;border-right-color:#fff;border-bottom-color:#fff;transform:rotate(45deg) scale(0);margin-top:-1px;transition:transform .14s ease;
-}
-main input[type=radio]:not(.native)::before,#mobile180 input[type=radio]:not(.native)::before{
-  content:"";width:8px;height:8px;border-radius:50%;background:#fff;transform:scale(0);transition:transform .14s ease;
-}
-main input[type=checkbox]:checked:not(.native),main input[type=radio]:checked:not(.native),#mobile180 input[type=checkbox]:checked:not(.native),#mobile180 input[type=radio]:checked:not(.native){
-  background:linear-gradient(145deg,#2f78ed,#5b57f4);border-color:#2f78ed;box-shadow:0 3px 9px rgba(47,120,237,.26)
-}
-main input[type=checkbox]:checked:not(.native)::before,main input[type=radio]:checked:not(.native)::before,#mobile180 input[type=checkbox]:checked:not(.native)::before,#mobile180 input[type=radio]:checked:not(.native)::before{transform:rotate(45deg) scale(1)}
-main input[type=radio]:checked:not(.native)::before,#mobile180 input[type=radio]:checked:not(.native)::before{transform:scale(1)}
-main input[type=checkbox]:hover:not(.native),main input[type=radio]:hover:not(.native),#mobile180 input[type=checkbox]:hover:not(.native),#mobile180 input[type=radio]:hover:not(.native){border-color:#5a9af5;transform:translateY(-1px)}
-main input[type=checkbox]:disabled:not(.native),main input[type=radio]:disabled:not(.native),#mobile180 input[type=checkbox]:disabled:not(.native),#mobile180 input[type=radio]:disabled:not(.native){opacity:.55;cursor:not-allowed;transform:none}
-
-main label:not(.meal-supplier):has(>input[type=checkbox]),
-main label:not(.meal-supplier):has(>input[type=radio]),
-#mobile180 label:has(>input[type=checkbox]),
-#mobile180 label:has(>input[type=radio]){
-  cursor:pointer;transition:background .16s,border-color .16s,box-shadow .16s,color .16s;
-}
-.bkopt label,#t2 .dup-check,#acc #ac147Form .ac147-pick label,#mobile180 .m195-select label,.tgl,#mp label{
-  border:1px solid var(--choice-bd)!important;background:var(--choice-bg)!important;color:var(--choice-text)!important;border-radius:12px!important;
-  box-shadow:var(--choice-shadow)!important;
-}
-.bkopt label:has(input:checked),#t2 .dup-check:has(input:checked),#acc #ac147Form .ac147-pick label:has(input:checked),#mobile180 .m195-select label:has(input:checked),.tgl:has(input:checked),#mp label:has(input:checked){
-  border-color:var(--choice-bd-active)!important;background:var(--choice-bg-active)!important;color:var(--choice-text-active)!important;box-shadow:0 4px 12px rgba(47,120,237,.12)!important;
-}
-#acc #ac147Form .ac147-pick{gap:10px!important;padding:10px!important;background:#f6f9ff!important;border:1px solid #dbe6f4!important;border-radius:12px!important}
-#acc #ac147Form .ac147-pick label{padding:8px 11px!important;font-size:11.5px!important;font-weight:700!important;gap:7px!important}
-#mp{display:flex;flex-wrap:wrap;gap:8px}
-#mp label{padding:8px 11px!important;display:inline-flex!important;align-items:center!important;gap:7px!important;font-size:12px!important;font-weight:700!important;margin:0!important}
-.bkopt label{padding:10px 12px!important;font-weight:700}
-#t2 .dup-check{align-items:center!important}
-.tgl{padding:7px 12px!important;gap:8px!important}
-.cmp input[type=checkbox],.cmp2 input[type=checkbox],.cmp3 input[type=checkbox]{width:17px!important;height:17px!important}
-
-/* Làm đẹp trang Báo cáo suất ăn mobile */
-#mobile180 .m195-config{padding:17px 16px 16px!important;background:linear-gradient(180deg,#ffffff,#f8fbff)!important}
-#mobile180 .m195-results,#mobile180 .m195-report{padding:17px 16px!important}
-#mobile180 .m195-results h3,#mobile180 .m195-report h3,#mobile180 .m195-config h3{display:flex;align-items:center;gap:8px;font-size:18px!important;letter-spacing:-.01em}
-#mobile180 .m195-results h3::before{content:"🍱"}#mobile180 .m195-report h3::before{content:"📝"}
-#mobile180 .m198-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
-#mobile180 .m198-actions>.mbtn{width:100%;min-height:50px;font-size:15px;font-weight:800;box-shadow:0 8px 20px rgba(38,104,222,.16)}
-#mobile180 .m195-select{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:4px}
-#mobile180 .m195-select label{min-height:56px;padding:11px 12px;display:flex;align-items:center;gap:9px;font-size:13px;font-weight:800;line-height:1.35}
-#mobile180 .m195-select span{display:block;min-width:0;overflow-wrap:anywhere}
-#mobile180 .m195-select input{width:19px;height:19px}
-#mobile180 .m195-select label:has(input:checked){background:linear-gradient(180deg,#f9fbff,#eef5ff)!important}
-#mobile180 .m195-vendor{border:1px solid #d4e1f3;border-radius:18px;padding:14px!important;margin:12px 0!important;background:linear-gradient(180deg,#ffffff,#fbfdff)!important;box-shadow:0 8px 18px rgba(30,76,141,.08)!important}
-#mobile180 .m195-vendor strong{display:flex;align-items:center;gap:8px;color:#143d75;font-size:15px;margin-bottom:2px}
-#mobile180 .m195-vendor strong::before{content:"📦";font-size:16px}
-#mobile180 .m195-qty-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:11px}
-#mobile180 .m195-qty{display:grid;gap:6px;padding:10px;border:1px solid #e2eaf5;border-radius:13px;background:#fff;box-shadow:0 2px 6px rgba(23,58,109,.04)}
-#mobile180 .m195-qty input{width:100%;min-width:0;box-sizing:border-box;padding:11px 8px;border:1px solid #d4e0f1;border-radius:10px;font-size:16px;font-weight:800;text-align:center;background:#fbfdff}
-#mobile180 .m195-total{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:11px 0 0;padding:10px 12px;border-radius:12px;background:#eef5ff;color:#1a4f95;font-size:12px;font-weight:700}
-#mobile180 .m195-total b{font-size:20px;color:#0f5aca;line-height:1}
-#mobile180 .m195-menu{margin-top:12px!important;line-height:1.5;background:#f7faff!important;border:1px solid #dee7f5;border-radius:13px;padding:11px 12px!important;font-size:12px!important}
-#mobile180 .m195-menu small{display:block;color:#4d6f9f!important;font-weight:800!important;margin:8px 0 4px!important;text-transform:uppercase;letter-spacing:.03em}
-#mobile180 .m195-menu small:first-child{margin-top:0!important}
-#mobile180 .m195-preview{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12.5px;line-height:1.6;background:#f8fbff;border:1px dashed #cfdced;border-radius:14px;padding:13px;min-height:110px}
-#mobile180 .m195-report .mactionrow{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}
-#mobile180 #m213CloudStatus{display:block;padding:9px 11px;background:#f8fbff;border:1px solid #dfe8f6;border-radius:11px;color:#5a7193;margin-bottom:12px}
-@media(max-width:420px){
-  #mobile180 .m195-select{grid-template-columns:1fr}
-  #mobile180 .m195-qty-grid{grid-template-columns:1fr 1fr 1fr}
-}
-@media(max-width:360px){
-  #mobile180 .m195-qty-grid{gap:7px}
-  #mobile180 .m195-qty{padding:8px}
-  #mobile180 .m195-total{padding:9px 10px}
-}
-
 </style>
 
 <style>
@@ -1125,43 +1034,7 @@ button.ktx-action:disabled,.ktx-action[aria-disabled=true]{filter:saturate(.5)!i
 @media(prefers-reduced-motion:reduce){.ktx-action{transition:none!important}.ktx-action:not(:disabled):hover,.ktx-action:not(:disabled):active{transform:none!important}}
 </style>
 
-<style id="step251-room-status-colors">
-/* STEP251: màu trạng thái dễ nhận biết trên cả PC và Mobile. Giữ nguyên logic / quyền. */
-#mobile180 .step230-counts span,
-#home .room-mini-stats .tag{
- display:inline-flex!important;align-items:center;justify-content:center;
- border-radius:999px!important;font-weight:850!important;
- line-height:1.35!important;letter-spacing:.01em;
- padding:4px 9px!important;font-size:10px!important;
- border:1px solid rgba(255,255,255,.5)!important;
- box-shadow:0 3px 0 rgba(30,40,75,.11),0 5px 12px rgba(25,39,89,.12),inset 0 1px rgba(255,255,255,.45)!important;
- white-space:nowrap;transition:transform .15s ease,box-shadow .15s ease;
-}
-/* Trống = aqua; sắp đầy = vàng; đầy = đỏ; quá tải = đỏ đậm */
-#mobile180 .step230-counts .free,
-#home .room-mini-stats .tag.g{background:linear-gradient(145deg,#00e7eb,#00b9d2)!important;color:#003f50!important;border-color:#5ef9ff!important}
-#mobile180 .step230-counts .near{background:linear-gradient(145deg,#fff742,#ffda00)!important;color:#644500!important;border-color:#fff8a4!important}
-#mobile180 .step230-counts .full,
-#home .room-mini-stats .tag.a{background:linear-gradient(145deg,#ff3658,#e9002d)!important;color:#fff!important;border-color:#ff91a5!important}
-#home .room-mini-stats .tag.r{background:linear-gradient(145deg,#ec0031,#a90023)!important;color:#fff!important;border-color:#ff7a93!important}
-/* Các thẻ phòng đồng bộ ngữ nghĩa: phòng còn nhiều chỗ = lime, sắp đầy = vàng, đầy/quá tải = đỏ */
-#mobile180 .step230-room,
-#home .room-cell{box-shadow:0 2px 0 rgba(31,56,100,.08),0 4px 11px rgba(30,55,100,.09)!important;transition:transform .15s ease,box-shadow .15s ease!important}
-#mobile180 .step230-room.empty{background:linear-gradient(155deg,#d8ffe7,#b2fac7)!important;border-color:#47d27e!important;color:#07582e!important}
-#mobile180 .step230-room.normal{background:linear-gradient(155deg,#f6fff9,#e8fbf1)!important;border-color:#9bdac0!important;color:#176449!important}
-#mobile180 .step230-room.near{background:linear-gradient(155deg,#fff8cb,#ffe49d)!important;border-color:#f4b537!important;color:#6a4400!important}
-#mobile180 .step230-room.full{background:linear-gradient(155deg,#ffe3e8,#ffb9c5)!important;border-color:#f15d78!important;color:#88152e!important}
-#mobile180 .step230-room:active,#home .room-cell:active{transform:translateY(2px)!important;box-shadow:0 1px 3px rgba(31,56,100,.12)!important}
-#home .room-cell.ok{background:linear-gradient(155deg,#e9fff0,#d6f9e4)!important;border-color:#75d8a0!important}
-#home .room-cell.full{background:linear-gradient(155deg,#fff3c9,#ffe5a6)!important;border-color:#eebd4b!important}
-#home .room-cell.over{background:linear-gradient(155deg,#ffe4e8,#ffc3cd)!important;border-color:#f46882!important}
-#home .room-filterbar button[data-rf="free5"]{border-color:#42d5db!important;color:#036377!important;background:#d8fcff!important}
-#home .room-filterbar button[data-rf="low"]{border-color:#ecc23d!important;color:#805900!important;background:#fff5bd!important}
-#home .room-filterbar button[data-rf="full"]{border-color:#f0788b!important;color:#a60c2e!important;background:#ffe5ea!important}
-#home .room-filterbar button[data-rf="over"]{border-color:#d83853!important;color:#fff!important;background:#d62543!important}
-#home .room-filterbar button[data-rf].on{outline:2px solid #326eff;outline-offset:1px;box-shadow:0 4px 11px rgba(28,75,157,.19)!important}
-@media(max-width:760px){#mobile180 .step230-counts span{font-size:9px!important;padding:3px 7px!important}#mobile180 .step230-rooms{gap:5px}}
-</style>
+
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -4992,56 +4865,7 @@ function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)retu
 </head><body><h1>${esc(d.title)}</h1><p>Kỳ báo cáo: ${esc(vn(RC96.from))} - ${esc(vn(RC96.to))} · ${esc(RC96.ktx||'Tất cả KTX')}</p><table><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${d.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')}</table><!-- KTX-STABLE-101 · Production baseline -->
 <!-- STEP105_PERFORMANCE_OPTIMIZATION -->
 
-<style id="step256-hover-contrast-final">
-/* STEP256 - Hover luôn dễ đọc; giao diện KTX 1 và KTX 2 giữ song song. */
-:root{--ktx-btn-blue:#1769df;--ktx-btn-green:#098d66;--ktx-btn-purple:#7048df;--ktx-btn-red:#d6314c;--ktx-btn-ink:#153f78}
-/* Vô hiệu sự thay đổi chữ đơn độc gây chữ sáng trên nền sáng và ngược lại. */
-@media(hover:hover){
-  button:not(:disabled):not(.on):not(.active):not([aria-selected=true]):hover,
-  label.btn:hover,a.btn:hover{filter:none!important;text-shadow:none!important}
-  .btn:hover:not(:disabled),label.btn:hover,#tools .btn:hover:not(:disabled),
-  #work .btn:hover:not(:disabled),#meal .btn:hover:not(:disabled),
-  #home .btn:hover:not(:disabled),#t6 .btn:hover:not(:disabled),
-  #qr .btn:hover:not(:disabled),.system-backbar:hover,
-  .ac-actions button:hover:not(:disabled),.auth-userbar button:hover:not(:disabled),
-  .aqd-read:hover,.aqd-edit:hover,.aqd-open-center:hover,.aqd-x:hover{
-    background:#e9f2ff!important;color:#174c96!important;border-color:#8bb8f2!important;
-    box-shadow:0 3px 10px rgba(33,82,152,.11)!important;text-shadow:none!important
-  }
-  .btn:hover:not(:disabled) :is(svg,.i,span,b,small,strong),label.btn:hover :is(svg,.i,span,b,small,strong),
-  #tools .btn:hover:not(:disabled) :is(svg,.i,span,b,small,strong){color:inherit!important;stroke:currentColor!important}
-  /* Mọi nút có màu nền đậm luôn đi kèm chữ/icon trắng. */
-  .ktx-action[data-action-tone=primary]:hover:not(:disabled),.ktx-action[data-action-tone=accent]:hover:not(:disabled),
-  .ktx-action[data-action-tone=success]:hover:not(:disabled),.ktx-action[data-action-tone=danger]:hover:not(:disabled),
-  .ktx-action[data-action-tone=warning]:hover:not(:disabled){color:#fff!important;border-color:transparent!important}
-  .ktx-action[data-action-tone=primary]:hover:not(:disabled){background:#1558bd!important}
-  .ktx-action[data-action-tone=success]:hover:not(:disabled){background:#087253!important}
-  .ktx-action[data-action-tone=danger]:hover:not(:disabled){background:#ad213a!important}
-  .ktx-action[data-action-tone=accent]:hover:not(:disabled){background:#5834bc!important}
-  .ktx-action[data-action-tone=warning]:hover:not(:disabled){background:#935609!important}
-  .ktx-action:is([data-action-tone=secondary],[data-action-tone=neutral]):hover:not(:disabled){background:#e9f2ff!important;color:#153f78!important;border-color:#a4c9f4!important}
-  .ktx-action:hover:not(:disabled) :is(svg,.i,b,span,strong){color:inherit!important;stroke:currentColor!important}
-  #transferDlg #transferGo:hover:not(:disabled),#workerDialog [data-act=move]:hover:not(:disabled){background:#087253!important;color:#fff!important}
-  #transferDlg #transferGo:hover:not(:disabled) *,#workerDialog [data-act=move]:hover:not(:disabled) *{color:#fff!important}
-  #mobile180 .mbtn:not(.outline):hover:not(:disabled){background:#1558bd!important;color:#fff!important}
-  #mobile180 .mbtn.outline:hover:not(:disabled){background:#e9f2ff!important;color:#153f78!important}
-  #sysfunc .sysfunc-btn:hover,#utilhub .sysfunc-btn:hover{background:#f0f6ff!important;color:#183b70!important}
-  #sysfunc .sysfunc-btn:hover b,#utilhub .sysfunc-btn:hover b{color:#183b70!important}
-  #sysfunc .sysfunc-btn:hover small,#utilhub .sysfunc-btn:hover small{color:#607492!important}
-}
-/* Dòng phòng hiện tại: tách nhãn và nội dung để không dính chữ. */
-#transferDlg .transfer-current{padding:11px 14px!important;line-height:1.6!important;min-height:40px!important}
-#transferDlg .transfer-current b,#transferDlg .transfer-current strong{margin-right:8px!important;display:inline-block!important}
-/* Nút xác nhận chuyển phòng có cùng sắc xanh lá với Chuyển phòng. */
-#transferDlg #transferGo:not(:disabled){background:#0b9670!important;border-color:#0b9670!important;color:#fff!important;text-shadow:none!important}
-#transferDlg #transferGo:not(:disabled) :is(svg,span,b){color:#fff!important;stroke:currentColor!important}
-/* Nhỏ lại checkbox quá cỡ ở danh sách và bảng, quay về kích thước tiêu chuẩn. */
-main input[type=checkbox]:not(.native),main input[type=radio]:not(.native){width:15px!important;height:15px!important;min-width:15px!important;box-shadow:none!important}
-#work .cmp2 input[type=checkbox],#work #wa,#work .ck{width:15px!important;height:15px!important;min-width:15px!important}
-main input[type=checkbox]:not(.native)::before{width:7px!important;height:4px!important}
-/* Tên người trong các bản ghi là chữ thường, không phải nút màu. */
-#log .log-name,#log .person-name,#activity .person-name{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;color:#173b70!important}
-</style>
+
 
 </body>
 <style id="step131SystemGroupPackingStyle">
@@ -8129,54 +7953,83 @@ setTimeout(refresh,400);setTimeout(refresh,1500);let tries=0;const timer=setInte
 </style>
 
 
-<style id="step255-unified-status-chips">
-/* STEP255: trạng thái phẳng, dễ đọc và nhất quán. Không thay đổi nghiệp vụ/JS. */
-:root{--st-ok-bg:#e6f8ef;--st-ok-fg:#116340;--st-ok-bd:#a4ddbd;
---st-warn-bg:#fff3d9;--st-warn-fg:#815300;--st-warn-bd:#e9c36e;
---st-danger-bg:#ffe9ed;--st-danger-fg:#a0243c;--st-danger-bd:#ecacb9;
---st-info-bg:#e8f2ff;--st-info-fg:#174e9a;--st-info-bd:#b9d4f8;
---st-purple-bg:#f0ebff;--st-purple-fg:#5737a6;--st-purple-bd:#d1c3f5;
---st-neutral-bg:#f1f5fa;--st-neutral-fg:#485c78;--st-neutral-bd:#d5e0ec}
-/* Shared geometries only for informative chips (never buttons). */
-.tag,.pl,.rbadge,.roomd-chip,.roomd-mini,.access-badge,
-#mobile180 .step230-counts span,#mobile180 .mworkertext .mstate,
-#qr .qr247-review-table .tag{
- background-image:none!important;box-shadow:none!important;text-shadow:none!important;filter:none!important;
- border-style:solid!important;border-width:1px!important;border-radius:8px!important;
- font-weight:750!important;line-height:1.35!important;letter-spacing:0!important;
- text-transform:none!important;vertical-align:middle;overflow-wrap:anywhere;
+
+
+<style id="ktx-step258-exact-step100-button-style">
+/* Source: user-provided KTX_STEP100_FULL_QA(1).zip/index.html.
+   Appearance port only: do not revert modern application logic, Supabase, authentication or navigation. */
+:root{--s100-blue:#2f6fe8;--s100-purple:#6d4bf0;--s100-green:#0c9f68;--s100-green-light:#22c98f;--s100-red:#d93a4d;--s100-red-light:#f26a78;--s100-light:#f3f6fc;--s100-line:#dbe3f0;--s100-ink:#13203a;--s100-focus:#2f6fe8}
+/* STEP100 original button dimensions, gradient, hover behavior. */
+main button.btn,main .btn,dialog button.btn,dialog .btn,button.ktx-action,.btn.ktx-action,
+#mobile180 button.mbtn,#mobile180 .mback,.vf button,.eh button{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:1px solid transparent!important;border-radius:12px!important;
+  padding:10px 18px!important;font-size:13.5px!important;font-weight:600!important;line-height:1.2!important;
+  background:linear-gradient(135deg,var(--s100-blue),var(--s100-purple))!important;
+  color:#fff!important;box-shadow:inset 0 1px 0 #ffffff33,0 6px 16px #2f6fe826!important;
+  text-shadow:none!important;filter:none!important;transform:none!important;
+  transition:background .15s,box-shadow .15s,transform .15s!important;
 }
-.tag,.rbadge,.roomd-chip,.roomd-mini,.access-badge{display:inline-flex;align-items:center;justify-content:center;padding:2px 7px!important;min-height:20px}
-/* Semantic families */
-.tag.g,.access-badge.green,.roomd-chip.ok,.roomd-mini.stay,.roomd-person .stay,
-#mobile180 .mworkertext .mstate:not(.warn),
-#mobile180 .step230-counts .free{
- background:var(--st-ok-bg)!important;color:var(--st-ok-fg)!important;border-color:var(--st-ok-bd)!important}
-.tag.a,.roomd-chip.a,.rbadge.mix,
-#mobile180 .step230-counts .near,#mobile180 .mworkertext .mstate.warn{
- background:var(--st-warn-bg)!important;color:var(--st-warn-fg)!important;border-color:var(--st-warn-bd)!important}
-.tag.r,.access-badge.red,#mobile180 .step230-counts .full,
-.roomd-person .warn{
- background:var(--st-danger-bg)!important;color:var(--st-danger-fg)!important;border-color:var(--st-danger-bd)!important}
-.tag:not(.g):not(.a):not(.r),.access-badge:not(.green):not(.red),
-.rbadge.m,.roomd-mini.m,.roomd-chip:not(.ok):not(.a):not(.r),
-.pl:not(.dy2):not(.ro):not(.tt-no):not(.tt-yes){
- background:var(--st-info-bg)!important;color:var(--st-info-fg)!important;border-color:var(--st-info-bd)!important}
-.pl.dy2,.rbadge.f,.roomd-mini.f{
- background:var(--st-purple-bg)!important;color:var(--st-purple-fg)!important;border-color:var(--st-purple-bd)!important}
-/* Room numbers & KTX are classifications, not error warnings. */
-.pl.ro{background:var(--st-ok-bg)!important;color:var(--st-ok-fg)!important;border-color:var(--st-ok-bd)!important}
-.pl.tt-no{background:var(--st-warn-bg)!important;color:var(--st-warn-fg)!important;border-color:var(--st-warn-bd)!important}
-.pl.tt-yes{background:var(--st-ok-bg)!important;color:var(--st-ok-fg)!important;border-color:var(--st-ok-bd)!important}
-/* Room status on dashboard: preserve established meaning, flat UI. */
-#home .room-mini-stats .tag.g{background:#dff7f8!important;color:#075e69!important;border-color:#a4e4e8!important}
-#home .room-mini-stats .tag.a{background:var(--st-warn-bg)!important;color:var(--st-warn-fg)!important;border-color:var(--st-warn-bd)!important}
-#home .room-mini-stats .tag.r{background:var(--st-danger-bg)!important;color:var(--st-danger-fg)!important;border-color:var(--st-danger-bd)!important}
-#mobile180 .step230-counts span{padding:3px 7px!important;min-height:18px;white-space:nowrap}
-/* Gender, category and QR statuses should be recognizable without shadows. */
-#work .cmp2 .tag{font-size:10px!important;padding:1px 6px!important;white-space:normal!important}
-#mobile180 .mworkertext .mstate{display:inline-flex;margin-top:5px;padding:2px 7px;font-size:11px!important}
-#qr .qr247-review-table .tag{white-space:normal!important}
-/* Keep existing room tiles and sortable header strictly flat per STEP253. */
-#home .room-cell,#work #wl .cmp2 th{box-shadow:none!important;text-shadow:none!important}
+main button.btn svg,main .btn svg,button.ktx-action svg,#mobile180 .mbtn svg{color:inherit!important;stroke:currentColor!important;fill:none}
+main button.btn:hover,main .btn:hover,dialog button.btn:hover,dialog .btn:hover,
+button.ktx-action:hover,.btn.ktx-action:hover,#mobile180 button.mbtn:hover,#mobile180 .mback:hover{
+  color:#fff!important;background:linear-gradient(135deg,#2863d6,#5d3cd6)!important;
+  box-shadow:inset 0 1px 0 #ffffff33,0 10px 22px #2f6fe832!important;
+  filter:none!important;transform:translateY(-1px)!important;
+}
+main button.btn:active,main .btn:active,dialog button.btn:active,#mobile180 .mbtn:active{transform:translateY(0) scale(.98)!important}
+/* STEP100 semantic variants: green, danger, secondary. */
+main .btn.g,dialog .btn.g,button.ktx-action[data-action-tone="success"],.ktx-action[data-action-tone="success"]{
+  background:linear-gradient(135deg,var(--s100-green),var(--s100-green-light))!important;
+  border-color:transparent!important;color:#fff!important;box-shadow:inset 0 1px 0 #ffffff33,0 6px 16px #0c9f6833!important;
+}
+main .btn.g:hover,dialog .btn.g:hover,.ktx-action[data-action-tone="success"]:hover{background:linear-gradient(135deg,#0a8758,#1db27f)!important;color:#fff!important}
+main .btn.r,dialog .btn.r,button.ktx-action[data-action-tone="danger"],.ktx-action[data-action-tone="danger"]{
+  background:linear-gradient(135deg,var(--s100-red),var(--s100-red-light))!important;
+  border-color:transparent!important;color:#fff!important;box-shadow:inset 0 1px 0 #ffffff33,0 6px 16px #d93a4d33!important;
+}
+main .btn.r:hover,dialog .btn.r:hover,.ktx-action[data-action-tone="danger"]:hover{background:linear-gradient(135deg,#bc2f41,#dd5262)!important;color:#fff!important}
+main .btn.s,dialog .btn.s,.ktx-action[data-action-tone="secondary"],.ktx-action[data-action-tone="neutral"],
+#mobile180 .mbtn.outline,#mobile180 .mback{
+  background:var(--s100-light)!important;border:1px solid var(--s100-line)!important;
+  color:var(--s100-ink)!important;box-shadow:none!important;
+}
+main .btn.s:hover,dialog .btn.s:hover,.ktx-action[data-action-tone="secondary"]:hover,
+.ktx-action[data-action-tone="neutral"]:hover,#mobile180 .mbtn.outline:hover,#mobile180 .mback:hover{
+  background:#e9f2ff!important;border-color:var(--s100-blue)!important;color:var(--s100-blue)!important;
+  box-shadow:none!important;filter:none!important;
+}
+main .btn.sm,dialog .btn.sm{padding:6px 12px!important;font-size:12.5px!important;border-radius:10px!important}
+main .btn:disabled,dialog .btn:disabled,.ktx-action:disabled,#mobile180 .mbtn:disabled{opacity:.45!important;transform:none!important;box-shadow:none!important;cursor:not-allowed!important}
+/* Icon/text always follow button foreground, including inherited descendants. */
+main .btn:is(:hover,:focus-visible) :is(svg,.i,span,b,strong,small),dialog .btn:is(:hover,:focus-visible) :is(svg,.i,span,b,strong,small),
+.ktx-action:is(:hover,:focus-visible) :is(svg,.i,span,b,strong,small),#mobile180 .mbtn:is(:hover,:focus-visible) :is(svg,.i,span,b,strong,small){color:inherit!important;stroke:currentColor!important;text-shadow:none!important}
+:is(main,dialog,#mobile180) button:focus-visible{outline:2px solid var(--s100-focus)!important;outline-offset:2px!important}
+/* Buttons used by newer screens that were not present in STEP100. Keep STEP100 restrained visual language. */
+#mobile180 .maction,#mobile180 .step230-open-day,#mobile180 .miconbtn,
+#mobile180 .mrefresh,#mobile180 .step238-utilgrid button{
+  background:#f3f6fc!important;background-image:none!important;color:#1c427d!important;
+  border:1px solid #dbe3f0!important;border-radius:12px!important;
+  box-shadow:none!important;text-shadow:none!important;filter:none!important;transform:none!important;
+}
+#mobile180 .maction:hover,#mobile180 .step230-open-day:hover,#mobile180 .miconbtn:hover,
+#mobile180 .mrefresh:hover,#mobile180 .step238-utilgrid button:hover{
+  background:#e9f2ff!important;color:#1b5fbd!important;border-color:#9cbcf0!important;
+  box-shadow:none!important;filter:none!important;transform:none!important;
+}
+/* Custom action buttons in utility panels. Avoid applying blue gradient to menu, tab, or status chips. */
+.sysfunc-btn:hover,.ac-actions button:hover,#tools button:hover,#work .worker-tools button:hover,
+#meal button:hover,#qr button:hover,#acc button:hover{
+  filter:none!important;text-shadow:none!important;
+}
+/* Selected segmented controls as in STEP100: blue/purple and white text. */
+.seg button.on,.seg button.on:hover{background:linear-gradient(135deg,var(--s100-blue),var(--s100-purple))!important;color:#fff!important}
+/* Keep small native tick controls from STEP100, removing large bespoke STEP254 checkboxes. */
+main input[type="checkbox"],main input[type="radio"],#mobile180 input[type="checkbox"],#mobile180 input[type="radio"]{
+ -webkit-appearance:auto!important;appearance:auto!important;
+ width:16px!important;height:16px!important;min-width:16px!important;min-height:16px!important;
+ padding:0!important;margin:0 4px 0 0!important;border-radius:initial!important;
+ background:none!important;box-shadow:none!important;transform:none!important;accent-color:var(--s100-blue)!important;
+}
+main input[type="checkbox"]::before,main input[type="radio"]::before,#mobile180 input[type="checkbox"]::before,#mobile180 input[type="radio"]::before{content:none!important}
 </style>
