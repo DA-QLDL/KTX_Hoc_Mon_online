@@ -4991,6 +4991,58 @@ function rc96PrintPdf(){const d=rc96Data(),w=window.open('','_blank');if(!w)retu
 </style>
 </head><body><h1>${esc(d.title)}</h1><p>Kỳ báo cáo: ${esc(vn(RC96.from))} - ${esc(vn(RC96.to))} · ${esc(RC96.ktx||'Tất cả KTX')}</p><table><tr>${d.headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>${d.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v==null?'':String(v))}</td>`).join('')}</tr>`).join('')}</table><!-- KTX-STABLE-101 · Production baseline -->
 <!-- STEP105_PERFORMANCE_OPTIMIZATION -->
+
+<style id="step256-hover-contrast-final">
+/* STEP256 - Hover luôn dễ đọc; giao diện KTX 1 và KTX 2 giữ song song. */
+:root{--ktx-btn-blue:#1769df;--ktx-btn-green:#098d66;--ktx-btn-purple:#7048df;--ktx-btn-red:#d6314c;--ktx-btn-ink:#153f78}
+/* Vô hiệu sự thay đổi chữ đơn độc gây chữ sáng trên nền sáng và ngược lại. */
+@media(hover:hover){
+  button:not(:disabled):not(.on):not(.active):not([aria-selected=true]):hover,
+  label.btn:hover,a.btn:hover{filter:none!important;text-shadow:none!important}
+  .btn:hover:not(:disabled),label.btn:hover,#tools .btn:hover:not(:disabled),
+  #work .btn:hover:not(:disabled),#meal .btn:hover:not(:disabled),
+  #home .btn:hover:not(:disabled),#t6 .btn:hover:not(:disabled),
+  #qr .btn:hover:not(:disabled),.system-backbar:hover,
+  .ac-actions button:hover:not(:disabled),.auth-userbar button:hover:not(:disabled),
+  .aqd-read:hover,.aqd-edit:hover,.aqd-open-center:hover,.aqd-x:hover{
+    background:#e9f2ff!important;color:#174c96!important;border-color:#8bb8f2!important;
+    box-shadow:0 3px 10px rgba(33,82,152,.11)!important;text-shadow:none!important
+  }
+  .btn:hover:not(:disabled) :is(svg,.i,span,b,small,strong),label.btn:hover :is(svg,.i,span,b,small,strong),
+  #tools .btn:hover:not(:disabled) :is(svg,.i,span,b,small,strong){color:inherit!important;stroke:currentColor!important}
+  /* Mọi nút có màu nền đậm luôn đi kèm chữ/icon trắng. */
+  .ktx-action[data-action-tone=primary]:hover:not(:disabled),.ktx-action[data-action-tone=accent]:hover:not(:disabled),
+  .ktx-action[data-action-tone=success]:hover:not(:disabled),.ktx-action[data-action-tone=danger]:hover:not(:disabled),
+  .ktx-action[data-action-tone=warning]:hover:not(:disabled){color:#fff!important;border-color:transparent!important}
+  .ktx-action[data-action-tone=primary]:hover:not(:disabled){background:#1558bd!important}
+  .ktx-action[data-action-tone=success]:hover:not(:disabled){background:#087253!important}
+  .ktx-action[data-action-tone=danger]:hover:not(:disabled){background:#ad213a!important}
+  .ktx-action[data-action-tone=accent]:hover:not(:disabled){background:#5834bc!important}
+  .ktx-action[data-action-tone=warning]:hover:not(:disabled){background:#935609!important}
+  .ktx-action:is([data-action-tone=secondary],[data-action-tone=neutral]):hover:not(:disabled){background:#e9f2ff!important;color:#153f78!important;border-color:#a4c9f4!important}
+  .ktx-action:hover:not(:disabled) :is(svg,.i,b,span,strong){color:inherit!important;stroke:currentColor!important}
+  #transferDlg #transferGo:hover:not(:disabled),#workerDialog [data-act=move]:hover:not(:disabled){background:#087253!important;color:#fff!important}
+  #transferDlg #transferGo:hover:not(:disabled) *,#workerDialog [data-act=move]:hover:not(:disabled) *{color:#fff!important}
+  #mobile180 .mbtn:not(.outline):hover:not(:disabled){background:#1558bd!important;color:#fff!important}
+  #mobile180 .mbtn.outline:hover:not(:disabled){background:#e9f2ff!important;color:#153f78!important}
+  #sysfunc .sysfunc-btn:hover,#utilhub .sysfunc-btn:hover{background:#f0f6ff!important;color:#183b70!important}
+  #sysfunc .sysfunc-btn:hover b,#utilhub .sysfunc-btn:hover b{color:#183b70!important}
+  #sysfunc .sysfunc-btn:hover small,#utilhub .sysfunc-btn:hover small{color:#607492!important}
+}
+/* Dòng phòng hiện tại: tách nhãn và nội dung để không dính chữ. */
+#transferDlg .transfer-current{padding:11px 14px!important;line-height:1.6!important;min-height:40px!important}
+#transferDlg .transfer-current b,#transferDlg .transfer-current strong{margin-right:8px!important;display:inline-block!important}
+/* Nút xác nhận chuyển phòng có cùng sắc xanh lá với Chuyển phòng. */
+#transferDlg #transferGo:not(:disabled){background:#0b9670!important;border-color:#0b9670!important;color:#fff!important;text-shadow:none!important}
+#transferDlg #transferGo:not(:disabled) :is(svg,span,b){color:#fff!important;stroke:currentColor!important}
+/* Nhỏ lại checkbox quá cỡ ở danh sách và bảng, quay về kích thước tiêu chuẩn. */
+main input[type=checkbox]:not(.native),main input[type=radio]:not(.native){width:15px!important;height:15px!important;min-width:15px!important;box-shadow:none!important}
+#work .cmp2 input[type=checkbox],#work #wa,#work .ck{width:15px!important;height:15px!important;min-width:15px!important}
+main input[type=checkbox]:not(.native)::before{width:7px!important;height:4px!important}
+/* Tên người trong các bản ghi là chữ thường, không phải nút màu. */
+#log .log-name,#log .person-name,#activity .person-name{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;color:#173b70!important}
+</style>
+
 </body>
 <style id="step131SystemGroupPackingStyle">
 /* STEP131 — các cụm hệ thống bám sát từ trái sang phải, chỉ xuống hàng khi hết chiều ngang */
