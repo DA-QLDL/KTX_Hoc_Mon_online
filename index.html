@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ký túc xá Hóc Môn</title>
-<meta name="app-version" content="KTX-STEP254-UNIFIED-SELECTION-MEAL-MOBILE">
+<meta name="app-version" content="KTX-STEP255-UNIFIED-STATUS-CHIPS">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -8074,4 +8074,57 @@ setTimeout(refresh,400);setTimeout(refresh,1500);let tries=0;const timer=setInte
 }
 #work .cmp2 th .thbtn.active,#work .cmp2 th .thbtn.active *{color:#0759bc!important}
 #work .cmp2 th .thbtn:hover{color:#0759bc!important}
+</style>
+
+
+<style id="step255-unified-status-chips">
+/* STEP255: trạng thái phẳng, dễ đọc và nhất quán. Không thay đổi nghiệp vụ/JS. */
+:root{--st-ok-bg:#e6f8ef;--st-ok-fg:#116340;--st-ok-bd:#a4ddbd;
+--st-warn-bg:#fff3d9;--st-warn-fg:#815300;--st-warn-bd:#e9c36e;
+--st-danger-bg:#ffe9ed;--st-danger-fg:#a0243c;--st-danger-bd:#ecacb9;
+--st-info-bg:#e8f2ff;--st-info-fg:#174e9a;--st-info-bd:#b9d4f8;
+--st-purple-bg:#f0ebff;--st-purple-fg:#5737a6;--st-purple-bd:#d1c3f5;
+--st-neutral-bg:#f1f5fa;--st-neutral-fg:#485c78;--st-neutral-bd:#d5e0ec}
+/* Shared geometries only for informative chips (never buttons). */
+.tag,.pl,.rbadge,.roomd-chip,.roomd-mini,.access-badge,
+#mobile180 .step230-counts span,#mobile180 .mworkertext .mstate,
+#qr .qr247-review-table .tag{
+ background-image:none!important;box-shadow:none!important;text-shadow:none!important;filter:none!important;
+ border-style:solid!important;border-width:1px!important;border-radius:8px!important;
+ font-weight:750!important;line-height:1.35!important;letter-spacing:0!important;
+ text-transform:none!important;vertical-align:middle;overflow-wrap:anywhere;
+}
+.tag,.rbadge,.roomd-chip,.roomd-mini,.access-badge{display:inline-flex;align-items:center;justify-content:center;padding:2px 7px!important;min-height:20px}
+/* Semantic families */
+.tag.g,.access-badge.green,.roomd-chip.ok,.roomd-mini.stay,.roomd-person .stay,
+#mobile180 .mworkertext .mstate:not(.warn),
+#mobile180 .step230-counts .free{
+ background:var(--st-ok-bg)!important;color:var(--st-ok-fg)!important;border-color:var(--st-ok-bd)!important}
+.tag.a,.roomd-chip.a,.rbadge.mix,
+#mobile180 .step230-counts .near,#mobile180 .mworkertext .mstate.warn{
+ background:var(--st-warn-bg)!important;color:var(--st-warn-fg)!important;border-color:var(--st-warn-bd)!important}
+.tag.r,.access-badge.red,#mobile180 .step230-counts .full,
+.roomd-person .warn{
+ background:var(--st-danger-bg)!important;color:var(--st-danger-fg)!important;border-color:var(--st-danger-bd)!important}
+.tag:not(.g):not(.a):not(.r),.access-badge:not(.green):not(.red),
+.rbadge.m,.roomd-mini.m,.roomd-chip:not(.ok):not(.a):not(.r),
+.pl:not(.dy2):not(.ro):not(.tt-no):not(.tt-yes){
+ background:var(--st-info-bg)!important;color:var(--st-info-fg)!important;border-color:var(--st-info-bd)!important}
+.pl.dy2,.rbadge.f,.roomd-mini.f{
+ background:var(--st-purple-bg)!important;color:var(--st-purple-fg)!important;border-color:var(--st-purple-bd)!important}
+/* Room numbers & KTX are classifications, not error warnings. */
+.pl.ro{background:var(--st-ok-bg)!important;color:var(--st-ok-fg)!important;border-color:var(--st-ok-bd)!important}
+.pl.tt-no{background:var(--st-warn-bg)!important;color:var(--st-warn-fg)!important;border-color:var(--st-warn-bd)!important}
+.pl.tt-yes{background:var(--st-ok-bg)!important;color:var(--st-ok-fg)!important;border-color:var(--st-ok-bd)!important}
+/* Room status on dashboard: preserve established meaning, flat UI. */
+#home .room-mini-stats .tag.g{background:#dff7f8!important;color:#075e69!important;border-color:#a4e4e8!important}
+#home .room-mini-stats .tag.a{background:var(--st-warn-bg)!important;color:var(--st-warn-fg)!important;border-color:var(--st-warn-bd)!important}
+#home .room-mini-stats .tag.r{background:var(--st-danger-bg)!important;color:var(--st-danger-fg)!important;border-color:var(--st-danger-bd)!important}
+#mobile180 .step230-counts span{padding:3px 7px!important;min-height:18px;white-space:nowrap}
+/* Gender, category and QR statuses should be recognizable without shadows. */
+#work .cmp2 .tag{font-size:10px!important;padding:1px 6px!important;white-space:normal!important}
+#mobile180 .mworkertext .mstate{display:inline-flex;margin-top:5px;padding:2px 7px;font-size:11px!important}
+#qr .qr247-review-table .tag{white-space:normal!important}
+/* Keep existing room tiles and sortable header strictly flat per STEP253. */
+#home .room-cell,#work #wl .cmp2 th{box-shadow:none!important;text-shadow:none!important}
 </style>
