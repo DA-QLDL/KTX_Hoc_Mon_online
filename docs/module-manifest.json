@@ -1,0 +1,679 @@
+{
+  "version": "1.0.0",
+  "based_on": "STEP258",
+  "scripts": [
+    {
+      "script_index": 7,
+      "module": "core",
+      "file": "assets/js/core/script-07.js",
+      "bytes": 579
+    },
+    {
+      "script_index": 8,
+      "module": "core",
+      "file": "assets/js/core/script-08.js",
+      "bytes": 247119
+    },
+    {
+      "script_index": 9,
+      "module": "workers",
+      "file": "assets/js/modules/workers/script-09.js",
+      "bytes": 5822
+    },
+    {
+      "script_index": 10,
+      "module": "workers",
+      "file": "assets/js/modules/workers/script-10.js",
+      "bytes": 2910
+    },
+    {
+      "script_index": 11,
+      "module": "workers",
+      "file": "assets/js/modules/workers/script-11.js",
+      "bytes": 2689
+    },
+    {
+      "script_index": 12,
+      "module": "reports",
+      "file": "assets/js/modules/reports/script-12.js",
+      "bytes": 701
+    },
+    {
+      "script_index": 13,
+      "module": "workers",
+      "file": "assets/js/modules/workers/script-13.js",
+      "bytes": 675
+    },
+    {
+      "script_index": 14,
+      "module": "residency",
+      "file": "assets/js/modules/residency/script-14.js",
+      "bytes": 1929
+    },
+    {
+      "script_index": 15,
+      "module": "reports",
+      "file": "assets/js/modules/reports/script-15.js",
+      "bytes": 772
+    },
+    {
+      "script_index": 16,
+      "module": "residency",
+      "file": "assets/js/modules/residency/script-16.js",
+      "bytes": 4038
+    },
+    {
+      "script_index": 17,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-17.js",
+      "bytes": 37109
+    },
+    {
+      "script_index": 18,
+      "module": "workers",
+      "file": "assets/js/modules/workers/script-18.js",
+      "bytes": 28294
+    },
+    {
+      "script_index": 19,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-19.js",
+      "bytes": 27471
+    },
+    {
+      "script_index": 20,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-20.js",
+      "bytes": 18380
+    },
+    {
+      "script_index": 21,
+      "module": "residency",
+      "file": "assets/js/modules/residency/script-21.js",
+      "bytes": 7009
+    },
+    {
+      "script_index": 22,
+      "module": "overview",
+      "file": "assets/js/modules/overview/script-22.js",
+      "bytes": 5306
+    },
+    {
+      "script_index": 23,
+      "module": "overview",
+      "file": "assets/js/modules/overview/script-23.js",
+      "bytes": 5836
+    },
+    {
+      "script_index": 24,
+      "module": "reports",
+      "file": "assets/js/modules/reports/script-24.js",
+      "bytes": 47446
+    },
+    {
+      "script_index": 25,
+      "module": "overview",
+      "file": "assets/js/modules/overview/script-25.js",
+      "bytes": 6561
+    },
+    {
+      "script_index": 26,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-26.js",
+      "bytes": 8971
+    },
+    {
+      "script_index": 27,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-27.js",
+      "bytes": 9221
+    },
+    {
+      "script_index": 28,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-28.js",
+      "bytes": 9785
+    },
+    {
+      "script_index": 29,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-29.js",
+      "bytes": 13826
+    },
+    {
+      "script_index": 30,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-30.js",
+      "bytes": 5979
+    },
+    {
+      "script_index": 31,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-31.js",
+      "bytes": 3146
+    },
+    {
+      "script_index": 32,
+      "module": "workers",
+      "file": "assets/js/modules/workers/script-32.js",
+      "bytes": 7207
+    },
+    {
+      "script_index": 33,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-33.js",
+      "bytes": 8356
+    },
+    {
+      "script_index": 34,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-34.js",
+      "bytes": 31723
+    },
+    {
+      "script_index": 35,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-35.js",
+      "bytes": 8641
+    },
+    {
+      "script_index": 36,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-36.js",
+      "bytes": 19969
+    },
+    {
+      "script_index": 37,
+      "module": "core",
+      "file": "assets/js/core/script-37.js",
+      "bytes": 1282
+    },
+    {
+      "script_index": 38,
+      "module": "meals",
+      "file": "assets/js/modules/meals/script-38.js",
+      "bytes": 348
+    },
+    {
+      "script_index": 39,
+      "module": "meals",
+      "file": "assets/js/modules/meals/script-39.js",
+      "bytes": 1259
+    },
+    {
+      "script_index": 40,
+      "module": "core",
+      "file": "assets/js/core/script-40.js",
+      "bytes": 429
+    },
+    {
+      "script_index": 41,
+      "module": "attendance",
+      "file": "assets/js/modules/attendance/script-41.js",
+      "bytes": 3633
+    },
+    {
+      "script_index": 42,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-42.js",
+      "bytes": 1100
+    },
+    {
+      "script_index": 43,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-43.js",
+      "bytes": 859
+    },
+    {
+      "script_index": 44,
+      "module": "workers",
+      "file": "assets/js/modules/workers/script-44.js",
+      "bytes": 1083
+    },
+    {
+      "script_index": 45,
+      "module": "core",
+      "file": "assets/js/core/script-45.js",
+      "bytes": 2456
+    },
+    {
+      "script_index": 46,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-46.js",
+      "bytes": 1277
+    },
+    {
+      "script_index": 47,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-47.js",
+      "bytes": 1006
+    },
+    {
+      "script_index": 48,
+      "module": "core",
+      "file": "assets/js/core/script-48.js",
+      "bytes": 10723
+    },
+    {
+      "script_index": 49,
+      "module": "core",
+      "file": "assets/js/core/script-49.js",
+      "bytes": 1861
+    },
+    {
+      "script_index": 50,
+      "module": "rooms",
+      "file": "assets/js/modules/rooms/script-50.js",
+      "bytes": 1789
+    },
+    {
+      "script_index": 51,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-51.js",
+      "bytes": 12587
+    },
+    {
+      "script_index": 52,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-52.js",
+      "bytes": 1103
+    },
+    {
+      "script_index": 53,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-53.js",
+      "bytes": 3598
+    },
+    {
+      "script_index": 54,
+      "module": "rooms",
+      "file": "assets/js/modules/rooms/script-54.js",
+      "bytes": 1437
+    },
+    {
+      "script_index": 55,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-55.js",
+      "bytes": 2494
+    },
+    {
+      "script_index": 56,
+      "module": "core",
+      "file": "assets/js/core/script-56.js",
+      "bytes": 297
+    },
+    {
+      "script_index": 57,
+      "module": "core",
+      "file": "assets/js/core/script-57.js",
+      "bytes": 1321
+    },
+    {
+      "script_index": 58,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-58.js",
+      "bytes": 9272
+    },
+    {
+      "script_index": 59,
+      "module": "attendance",
+      "file": "assets/js/modules/attendance/script-59.js",
+      "bytes": 11657
+    },
+    {
+      "script_index": 60,
+      "module": "reports",
+      "file": "assets/js/modules/reports/script-60.js",
+      "bytes": 2670
+    },
+    {
+      "script_index": 61,
+      "module": "attendance",
+      "file": "assets/js/modules/attendance/script-61.js",
+      "bytes": 6641
+    },
+    {
+      "script_index": 62,
+      "module": "attendance",
+      "file": "assets/js/modules/attendance/script-62.js",
+      "bytes": 2696
+    },
+    {
+      "script_index": 63,
+      "module": "reports",
+      "file": "assets/js/modules/reports/script-63.js",
+      "bytes": 2095
+    },
+    {
+      "script_index": 64,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-64.js",
+      "bytes": 1430
+    },
+    {
+      "script_index": 65,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-65.js",
+      "bytes": 267
+    },
+    {
+      "script_index": 67,
+      "module": "meals",
+      "file": "assets/js/modules/meals/script-67.js",
+      "bytes": 1545
+    },
+    {
+      "script_index": 68,
+      "module": "core",
+      "file": "assets/js/core/script-68.js",
+      "bytes": 30843
+    },
+    {
+      "script_index": 69,
+      "module": "admin",
+      "file": "assets/js/modules/admin/script-69.js",
+      "bytes": 314
+    }
+  ],
+  "module_script_counts": {
+    "core": 10,
+    "workers": 7,
+    "reports": 5,
+    "residency": 3,
+    "admin": 25,
+    "overview": 3,
+    "meals": 3,
+    "attendance": 4,
+    "rooms": 2
+  },
+  "extracted_style_blocks": 112,
+  "inline_script_blocks": 62,
+  "css_bytes": 321808,
+  "html_bytes": 39231,
+  "local_dependencies": [
+    {
+      "path": "qr-config.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/core/script-07.js",
+      "exists": true
+    },
+    {
+      "path": "manifest.webmanifest",
+      "exists": true
+    },
+    {
+      "path": "pwa-icon-192.png",
+      "exists": true
+    },
+    {
+      "path": "pwa-icon-192.png",
+      "exists": true
+    },
+    {
+      "path": "assets/css/app.css",
+      "exists": true
+    },
+    {
+      "path": "ktx-logo.png",
+      "exists": true
+    },
+    {
+      "path": "pwa-icon-192.png",
+      "exists": true
+    },
+    {
+      "path": "assets/js/core/script-08.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/workers/script-09.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/workers/script-10.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/workers/script-11.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/reports/script-12.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/workers/script-13.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/residency/script-14.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/reports/script-15.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/residency/script-16.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-17.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/workers/script-18.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-19.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-20.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/residency/script-21.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/overview/script-22.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/overview/script-23.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/reports/script-24.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/overview/script-25.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-26.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-27.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-28.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-29.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-30.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-31.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/workers/script-32.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-33.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-34.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-35.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-36.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/core/script-37.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/meals/script-38.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/meals/script-39.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/core/script-40.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/attendance/script-41.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-42.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-43.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/workers/script-44.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/core/script-45.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-46.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-47.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/core/script-48.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/core/script-49.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/rooms/script-50.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-51.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-52.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-53.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/rooms/script-54.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-55.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/core/script-56.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/core/script-57.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-58.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/attendance/script-59.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/reports/script-60.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/attendance/script-61.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/attendance/script-62.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/reports/script-63.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-64.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-65.js",
+      "exists": true
+    },
+    {
+      "path": "qr-sessions.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/meals/script-67.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/core/script-68.js",
+      "exists": true
+    },
+    {
+      "path": "assets/js/modules/admin/script-69.js",
+      "exists": true
+    }
+  ],
+  "syntax_checks": {
+    "checked": 62,
+    "errors": []
+  }
+}
