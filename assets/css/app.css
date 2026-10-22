@@ -3146,30 +3146,3 @@ main input[type="checkbox"],main input[type="radio"],#mobile180 input[type="chec
 }
 main input[type="checkbox"]::before,main input[type="radio"]::before,#mobile180 input[type="checkbox"]::before,#mobile180 input[type="radio"]::before{content:none!important}
 
-
-
-/* Production v1.0.0 — targeted worker desktop layout + STEP100 action palette (2026-10-22).
-   Single last rule set; does not alter data, module JS, auth or responsive mobile behavior. */
-@media(min-width:861px){
-  #tools.top-actions{display:flex!important;flex-flow:row wrap!important;align-items:center!important;justify-content:flex-end!important;align-content:flex-start!important;gap:7px!important;min-width:0!important;width:auto!important;max-width:100%!important;}
-  #tools.top-actions>button,#tools.top-actions>label{flex:0 0 auto!important;white-space:nowrap!important;min-width:0!important;}
-  #tools.top-actions>select:not(.hide){flex:0 0 auto!important;max-width:230px!important;}
-  #work #wl>.wrap{overflow-x:auto!important;overflow-y:auto!important;max-width:100%!important;}
-  #work .cmp2{min-width:1090px!important;width:100%!important;table-layout:auto!important;}
-  #work .cmp2 thead th{height:50px!important;white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;writing-mode:horizontal-tb!important;line-height:1.25!important;padding:9px 6px!important;vertical-align:middle!important;font-size:10.5px!important;}
-  #work .cmp2 thead th :is(button,.thbtn,span,b,small,div){white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;writing-mode:horizontal-tb!important;}
-  #work .cmp2 th:nth-child(3),#work .cmp2 td:nth-child(3){min-width:145px!important;}
-}
-/* Color codes match the second reference screenshot: blue, green, violet, amber and red. */
-#tools :is(button,label).btn{color:#fff!important;border:1px solid transparent!important;box-shadow:0 3px 9px rgba(29,63,105,.14)!important;border-radius:9px!important;font-weight:750!important;}
-#tools :is(button,label).ta-slate{background:#4b6d9c!important;color:#fff!important;}
-#tools :is(button,label).ta-blue{background:#2176ee!important;color:#fff!important;}
-#tools :is(button,label).ta-green{background:#0fa773!important;color:#fff!important;}
-#tools :is(button,label).ta-indigo{background:#4267e8!important;color:#fff!important;}
-#tools :is(button,label).ta-emerald{background:#13ad79!important;color:#fff!important;}
-#tools :is(button,label).ta-violet{background:#7752ed!important;color:#fff!important;}
-#tools :is(button,label).ta-amber{background:#ec8a09!important;color:#fff!important;}
-#tools :is(button,label).ta-purple{background:#923fde!important;color:#fff!important;}
-#tools :is(button,label).r{background:#f43f57!important;color:#fff!important;}
-#tools :is(button,label).btn:hover{filter:brightness(.93)!important;color:#fff!important;transform:translateY(-1px)!important;}
-#tools :is(button,label).btn :is(span,b,strong,svg,.i){color:inherit!important;stroke:currentColor!important;}
