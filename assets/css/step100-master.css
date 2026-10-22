@@ -1,0 +1,1331 @@
+/* KTX STEP100 master appearance: exact CSS from user supplied STEP100 */
+
+:root{--bg:#070c17;--pn:#0f192d;--pn2:#15213a;--ln:#1f2e4a;--ink:#eaf0ff;--mut:#8d9dbd;--bl:#4f8cff;--bl2:#7c5cff;--gr:#2fd48a;--am:#ffb02e;--rd:#ff5d6c;--pk:#ff6fb1;--grbg:#0d2e24;--ambg:#33270f;--rdbg:#3a161c;--bd:var(--ln);--hl:var(--ambg);--sh:0 10px 30px #0006;--gl:#4f8cff26;--gl2:#7c5cff1f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#eef2fa;--pn:#fff;--pn2:#f3f6fc;--ln:#dbe3f0;--ink:#13203a;--mut:#5b6c8a;--bl:#2f6fe8;--bl2:#6d4bf0;--gr:#12935c;--am:#b45f00;--rd:#cf2a3b;--pk:#c2185b;--grbg:#dff5e9;--ambg:#fdeccb;--rdbg:#fde0e2;--sh:0 8px 24px #1b2f5a18;--gl:#2f6fe81f;--gl2:#6d4bf01a}}
+:root[data-theme="light"]{--bg:#eef2fa;--pn:#fff;--pn2:#f3f6fc;--ln:#dbe3f0;--ink:#13203a;--mut:#5b6c8a;--bl:#2f6fe8;--bl2:#6d4bf0;--gr:#12935c;--am:#b45f00;--rd:#cf2a3b;--pk:#c2185b;--grbg:#dff5e9;--ambg:#fdeccb;--rdbg:#fde0e2;--sh:0 8px 24px #1b2f5a18;--gl:#2f6fe81f;--gl2:#6d4bf01a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:14px/1.5 "Be Vietnam Pro",system-ui,sans-serif;display:flex;min-height:100vh;background:radial-gradient(900px 480px at 88% -8%,var(--gl),transparent 60%),radial-gradient(700px 400px at -8% 8%,var(--gl2),transparent 60%),var(--bg);background-attachment:fixed}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+nav{width:256px;background:var(--pn);border-right:1px solid var(--ln);padding:18px 12px;display:flex;flex-direction:column;gap:2px;position:sticky;top:0;height:100vh;flex:none;overflow-y:auto}
+.brand{display:flex;gap:11px;align-items:center;padding:4px 8px 18px}.logo{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--bl),var(--bl2));box-shadow:0 6px 18px var(--gl)}
+.brand b{display:block;font-size:15px;letter-spacing:.02em}.brand small{color:var(--mut);font-size:12px}
+.cap{font-size:10.5px;letter-spacing:.12em;color:var(--mut);padding:14px 10px 6px;font-weight:700}
+nav button{all:unset;box-sizing:border-box;cursor:pointer;padding:10px 12px;border-radius:10px;color:var(--mut);display:flex;align-items:center;gap:11px;width:100%;transition:.15s;position:relative}
+nav button:hover{background:var(--pn2);color:var(--ink)}
+nav button.on{background:linear-gradient(90deg,var(--gl),transparent);color:var(--ink);font-weight:600}
+nav button.on::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--bl)}
+nav button.on svg{color:var(--bl)}
+nav .gh{color:var(--ink);font-weight:600;justify-content:flex-start}.gh .ch{margin-left:auto;transition:.2s}.grp.open .gh .ch{transform:rotate(180deg)}
+.gi{margin:2px 0 4px 20px;padding-left:8px;border-left:1px dashed var(--ln)}.grp:not(.open) .gi{display:none}
+nav .pill{margin-left:auto;background:linear-gradient(135deg,var(--bl),var(--bl2));color:#fff;border-radius:99px;padding:0 9px;font-size:11.5px;font-weight:600}
+.foot{margin-top:auto;padding:12px 10px 0;color:var(--mut);font-size:11.5px;border-top:1px solid var(--ln)}
+nav button:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--bl);outline-offset:2px}
+main{flex:1;min-width:0;padding:0 26px 56px;max-width:1360px}
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:18px 0 16px;margin-bottom:18px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:linear-gradient(var(--bg) 70%,transparent);backdrop-filter:blur(8px)}
+.eb{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bl);font-weight:700}
+h2{font-size:26px;margin:2px 0 0;letter-spacing:-.01em;font-weight:800}h3{font-size:15px;margin:0 0 12px;font-weight:700}.mut{color:var(--mut)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{border:0;border-radius:10px;padding:9px 15px;font:inherit;font-weight:600;color:#fff;background:linear-gradient(135deg,var(--bl),var(--bl2));cursor:pointer;transition:.15s;box-shadow:0 4px 14px var(--gl)}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.1)}.btn.g{background:linear-gradient(135deg,#0fa968,#1bc58a);box-shadow:0 4px 14px #0fa96833}.btn.r{background:linear-gradient(135deg,#d6384a,#f0586a);box-shadow:0 4px 14px #d6384a33}
+.btn.s{background:var(--pn2);color:var(--ink);border:1px solid var(--ln);box-shadow:none}.btn:disabled{opacity:.4;transform:none;cursor:not-allowed}
+input,select{font:inherit;color:var(--ink);background:var(--pn2);border:1px solid var(--ln);border-radius:10px;padding:9px 12px;max-width:100%;transition:border-color .15s}
+input:focus,select:focus{border-color:var(--bl)}
+.card{background:var(--pn);border:1px solid var(--ln);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:var(--sh)}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:16px}.g4>.card{margin:0;border-top:3px solid var(--bl)}
+.g4>.card:nth-child(2){border-top-color:var(--bl2)}.g4>.card:nth-child(3){border-top-color:var(--gr)}.g4>.card:nth-child(4){border-top-color:var(--am)}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}.g2>.card{margin:0}.g2{margin-bottom:16px}
+.kpi{font-size:30px;font-weight:800;line-height:1.15;letter-spacing:-.01em}.lbl{color:var(--mut);font-size:11.5px;font-weight:600;letter-spacing:.06em}
+.bar{height:9px;border-radius:9px;background:var(--pn2);overflow:hidden;margin:7px 0}.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--am),#ffd36b)}
+.two{display:flex;height:9px;border-radius:9px;overflow:hidden;margin-top:6px}.two i:first-child{background:var(--bl)}.two i:last-child{background:var(--pk)}
+.nam{color:#6aa3f5}.nu{color:var(--pk)}.gr{color:var(--gr)}.am{color:var(--am)}.rd{color:var(--rd)}
+.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}.dy{border:1px solid var(--ln);border-radius:12px;padding:12px;background:var(--pn2)}
+.rm{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:7px;margin-top:9px}
+.r{border:1px solid var(--bl);border-radius:9px;padding:5px 7px;font-size:11.5px;cursor:pointer;background:var(--pn);text-align:left;color:var(--ink);font-family:inherit;transition:.12s}.r:hover{transform:translateY(-2px);box-shadow:var(--sh)}
+.r.f{border-color:var(--pk)}.r.m{border-color:var(--am)}.r.ok{background:var(--grbg)}.r.full{background:var(--ambg)}.r.over{background:var(--rdbg)}
+.hist{display:flex;align-items:flex-end;gap:10px;height:160px;padding-top:6px}.hist div{flex:1;text-align:center;font-size:12px;display:flex;flex-direction:column;justify-content:flex-end;height:100%}.hist i{display:block;background:linear-gradient(180deg,var(--gr),#0f8f5c);border-radius:6px 6px 0 0;min-height:2px}
+.wrap{overflow-x:auto;border:1px solid var(--ln);border-radius:12px;margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--ln);white-space:nowrap}th{background:var(--pn2);color:var(--mut);font-weight:600;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;position:sticky;top:0}tr:hover td{background:var(--pn2)}tr:last-child td{border-bottom:0}
+.tag{font-size:11px;border-radius:99px;padding:1px 9px;border:1px solid var(--ln);display:inline-block;font-weight:500}.tag.g{color:var(--gr);background:var(--grbg);border-color:transparent}.tag.a{color:var(--am);background:var(--ambg);border-color:transparent}.tag.r{color:var(--rd);background:var(--rdbg);border-color:transparent}
+dialog{background:var(--pn);color:var(--ink);border:1px solid var(--ln);border-radius:16px;max-width:580px;width:calc(100% - 24px);padding:22px;box-shadow:var(--sh)}dialog::backdrop{background:#0009;backdrop-filter:blur(3px)}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fg label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mut)}
+.act{position:sticky;right:0;background:var(--pn);box-shadow:-10px 0 14px -10px #0007;z-index:1}th.act{background:var(--pn2);z-index:3}tr:hover td.act{background:var(--pn2)}.btn.sm{padding:5px 10px;font-size:12px;box-shadow:none}.dv{max-width:760px;padding:0;overflow:hidden}.vh{display:flex;gap:10px;align-items:center;padding:18px 20px;border-bottom:1px solid var(--ln)}.av{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:18px;color:var(--bl);background:var(--gl);flex:none}.vn{font-size:18px;font-weight:800}
+.vbody{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;padding:4px 20px 14px;max-height:62vh;overflow:auto}.vs{font-size:11px;letter-spacing:.12em;color:var(--mut);font-weight:700;padding:16px 0 4px}.df{display:flex;flex-direction:column;padding:8px 0;border-bottom:1px solid var(--ln)}.df span{font-size:12px;color:var(--mut)}.df b{font-weight:600;font-size:15px;word-break:break-word}.vf{display:flex;justify-content:flex-end;gap:8px;padding:14px 20px;border-top:1px solid var(--ln)}.lk{cursor:pointer}.lk:hover{color:var(--bl);text-decoration:underline}
+@media(max-width:600px){.vbody{grid-template-columns:1fr}}.fl{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mut);margin:10px 0 0;white-space:normal}.fl input{width:100%}#rpd{max-height:90vh;overflow:auto}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:10px 18px;font-weight:600;font-size:13.5px;line-height:1.2;border:1px solid transparent;background:linear-gradient(135deg,var(--bl),var(--bl2));box-shadow:inset 0 1px 0 #ffffff33,0 6px 16px var(--gl)}
+.btn:hover{transform:translateY(-1px);box-shadow:inset 0 1px 0 #ffffff33,0 10px 22px var(--gl);filter:none}.btn:active{transform:translateY(0) scale(.98)}.btn svg.i{width:16px;height:16px}
+.btn.g{background:linear-gradient(135deg,#0c9f68,#22c98f);box-shadow:inset 0 1px 0 #ffffff33,0 6px 16px #0c9f6833}.btn.r{background:linear-gradient(135deg,#d93a4d,#f26a78);box-shadow:inset 0 1px 0 #ffffff33,0 6px 16px #d93a4d33}
+.btn.s{background:var(--pn2);color:var(--ink);border-color:var(--ln);box-shadow:none}.btn.s:hover{border-color:var(--bl);color:var(--bl);box-shadow:none}
+.btn.sm{padding:6px 12px;font-size:12.5px;border-radius:10px}.btn:disabled{opacity:.45;transform:none;box-shadow:none;cursor:not-allowed}
+.qs{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--pn2);border:1px solid var(--ln);border-radius:14px;padding:10px 12px}
+.cnt{display:inline-block;min-width:26px;text-align:center;padding:2px 12px;border-radius:99px;background:var(--pn);border:1px solid var(--ln);color:var(--mut);font-size:12.5px;font-weight:700}.cnt.on{background:linear-gradient(135deg,var(--bl),var(--bl2));color:#fff;border-color:transparent}
+.chips{display:flex;flex-wrap:wrap;gap:8px;max-height:260px;overflow:auto}.chip{display:inline-flex;align-items:center;gap:8px;background:var(--pn2);border:1px solid var(--ln);border-radius:12px;padding:5px 6px 5px 12px;font-size:13px}.chip small{color:var(--mut);font-size:11.5px}
+.chip button{all:unset;cursor:pointer;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;color:var(--mut);font-size:12px}.chip button:hover{background:var(--rdbg);color:var(--rd)}
+.tgl{display:inline-flex;align-items:center;gap:8px;margin:0;padding:6px 12px;border:1px solid var(--ln);border-radius:99px;background:var(--pn);cursor:pointer;font-size:12.5px;font-weight:600}.tgl:has(input:checked){border-color:var(--bl);color:var(--bl);background:var(--gl)}.toast{display:flex;gap:10px;align-items:flex-start;position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:50;background:var(--pn);color:var(--ink);border:1px solid var(--bl);border-radius:12px;padding:12px 18px;box-shadow:var(--sh);max-width:min(560px,92vw);white-space:pre-line;font-size:13.5px;cursor:pointer}.cmp{table-layout:fixed;width:100%;font-size:12px}.cmp th,.cmp td{padding:7px 6px;white-space:normal;overflow-wrap:anywhere;vertical-align:top}.cmp th{font-size:10.5px;letter-spacing:.02em}.cmp input[type=checkbox]{margin:0}@media(max-width:760px){.cmp{table-layout:auto;min-width:780px}}
+.cmp2{font-size:11.5px;width:100%}.cmp2 th,.cmp2 td{padding:6px 5px;white-space:nowrap}.cmp2 th{font-size:10px;white-space:normal;line-height:1.25;letter-spacing:.02em;vertical-align:bottom}.cmp2 td.wr{white-space:normal;min-width:56px}.cmp2 td.nm{min-width:92px}.cmp2 td.ad{min-width:170px}.cmp2 .tag{font-size:10px;padding:0 7px}.cmp2 input[type=checkbox]{margin:0}
+/* căn chỉnh văn bản trong bảng */
+.cmp,.cmp2{font-variant-numeric:tabular-nums}
+.cmp th,.cmp td,.cmp2 th,.cmp2 td{vertical-align:middle;line-height:1.4}
+.cmp2 th,.cmp2 td{text-align:center}.cmp2 :is(th,td):is(:nth-child(3),:nth-child(14),:nth-child(15)){text-align:left}
+.cmp th,.cmp td{text-align:center}.cmp :is(th,td):is(:nth-child(4),:nth-child(8),:nth-child(9)){text-align:left}
+.cmp2 td.nm .tag{margin-top:3px}.cmp2 td.ad,.cmp td{text-wrap:pretty}
+.cmp2 tbody tr:nth-child(even) td,.cmp tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--pn2) 55%,transparent)}
+.cmp2 tr:hover td,.cmp tr:hover td{background:var(--pn2)}
+/* tô màu bảng */
+.cmp th,.cmp2 th{background:linear-gradient(180deg,var(--gl),var(--pn2));color:var(--bl);font-weight:700}
+.pl{--c:var(--bl);display:inline-block;padding:1px 9px;border-radius:99px;font-weight:600;font-size:11px;line-height:1.5;color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent);border:1px solid color-mix(in srgb,var(--c) 32%,transparent);white-space:nowrap}
+.pl.k1{--c:var(--bl)}.pl.k2{--c:var(--am)}.pl.k3{--c:var(--gr)}.pl.k4{--c:var(--pk)}.pl.dy2{--c:var(--bl2)}.pl.ro{--c:var(--gr)}.pl.g-m{--c:var(--bl)}.pl.g-f{--c:var(--pk)}
+.cmp2 tbody tr.fm td,.cmp tbody tr.fm td{background:color-mix(in srgb,var(--pk) 8%,transparent)}
+.cmp2 tbody tr:hover td,.cmp tbody tr:hover td{background:color-mix(in srgb,var(--bl) 14%,transparent)}
+.cmp2 td.nm b,.cmp td b{color:var(--ink)}
+/* hộp thoại chi tiết / sửa công nhân */
+dialog.dv[open],dialog.de[open]{display:flex;flex-direction:column;max-height:92vh}
+.dv{max-width:820px}.de{padding:0;max-width:740px;overflow:hidden}
+.vh,.eh{display:flex;gap:10px;align-items:center;padding:16px 20px;border-bottom:1px solid var(--ln);background:linear-gradient(135deg,var(--gl),var(--gl2))}
+.av{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:19px;color:#fff;background:linear-gradient(135deg,var(--bl),var(--bl2));box-shadow:0 6px 16px var(--gl);flex:none}.av svg.i{width:22px;height:22px}
+.vn{font-size:19px;font-weight:800;letter-spacing:-.01em}.vchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px;align-items:center}
+.ib{width:34px;height:34px;padding:0;border-radius:10px}.ib svg.i{width:16px;height:16px}
+.vbody{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 20px;overflow:auto;flex:1;max-height:none}
+.vcd,.eb2{background:var(--pn2);border:1px solid var(--ln);border-radius:14px;padding:12px 14px}
+.vs,.es{display:flex;align-items:center;gap:8px;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--bl);padding:0 0 10px}.vs svg.i,.es svg.i{width:15px;height:15px}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:9px 14px}.df{display:flex;flex-direction:column;padding:0;border:0;gap:1px}.df.w2{grid-column:1/-1}
+.df span{font-size:11px;color:var(--mut);letter-spacing:.03em}.df b{font-size:13.5px;font-weight:600;word-break:break-word}
+.vf{display:flex;justify-content:flex-end;gap:8px;padding:12px 20px;border-top:1px solid var(--ln);background:var(--pn)}
+.ebody{overflow:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
+.eg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 12px}.eg .s2{grid-column:span 2}
+.ef label{display:flex;flex-direction:column;gap:4px;font-size:11.5px;font-weight:600;color:var(--mut);margin:0;white-space:normal}
+.ef input,.ef select{width:100%;padding:8px 10px;font-size:13px;font-weight:500;border-radius:10px}
+@media(max-width:700px){.vbody{grid-template-columns:1fr}.eg{grid-template-columns:1fr 1fr}.eg .s2{grid-column:1/-1}}
+.toast.dkz{border:2px dashed var(--ln);border-radius:16px;padding:22px;text-align:center;background:var(--pn2);transition:.15s}.dkz.over{border-color:var(--bl);background:var(--gl)}.dkz b{display:block;margin-bottom:6px}
+.dkg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:12px}.dkc{background:var(--pn2);border:1px solid var(--ln);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.dkc h4{margin:0;font-size:14px;word-break:break-word}.dkc .ft{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--bl),var(--bl2));flex:none}
+.dkc .ac{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}.dkprev img,.dkprev video{max-width:100%;max-height:68vh;border-radius:10px}.dkprev pre{white-space:pre-wrap;word-break:break-word;font-size:12px;max-height:60vh;overflow:auto;background:var(--pn2);border:1px solid var(--ln);border-radius:10px;padding:12px;margin:0}
+.dkl{display:grid;grid-template-columns:260px 1fr;gap:16px;align-items:start}.dkl>div>.card:last-child{margin-bottom:0}.dkside{position:sticky;top:96px;margin:0}
+.fi{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;cursor:pointer;color:var(--mut);justify-content:space-between;margin-bottom:2px}.fi:hover{background:var(--pn2);color:var(--ink)}
+.fi.on{background:linear-gradient(90deg,var(--gl),transparent);color:var(--ink);font-weight:600;outline:1px solid var(--bl)}.fi .fn{display:flex;gap:8px;align-items:center;min-width:0;overflow:hidden}.fi .fn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fi .fc{font-size:11.5px;background:var(--pn2);border-radius:99px;padding:0 8px;flex:none}.fi .fa{display:none;gap:2px;flex:none}.fi:hover .fa,.fi.on .fa{display:flex}.fi:hover .fc,.fi.on .fc{display:none}
+.fi .fa button{all:unset;cursor:pointer;width:24px;height:24px;display:grid;place-items:center;border-radius:7px;color:var(--mut)}.fi .fa button:hover{background:var(--pn);color:var(--bl)}.fi .fa button[data-fd]:hover{color:var(--rd)}
+@media(max-width:860px){.dkl{grid-template-columns:1fr}.dkside{position:static}}
+.cmp3{font-size:11.5px;width:100%;font-variant-numeric:tabular-nums}.cmp3 th,.cmp3 td{padding:6px 5px;white-space:nowrap;text-align:center;vertical-align:middle;line-height:1.35}
+.cmp3 th{font-size:10px;white-space:normal;line-height:1.25;letter-spacing:.02em;background:linear-gradient(180deg,var(--gl),var(--pn2));color:var(--bl);font-weight:700}
+.cmp3 td.wr{white-space:normal;min-width:58px}.cmp3 :is(th,td):is(:nth-child(3),:nth-child(14)){text-align:left}
+.cmp3 td.act{position:static;box-shadow:none;background:transparent}.cmp3 th.act{position:static}.cmp3 .btn.sm{padding:4px 8px;font-size:11px;gap:4px}.cmp3 .btn.sm svg.i{width:13px;height:13px}
+.cmp3 tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--pn2) 55%,transparent)}.cmp3 tbody tr:hover td{background:color-mix(in srgb,var(--bl) 14%,transparent)}.cmp3 td.h{background:var(--ambg)!important;font-weight:700}
+nav .tgs{margin-left:auto;font-size:10.5px;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--pn2);border:1px solid var(--ln);color:var(--mut)}nav #tgm.on .tgs{background:var(--grbg);color:var(--gr);border-color:transparent}
+.gate{position:fixed;inset:0;z-index:70;background:var(--bg);display:grid;place-items:center;padding:20px}.gatetextarea{font:inherit;color:var(--ink);background:var(--pn2);border:1px solid var(--ln);border-radius:10px;padding:8px 10px;width:100%;resize:vertical}.qsr{border-radius:16px;padding:16px 18px;margin-top:12px;border:2px solid var(--ln)}.qsr.ok{background:var(--grbg);border-color:var(--gr)}.qsr.wn{background:var(--ambg);border-color:var(--am)}.qsr.er{background:var(--rdbg);border-color:var(--rd)}.qsr b.big{font-size:20px}
+.qcg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:12px}.qcc{border:1px solid var(--ln);border-radius:12px;padding:10px;background:var(--pn2);text-align:center}.qcc canvas{width:100%;border-radius:8px;background:#fff}
+.hide{display:none}.gcard{background:var(--pn);border:1px solid var(--ln);border-radius:18px;padding:28px;max-width:440px;text-align:center;box-shadow:var(--sh)}.gcard .av{margin:0 auto 12px}.rb{display:inline-block;padding:1px 10px;border-radius:99px;font-size:11.5px;font-weight:700;background:var(--gl);color:var(--bl)}
+.hide{display:none}.toast .ti{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;color:#fff}
+.toast.ok{border-color:var(--gr)}.toast.ok .ti{background:var(--gr)}.toast.er{border-color:var(--rd)}.toast.er .ti{background:var(--rd)}.toast.wn{border-color:var(--am)}.toast.wn .ti{background:var(--am)}
+#cfd{max-width:460px;width:calc(100% - 24px)}.cft{font-size:17px;font-weight:800;margin-bottom:10px}
+.hide{display:none}.ok{color:var(--gr)}.warn{color:var(--am)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}td.h{background:var(--ambg);font-weight:700}label{margin-right:10px;white-space:nowrap}
+@media(max-width:860px){body{flex-direction:column}nav{width:100%;height:auto;position:static;flex-direction:row;overflow-x:auto;padding:8px;gap:4px;border-right:0;border-bottom:1px solid var(--ln)}.brand,.cap,.foot,.gh{display:none!important}.grp,.gi{display:contents!important;margin:0;padding:0;border:0}nav button{width:auto;white-space:nowrap}nav button.on::before{display:none}main{padding:0 14px 40px}.fg{grid-template-columns:1fr}.top{position:static}}
+/* Tổng quan gọn hơn */
+#home .g4{gap:10px;margin-bottom:12px}#home .g4>.card{padding:12px 14px}#home .kpi{font-size:26px}
+#home .card{padding:14px 16px;margin-bottom:12px}#home h3{margin:0 0 8px}
+#home .bar{height:7px;margin:5px 0}#home .sub{font-size:12px;color:var(--mut);margin-top:2px}#home .sub label{margin:0}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-bottom:12px}.g3>.card{margin:0!important}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.kr{cursor:pointer;border:1px solid var(--ln);border-radius:12px;padding:10px 12px;background:var(--pn2);transition:border-color .15s,background .15s}.kr:hover{border-color:var(--bl)}.kr.on{border-color:var(--bl);background:var(--gl);box-shadow:0 0 0 1px var(--bl)}.kr:focus-visible{outline:2px solid var(--bl);outline-offset:2px}
+.kdt{margin-top:12px;padding:12px 14px;border:1px solid var(--bl);border-radius:12px;background:var(--gl)}.kst{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px 14px;margin:10px 0}.kst div{display:flex;flex-direction:column}.kst span{font-size:11.5px;color:var(--mut)}.kst b{font-size:20px;font-weight:800;line-height:1.25}.kst em{font-style:normal;font-size:12px;color:var(--mut)}.krh{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+#home .hist{height:125px}
+.kd{margin-top:8px;border:1px solid var(--ln);border-radius:12px;padding:0 12px;background:var(--pn)}
+.kd>summary{cursor:pointer;list-style:none;display:flex;gap:10px;align-items:center;padding:9px 0;font-size:13.5px}.kd>summary::-webkit-details-marker{display:none}
+.kd>summary svg{width:15px;height:15px;color:var(--mut);transition:transform .15s}.kd:not([open])>summary svg{transform:rotate(-90deg)}
+.kd[open]>summary{border-bottom:1px solid var(--ln);margin-bottom:10px}.kd>summary:focus-visible{outline:2px solid var(--bl);outline-offset:2px;border-radius:8px}
+#home .dg{gap:10px;padding-bottom:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}#home .dy{padding:9px 10px}
+#home .rm{grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:5px;margin-top:7px}#home .r{padding:3px 5px;font-size:11px;line-height:1.3}
+@media(max-width:600px){#home .g4{grid-template-columns:1fr 1fr}#home .kpi{font-size:22px}}
+/* Báo cáo suất ăn */
+#meal .card{padding:14px 16px;margin-bottom:12px}#meal h3{margin:0 0 8px}#meal .fl{margin:0}#meal .ctl{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:flex-end}
+.seg{display:inline-flex;border:1px solid var(--ln);border-radius:12px;overflow:hidden}.seg button{all:unset;cursor:pointer;padding:9px 18px;font-weight:600;font-size:13px;color:var(--mut);background:var(--pn2)}.seg button+button{border-left:1px solid var(--ln)}.seg button.on{color:#fff;background:linear-gradient(135deg,var(--bl),var(--bl2))}.seg button:focus-visible{outline:2px solid var(--bl);outline-offset:-2px}
+#meal .g2{gap:12px;margin-bottom:12px}#meal .g2>.card{margin:0;display:flex;flex-direction:column;gap:10px}
+.mp-td{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.mp-td input{width:100%}.mp-td b{font-size:18px;line-height:1.9}
+#meal textarea{font:inherit;color:var(--ink);background:var(--pn2);border:1px solid var(--ln);border-radius:10px;padding:8px 10px;width:100%;resize:vertical}#meal textarea:focus{border-color:var(--bl)}#meal select{width:100%}#meal .row select{width:auto}
+#mp_o{white-space:pre-wrap;word-break:break-word;margin:0;padding:14px;background:var(--pn2);border:1px solid var(--ln);border-radius:12px;font:13.5px/1.65 "Be Vietnam Pro",system-ui,sans-serif;max-height:60vh;overflow:auto;user-select:text}
+.wkd{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;flex:1;min-width:0}.wkd button{all:unset;cursor:pointer;box-sizing:border-box;padding:7px 6px;border:1px solid var(--ln);border-radius:10px;background:var(--pn2);text-align:center;font-size:12.5px;display:flex;flex-direction:column;gap:1px}.wkd button:hover{border-color:var(--bl)}.wkd button small{font-size:10.5px;color:var(--mut)}.wkd button.on{border-color:var(--bl);background:var(--gl);box-shadow:0 0 0 1px var(--bl)}.wkd button:focus-visible{outline:2px solid var(--bl);outline-offset:1px}
+@media(max-width:700px){.wkd{grid-template-columns:repeat(4,1fr)}}
+
+/* Sao lưu dữ liệu */
+.bkgrid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}.bkopt{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.bkopt label{margin:0;display:flex;align-items:center;gap:8px;padding:9px 10px;border:1px solid var(--ln);border-radius:10px;background:var(--pn2);white-space:normal}.bklist{display:flex;flex-direction:column;gap:8px;margin-top:10px}.bkitem{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--ln);border-radius:11px;background:var(--pn2)}.bkitem small{display:block;color:var(--mut);font-size:10.5px}.bkstatus{padding:10px 12px;border-radius:11px;background:var(--pn2);border:1px solid var(--ln);font-size:12px}.bkstatus.ok{border-color:var(--gr);background:var(--grbg)}.bkstatus.wn{border-color:var(--am);background:var(--ambg)}@media(max-width:800px){.bkgrid{grid-template-columns:1fr}.bkopt{grid-template-columns:1fr}}
+
+/* ===== GIAO DIỆN 2026 - PHONG CÁCH QUẢN TRỊ SÁNG ===== */
+:root,:root[data-theme="light"],:root[data-theme="dark"]{
+  --bg:#f4f7fc;--pn:#ffffff;--pn2:#f7f9fd;--ln:#dfe6f2;--ink:#15233f;--mut:#71809d;
+  --bl:#246bdf;--bl2:#2b82f6;--gr:#16b977;--am:#f0a31a;--rd:#ed4b5e;--pk:#d752a5;
+  --grbg:#e7f8f0;--ambg:#fff5d9;--rdbg:#fde9ec;--bd:var(--ln);--hl:#f3f6fb;
+  --sh:0 8px 28px rgba(38,77,135,.08);--gl:rgba(36,107,223,.10);--gl2:rgba(43,130,246,.08)
+}
+body{background:linear-gradient(135deg,#f7faff 0%,#eef5ff 52%,#f7fbff 100%);color:var(--ink)}
+nav{width:286px;background:#fff;border-right:1px solid #e3eaf5;padding:18px 13px;box-shadow:6px 0 24px rgba(52,82,128,.04);z-index:10}
+.brand{padding:2px 8px 22px}.logo{width:46px;height:46px;border-radius:13px;background:linear-gradient(145deg,#2989f4,#4167e8);box-shadow:0 8px 20px rgba(42,116,232,.22)}
+.brand b{font-size:16px;color:#14213d}.brand small{font-size:12px;color:#75839e}
+.cap{font-size:11px;letter-spacing:.06em;color:#8b99b2;padding:16px 12px 7px;text-transform:none}
+nav button{padding:11px 12px;border-radius:10px;color:#64738f;font-weight:500;gap:12px;margin:1px 0}
+nav button:hover{background:#f2f6fd;color:#245fc1}
+nav button.on{background:linear-gradient(90deg,#e9f2ff,#f3f8ff);color:#1765da;font-weight:700}
+nav button.on::before{left:-13px;top:5px;bottom:5px;width:4px;border-radius:0 4px 4px 0;background:#2b78ec}
+nav button.on svg{color:#1765da}.gi{margin-left:8px;padding-left:0;border-left:0}
+.foot{margin:18px 3px 0;padding:16px 12px;border:1px solid #e4ebf5;border-radius:13px;background:linear-gradient(180deg,#f5f9ff,#eef5ff);color:#677895;text-align:center;line-height:1.55}
+main{max-width:none;padding:0 24px 48px 30px}
+.top{padding:21px 0 17px;margin-bottom:15px;background:rgba(244,247,252,.88);border-bottom:1px solid rgba(222,231,244,.85);backdrop-filter:blur(14px)}
+.eb{font-size:11px;color:#3979da;letter-spacing:.08em}.top h2{font-size:28px;color:#14213e}.top .mut{font-size:13px}
+.card{background:#fff;border:1px solid #e3eaf4;border-radius:14px;box-shadow:0 8px 24px rgba(44,78,126,.06)}
+.btn{border-radius:9px;padding:9px 14px;font-size:13px;background:linear-gradient(135deg,#2877ea,#1763da);box-shadow:0 5px 14px rgba(32,102,219,.15)}
+.btn.g{background:linear-gradient(135deg,#159f68,#20c58a)}.btn.r{background:linear-gradient(135deg,#e33f52,#f06171)}
+.btn.s{background:#fff;color:#30415f;border-color:#dbe4f1}.btn.s:hover{background:#f7faff;color:#1765da;border-color:#aac8f4}
+input,select,textarea{background:#fff;border-color:#dbe4f0;color:#1c2c49;border-radius:9px;min-height:40px}
+input::placeholder{color:#9aa7bc}.wrap{border-color:#e0e7f1;border-radius:12px;background:#fff}
+table{background:#fff}th{background:#f5f8fc;color:#52637f;border-color:#e2e8f1}td{border-color:#edf1f6}tr:hover td{background:#f8fbff}
+.cmp2 th,.cmp2 td{padding:8px 7px}.cmp2 th{background:linear-gradient(180deg,#f7faff,#eef4fb);color:#4a5d7b}.cmp2 tbody tr:nth-child(even) td{background:#fbfdff}.cmp2 tbody tr:hover td{background:#f2f7ff}
+.tag.g{background:#dcf8ea;color:#10925c}.tag.a{background:#fff1cf;color:#b97400}.tag.r{background:#ffe2e6;color:#d63e50}
+.pl{border-radius:7px;padding:2px 8px}
+/* Trang quản lý công nhân */
+#work .worker-panel{padding:16px 16px 14px;margin-bottom:15px}
+#work .worker-primary{display:grid;grid-template-columns:minmax(320px,1fr) auto auto auto auto;gap:9px;align-items:center}
+#work .worker-search{position:relative;min-width:0}
+#work .worker-search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#7e8ca5;width:18px;height:18px;pointer-events:none}
+#work .worker-search input{width:100%;padding-left:41px;height:44px;font-size:13.5px}
+#work .worker-filters{display:grid;grid-template-columns:repeat(5,minmax(125px,1fr));gap:9px;margin-top:11px}
+#work .worker-filters select{width:100%;height:44px;font-weight:600;color:#344561}
+#work .worker-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px;padding-top:11px;border-top:1px solid #edf1f6}
+#work .worker-tools .danger-push{margin-left:auto}
+#work .qs{background:#f8faff;border-color:#e2e9f3;padding:9px 11px;border-radius:11px;margin-top:11px!important}
+#work #wl>.wrap{box-shadow:0 8px 26px rgba(42,79,129,.05)}
+#work #wl>.row{background:#fff;border:1px solid #e1e8f2;border-top:0;border-radius:0 0 12px 12px;margin-top:-1px!important;padding:10px 12px}
+#work .worker-iconbtn{width:42px;height:42px;padding:0;display:inline-grid;place-items:center}
+#work .worker-iconbtn svg{width:17px;height:17px}
+#work .cmp2 tbody tr.wkrow{cursor:pointer}
+#work .cmp2 tbody tr.wkrow td:first-child,#work .cmp2 tbody tr.wkrow input{cursor:default}
+@media(max-width:1180px){#work .worker-primary{grid-template-columns:1fr auto auto}#work .worker-primary .wide-extra{display:none}#work .worker-filters{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:860px){nav{width:100%;box-shadow:none}main{padding:0 14px 40px}.top{background:transparent;border:0}#work .worker-primary{grid-template-columns:1fr 1fr}#work .worker-search{grid-column:1/-1}#work .worker-filters{grid-template-columns:1fr 1fr}#work .worker-tools .danger-push{margin-left:0}}
+@media(max-width:520px){#work .worker-primary,#work .worker-filters{grid-template-columns:1fr}#work .worker-primary>*{width:100%}.btn{justify-content:center}}
+
+
+/* STEP72: màu nút báo cáo */
+#meal .meal-report-btn{background:linear-gradient(135deg,#2d7df4,#1763da)!important;color:#fff!important;border:1px solid transparent!important;box-shadow:0 5px 14px rgba(23,99,218,.22)!important}
+#meal .meal-copy-btn{background:linear-gradient(135deg,#16a46d,#20c58a)!important;color:#fff!important;border:1px solid transparent!important;box-shadow:0 5px 14px rgba(22,164,109,.20)!important}
+#meal .meal-import-btn{background:linear-gradient(135deg,#f2a11f,#f5b83d)!important;color:#3f2d00!important;border:1px solid transparent!important;box-shadow:0 4px 12px rgba(242,161,31,.18)!important}
+#rpd .report-excel-btn{background:linear-gradient(135deg,#0f9fb8,#21b7d1)!important;color:#fff!important;border:1px solid transparent!important}
+#rpd .report-export-btn{background:linear-gradient(135deg,#2d7df4,#1763da)!important;color:#fff!important;border:1px solid transparent!important;box-shadow:0 5px 14px rgba(23,99,218,.22)!important}
+
+
+
+/* Step 22 - compact duplicate filter + cleaner worker toolbar */
+#t2.dup-page{padding:14px 16px!important}
+#t2 .dup-head{padding-bottom:9px!important;gap:10px!important}
+#t2 .dup-head h3{font-size:15.5px!important}
+#t2 .dup-head .mut{font-size:11.5px!important;margin-top:2px}
+#t2 .dup-files:empty{display:none!important}
+#t2 .dup-files{margin:7px 0!important;gap:6px!important}
+#t2 .dup-source{display:flex!important;flex-wrap:wrap!important;gap:8px!important;margin:8px 0!important}
+#t2 .dup-check{flex:0 1 auto!important;min-width:240px!important;align-items:center!important;padding:8px 10px!important;border-radius:10px!important;background:#f8fbff!important}
+#t2 .dup-check span{gap:0!important}
+#t2 .dup-check b{font-size:12px!important}
+#t2 .dup-check small{font-size:10.5px!important;line-height:1.25!important}
+#t2 .dup-criteria{grid-template-columns:minmax(0,1fr) auto auto!important;gap:8px!important;align-items:center!important;padding:9px 10px!important;border-radius:11px!important;background:#fbfdff!important}
+#t2 .dup-label{font-size:10.5px!important;margin-bottom:5px!important}
+#t2 .dup-crit{gap:5px!important}
+#t2 .dup-crit label{padding:5px 8px!important;border-radius:8px!important;font-size:11.5px!important;min-height:30px!important;background:#fff!important}
+#t2 .dup-crit label:has(input:checked){background:#eef5ff!important}
+#t2 .dup-min{font-size:11.5px!important;gap:5px!important}
+#t2 .dup-min select{min-width:54px!important;min-height:34px!important;height:34px!important;padding:4px 8px!important}
+#t2 .dup-actions .btn{padding:8px 12px!important;font-size:12px!important}
+#t2 .dup-note{margin:7px 2px 9px!important;font-size:10.8px!important;line-height:1.35!important}
+#t2 #r2{margin-top:4px}
+#t2 #r2>p{margin:7px 0!important;font-size:12px!important}
+#t2 #r2 .wrap{margin-top:5px!important}
+
+/* Worker page: avoid duplicated visual actions and improve alignment */
+#work .worker-panel{padding:14px 14px 12px!important}
+#work .worker-primary{grid-template-columns:minmax(360px,1fr) 42px auto auto auto!important;gap:8px!important}
+#work .worker-primary .btn{white-space:nowrap}
+#work .worker-filters{gap:8px!important;margin-top:9px!important}
+#work .worker-tools{gap:7px!important;margin-top:9px!important;padding-top:9px!important;align-items:center}
+#work .worker-tools .btn,#work .worker-tools label.btn{min-height:36px;padding:7px 11px;font-size:12px}
+#work .qs{margin-top:9px!important;padding:8px 10px!important}
+.top #tools{gap:7px}
+.top #tools .btn,.top #tools select{min-height:38px;height:38px}
+
+@media(max-width:1000px){
+ #t2 .dup-criteria{grid-template-columns:1fr!important;align-items:start!important}
+ #t2 .dup-min,#t2 .dup-actions{justify-self:start}
+ #work .worker-primary{grid-template-columns:1fr auto auto!important}
+ #work .worker-search{grid-column:1/-1}
+}
+@media(max-width:640px){
+ #t2 .dup-source{display:grid!important;grid-template-columns:1fr!important}
+ #t2 .dup-check{min-width:0!important;width:100%!important}
+ #work .worker-primary{grid-template-columns:1fr!important}
+ #work .worker-primary>*{width:100%}
+}
+
+
+
+/* STEP 23 — gom thao tác Quản lý công nhân lên thanh trên cùng */
+.top{align-items:flex-start;gap:18px}
+.top>div:first-child{min-width:280px}
+#tools.top-actions{flex:1;justify-content:flex-end;align-items:center;gap:8px;row-gap:8px;flex-wrap:wrap}
+#tools.top-actions select{height:38px;min-width:132px;border-radius:10px}
+#tools.top-actions select.hide{display:none!important}
+
+#tools.top-actions .btn{height:38px;padding:8px 12px;border-radius:10px;box-shadow:none;white-space:nowrap;font-size:12.5px}
+#tools.top-actions .pill{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:999px;font-size:10px;font-weight:800;margin-left:2px;border:1px solid transparent;box-shadow:0 1px 2px rgba(15,23,42,.12)}
+#tools #mnn{background:#7c4a03;color:#fff;border-color:#9a5b05}
+#tools #wdn{background:#ff3b5c;color:#fff;border-color:#e72f4e}
+#tools .ta-slate{background:#eef3fb;color:#30415f;border:1px solid #d6e0ef}
+#tools .ta-blue{background:linear-gradient(135deg,#2d7df4,#1763da);color:#fff}
+#tools .ta-green{background:linear-gradient(135deg,#16a46d,#20c58a);color:#fff}
+#tools .ta-indigo{background:linear-gradient(135deg,#536dfe,#4054d8);color:#fff}
+#tools .ta-emerald{background:linear-gradient(135deg,#0e9f6e,#18b981);color:#fff}
+#tools .ta-cyan{background:linear-gradient(135deg,#0f9fb8,#21b7d1);color:#fff}
+#tools .ta-violet{background:linear-gradient(135deg,#7c5cff,#6948e8);color:#fff}
+#tools .ta-amber{background:linear-gradient(135deg,#f2a11f,#f5b83d);color:#3f2d00}
+#tools .ta-purple{background:linear-gradient(135deg,#9a55df,#7f3fc2);color:#fff}
+#work .worker-primary-clean{grid-template-columns:minmax(0,1fr) auto}
+#work .worker-primary-clean .worker-search{grid-column:auto}
+@media(max-width:1180px){.top{flex-direction:column}.top>div:first-child{min-width:0}#tools.top-actions{justify-content:flex-start;width:100%}}
+@media(max-width:700px){#tools.top-actions .btn,#tools.top-actions select{flex:1 1 150px}.top{padding-bottom:10px}}
+
+
+
+/* Step 24: filters first, search below; quick-select UI removed */
+#work .worker-panel{padding:14px 14px 12px}
+#work .worker-filters{margin-top:0!important}
+#work .worker-search-row{margin-top:10px!important;grid-template-columns:minmax(0,1fr) 42px!important}
+#work .worker-search-row .worker-search{grid-column:auto!important}
+#work .worker-panel>.qs.hide{display:none!important}
+@media(max-width:860px){#work .worker-search-row{grid-template-columns:1fr 42px!important}}
+@media(max-width:520px){#work .worker-search-row{grid-template-columns:1fr 42px!important}#work .worker-search-row>*{width:auto!important}}
+
+
+
+/* STEP35: dashboard analytics panels */
+.home-analytics{display:grid;grid-template-columns:1.05fr 1fr;gap:14px;margin:14px 0}
+.home-analytics .card{margin:0;min-width:0}
+.an-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.an-title{display:flex;gap:10px;align-items:center}.an-ico{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#eaf2ff;color:#1765da;font-size:18px;flex:none}
+.an-head h3{margin:0;font-size:15px}.an-head .mut{font-size:11.5px;margin-top:2px}
+.gender-kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.gender-box{border:1px solid #dbe5f2;border-radius:12px;padding:10px 12px;background:#f8fbff}.gender-box.male{border-color:#b8d3ff;background:#f1f7ff}.gender-box.female{border-color:#f0bad3;background:#fff2f8}
+.gender-box .cap{font-size:11px;font-weight:700;color:#60708e}.gender-box b{display:block;font-size:22px;margin-top:3px}.gender-box.male b{color:#2877ea}.gender-box.female b{color:#d54f8c}.gender-box small{color:#6d7d99}
+.an-subtitle{font-size:11px;font-weight:800;color:#6a7893;text-transform:uppercase;letter-spacing:.3px;margin:12px 0 7px}
+.ktx-gender-row{border:1px solid #dfe7f2;border-radius:11px;padding:9px 10px;margin-top:7px;background:#fbfdff}.ktx-gender-top{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.ktx-gender-top b{margin-right:auto}.room-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.rbadge{font-size:10.5px;padding:3px 7px;border-radius:999px;border:1px solid #d9e3f2;background:#fff;color:#50627f}.rbadge.m{background:#edf5ff;color:#1765da;border-color:#bad4ff}.rbadge.f{background:#fff0f7;color:#ca3f80;border-color:#f0b6d1}.rbadge.mix{background:#fff8e9;color:#9b6500;border-color:#f2d18a}
+.splitbar{display:flex;height:5px;border-radius:999px;overflow:hidden;background:#eef2f7;margin-top:7px}.splitbar i:first-child{background:#4f8cff}.splitbar i:last-child{background:#ed6eb0}
+.unit-top{display:grid;grid-template-columns:1fr 1fr;gap:7px}.unit-chip{display:flex;justify-content:space-between;gap:8px;border:1px solid #dfe7f2;background:#fbfdff;border-radius:10px;padding:8px 10px;font-size:12px}.unit-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.unit-chip b{color:#b67a00}
+.unit-ktx{border:1px solid #dfe7f2;border-radius:11px;padding:9px 10px;margin-top:8px;background:#fbfdff}.unit-ktx h4{margin:0 0 6px;font-size:12.5px}.unit-mini{display:grid;grid-template-columns:1fr 1fr;gap:5px}.unit-mini div{display:flex;justify-content:space-between;gap:6px;background:#f1f5fb;border-radius:7px;padding:4px 7px;font-size:10.5px}.unit-mini b{color:#986800}.unit-scroll{max-height:170px;overflow:auto;padding-right:3px}
+/* Step 60: giường trống theo từng phòng trong khung phân tích */
+.bedroom-card{display:flex;flex-direction:column;min-height:0}.bedroom-head-total{display:flex;align-items:center;gap:8px;white-space:nowrap}.bedroom-head-total span{font-size:9.5px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.25px}.bedroom-head-total b{font-size:20px;line-height:1;color:#12945d}.bedroom-scroll{max-height:304px;overflow:auto;padding-right:4px;margin-top:2px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.bedroom-group{border:1px solid #dfe7f2;border-radius:10px;padding:6px 7px;margin:0;background:#fbfdff;min-width:0}.bedroom-group:first-child{margin-top:0}.bedroom-group-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:5px}.bedroom-group-head b{font-size:10.8px;color:#173968;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bedroom-group-head span{font-size:9px;color:var(--mut);white-space:nowrap}.bedroom-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.bedroom-item{display:flex;align-items:center;justify-content:space-between;gap:3px;min-width:0;border:1px solid #dce6f2;border-radius:7px;background:#fff;padding:4px 5px;transition:all .18s ease}.bedroom-item .rp{font-size:9px;font-weight:800;color:#314b71;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bedroom-item strong{font-size:10.5px;line-height:1;color:#11985d}.bedroom-item.available{background:linear-gradient(180deg,#dff7ea 0%,#c9efd9 100%);border-color:#52bf80;box-shadow:0 1px 0 rgba(17,152,93,.10),0 4px 10px rgba(17,152,93,.10)}.bedroom-item.available .rp{color:#17653f}.bedroom-item.available strong{color:#087f49;font-weight:900}.bedroom-item.available::after{content:'';width:6px;height:6px;border-radius:50%;background:#14985a;flex:0 0 6px;box-shadow:0 0 0 2px rgba(20,152,90,.16)}.bedroom-item.zero{background:#fff;border-color:#dce6f2;box-shadow:none}.bedroom-item.zero strong{color:#6f7f96}.bedroom-item.zero::after{display:none}.bedroom-item.low{background:linear-gradient(180deg,#dff7ea 0%,#c9efd9 100%);border-color:#52bf80;box-shadow:0 1px 0 rgba(17,152,93,.10),0 4px 10px rgba(17,152,93,.10)}.bedroom-item.low strong{color:#087f49;font-weight:900}.bedroom-item.low::after{background:#14985a;box-shadow:0 0 0 2px rgba(20,152,90,.16)}@media(max-width:1050px){.bedroom-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:900px){.bedroom-scroll{max-height:260px;grid-template-columns:1fr}}
+@media(max-width:900px){.home-analytics{grid-template-columns:1fr}.unit-top{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.gender-kpis,.unit-top,.unit-mini{grid-template-columns:1fr}}
+
+
+
+/* Step 37: room-map functionality, preserving current light UI */
+.roommap-card{overflow:hidden}.roommap-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:10px}.roommap-legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:7px;font-size:11.5px;color:var(--mut)}.roommap-legend span{display:inline-flex;align-items:center;gap:5px}.lg-dot,.lg-ring{width:9px;height:9px;border-radius:50%;display:inline-block}.lg-dot.free{background:var(--gr)}.lg-dot.full{background:var(--am)}.lg-dot.over{background:var(--rd)}.lg-ring{background:transparent;border:2px solid var(--bl)}.lg-ring.female{border-color:var(--pk)}.lg-ring.mix{border-color:var(--am)}
+.day-filter{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.day-chip{border:1px solid var(--ln);background:var(--pn2);color:var(--mut);border-radius:999px;padding:6px 10px;font:inherit;font-size:11.5px;font-weight:700;cursor:pointer}.day-chip:hover{border-color:var(--bl);color:var(--bl)}.day-chip.on{background:var(--bl);color:#fff;border-color:var(--bl);box-shadow:0 4px 12px var(--gl)}
+.room-day{padding:10px!important}.room-day-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.room-day-kpis{display:flex;align-items:center;gap:8px;font-size:11.5px}.room-day-kpis>b{font-size:12px}.room-mini-stats{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}.room-mini-stats .tag{font-size:10px;padding:1px 6px}.room-cell{display:flex!important;flex-direction:column;gap:3px;min-height:48px;padding:5px 6px!important}.room-no,.room-occ{display:flex;justify-content:space-between;align-items:center;gap:4px;width:100%}.room-occ small{font-size:9.5px;color:var(--mut)}.sex{font-style:normal;font-size:10px;border-radius:99px;padding:0 4px;line-height:16px}.sex.m{color:var(--bl);background:var(--gl)}.sex.f{color:var(--pk);background:color-mix(in srgb,var(--pk) 12%,transparent)}.sex.mix{color:var(--am);background:var(--ambg)}
+@media(max-width:800px){.roommap-head{display:block}.day-filter{justify-content:flex-start;margin-top:10px}.roommap-legend{gap:7px}.room-cell{min-height:44px}}
+/* Step 42: room drawer details */
+#rdl.room-drawer{padding:0!important;margin:0 0 0 auto;width:min(420px,100vw);max-width:min(420px,100vw);height:125vh;max-height:125vh;border-radius:18px 0 0 18px!important;border-right:0!important;overflow:hidden;background:#f8fbff!important}#rdl.room-drawer::backdrop{background:rgba(9,20,43,.34);backdrop-filter:blur(5px)}#rdl.room-drawer[open]{display:flex;flex-direction:column}.roomd-head{padding:18px 18px 14px;border-bottom:1px solid var(--ln);background:linear-gradient(180deg,#fff,#f5f9ff)}.roomd-title-row{display:flex;align-items:flex-start;gap:12px}.roomd-title-box{flex:1;min-width:0}.roomd-title-box h3{margin:0;font-size:22px;line-height:1.2}.roomd-sub{margin-top:5px;font-size:12.5px;color:var(--mut)}.roomd-chipline{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.roomd-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;border:1px solid #d9e3f2;background:#fff;color:#355070;font-size:12px;font-weight:700}.roomd-chip.ok{background:#eaf8ef;border-color:#bfe7cb;color:#1e8c57}.roomd-chip.m{background:#edf5ff;border-color:#bfd6ff;color:#1765da}.roomd-chip.f{background:#fff0f7;border-color:#f3bfd8;color:#c4387c}.roomd-chip.mix{background:#fff7e9;border-color:#efd39a;color:#996200}.roomd-chip.a{background:#f3f6fc;border-color:#dbe4f1;color:#5f7395}.roomd-sec{padding:14px 18px;border-bottom:1px solid var(--ln)}.roomd-sec-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.roomd-sec-h b{font-size:12.5px}.roomd-sec-h span{font-size:11.5px;color:var(--mut)}.roomd-type-actions{display:flex;gap:8px;flex-wrap:wrap}.roomd-type{border:1px solid #d5dfef;background:#fff;border-radius:12px;padding:8px 12px;font-size:12.5px;font-weight:700;color:#4b5f80;cursor:pointer}.roomd-type.on{background:#eaf2ff;border-color:#8db7ff;color:#0f56c2;box-shadow:0 6px 16px rgba(41,113,255,.12)}.roomd-type.f.on{background:#fff0f7;border-color:#f2b9d4;color:#c3387a}.roomd-type.mix.on{background:#fff7e9;border-color:#e8c87b;color:#9c6600}.roomd-type.auto.on{background:#eef7f6;border-color:#9bd1ca;color:#137465}.roomd-note-row{display:flex;gap:8px}.roomd-note-row input{flex:1;min-width:0}.roomd-legend{display:flex;gap:12px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid var(--ln);font-size:11.5px;color:var(--mut)}.roomd-legend span{display:inline-flex;align-items:center;gap:5px}.rdot{width:8px;height:8px;border-radius:50%;display:inline-block}.rdot.ok{background:#29b36a}.rdot.miss{background:#ff6b81}.rdot.empty{background:#f0b02f}.roomd-body{flex:1;overflow:auto;padding:0 18px 10px}.roomd-person{padding:14px 0;border-bottom:1px solid #ebf0f7;cursor:pointer;border-radius:10px;transition:background .15s ease,transform .15s ease}.roomd-person:hover{background:#f1f6ff}.roomd-person:active{transform:scale(.997)}.roomd-row1{display:flex;align-items:flex-start;gap:10px}.roomd-index{width:18px;min-width:18px;text-align:center;font-size:12px;font-weight:800;color:#7e93b3;padding-top:4px}.roomd-avatar{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#eef4ff,#dbe9ff);color:#356ad6;display:grid;place-items:center;font-weight:800;font-size:14px}.roomd-main{flex:1;min-width:0}.roomd-topline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.roomd-name{font-weight:800;color:#1c2b46}.roomd-mini{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;border:1px solid #dbe4f2;background:#fff;color:#557098}.roomd-mini.m{background:#edf5ff;border-color:#bfd6ff;color:#1765da}.roomd-mini.f{background:#fff0f7;border-color:#f3bfd8;color:#c4387c}.roomd-mini.td{background:#eef3fb;color:#4f678c}.roomd-lines{margin-top:5px;font-size:12px;color:#516781;line-height:1.45}.roomd-lines .stay{color:#139b61;font-weight:700}.roomd-lines .warn{color:#db506f;font-weight:700}.roomd-lines .mut{color:var(--mut)}.roomd-foot{padding:14px 18px;border-top:1px solid var(--ln);display:flex;justify-content:flex-end;background:#fff}@media(max-width:720px){#rdl.room-drawer{width:100vw;max-width:100vw;border-radius:0!important}.roomd-title-box h3{font-size:20px}.roomd-note-row{flex-direction:column}.roomd-note-row .btn{width:100%}}
+
+
+
+
+/* STEP 41 — unified typography system */
+:root{--app-font:"Be Vietnam Pro","Segoe UI",Arial,sans-serif}
+html,body,button,input,select,textarea,option,table,th,td,dialog{font-family:var(--app-font)!important}
+body{font-size:14px!important;line-height:1.46!important;font-weight:400!important}
+/* Page hierarchy */
+.top h2{font-size:28px!important;line-height:1.15!important;font-weight:700!important;letter-spacing:-.02em!important}
+h2{font-weight:700!important}
+h3{font-size:15.5px!important;line-height:1.3!important;font-weight:700!important}
+.eb,.cap,.lbl,.an-subtitle{font-weight:700!important}
+.mut,.sub,small{font-weight:400!important}
+/* Navigation */
+.brand b{font-size:16px!important;font-weight:700!important}.brand small{font-size:12.5px!important}
+nav button{font-size:13.5px!important;font-weight:500!important}nav button.on{font-weight:600!important}
+/* Controls */
+.btn{font-size:13px!important;font-weight:600!important}.btn.sm{font-size:12px!important;font-weight:600!important}
+input,select,textarea{font-size:13.5px!important;font-weight:500!important}
+/* Data tables: readable but compact */
+table{font-size:12.8px!important}th{font-size:11.5px!important;font-weight:700!important;letter-spacing:.01em!important}td{font-weight:500!important}
+#work .cmp2{font-size:12.7px!important}
+#work .cmp2 th{font-size:11.3px!important}
+#work .cmp2 td{font-size:12.7px!important}
+/* Badges and chips */
+.tag,.pl,.pill,.rbadge,.day-chip,.sex{font-family:var(--app-font)!important;font-weight:600!important}
+/* Room map stays compact */
+#home .roommap-card,#home .room-day,#home .room-cell{font-family:var(--app-font)!important}
+#home .room-day-head{font-size:11.5px!important}
+#home .room-cell{font-size:9.5px!important;line-height:1.12!important}
+#home .room-cell .room-no b{font-size:10px!important}
+#home .room-cell .room-occ b{font-size:10.5px!important}
+#home .room-cell .room-occ small{font-size:8px!important}
+#home .room-cell .sex{font-size:8.5px!important;line-height:13px!important}
+
+
+
+/* STEP50: color-coded actions for Tạm trú · Tạm vắng */
+#t6 #tA{background:linear-gradient(135deg,#12a66c,#22c98f)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 5px 14px rgba(18,166,108,.22)!important}
+#t6 #tB{background:linear-gradient(135deg,#64748b,#7c8aa0)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 5px 14px rgba(100,116,139,.18)!important}
+#t6 #tC{background:linear-gradient(135deg,#12a66c,#22c98f)!important;color:#fff!important;border-color:transparent!important}
+#t6 #tD{background:linear-gradient(135deg,#64748b,#7c8aa0)!important;color:#fff!important;border-color:transparent!important}
+#t6 #tN{background:linear-gradient(135deg,#2477ea,#1763da)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 5px 14px rgba(36,119,234,.2)!important}
+#t6 #tX{background:linear-gradient(135deg,#7c4dff,#6542d8)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 5px 14px rgba(124,77,255,.2)!important}
+#t6 label.btn:has(#tU){background:linear-gradient(135deg,#f59e0b,#e17c00)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 5px 14px rgba(245,158,11,.2)!important}
+#t6 #tA:hover,#t6 #tB:hover,#t6 #tC:hover,#t6 #tD:hover,#t6 #tN:hover,#t6 #tX:hover,#t6 label.btn:has(#tU):hover{filter:brightness(1.06);transform:translateY(-1px)}
+
+
+
+/* STEP 51 — đồng bộ cỡ chữ bảng Tạm trú · Tạm vắng với toàn ứng dụng */
+@media (min-width:761px){
+  #t6 .cmp{font-size:12.8px!important;}
+  #t6 .cmp th{font-size:11.4px!important;line-height:1.3!important;font-weight:800!important;}
+  #t6 .cmp td{font-size:12.8px!important;line-height:1.4!important;}
+  #t6 .cmp td b{font-size:13px!important;}
+  #t6 .cmp .pl,#t6 .cmp .tag{font-size:10.8px!important;}
+  #t6 .t6-sort{font-size:11.4px!important;}
+  #t6 .t6-sort .sa{font-size:9.5px!important;}
+}
+@media (max-width:760px){
+  #t6 .cmp th{font-size:11px!important;}
+  #t6 .cmp td{font-size:12.3px!important;}
+  #t6 .cmp td b{font-size:12.6px!important;}
+}
+
+
+
+/* STEP 62/64: scale giao diện 80% và bù chiều cao viewport trên desktop */
+@media (min-width: 900px){
+  body{zoom:.80;min-height:125vh;}
+  nav{height:125vh;}
+  main{min-height:125vh;}
+}
+
+
+
+/* STEP 77: ngăn thông báo nhanh bên phải */
+.alert-quick-drawer{position:fixed;top:0;right:0;width:min(420px,100vw);max-width:min(420px,100vw);height:125vh;max-height:125vh;z-index:3200;background:#fff;border:1px solid #dbe5f2;border-right:0;border-radius:18px 0 0 18px;box-shadow:0 20px 55px rgba(20,44,82,.22);display:none;overflow:hidden}
+.alert-quick-drawer.open{display:flex;flex-direction:column}
+.aqd-head{display:flex;align-items:flex-start;gap:10px;padding:14px 14px 12px;border-bottom:1px solid #e7edf6;background:linear-gradient(180deg,#fff,#f7faff)}
+.aqd-head-main{flex:1;min-width:0}.aqd-head h3{margin:0;font-size:16px;color:#172b4d}.aqd-head .mut{font-size:10.5px;margin-top:2px}.aqd-x{width:30px;height:30px;border:1px solid #d9e4f1;border-radius:9px;background:#fff;color:#50627e;cursor:pointer;font-size:18px;line-height:1}
+.aqd-tools{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid #edf1f7}.aqd-count{font-size:10.5px;color:#637795;flex:1}.aqd-read{border:1px solid #bed5ff;background:#edf5ff;color:#1d63c5;border-radius:9px;padding:7px 10px;font-size:10.5px;font-weight:800;cursor:pointer}.aqd-read:disabled{opacity:.45;cursor:default}
+.aqd-list{flex:1;min-height:0;overflow:auto;padding:8px;display:grid;gap:6px}.aqd-empty{padding:28px 16px;text-align:center;color:#71829c;font-size:11px}
+.aqd-item{display:grid;grid-template-columns:9px minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 9px;border:1px solid #e5ecf5;border-radius:11px;background:#fff;transition:.15s ease}.aqd-item.clickable{cursor:pointer}.aqd-item.clickable:hover{background:#f5f9ff;border-color:#cdddf4;transform:translateY(-1px)}
+.aqd-dot{width:7px;height:7px;border-radius:50%;background:#e4a325}.aqd-item.danger .aqd-dot{background:#e3495d}.aqd-item.info .aqd-dot{background:#3478e5}.aqd-copy{min-width:0}.aqd-title{font-size:11.5px;font-weight:800;color:#1d3151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.aqd-detail{margin-top:2px;font-size:10px;color:#687b98;line-height:1.35}.aqd-edit{border:1px solid #cfe0f6;background:#fff;color:#2868c7;border-radius:8px;padding:5px 7px;font-size:9.5px;font-weight:800;white-space:nowrap;cursor:pointer}.aqd-edit:hover{background:#edf5ff}
+.aqd-foot{padding:9px 12px;border-top:1px solid #e7edf6;background:#fbfdff}.aqd-open-center{width:100%;border:0;background:transparent;color:#2868c7;font-size:10.5px;font-weight:800;cursor:pointer;padding:5px}
+@media(max-width:700px){.alert-quick-drawer{top:0;right:0;width:100vw;max-width:100vw;height:100vh;max-height:100vh;border-radius:0;border-right:1px solid #dbe5f2}}
+
+
+
+/* STEP 83 — Đồng bộ màu cho toàn bộ nút thao tác */
+:root{
+  --btn-blue1:#2f7cf4;--btn-blue2:#1763da;
+  --btn-green1:#12a56e;--btn-green2:#20c58a;
+  --btn-red1:#e33f52;--btn-red2:#f06171;
+  --btn-slate1:#7082a3;--btn-slate2:#536784;
+  --btn-amber1:#f2a11f;--btn-amber2:#e88612;
+  --btn-violet1:#7c5cff;--btn-violet2:#6948e8;
+  --btn-cyan1:#0f9fb8;--btn-cyan2:#21b7d1;
+}
+/* Nút chuẩn */
+.btn,label.btn{background:linear-gradient(135deg,var(--btn-blue1),var(--btn-blue2))!important;color:#fff!important;border-color:transparent!important;box-shadow:0 5px 14px rgba(23,99,218,.18)!important}
+.btn.g,label.btn.g{background:linear-gradient(135deg,var(--btn-green1),var(--btn-green2))!important;color:#fff!important;border-color:transparent!important}
+.btn.r,label.btn.r{background:linear-gradient(135deg,var(--btn-red1),var(--btn-red2))!important;color:#fff!important;border-color:transparent!important}
+.btn.s,label.btn.s{background:linear-gradient(135deg,var(--btn-slate1),var(--btn-slate2))!important;color:#fff!important;border-color:transparent!important;box-shadow:0 5px 12px rgba(65,83,115,.16)!important}
+.btn.a,label.btn.a{background:linear-gradient(135deg,var(--btn-amber1),var(--btn-amber2))!important;color:#fff!important;border-color:transparent!important}
+.btn:hover,label.btn:hover{filter:brightness(1.055)!important;transform:translateY(-1px)!important}
+.btn:disabled,label.btn:has(input:disabled){filter:none!important;transform:none!important;opacity:.45!important}
+/* Thanh công cụ Quản lý công nhân: giữ palette nhiều màu nhưng không còn nút trắng */
+#tools .ta-slate{background:linear-gradient(135deg,#4f6f9f,#3d5c89)!important;color:#fff!important;border-color:transparent!important}
+#tools .ta-blue{background:linear-gradient(135deg,#2d7df4,#1763da)!important;color:#fff!important}
+#tools .ta-green{background:linear-gradient(135deg,#159f68,#20c58a)!important;color:#fff!important}
+#tools .ta-indigo{background:linear-gradient(135deg,#536dfe,#4054d8)!important;color:#fff!important}
+#tools .ta-emerald{background:linear-gradient(135deg,#0e9f6e,#18b981)!important;color:#fff!important}
+#tools .ta-cyan{background:linear-gradient(135deg,#0f9fb8,#21b7d1)!important;color:#fff!important}
+#tools .ta-violet{background:linear-gradient(135deg,#7c5cff,#6948e8)!important;color:#fff!important}
+#tools .ta-amber{background:linear-gradient(135deg,#f2a11f,#e88612)!important;color:#fff!important}
+#tools .ta-purple{background:linear-gradient(135deg,#9a55df,#7f3fc2)!important;color:#fff!important}
+/* Tab / phân đoạn */
+.seg button{background:#e9f1ff!important;color:#285b9f!important;border-color:#c9daf5!important;font-weight:700!important}
+.seg button.on{background:linear-gradient(135deg,var(--btn-blue1),var(--btn-blue2))!important;color:#fff!important}
+/* Bộ lọc dạng chip */
+.day-chip,.room-filterbar button,.alert-filterbar button{background:#edf4ff!important;color:#315f9b!important;border-color:#c9daf4!important;font-weight:750!important;box-shadow:none!important}
+.day-chip.on,.room-filterbar button.on,.alert-filterbar button.on{background:linear-gradient(135deg,var(--btn-blue1),var(--btn-blue2))!important;color:#fff!important;border-color:transparent!important;box-shadow:0 4px 10px rgba(34,103,218,.15)!important}
+/* Công năng phòng: mỗi lựa chọn có màu nhận diện */
+.roomd-type.auto{background:#eaf8f5!important;color:#147664!important;border-color:#9fd8ce!important}
+.roomd-type.m{background:#edf5ff!important;color:#1765da!important;border-color:#b8d2ff!important}
+.roomd-type.f{background:#fff0f7!important;color:#c3387a!important;border-color:#efbdd5!important}
+.roomd-type.mix{background:#fff7e9!important;color:#986200!important;border-color:#e8ca84!important}
+.roomd-type.on{box-shadow:0 5px 14px rgba(47,111,232,.14)!important;font-weight:800!important}
+/* Nút ngày/tuần và lựa chọn nhỏ */
+.wkd button{background:#edf4ff!important;color:#315f9b!important;border-color:#c9daf4!important}
+.wkd button.on{background:linear-gradient(135deg,var(--btn-blue1),var(--btn-blue2))!important;color:#fff!important;border-color:transparent!important}
+.wkd button.on small{color:#eaf2ff!important}
+/* Nút cảnh báo nhanh */
+.aqd-read{background:linear-gradient(135deg,#2f7cf4,#1763da)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 4px 12px rgba(23,99,218,.16)!important}
+.aqd-open-center{background:linear-gradient(135deg,#6d5ce7,#5844cb)!important;color:#fff!important;border-radius:9px!important;padding:8px 10px!important}
+.aqd-edit{background:linear-gradient(135deg,#0f9fb8,#21b7d1)!important;color:#fff!important;border-color:transparent!important}
+/* Nút đóng/xoá icon: vẫn có màu nhưng nhẹ để không lấn át */
+.aqd-x,dialog .x,#rdl #rx,#rdl #rx2{background:#eef3fb!important;color:#405878!important;border-color:#d1ddeb!important}
+.chip button,.fi .fa button{background:#edf4ff!important;color:#3566a5!important}
+.chip button:hover,.fi .fa button:hover{background:#dfeaff!important;color:#164f9d!important}
+/* Các nút báo cáo / xuất file */
+.report-excel-btn{background:linear-gradient(135deg,var(--btn-cyan1),var(--btn-cyan2))!important;color:#fff!important}
+.report-export-btn,.meal-report-btn{background:linear-gradient(135deg,var(--btn-blue1),var(--btn-blue2))!important;color:#fff!important}
+/* Nút chuông giữ màu vàng nhận diện */
+.alert-float{background:linear-gradient(135deg,#fff4bf,#ffd85d)!important;color:#8b5d00!important;box-shadow:0 7px 20px rgba(190,137,0,.22),0 0 0 1px #f0c84e!important}
+/* Không đổi màu các ô phòng và menu điều hướng — đây là dữ liệu/trạng thái, không phải nút thao tác. */
+
+
+
+/* STEP85 — Phân quyền chi tiết theo chức năng */
+.perm-matrix th,.perm-matrix td{text-align:center!important;white-space:nowrap}.perm-matrix th:first-child,.perm-matrix td:first-child{text-align:left!important}.perm-matrix td:not(:first-child){font-weight:800;color:#168452}.perm-matrix td:not(:first-child):has(:empty){color:#8b9ab0}.role-perm-note{margin-top:10px;padding:9px 11px;border:1px solid #dce6f3;border-radius:10px;background:#f8fbff;color:#5d718f;font-size:10.5px}
+
+
+
+/* STEP86 — Đồng bộ Supabase dữ liệu thật */
+.sync-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:12px}.sync-status{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid #dce6f3;border-radius:12px;background:#f8fbff}.sync-dot{width:10px;height:10px;border-radius:50%;background:#9aa9bd;box-shadow:0 0 0 4px rgba(154,169,189,.13)}.sync-status.ok .sync-dot{background:#18a864;box-shadow:0 0 0 4px rgba(24,168,100,.13)}.sync-status.warn .sync-dot{background:#e4a325;box-shadow:0 0 0 4px rgba(228,163,37,.13)}.sync-status.bad .sync-dot{background:#df4d5b;box-shadow:0 0 0 4px rgba(223,77,91,.12)}.sync-status b{display:block;font-size:12px}.sync-status small{display:block;color:var(--mut);font-size:10px;margin-top:2px}.sync-form{display:grid;grid-template-columns:1fr 1fr;gap:9px}.sync-form .wide{grid-column:1/-1}.sync-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.sync-kpi{border:1px solid #e0e8f3;border-radius:10px;background:#fff;padding:9px}.sync-kpi span{display:block;color:var(--mut);font-size:9px;text-transform:uppercase;font-weight:800}.sync-kpi b{display:block;font-size:18px;margin-top:2px}.sync-table td,.sync-table th{font-size:10.5px!important}.sync-help{padding:10px 12px;border:1px solid #dce6f3;border-radius:11px;background:#fbfdff;font-size:10.5px;line-height:1.55;color:#60738f}.sync-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.sync-actions .btn{min-height:34px!important}.sync-note{margin-top:8px;font-size:10px;color:#71829b}.sync-code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:9.5px;background:#eef3fa;border-radius:6px;padding:2px 5px}.sync-last{font-size:10px;color:#60738f;margin-top:8px}.sync-pill{display:inline-flex;align-items:center;padding:3px 7px;border-radius:999px;background:#edf5ff;color:#1b64ca;font-size:9px;font-weight:800}.sync-pill.ok{background:#eaf8ef;color:#178551}.sync-pill.off{background:#f1f4f8;color:#6d7f98}@media(max-width:900px){.sync-grid{grid-template-columns:1fr}.sync-form{grid-template-columns:1fr}.sync-form .wide{grid-column:auto}.sync-kpis{grid-template-columns:repeat(2,1fr)}}
+
+
+
+/* STEP95 — Tìm kiếm toàn hệ thống */
+.global-search{position:relative;width:min(370px,34vw);min-width:260px;align-self:center;z-index:4500}
+.gs-input-wrap{height:38px;display:flex;align-items:center;gap:8px;padding:0 9px 0 11px;border:1px solid #cfdced;border-radius:11px;background:#fff;box-shadow:0 4px 14px rgba(30,63,110,.08);transition:.16s ease}
+.gs-input-wrap:focus-within{border-color:#6da5f7;box-shadow:0 0 0 3px rgba(47,124,244,.10),0 6px 18px rgba(30,63,110,.10)}
+.gs-input-wrap svg{width:16px;height:16px;color:#55739e;flex:0 0 auto}.gs-input-wrap input{border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;min-height:34px!important;height:34px!important;padding:0!important;font-size:11.5px!important;flex:1;min-width:0}.gs-input-wrap kbd{font-family:inherit;font-size:8.5px;font-weight:800;color:#71839d;border:1px solid #dbe5f1;background:#f5f8fc;border-radius:6px;padding:2px 5px;white-space:nowrap}
+.gs-panel{position:absolute;top:44px;left:0;right:0;max-height:min(520px,72vh);overflow:auto;background:#fff;border:1px solid #d9e4f1;border-radius:13px;box-shadow:0 18px 48px rgba(22,48,86,.22);display:none;padding:7px}
+.gs-panel.open{display:block}.gs-empty{padding:18px 12px;text-align:center;color:#71829a;font-size:10.5px}.gs-section{padding:5px 5px 3px;color:#72849e;font-size:8.5px;font-weight:900;text-transform:uppercase;letter-spacing:.45px}.gs-result{width:100%;border:0;background:#fff;display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:9px;align-items:center;padding:8px 9px;border-radius:9px;text-align:left;cursor:pointer;color:#203757}.gs-result:hover,.gs-result.on{background:#eef5ff}.gs-ico{width:30px;height:30px;border-radius:9px;background:#eaf2ff;color:#2f6fd8;display:grid;place-items:center;font-size:11px;font-weight:900}.gs-ico.room{background:#eaf9f1;color:#168759}.gs-ico.page{background:#f3efff;color:#7156cc}.gs-main{min-width:0}.gs-name{font-size:11px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gs-meta{font-size:9.4px;color:#6c7f9a;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gs-tag{font-size:8.5px;font-weight:800;padding:3px 6px;border-radius:999px;background:#f1f5fb;color:#577093;white-space:nowrap}.gs-tag.archive{background:#fff1f1;color:#c74c5e}.gs-hint{padding:7px 9px 5px;color:#8a99ae;font-size:8.8px;border-top:1px solid #edf1f6;margin-top:4px}
+@media(max-width:1180px){.global-search{width:100%;max-width:none;min-width:0;order:2}#tools.top-actions{order:3}}
+@media(max-width:700px){.global-search{width:100%}.gs-input-wrap kbd{display:none}.gs-panel{position:fixed;left:8px;right:8px;top:78px;max-height:65vh}}
+
+
+
+/* STEP99 — PWA / cài ứng dụng */
+#pwaInstallNav .pwa-state{margin-left:auto;font-size:8px;font-weight:800;padding:2px 5px;border-radius:999px;background:#eaf8ef;color:#188451}#pwaInstallNav.installed{opacity:.78}.pwa-install-dialog{width:min(430px,calc(100vw - 24px));border:0;border-radius:16px;padding:0;box-shadow:0 24px 70px rgba(18,42,78,.28);background:#fff;color:#172b4d}.pwa-install-dialog::backdrop{background:rgba(9,20,43,.38);backdrop-filter:blur(4px)}.pwa-install-head{display:flex;align-items:center;gap:12px;padding:16px 17px;border-bottom:1px solid #e5edf7;background:linear-gradient(180deg,#fff,#f6f9ff)}.pwa-install-head img{width:46px;height:46px;border-radius:12px;box-shadow:0 5px 16px rgba(36,107,253,.18)}.pwa-install-head h3{margin:0;font-size:16px}.pwa-install-head p{margin:2px 0 0;font-size:10px;color:#6e809b}.pwa-install-body{padding:14px 17px;font-size:11px;line-height:1.55;color:#526885}.pwa-install-benefits{display:grid;gap:7px;margin:10px 0}.pwa-install-benefits div{padding:8px 10px;border:1px solid #e2eaf5;border-radius:10px;background:#f9fbfe}.pwa-install-actions{display:flex;justify-content:flex-end;gap:8px;padding:12px 17px;border-top:1px solid #e5edf7;background:#fbfdff}.pwa-install-actions .btn{min-height:34px!important}.pwa-installed-note{color:#168452;font-weight:800}.pwa-ios-note{padding:9px 10px;border-radius:10px;background:#fff8e8;border:1px solid #efd493;color:#876000}
+@media(display-mode:standalone){body{overscroll-behavior-y:none}.pwa-only-browser{display:none!important}}
+@media(max-width:700px){.pwa-install-dialog{width:calc(100vw - 16px)}body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}}
+
+
+
+/* Step 8: worker filter cleanup */
+#work #so{display:none!important}
+/* Step 4 tweaks: brighter delete buttons + clickable/sortable worker table headers */
+.btn.r{background:linear-gradient(135deg,#ff2d55,#ff4d4f)!important;color:#fff!important;box-shadow:0 7px 18px rgba(255,45,85,.28)!important}
+.btn.r:hover{filter:none;transform:translateY(-1px);background:linear-gradient(135deg,#ff244f,#ff4547)!important;color:#fff!important}
+#work .danger-push{background:linear-gradient(135deg,#ff2d55,#ff4d4f)!important;color:#fff!important;box-shadow:0 7px 18px rgba(255,45,85,.28)!important}
+#work .cmp2 tbody tr.wkrow td:not(:first-child){cursor:pointer}
+#work .cmp2 th .thbtn{display:inline-flex;align-items:center;gap:6px;background:transparent;border:0;padding:0;color:inherit;font:inherit;font-weight:700;cursor:pointer}
+#work .cmp2 th .thbtn .arr{font-size:11px;opacity:.45;transition:.15s}
+#work .cmp2 th .thbtn.active{color:#1765da}
+#work .cmp2 th .thbtn.active .arr{opacity:1}
+#work .cmp2 th .thbtn:hover{color:#1765da}
+
+
+
+/* STEP 5 - Tối ưu bảng Quản lý công nhân */
+#work .cmp2{min-width:1780px}
+#work .cmp2 tbody tr.wkrow{transition:background-color .14s ease,box-shadow .14s ease,transform .08s ease}
+#work .cmp2 tbody tr.wkrow:hover td{background:#eaf3ff!important}
+#work .cmp2 tbody tr.wkrow:hover{box-shadow:inset 3px 0 0 #2877ea}
+#work .cmp2 tbody tr.wkrow:active{transform:translateY(1px)}
+#work .cmp2 tbody tr.wkrow:focus-visible{outline:2px solid #2877ea;outline-offset:-2px}
+
+/* Cố định 3 cột đầu khi cuộn ngang */
+#work .cmp2 th:nth-child(1),#work .cmp2 td:nth-child(1){position:sticky;left:0;min-width:42px;width:42px;z-index:5}
+#work .cmp2 th:nth-child(2),#work .cmp2 td:nth-child(2){position:sticky;left:42px;min-width:52px;width:52px;z-index:5}
+#work .cmp2 th:nth-child(3),#work .cmp2 td:nth-child(3){position:sticky;left:94px;min-width:190px;width:190px;z-index:5;box-shadow:8px 0 12px -12px #17396880}
+#work .cmp2 th:nth-child(-n+3){z-index:9;background:linear-gradient(180deg,#f7faff,#eef4fb)}
+#work .cmp2 td:nth-child(-n+3){background:var(--pn)}
+#work .cmp2 tbody tr:nth-child(even) td:nth-child(-n+3){background:#fbfdff}
+#work .cmp2 tbody tr.wkrow:hover td:nth-child(-n+3){background:#eaf3ff!important}
+
+/* Menu thao tác nhanh trong cửa sổ chi tiết */
+#vquick{display:flex;flex-wrap:wrap;gap:8px;padding:10px 20px;border-bottom:1px solid var(--ln);background:color-mix(in srgb,var(--bl) 5%,var(--pn))}
+#vquick .btn{padding:7px 11px;font-size:12.5px;border-radius:9px}
+#vquick .qhint{margin-left:auto;align-self:center;color:var(--mut);font-size:11.5px}
+@media(max-width:700px){#vquick .qhint{width:100%;margin-left:0}.cmp2{min-width:1600px}}
+
+
+
+/* STEP 9 — Đồng bộ trải nghiệm bảng dữ liệu với Quản lý công nhân */
+#t6 table tbody tr,#arc table tbody tr,#t2 table tbody tr,#t3 table tbody tr,#t4 table tbody tr{transition:background .14s,box-shadow .14s;cursor:pointer}
+#t6 table tbody tr:hover td,#arc table tbody tr:hover td,#t2 table tbody tr:hover td,#t3 table tbody tr:hover td,#t4 table tbody tr:hover td{background:#eaf3ff!important}
+#t6 table tbody tr:hover,#arc table tbody tr:hover,#t2 table tbody tr:hover,#t3 table tbody tr:hover,#t4 table tbody tr:hover{box-shadow:inset 3px 0 0 #2877ea}
+#t6 table tbody tr:focus-visible,#arc table tbody tr:focus-visible,#t2 table tbody tr:focus-visible,#t3 table tbody tr:focus-visible,#t4 table tbody tr:focus-visible{outline:2px solid #2877ea;outline-offset:-2px}
+/* sticky columns */
+#t6 .wrap,#arc .wrap,#t2 .wrap,#t3 .wrap,#t4 .wrap{position:relative}
+#t6 table th:nth-child(1),#t6 table td:nth-child(1),#arc table th:nth-child(1),#arc table td:nth-child(1){position:sticky;left:0;z-index:5;min-width:42px;background:var(--pn)}
+#t6 table th:nth-child(2),#t6 table td:nth-child(2),#arc table th:nth-child(2),#arc table td:nth-child(2){position:sticky;left:42px;z-index:5;min-width:54px;background:var(--pn)}
+#t6 table th:nth-child(3),#t6 table td:nth-child(3){position:sticky;left:96px;z-index:5;min-width:86px;background:var(--pn)}
+#t6 table th:nth-child(4),#t6 table td:nth-child(4){position:sticky;left:182px;z-index:5;min-width:180px;background:var(--pn);box-shadow:8px 0 12px -12px #17396880}
+#arc table th:nth-child(3),#arc table td:nth-child(3){position:sticky;left:96px;z-index:5;min-width:190px;background:var(--pn);box-shadow:8px 0 12px -12px #17396880}
+#t2 table th:nth-child(1),#t2 table td:nth-child(1),#t3 table th:nth-child(1),#t3 table td:nth-child(1),#t4 table th:nth-child(1),#t4 table td:nth-child(1){position:sticky;left:0;z-index:5;background:var(--pn)}
+#t2 table th,#t3 table th,#t4 table th,#t6 table th,#arc table th{z-index:8}
+#t6 table tr:hover td:nth-child(-n+4),#arc table tr:hover td:nth-child(-n+3),#t2 table tr:hover td:first-child,#t3 table tr:hover td:first-child,#t4 table tr:hover td:first-child{background:#eaf3ff!important}
+
+
+
+/* STEP 10 - Tự động co/dãn cột để toàn bộ danh sách vừa 1 trang trên desktop */
+@media (min-width:1100px){
+  #work #wl>.wrap,#t6 .wrap,#arc .wrap,#t2 .wrap,#t3 .wrap,#t4 .wrap{overflow-x:hidden}
+
+  /* Quản lý công nhân: bỏ min-width cũ, tự chia đều phần còn lại */
+  #work .cmp2{width:100%!important;min-width:0!important;table-layout:fixed!important;font-size:10px!important}
+  #work .cmp2 th,#work .cmp2 td{padding:5px 3px!important;white-space:normal!important;overflow-wrap:anywhere;word-break:break-word;line-height:1.25!important;min-width:0!important}
+  #work .cmp2 th{font-size:8.8px!important}
+  #work .cmp2 .pl,#work .cmp2 .tag{font-size:8.8px!important;padding:0 4px!important;white-space:normal!important}
+  #work .cmp2 th:nth-child(1),#work .cmp2 td:nth-child(1){left:0!important;width:34px!important;min-width:34px!important;max-width:34px!important}
+  #work .cmp2 th:nth-child(2),#work .cmp2 td:nth-child(2){left:34px!important;width:38px!important;min-width:38px!important;max-width:38px!important}
+  #work .cmp2 th:nth-child(3),#work .cmp2 td:nth-child(3){left:72px!important;width:132px!important;min-width:132px!important;max-width:132px!important}
+  #work .cmp2 th:nth-child(4),#work .cmp2 td:nth-child(4){width:64px}
+  #work .cmp2 th:nth-child(5),#work .cmp2 td:nth-child(5){width:58px}
+  #work .cmp2 th:nth-child(6),#work .cmp2 td:nth-child(6){width:64px}
+  #work .cmp2 th:nth-child(7),#work .cmp2 td:nth-child(7){width:52px}
+  #work .cmp2 th:nth-child(8),#work .cmp2 td:nth-child(8){width:50px}
+  #work .cmp2 th:nth-child(9),#work .cmp2 td:nth-child(9){width:46px}
+  #work .cmp2 th:nth-child(10),#work .cmp2 td:nth-child(10){width:54px}
+  #work .cmp2 th:nth-child(11),#work .cmp2 td:nth-child(11){width:72px}
+  #work .cmp2 th:nth-child(12),#work .cmp2 td:nth-child(12){width:76px}
+  #work .cmp2 th:nth-child(13),#work .cmp2 td:nth-child(13){width:62px}
+  #work .cmp2 th:nth-child(14),#work .cmp2 td:nth-child(14){width:88px}
+  #work .cmp2 th:nth-child(15),#work .cmp2 td:nth-child(15){width:76px}
+  #work .cmp2 th:nth-child(16),#work .cmp2 td:nth-child(16){width:76px}
+  #work .cmp2 th:nth-child(17),#work .cmp2 td:nth-child(17){width:90px}
+
+  /* Các danh sách còn lại: tự chia cột, cho phép xuống dòng để không tràn ngang */
+  #t6 table,#arc table,#t2 table,#t3 table,#t4 table{width:100%!important;min-width:0!important;table-layout:fixed!important;font-size:10px!important}
+  #t6 table th,#t6 table td,#arc table th,#arc table td,#t2 table th,#t2 table td,#t3 table th,#t3 table td,#t4 table th,#t4 table td{padding:5px 4px!important;white-space:normal!important;overflow-wrap:anywhere;word-break:break-word;line-height:1.25!important;min-width:0!important}
+  #t6 table th,#arc table th,#t2 table th,#t3 table th,#t4 table th{font-size:9px!important}
+  #t6 .tag,#arc .tag,#t2 .tag,#t3 .tag,#t4 .tag,#t6 .pl,#arc .pl{font-size:9px!important;padding:0 4px!important;white-space:normal!important}
+
+  /* Giữ cột đầu cố định nhưng thu gọn để vẫn vừa trang */
+  #t6 table th:nth-child(1),#t6 table td:nth-child(1),#arc table th:nth-child(1),#arc table td:nth-child(1){width:34px!important;min-width:34px!important;left:0!important}
+  #t6 table th:nth-child(2),#t6 table td:nth-child(2),#arc table th:nth-child(2),#arc table td:nth-child(2){width:38px!important;min-width:38px!important;left:34px!important}
+  #t6 table th:nth-child(3),#t6 table td:nth-child(3){width:58px!important;min-width:58px!important;left:72px!important}
+  #t6 table th:nth-child(4),#t6 table td:nth-child(4){width:120px!important;min-width:120px!important;left:130px!important}
+  #arc table th:nth-child(3),#arc table td:nth-child(3){width:125px!important;min-width:125px!important;left:72px!important}
+
+  /* Nút trong bảng nhỏ hơn để tránh kéo rộng cột */
+  #t6 table .btn.sm,#arc table .btn.sm,#t2 table .btn.sm,#t3 table .btn.sm,#t4 table .btn.sm{padding:4px 6px!important;font-size:9px!important;gap:3px!important}
+}
+
+/* Màn hình nhỏ vẫn cho cuộn ngang để đảm bảo dễ đọc */
+@media (max-width:1099px){
+  #work .cmp2{min-width:1500px!important}
+  #t6 table,#arc table,#t2 table,#t3 table,#t4 table{min-width:1000px}
+}
+
+
+
+/* STEP 15 - Fix lỗi cột cố định chồng lấn ở Tạm trú/Tạm vắng và Điều chuyển/Nghỉ việc */
+#t6 table th,#t6 table td,#arc table th,#arc table td{
+  position:static!important;
+  left:auto!important;
+  right:auto!important;
+  z-index:auto!important;
+  box-shadow:none!important;
+}
+#t6 table th,#arc table th{
+  position:sticky!important;
+  top:0!important;
+  z-index:2!important;
+}
+#t6 .wrap,#arc .wrap{
+  overflow-x:hidden!important;
+}
+@media (max-width:1099px){
+  #t6 .wrap,#arc .wrap{overflow-x:auto!important}
+  #t6 table,#arc table{min-width:1000px!important}
+}
+
+
+
+/* STEP 16 - Tạm trú/Tạm vắng: bỏ thao tác theo dòng, đồng nhất nền; Điều chuyển: đồng nhất nền */
+#t6 table tbody tr,#arc table tbody tr{cursor:default!important;box-shadow:none!important}
+#t6 table tbody tr td,#arc table tbody tr td{background:var(--pn)!important}
+#t6 table tbody tr:nth-child(even) td,#arc table tbody tr:nth-child(even) td{background:var(--pn)!important}
+#t6 table tbody tr:hover td,#arc table tbody tr:hover td{background:#eaf3ff!important}
+#t6 table th,#arc table th{background:var(--pn2)!important}
+/* Xóa dư âm nền/cột sticky cũ còn sót lại */
+#t6 table th,#t6 table td,#arc table th,#arc table td{box-shadow:none!important}
+
+
+
+/* Step 17: giữ Khôi phục + Xóa hẳn cùng một hàng trong Điều chuyển · Nghỉ việc */
+#arc .cmp3 th:last-child,#arc .cmp3 td:last-child{white-space:nowrap;width:1%;min-width:150px}
+#arc .cmp3 td:last-child .btn{display:inline-flex;vertical-align:middle;margin:0 2px;white-space:nowrap}
+#arc .cmp3 td:last-child{padding-left:6px;padding-right:6px}
+
+
+
+/* STEP 18 — Lọc trùng: hiển thị danh sách theo phong cách Điều chuyển · Nghỉ việc */
+#t2 #r2 .wrap{overflow-x:hidden!important}
+#t2 #r2 table{width:100%!important;min-width:0!important;table-layout:fixed!important}
+#t2 #r2 table th,#t2 #r2 table td{
+  position:static!important;left:auto!important;right:auto!important;z-index:auto!important;
+  box-shadow:none!important;background:var(--pn)!important;
+  padding:7px 6px!important;white-space:normal!important;overflow-wrap:anywhere;word-break:break-word;
+}
+#t2 #r2 table th{background:var(--pn2)!important;position:sticky!important;top:0!important;z-index:2!important;color:#1765da}
+#t2 #r2 table tbody tr{cursor:default!important;box-shadow:none!important;transition:background .14s}
+#t2 #r2 table tbody tr:hover td{background:#eaf3ff!important}
+#t2 #r2 td.act,#t2 #r2 th.act{width:145px!important;min-width:145px!important;white-space:nowrap!important;text-align:center!important}
+#t2 #r2 td.act .btn{display:inline-flex!important;white-space:nowrap!important;margin:1px 2px!important}
+#t2 #r2 td.act.mut{white-space:normal!important}
+@media(max-width:1099px){
+  #t2 #r2 .wrap{overflow-x:auto!important}
+  #t2 #r2 table{min-width:1050px!important;table-layout:auto!important}
+}
+
+
+
+/* STEP 19 — Co giãn cột tối ưu cho Tạm trú/Tạm vắng và Điều chuyển/Nghỉ việc */
+@media (min-width:1100px){
+  #t6 .wrap,#arc .wrap{overflow-x:hidden!important}
+  #t6 table,#arc table{width:100%!important;min-width:0!important;table-layout:auto!important;font-size:11.5px!important}
+  #t6 table th,#t6 table td,#arc table th,#arc table td{
+    min-width:0!important;width:auto!important;padding:6px 5px!important;white-space:nowrap!important;
+    overflow:hidden;text-overflow:ellipsis;vertical-align:middle!important;
+  }
+  /* Các cột nội dung dài được phép xuống dòng để tận dụng chiều ngang tốt hơn */
+  #t6 table th:nth-child(4),#t6 table td:nth-child(4),
+  #t6 table th:nth-child(8),#t6 table td:nth-child(8),
+  #t6 table th:nth-child(9),#t6 table td:nth-child(9),
+  #arc table th:nth-child(3),#arc table td:nth-child(3){white-space:normal!important;overflow-wrap:anywhere;word-break:normal}
+
+  /* Tạm trú/Tạm vắng: ưu tiên không gian cho Họ tên, địa chỉ và CCCD */
+  #t6 table th:nth-child(1),#t6 table td:nth-child(1){width:32px!important}
+  #t6 table th:nth-child(2),#t6 table td:nth-child(2){width:38px!important}
+  #t6 table th:nth-child(3),#t6 table td:nth-child(3){width:72px!important}
+  #t6 table th:nth-child(4),#t6 table td:nth-child(4){width:15%!important}
+  #t6 table th:nth-child(5),#t6 table td:nth-child(5){width:64px!important;text-align:center}
+  #t6 table th:nth-child(6),#t6 table td:nth-child(6){width:84px!important}
+  #t6 table th:nth-child(7),#t6 table td:nth-child(7){width:104px!important}
+  #t6 table th:nth-child(8),#t6 table td:nth-child(8){width:12%!important}
+  #t6 table th:nth-child(9),#t6 table td:nth-child(9){width:11%!important}
+  #t6 table th:nth-child(10),#t6 table td:nth-child(10){width:122px!important}
+  #t6 table th:nth-child(11),#t6 table td:nth-child(11){width:98px!important}
+
+  /* Điều chuyển/Nghỉ việc: giữ thao tác đủ chỗ, các cột còn lại tự co giãn */
+  #arc table th:nth-child(1),#arc table td:nth-child(1){width:32px!important}
+  #arc table th:nth-child(2),#arc table td:nth-child(2){width:38px!important}
+  #arc table th:nth-child(3),#arc table td:nth-child(3){width:17%!important}
+  #arc table th:nth-child(4),#arc table td:nth-child(4){width:82px!important}
+  #arc table th:nth-child(5),#arc table td:nth-child(5){width:62px!important}
+  #arc table th:nth-child(6),#arc table td:nth-child(6){width:70px!important}
+  #arc table th:nth-child(7),#arc table td:nth-child(7){width:58px!important}
+  #arc table th:nth-child(8),#arc table td:nth-child(8){width:124px!important}
+  #arc table th:nth-child(9),#arc table td:nth-child(9){width:96px!important}
+  #arc table th:nth-child(10),#arc table td:nth-child(10){width:92px!important}
+  #arc table th:nth-child(11),#arc table td:nth-child(11){width:164px!important;min-width:164px!important;overflow:visible!important;text-overflow:clip!important}
+}
+@media (max-width:1099px){
+  #t6 .wrap,#arc .wrap{overflow-x:auto!important}
+  #t6 table{min-width:980px!important;table-layout:auto!important}
+  #arc table{min-width:900px!important;table-layout:auto!important}
+}
+
+
+
+/* STEP 20 — tinh chỉnh Báo cáo suất ăn + Lọc trùng */
+/* Meal suppliers: compact modern chips */
+#meal .meal-suppliers{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;margin-top:12px;padding:12px 14px;border:1px solid #dfe7f3;border-radius:14px;background:linear-gradient(180deg,#fbfdff,#f6f9fe)}
+#meal .meal-supplier-label{font-size:12.5px;font-weight:800;color:#5d6f8d;padding-top:7px;white-space:nowrap}
+#meal .meal-supplier-list{display:flex;flex-wrap:wrap;gap:7px}
+#meal .meal-supplier{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:6px 11px;border:1px solid #d6e1ef;border-radius:10px;background:#fff;color:#344866;font-size:12.5px;font-weight:700;cursor:pointer;transition:.16s;box-shadow:0 1px 2px rgba(35,70,120,.04);user-select:none}
+#meal .meal-supplier:hover{border-color:#8eb9f6;background:#f7fbff;transform:translateY(-1px)}
+#meal .meal-supplier input{position:absolute;opacity:0;pointer-events:none}
+#meal .meal-check{width:17px;height:17px;border-radius:5px;display:grid;place-items:center;border:1.5px solid #b9c8db;color:transparent;background:#fff;font-size:11px;line-height:1}
+#meal .meal-supplier:has(input:checked){border-color:#6aa5ff;background:#eef5ff;color:#1765da}
+#meal .meal-supplier:has(input:checked) .meal-check{background:#2f78ed;border-color:#2f78ed;color:#fff}
+@media(max-width:700px){#meal .meal-suppliers{grid-template-columns:1fr}.meal-supplier-label{padding-top:0}}
+
+/* Duplicate filter controls */
+#t2.dup-page{padding:16px 18px}
+#t2 .dup-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-bottom:12px;border-bottom:1px solid var(--ln)}
+#t2 .dup-head h3{font-size:16px}
+#t2 .dup-file-btn{cursor:pointer}
+#t2 .dup-files{display:flex;flex-wrap:wrap;gap:7px;min-height:0;margin:10px 0}
+#t2 .dup-source{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0 12px}
+#t2 .dup-check{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border:1px solid #dce6f3;border-radius:12px;background:#f9fbfe;cursor:pointer}
+#t2 .dup-check input{margin-top:3px;accent-color:#2f78ed}
+#t2 .dup-check span{display:flex;flex-direction:column;gap:2px}
+#t2 .dup-check b{font-size:12.5px;color:#2f405d}
+#t2 .dup-check small{font-size:11.5px;color:#7b8ba5}
+#t2 .dup-criteria{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:end;padding:12px;border:1px solid #dce6f3;border-radius:14px;background:#fff}
+#t2 .dup-label{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#71839f;margin-bottom:7px}
+#t2 .dup-crit{display:flex;flex-wrap:wrap;gap:7px}
+#t2 .dup-crit label{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid #d9e4f1;border-radius:9px;background:#f8fbff;font-size:12px;font-weight:650;color:#3a4d6b;cursor:pointer}
+#t2 .dup-crit label:has(input:checked){border-color:#77aaf5;background:#eef5ff;color:#1765da}
+#t2 .dup-crit input{accent-color:#2f78ed}
+#t2 .dup-min{display:flex;align-items:center;gap:7px;white-space:nowrap;font-size:12px;color:#60718d}
+#t2 .dup-min select{min-width:60px}
+#t2 .dup-actions{display:flex;gap:7px}
+#t2 .dup-note{margin:9px 2px 12px;font-size:11.5px;color:#71809a}
+@media(max-width:900px){#t2 .dup-source{grid-template-columns:1fr}#t2 .dup-criteria{grid-template-columns:1fr}#t2 .dup-actions{justify-content:flex-start}}
+
+/* Duplicate result highlights: cells actually used in match detection */
+#t2 #r2 table td.h{background:#fff3c4!important;color:#7a4b00!important;font-weight:800!important;box-shadow:inset 0 0 0 1px #ffd66b!important;border-radius:6px!important;background-clip:padding-box!important}
+#t2 #r2 table tbody tr:hover td.h{background:#ffeaa0!important;border-radius:6px!important}
+#t2 #r2 table tbody tr:nth-child(even) td:not(.h){background:#fbfdff!important}
+#t2 #r2 table tbody tr:nth-child(odd) td:not(.h){background:#fff!important}
+
+
+
+/* STEP 21 — Rà soát giao diện toàn ứng dụng + sắp xếp bảng Tạm trú/Tạm vắng */
+:root{
+  --ui-radius:14px;
+  --ui-radius-sm:10px;
+  --ui-control-h:40px;
+  --ui-shadow:0 8px 24px rgba(38,74,132,.08);
+  --ui-shadow-hover:0 12px 28px rgba(38,74,132,.12);
+}
+main{max-width:1600px!important;padding-left:24px!important;padding-right:24px!important}
+.top{padding:16px 0 14px!important;margin-bottom:14px!important}
+.card{border-radius:var(--ui-radius)!important;padding:16px!important;margin-bottom:14px!important;box-shadow:var(--ui-shadow)!important}
+.card:hover{box-shadow:var(--ui-shadow-hover)}
+.g2,.g4{gap:14px!important;margin-bottom:14px!important}
+input:not([type=checkbox]):not([type=radio]),select,textarea{
+  min-height:var(--ui-control-h);border-radius:var(--ui-radius-sm)!important;
+  border:1px solid var(--ln)!important;background:var(--pn)!important;color:var(--ink)!important;
+  transition:border-color .15s ease,box-shadow .15s ease,background .15s ease;
+}
+input:not([type=checkbox]):not([type=radio]):hover,select:hover,textarea:hover{border-color:color-mix(in srgb,var(--bl) 45%,var(--ln))!important}
+input:not([type=checkbox]):not([type=radio]):focus,select:focus,textarea:focus{border-color:var(--bl)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--bl) 13%,transparent)!important;outline:none!important}
+.btn{min-height:38px;border-radius:10px!important;padding:8px 14px!important;font-size:13px!important;font-weight:700!important;letter-spacing:0!important}
+.btn.sm{min-height:30px;padding:5px 10px!important;font-size:12px!important}
+.row{gap:8px!important}
+.wrap{border-radius:12px!important;border:1px solid var(--ln)!important;background:var(--pn)!important}
+table{font-size:12.5px!important}
+th{font-size:10.5px!important;letter-spacing:.035em!important;color:#476083!important;background:#f3f7fd!important;border-bottom:1px solid #dfe7f3!important}
+td{border-bottom:1px solid #e7edf6!important}
+tbody tr{transition:background .12s ease,box-shadow .12s ease}
+tbody tr:hover td{background:#edf5ff!important}
+.tag,.pl{font-weight:700!important}
+dialog{border-radius:16px!important;box-shadow:0 24px 80px rgba(16,36,72,.28)!important;border:1px solid #dce5f2!important}
+.vh,.vf{background:#fff!important}
+.lbl{letter-spacing:.055em!important;color:#667a98!important}
+.kpi{letter-spacing:-.035em!important}
+nav{width:236px!important;padding:14px 10px!important}
+nav button{border-radius:9px!important;padding:9px 11px!important}
+nav button.on{background:linear-gradient(90deg,#e9f2ff,#f5f9ff)!important;color:#1765da!important}
+nav .pill{box-shadow:none!important}
+/* Đồng bộ thanh công cụ của các module */
+#work .worker-panel,#t6>.card,#arc>.card,#t2.card,#meal>.card,#backup>.card,#acc>.card,#log>.card,#qr>.card{border-color:#dfe7f3!important}
+/* Tạm trú / tạm vắng: tiêu đề có nút sắp xếp giống Quản lý công nhân */
+#t6 .t6-sort{all:unset;display:inline-flex;align-items:center;gap:5px;cursor:pointer;font:inherit;font-weight:800;color:inherit;white-space:nowrap}
+#t6 .t6-sort:hover{color:#1765da}
+#t6 .t6-sort.on{color:#1765da}
+#t6 .t6-sort .sa{font-size:10px;opacity:.5}
+#t6 .t6-sort.on .sa{opacity:1}
+#t6 .cmp{table-layout:fixed!important;width:100%!important;min-width:0!important}
+#t6 .cmp th,#t6 .cmp td{padding:8px 7px!important;white-space:normal!important;overflow-wrap:anywhere!important;vertical-align:middle!important}
+#t6 .cmp th:nth-child(1),#t6 .cmp td:nth-child(1){width:4%}
+#t6 .cmp th:nth-child(2),#t6 .cmp td:nth-child(2){width:5%}
+#t6 .cmp th:nth-child(3),#t6 .cmp td:nth-child(3){width:8%}
+#t6 .cmp th:nth-child(4),#t6 .cmp td:nth-child(4){width:15%}
+#t6 .cmp th:nth-child(5),#t6 .cmp td:nth-child(5){width:7%}
+#t6 .cmp th:nth-child(6),#t6 .cmp td:nth-child(6){width:9%}
+#t6 .cmp th:nth-child(7),#t6 .cmp td:nth-child(7){width:11%}
+#t6 .cmp th:nth-child(8),#t6 .cmp td:nth-child(8){width:11%}
+#t6 .cmp th:nth-child(9),#t6 .cmp td:nth-child(9){width:10%}
+#t6 .cmp th:nth-child(10),#t6 .cmp td:nth-child(10){width:12%}
+#t6 .cmp th:nth-child(11),#t6 .cmp td:nth-child(11){width:10%}
+/* Nhất quán trạng thái hover cho bảng chỉ xem */
+#t6 table tbody tr,#arc table tbody tr,#t2 #r2 table tbody tr{cursor:default!important}
+/* Meal: chip NCC nhỏ gọn nhất quán */
+#meal .meal-suppliers{padding:10px 12px!important;border-radius:12px!important;background:#fbfdff!important}
+#meal .meal-supplier-options{gap:7px!important}
+#meal .meal-supplier-chip{min-height:34px!important;padding:6px 10px!important;border-radius:10px!important}
+/* Lọc trùng: card tiêu chí gọn, căn hàng */
+#t2 .dup-panel{border-radius:14px!important}
+#t2 .dup-source,#t2 .dup-criteria{gap:10px!important}
+#t2 .dup-actions{gap:8px!important}
+/* Responsive */
+@media(max-width:1099px){
+  main{padding-left:16px!important;padding-right:16px!important}
+  #t6 .cmp{min-width:1050px!important;table-layout:auto!important}
+  #t6 .wrap{overflow-x:auto!important}
+}
+@media(max-width:760px){
+  nav{width:100%!important}
+  main{padding-left:12px!important;padding-right:12px!important}
+  .card{padding:13px!important}
+  .btn{min-height:36px!important}
+}
+
+
+
+/* STEP 26 — tăng cỡ chữ phần hiển thị dữ liệu để đồng bộ toàn ứng dụng */
+@media (min-width:761px){
+  /* Bảng dữ liệu chung */
+  table{font-size:12.5px!important}
+  table th{font-size:10.8px!important;line-height:1.3!important}
+  table td{font-size:12.5px!important;line-height:1.38!important}
+
+  /* Quản lý công nhân */
+  #work .cmp2{font-size:11.8px!important}
+  #work .cmp2 th{font-size:9.8px!important;line-height:1.28!important}
+  #work .cmp2 td{font-size:11.8px!important;line-height:1.35!important}
+  #work .cmp2 .tag,#work .cmp2 .pl{font-size:10px!important;line-height:1.45!important}
+  #work .cmp2 td.nm b{font-size:12.2px!important}
+
+  /* Tạm trú · Tạm vắng / Điều chuyển · Nghỉ việc */
+  #t6 table,#arc table{font-size:12px!important}
+  #t6 table th,#arc table th{font-size:10.4px!important}
+  #t6 table td,#arc table td{font-size:12px!important}
+  #t6 .tag,#arc .tag,#t6 .pl,#arc .pl{font-size:10.2px!important}
+
+  /* Lọc trùng / Tách / Gộp địa chỉ */
+  #t2 table,#t3 table,#t4 table{font-size:11.8px!important}
+  #t2 table th,#t3 table th,#t4 table th{font-size:10.2px!important}
+  #t2 table td,#t3 table td,#t4 table td{font-size:11.8px!important}
+  #t2 .tag,#t3 .tag,#t4 .tag{font-size:10px!important}
+
+  /* Các bảng phụ */
+  .cmp3{font-size:11.8px!important}
+  .cmp3 th{font-size:10.2px!important}
+  .cmp3 td{font-size:11.8px!important}
+}
+
+@media (max-width:760px){
+  table{font-size:12px}
+  table td{font-size:12px}
+}
+
+
+
+/* STEP 31 — nới rộng cột SĐT để số điện thoại hiển thị trên một dòng */
+@media (min-width:761px){
+  #work .cmp2 th:nth-child(11),
+  #work .cmp2 td:nth-child(11){
+    width:92px!important;
+    min-width:92px!important;
+    max-width:92px!important;
+    white-space:nowrap!important;
+    word-break:normal!important;
+    overflow-wrap:normal!important;
+    text-align:center!important;
+  }
+  /* cân lại nhẹ một số cột ngắn để bảng vẫn gọn trong chiều ngang */
+  #work .cmp2 th:nth-child(6),
+  #work .cmp2 td:nth-child(6){width:58px!important;}
+  #work .cmp2 th:nth-child(10),
+  #work .cmp2 td:nth-child(10){width:50px!important;}
+}
+
+
+
+/* Step 34: KTX selector on Overview */
+#tools .home-ktx-select{min-width:132px;font-weight:700;border:1px solid #cbd9ee;background:#fff;color:#17345f;box-shadow:0 4px 12px rgba(39,96,180,.10)}
+#tools .home-ktx-select:focus{border-color:#4f8cff;box-shadow:0 0 0 3px rgba(79,140,255,.13)}
+@media(max-width:860px){#tools .home-ktx-select{min-width:120px;flex:1}}
+
+
+
+/* Step 38 - Room map font fitting */
+#home .roommap-card{font-size:12px}
+#home .roommap-head h3{font-size:16px!important;line-height:1.25}
+#home .roommap-legend{font-size:10.5px!important;gap:8px!important;line-height:1.2}
+#home .day-filter{gap:5px!important}
+#home .day-chip{font-size:10.5px!important;padding:5px 9px!important;line-height:1.1!important}
+#home .kd>summary{font-size:12.5px!important;padding:8px 0!important}
+#home .room-day{padding:8px!important}
+#home .room-day-head{gap:6px!important}
+#home .room-day-head b{font-size:12.5px!important}
+#home .room-day-head .mut{font-size:10.5px!important}
+#home .room-day-kpis{font-size:10.5px!important;gap:5px!important;white-space:nowrap}
+#home .room-day-kpis>b{font-size:11.5px!important}
+#home .room-mini-stats{gap:4px!important;margin-top:4px!important}
+#home .room-mini-stats .tag{font-size:9px!important;padding:1px 5px!important;line-height:1.25!important}
+#home .rm{grid-template-columns:repeat(auto-fill,minmax(58px,1fr))!important;gap:5px!important;margin-top:7px!important}
+#home .r.room-cell{min-height:44px!important;padding:4px 5px!important;font-size:10.5px!important;line-height:1.12!important;gap:2px!important}
+#home .room-no{gap:3px!important;white-space:nowrap}
+#home .room-no>b{font-size:10.5px!important;line-height:1.1!important}
+#home .room-occ{gap:3px!important;white-space:nowrap}
+#home .room-occ>b{font-size:10.5px!important;line-height:1.1!important}
+#home .room-occ small{font-size:8.8px!important;line-height:1.1!important}
+#home .sex{font-size:8.8px!important;line-height:14px!important;padding:0 3px!important}
+@media(max-width:900px){
+  #home .roommap-head h3{font-size:15px!important}
+  #home .day-chip{font-size:10px!important;padding:4px 7px!important}
+  #home .rm{grid-template-columns:repeat(auto-fill,minmax(54px,1fr))!important}
+  #home .r.room-cell{font-size:10px!important}
+}
+
+
+
+/* STEP 27 - Đồng bộ màu nền bảng Quản lý công nhân */
+#work .cmp2{
+  background:#f8fbff!important;
+}
+#work .cmp2 thead th,
+#work .cmp2 tr:first-child th{
+  background:linear-gradient(180deg,#f3f7fd,#eaf1fa)!important;
+  color:#4d607e!important;
+}
+#work .cmp2 tbody tr td,
+#work .cmp2 tbody tr:nth-child(odd) td,
+#work .cmp2 tbody tr:nth-child(even) td,
+#work .cmp2 tbody tr.fm td{
+  background:#f8fbff!important;
+}
+/* Các cột cố định phải dùng đúng màu của cả hàng, tránh tạo mảng trắng */
+#work .cmp2 tbody tr td:nth-child(-n+3),
+#work .cmp2 tbody tr:nth-child(odd) td:nth-child(-n+3),
+#work .cmp2 tbody tr:nth-child(even) td:nth-child(-n+3),
+#work .cmp2 tbody tr.fm td:nth-child(-n+3){
+  background:#f8fbff!important;
+}
+#work .cmp2 tbody tr.wkrow:hover td,
+#work .cmp2 tbody tr.wkrow:hover td:nth-child(-n+3){
+  background:#e8f2ff!important;
+}
+#work .cmp2 tbody tr.wkrow:focus-within td,
+#work .cmp2 tbody tr.wkrow:focus-within td:nth-child(-n+3){
+  background:#eef5ff!important;
+}
+
+
+
+/* STEP 30 — nới rộng cột Ngày sinh để hiển thị DD/MM/YYYY trên một dòng */
+@media (min-width:761px){
+  #work .cmp2 th:nth-child(13),
+  #work .cmp2 td:nth-child(13){
+    width:88px!important;
+    min-width:88px!important;
+    max-width:88px!important;
+    white-space:nowrap!important;
+    word-break:normal!important;
+    overflow-wrap:normal!important;
+    text-align:center!important;
+  }
+  /* nhường nhẹ không gian từ cột Địa chỉ để tổng thể vẫn vừa trang */
+  #work .cmp2 th:nth-child(14),
+  #work .cmp2 td:nth-child(14){
+    width:82px!important;
+  }
+}
+
+
+
+/* STEP 40 — full UI audit, restore original application font */
+html,body,body *,button,input,select,textarea,option,table,th,td,dialog{
+  font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Arial,sans-serif!important;
+}
+body{font-size:15px!important;line-height:1.42!important}
+input,select,textarea,button{font-size:14px!important}
+nav button{font-size:14px!important}
+.brand b{font-size:17px!important}.brand small{font-size:13px!important}
+.top{z-index:100!important;background:rgba(244,247,252,.98)!important;backdrop-filter:blur(14px)!important}
+.top h2{font-size:29px!important;line-height:1.12!important}.top .mut{font-size:14px!important}
+h3{font-size:16px!important}.btn{font-size:14px!important}.btn.sm{font-size:12.5px!important}
+.card{box-shadow:0 7px 22px rgba(44,78,126,.055)!important}
+
+/* Prevent table headers/cells from floating over sticky top toolbar. */
+.wrap{position:relative;isolation:isolate}
+table th{position:static!important;top:auto!important}
+#work .cmp2 th:nth-child(1),#work .cmp2 th:nth-child(2),#work .cmp2 th:nth-child(3),
+#work .cmp2 td:nth-child(1),#work .cmp2 td:nth-child(2),#work .cmp2 td:nth-child(3){
+  position:sticky!important;top:auto!important;z-index:3!important;
+}
+#work .cmp2 th:nth-child(1),#work .cmp2 th:nth-child(2),#work .cmp2 th:nth-child(3){z-index:4!important}
+/* No sticky columns on other pages: avoids overlap and keeps auto-fit predictable. */
+#t6 table th,#t6 table td,#arc table th,#arc table td,#t2 table th,#t2 table td,#t3 table th,#t3 table td,#t4 table th,#t4 table td{
+  position:static!important;left:auto!important;right:auto!important;z-index:auto!important;box-shadow:none!important;
+}
+
+/* Worker list: consistent sizing and readable one-line key values. */
+#work #wl>.wrap{overflow-x:auto!important;overflow-y:visible!important}
+#work .cmp2{width:100%!important;table-layout:fixed!important;background:#f8fbff!important}
+#work .cmp2 th,#work .cmp2 td{padding:8px 6px!important;vertical-align:middle!important}
+#work .cmp2 th{font-size:11.5px!important;line-height:1.15!important}
+#work .cmp2 td{font-size:13px!important;line-height:1.28!important}
+#work .cmp2 td.nm b{font-size:13.5px!important}
+#work .cmp2 .tag,#work .cmp2 .pl{font-size:10.5px!important}
+#work .cmp2 th:nth-child(1),#work .cmp2 td:nth-child(1){left:0!important;width:34px!important;min-width:34px!important;max-width:34px!important}
+#work .cmp2 th:nth-child(2),#work .cmp2 td:nth-child(2){left:34px!important;width:42px!important;min-width:42px!important;max-width:42px!important}
+#work .cmp2 th:nth-child(3),#work .cmp2 td:nth-child(3){left:76px!important;width:145px!important;min-width:145px!important;max-width:145px!important;box-shadow:7px 0 12px -12px #17396880!important}
+#work .cmp2 th:nth-child(11),#work .cmp2 td:nth-child(11){width:94px!important;min-width:94px!important;white-space:nowrap!important}
+#work .cmp2 th:nth-child(13),#work .cmp2 td:nth-child(13){width:88px!important;min-width:88px!important;white-space:nowrap!important}
+#work .cmp2 tbody tr td:nth-child(-n+3),#work .cmp2 tbody tr:nth-child(even) td:nth-child(-n+3),#work .cmp2 tbody tr.fm td:nth-child(-n+3){background:#f8fbff!important}
+#work .cmp2 tbody tr.wkrow:hover td,#work .cmp2 tbody tr.wkrow:hover td:nth-child(-n+3){background:#e8f2ff!important}
+
+/* All core data tables: unified typography/background and predictable fit. */
+#t6 table,#arc table,#t2 table,#t3 table,#t4 table,.cmp3{width:100%!important;table-layout:fixed!important;background:#fff!important}
+#t6 th,#arc th,#t2 th,#t3 th,#t4 th,.cmp3 th{font-size:11.5px!important;line-height:1.15!important;background:#f1f6fc!important;color:#315b9c!important;padding:8px 6px!important}
+#t6 td,#arc td,#t2 td,#t3 td,#t4 td,.cmp3 td{font-size:13px!important;line-height:1.25!important;padding:8px 6px!important;background:#fff!important;white-space:normal!important;overflow-wrap:anywhere!important}
+#t6 tr:hover td,#arc tr:hover td,#t2 tr:hover td,#t3 tr:hover td,#t4 tr:hover td,.cmp3 tr:hover td{background:#eef5ff!important}
+#t6 tbody tr:nth-child(even) td,#arc tbody tr:nth-child(even) td,#t2 tbody tr:nth-child(even) td,#t3 tbody tr:nth-child(even) td,#t4 tbody tr:nth-child(even) td{background:#fbfdff!important}
+
+/* Room map: reduce typography and density so every value fits its tile. */
+#home .roommap-card{font-size:11px!important}
+#home .roommap-head h3{font-size:15px!important;line-height:1.15!important}
+#home .roommap-legend{font-size:9.5px!important;gap:6px!important}
+#home .day-chip{font-size:9.5px!important;padding:4px 7px!important}
+#home .kd>summary{font-size:11.5px!important;padding:7px 0!important}
+#home .room-day{padding:7px!important}
+#home .room-day-head b{font-size:11.5px!important}
+#home .room-day-head .mut{font-size:9px!important}
+#home .room-day-kpis{font-size:9px!important;gap:4px!important}
+#home .room-day-kpis>b{font-size:10px!important}
+#home .room-mini-stats .tag{font-size:8px!important;padding:1px 4px!important}
+#home .rm{grid-template-columns:repeat(auto-fill,minmax(52px,1fr))!important;gap:4px!important;margin-top:6px!important}
+#home .r.room-cell{min-height:39px!important;padding:3px 4px!important;font-size:9px!important;line-height:1.02!important;gap:1px!important;border-radius:7px!important}
+#home .room-no>b{font-size:9.2px!important;line-height:1!important}
+#home .room-occ>b{font-size:9.2px!important;line-height:1!important}
+#home .room-occ small{font-size:7.6px!important;line-height:1!important}
+#home .sex{font-size:7.5px!important;line-height:12px!important;padding:0 2px!important}
+
+/* Keep cards/forms aligned across pages. */
+.row{align-items:center!important}
+input,select,textarea{min-height:39px!important}
+.card>.row:first-child{align-items:center!important}
+
+@media(max-width:1180px){
+  main{padding-left:18px!important;padding-right:18px!important}
+  #work .cmp2{min-width:1120px!important}
+}
+@media(max-width:860px){
+  body{font-size:14px!important}
+  main{padding-left:12px!important;padding-right:12px!important}
+  .top{position:relative!important;z-index:20!important;background:transparent!important}
+  #work .cmp2{min-width:1080px!important}
+  #home .rm{grid-template-columns:repeat(auto-fill,minmax(50px,1fr))!important}
+}
+
+
+
+/* STEP59: tổng hợp giường trống phía dưới sơ đồ phòng */
+#home .bedfree-card{margin-top:12px!important;padding:14px 16px!important;background:linear-gradient(180deg,#fff 0%,#f8fbff 100%)!important}
+#home .bedfree-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+#home .bedfree-head h3{margin:0 0 3px!important;font-size:15px!important}
+#home .bedfree-head .mut{font-size:10.5px!important}
+#home .bedfree-total{display:flex;align-items:center;gap:10px;padding:7px 11px;border:1px solid #b7e4cc;border-radius:10px;background:#effaf4}
+#home .bedfree-total span{font-size:9px;font-weight:800;letter-spacing:.35px;color:#37815a}
+#home .bedfree-total b{font-size:22px;line-height:1;color:#11985d}
+#home .bedfree-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px;margin-top:11px}
+#home .bedfree-item{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;align-items:center;column-gap:12px;padding:9px 11px;border:1px solid #d8e3f0;border-radius:10px;background:#fff}
+#home .bedfree-item>div{display:flex;flex-direction:column;gap:2px;grid-row:1/3}
+#home .bedfree-item>div b{font-size:11.5px;color:#173968}
+#home .bedfree-item>div span{font-size:9.5px;color:var(--mut)}
+#home .bedfree-item strong{font-size:18px;line-height:1;color:#11985d;text-align:right}
+#home .bedfree-item small{font-size:9px;color:var(--mut);text-align:right}
+@media(max-width:700px){#home .bedfree-total{width:100%;justify-content:space-between}#home .bedfree-grid{grid-template-columns:1fr 1fr}}
+
+
+
+/* STEP52: Lọc trùng - thu gọn các ô lựa chọn bằng chiều cao nút thao tác */
+#t2 .dup-source{gap:8px!important;margin:7px 0 8px!important}
+#t2 .dup-check{
+  min-height:34px!important;
+  height:34px!important;
+  padding:0 10px!important;
+  border-radius:9px!important;
+  align-items:center!important;
+  gap:8px!important;
+  box-sizing:border-box!important;
+}
+#t2 .dup-check input{margin:0!important;flex:0 0 auto}
+#t2 .dup-check span{
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  gap:6px!important;
+  min-width:0!important;
+  line-height:1!important;
+}
+#t2 .dup-check b{font-size:11.5px!important;line-height:1!important;white-space:nowrap!important}
+#t2 .dup-check small{font-size:9.5px!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;opacity:.8}
+#t2 .dup-criteria{
+  padding:7px 9px!important;
+  gap:8px!important;
+  border-radius:10px!important;
+  align-items:center!important;
+}
+#t2 .dup-label{font-size:9.5px!important;margin-bottom:4px!important;line-height:1!important}
+#t2 .dup-crit{gap:5px!important;align-items:center!important}
+#t2 .dup-crit label{
+  min-height:34px!important;
+  height:34px!important;
+  padding:0 9px!important;
+  border-radius:8px!important;
+  font-size:11px!important;
+  line-height:1!important;
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+}
+#t2 .dup-min{min-height:34px!important;height:34px!important;align-items:center!important}
+#t2 .dup-min select{height:34px!important;min-height:34px!important}
+#t2 .dup-actions .btn{height:34px!important;min-height:34px!important;padding:0 12px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important}
+@media(max-width:760px){
+  #t2 .dup-check small{display:none!important}
+  #t2 .dup-check{min-width:0!important;width:100%!important}
+}
+
+/* STEP 55 — Quản lý công nhân: bỏ lọc Tiểu đoàn, nới cột CCCD */
+#work .worker-filters{grid-template-columns:repeat(5,minmax(125px,1fr))!important}
+#work .cmp2 th:nth-child(12),
+#work .cmp2 td:nth-child(12){
+  width:106px!important;
+  min-width:106px!important;
+  white-space:nowrap!important;
+  word-break:normal!important;
+}
+@media(max-width:1180px){#work .worker-filters{grid-template-columns:repeat(3,1fr)!important}}
+@media(max-width:860px){#work .worker-filters{grid-template-columns:1fr 1fr!important}}
+@media(max-width:520px){#work .worker-filters{grid-template-columns:1fr!important}}
+
+
+
+/* STEP 58 — Làm gọn cửa sổ chi tiết công nhân */
+#vdl #ve{display:none!important}
+#vdl #vquick{display:none!important}
+
+
+
+/* STEP73 — Bộ quản trị vận hành mở rộng */
+.alert-float{position:fixed!important;right:18px!important;top:112px!important;transform:none!important;z-index:3100;min-width:36px;width:36px;height:36px;border:0;border-radius:50%;background:rgba(255,255,255,.97);box-shadow:0 8px 24px rgba(20,52,96,.18),0 0 0 1px rgba(184,202,226,.75);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:#24466f;padding:0;margin:0!important;font-size:16px;line-height:1;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}.alert-float:hover{background:#fff;transform:translateY(-1px)!important;box-shadow:0 10px 28px rgba(20,52,96,.24),0 0 0 1px #a9c3e7}.alert-float.hide{display:none!important}.alert-float .badge{position:absolute;right:-7px;top:-7px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#e54a5f;color:#fff;font-size:9px;font-weight:800;display:grid;place-items:center;border:2px solid #fff}@media(max-width:700px){.alert-float{right:10px!important;top:86px!important;width:34px;height:34px}}.alert-read-all{margin-left:auto;background:#eef5ff!important;border-color:#c6dcff!important;color:#1d63c5!important}.alert-read-all:hover{background:#e2eeff!important}
+.alert-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}.alert-card{padding:13px;border:1px solid #e0e8f3;border-radius:13px;background:#fff}.alert-card b{display:block;font-size:22px;margin-top:3px}.alert-card.warn b{color:#c77a00}.alert-card.danger b{color:#d9465d}.alert-card.ok b{color:#14945d}.alert-list{display:grid;gap:8px}.alert-row{display:grid;grid-template-columns:24px minmax(140px,1fr) minmax(220px,2fr) auto;gap:10px;align-items:center;padding:9px 10px;border:1px solid #e6edf6;border-radius:10px;background:#fff}.alert-row:hover{background:#f8fbff}.alert-dot{width:10px;height:10px;border-radius:50%;background:#f1aa26}.alert-row.danger .alert-dot{background:#e34b60}.alert-row.info .alert-dot{background:#357ae8}.alert-row .who{font-weight:750;color:#17375f}.alert-row .why{font-size:11px;color:#5f7290}.alert-row button{white-space:nowrap}
+.today-box{position:relative;margin:0 0 12px;padding:10px 12px;border:1px solid #dbe8f8;border-radius:12px;background:linear-gradient(135deg,#f7fbff,#eef6ff);display:flex;align-items:center;gap:10px;flex-wrap:wrap}.today-box b{font-size:12px;color:#173b68}.today-chip{padding:4px 8px;border-radius:999px;background:#fff;border:1px solid #d6e4f4;font-size:10px;font-weight:700;color:#466180}.today-chip.hot{border-color:#f1bdc6;background:#fff5f7;color:#c33d54}.today-box .go-alert{margin-left:auto}
+.imp-preview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}.imp-kpi{border:1px solid #dfe8f4;border-radius:10px;padding:9px;background:#f9fbfe}.imp-kpi span{display:block;font-size:9.5px;color:#71839c;text-transform:uppercase;font-weight:800}.imp-kpi b{font-size:19px}.imp-errors{max-height:220px;overflow:auto;border:1px solid #e3eaf3;border-radius:10px}.imp-errors table{margin:0}.data-error{color:#d33b51;font-weight:700}.data-warn{color:#b97600;font-weight:700}
+.room-filterbar{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.room-filterbar button{border:1px solid #d9e4f1;background:#fff;border-radius:999px;padding:5px 9px;font-size:9.5px;font-weight:750;color:#4c6588;cursor:pointer}.room-filterbar button.on{background:#eaf3ff;border-color:#91b9f8;color:#1f64c7}.room-cell.locked{opacity:.65;box-shadow:inset 0 0 0 1px #8d9db3!important}.room-cell.locked::after{content:'🔒';position:absolute;right:4px;bottom:2px;font-size:8px}.room-cell{position:relative}.room-lock-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 10px;border:1px solid #e1e9f4;border-radius:10px;background:#fbfdff;margin-top:8px}.room-lock-row b{font-size:11px}.room-lock-row small{display:block;color:#7a8ba2;font-size:9.5px;margin-top:2px}
+.timeline{position:relative;padding-left:18px}.timeline::before{content:'';position:absolute;left:5px;top:4px;bottom:4px;width:2px;background:#dce7f5}.tl-item{position:relative;padding:0 0 10px 10px}.tl-item::before{content:'';position:absolute;left:-17px;top:4px;width:8px;height:8px;border-radius:50%;background:#3276e3;border:2px solid #fff;box-shadow:0 0 0 1px #a7c4ef}.tl-item b{display:block;font-size:11px}.tl-item span{font-size:10px;color:#6d7f98}.tl-actions{display:flex;gap:6px;margin-top:10px}.transfer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.transfer-note{margin-top:8px;font-size:10px;color:#71839b}.locked-msg{color:#c44556;font-weight:700}
+.transfer-pro-dialog{width:min(720px,96vw);max-height:92vh}.transfer-pro{padding-bottom:12px}.transfer-current{margin:8px 0 12px;padding:10px 12px;border:1px solid #dbe6f3;border-radius:11px;background:linear-gradient(135deg,#f7fbff,#eef6ff);display:flex;align-items:center;justify-content:space-between;gap:10px}.transfer-current b{font-size:12px;color:#183d69}.transfer-current span{font-size:10px;color:#657b99}.transfer-selectors{grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:12px}.transfer-room-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 7px}.transfer-room-head>div{display:flex;align-items:baseline;gap:8px}.transfer-room-head b{font-size:12px;color:#203b62}.transfer-room-head .mut{font-size:9.5px}.transfer-cap{font-size:9px;font-weight:800;padding:3px 7px;border-radius:999px;background:#eef4ff;color:#466991}.transfer-room-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;max-height:250px;overflow:auto;padding:2px 2px 5px}.transfer-room-card{border:1px solid #d9e5f2;background:#fff;border-radius:10px;padding:8px 7px;cursor:pointer;text-align:left;min-width:0;transition:.15s ease}.transfer-room-card:hover{border-color:#8fb8f6;background:#f5f9ff;transform:translateY(-1px)}.transfer-room-card.on{border-color:#2d72e7;background:#eaf3ff;box-shadow:0 0 0 2px rgba(45,114,231,.10)}.transfer-room-card.compat-warn{border-color:#efc77c;background:#fffaf0}.transfer-room-card strong{display:block;font-size:11px;color:#203e68}.transfer-room-card span{display:block;margin-top:2px;font-size:9px;color:#647a98}.transfer-room-card em{display:inline-flex;margin-top:4px;padding:2px 5px;border-radius:999px;font-size:8px;font-style:normal;font-weight:800;background:#eaf8ef;color:#16814f}.transfer-room-card.compat-warn em{background:#fff1cf;color:#9a6700}.transfer-room-empty{grid-column:1/-1;padding:22px 12px;border:1px dashed #d7e2ef;border-radius:10px;text-align:center;color:#70839e;font-size:10.5px;background:#fbfdff}.transfer-target-info{margin-top:10px;padding:9px 11px;border:1px solid #dfe8f3;border-radius:10px;background:#fbfdff;font-size:10px;color:#627793}.transfer-target-info.ok{border-color:#b9e2c9;background:#f2fbf6;color:#236a49}.transfer-target-info.warn{border-color:#f0d49b;background:#fffaf0;color:#8b620b}.transfer-note-label{display:block;margin-top:10px;font-size:10px;color:#657b99}.transfer-note-label input{margin-top:4px;width:100%}@media(max-width:760px){.transfer-room-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.transfer-selectors{grid-template-columns:1fr}}
+.report-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.report-kpi{border:1px solid #e0e8f3;border-radius:12px;padding:12px;background:#fff}.report-kpi span{display:block;font-size:9px;color:#73859d;font-weight:800;text-transform:uppercase}.report-kpi b{font-size:21px}.report-section{margin-top:12px}.report-toolbar{display:flex;gap:8px;align-items:end;flex-wrap:wrap}.report-toolbar label{font-size:10px;color:#667c99}.report-toolbar input,.report-toolbar select{display:block;margin-top:4px}
+.log-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.log-toolbar input,.log-toolbar select{min-height:34px}.log-detail{font-size:10px;color:#667a96;white-space:pre-wrap;max-width:480px}.log-actor{font-weight:700;color:#24476e}.diff-pill{display:inline-block;padding:2px 6px;border-radius:999px;background:#eef4ff;color:#3467b7;font-size:9px;font-weight:700;margin-top:3px}
+@media(max-width:900px){.alert-grid,.report-grid{grid-template-columns:repeat(2,1fr)}.alert-row{grid-template-columns:20px 1fr}.alert-row .why,.alert-row button{grid-column:2}.transfer-grid{grid-template-columns:1fr}.imp-preview-grid{grid-template-columns:repeat(2,1fr)}}
+
+
+
+/* STEP81 — Governance suite: audit, alerts, validation, safe import, residence timeline */
+.alert-filterbar{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px;border-bottom:1px solid #edf1f7;background:#fbfdff}.alert-filterbar button{border:1px solid #d9e4f1;background:#fff;border-radius:999px;padding:5px 9px;font-size:9.5px;font-weight:800;color:#4d6485;cursor:pointer}.alert-filterbar button.on{background:#eaf3ff;border-color:#91b9f8;color:#1f64c7}.alert-filterbar .cnt{margin-left:3px;opacity:.75}.alert-search{padding:0 12px 8px;background:#fbfdff}.alert-search input{width:100%;min-height:32px!important;font-size:10.5px!important}.aqd-cat{display:inline-flex;align-items:center;padding:2px 6px;border-radius:999px;background:#eef4fb;color:#5b7090;font-size:8.5px;font-weight:800;margin-left:5px}.aqd-item.seen{opacity:.7}.aqd-item.seen:hover{opacity:1}.validation-box{margin:10px 0 0;padding:10px 12px;border:1px solid #dfe8f4;border-radius:11px;background:#f8fbff}.validation-box.ok{border-color:#bde5cc;background:#f2fbf6}.validation-box.warn{border-color:#f0d59a;background:#fffaf0}.validation-box.bad{border-color:#f0bcc5;background:#fff6f7}.validation-title{font-size:11px;font-weight:800;color:#29476f}.validation-list{margin:6px 0 0;padding-left:18px;font-size:10.5px;line-height:1.45;color:#5c708e}.validation-list li.err{color:#c63d53}.validation-list li.wn{color:#9a6800}.imp-status{display:inline-flex;align-items:center;padding:3px 7px;border-radius:999px;font-size:9px;font-weight:800;white-space:nowrap}.imp-status.new{background:#eaf8ef;color:#18844f}.imp-status.update{background:#edf5ff;color:#1765da}.imp-status.error{background:#fff0f2;color:#c83d52}.imp-status.dup{background:#fff7e7;color:#9b6700}.log-change{display:grid;grid-template-columns:minmax(105px,160px) 1fr;gap:4px 10px;padding:4px 0;border-top:1px dashed #e5ecf5}.log-change:first-child{border-top:0}.log-change b{font-size:9.5px;color:#49617f}.log-change span{font-size:9.5px;color:#647793}.log-change .from{color:#b15d68}.log-change .to{color:#168452}.log-subject{font-size:10px;font-weight:800;color:#1e4f91;margin-top:2px}.log-detail-toggle{border:0;background:transparent;color:#2369cc;font-size:9.5px;font-weight:800;cursor:pointer;padding:3px 0}.log-changes-wrap{display:none;margin-top:5px;padding:6px 8px;border:1px solid #e5ecf5;border-radius:8px;background:#fbfdff}.log-changes-wrap.open{display:block}.history-type{display:inline-flex;padding:1px 6px;border-radius:999px;background:#edf4ff;color:#3767ad;font-size:8.5px;font-weight:800;margin-right:5px}
+
+
+
+/* STEP84 — Kích thước bảng cảnh báo đồng bộ thanh chi tiết phòng */
+@media (min-width:701px){
+  #alertQuickDrawer.alert-quick-drawer{
+    top:0!important;
+    right:0!important;
+    width:420px!important;
+    min-width:420px!important;
+    max-width:420px!important;
+    height:125vh!important;
+    min-height:125vh!important;
+    max-height:125vh!important;
+    border-radius:18px 0 0 18px!important;
+    border-right:0!important;
+  }
+  #alertQuickDrawer .aqd-list{flex:1!important;min-height:0!important;overflow-y:auto!important;}
+}
+@media (max-width:700px){
+  #alertQuickDrawer.alert-quick-drawer{
+    top:0!important;right:0!important;width:100vw!important;min-width:0!important;max-width:100vw!important;
+    height:100vh!important;min-height:100vh!important;max-height:100vh!important;border-radius:0!important;
+  }
+}
+
+
+
+/* STEP91 — BƯỚC 3: Backup online + versioning */
+.cloud-bk-status{display:flex;align-items:center;gap:9px;padding:10px 12px;border:1px solid #dce6f3;border-radius:11px;background:#f8fbff;margin-top:10px}.cloud-bk-status i{width:9px;height:9px;border-radius:50%;background:#9aa9bd}.cloud-bk-status.ok i{background:#17a764;box-shadow:0 0 0 4px rgba(23,167,100,.12)}.cloud-bk-status.warn i{background:#e4a325;box-shadow:0 0 0 4px rgba(228,163,37,.12)}.cloud-bk-status b{display:block;font-size:11.5px}.cloud-bk-status small{display:block;color:var(--mut);font-size:9.8px;margin-top:2px}.cloud-bk-list{display:grid;gap:8px;margin-top:10px}.cloud-bk-item{border:1px solid #dfe7f2;border-radius:11px;padding:10px 11px;background:#fff}.cloud-bk-top{display:flex;align-items:flex-start;gap:8px}.cloud-bk-main{flex:1;min-width:0}.cloud-bk-main b{font-size:11.5px}.cloud-bk-main small{display:block;color:var(--mut);font-size:9.5px;line-height:1.45;margin-top:2px}.cloud-bk-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.cloud-bk-type{display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;font-size:8.5px;font-weight:800;margin-right:5px}.cloud-bk-type.manual{background:#edf5ff;color:#1e66c9}.cloud-bk-type.auto{background:#eaf8ef;color:#158653}.cloud-bk-type.pre_restore{background:#fff3df;color:#a56800}.cloud-bk-empty{padding:18px;text-align:center;color:var(--mut);font-size:10.5px;border:1px dashed #dce5f1;border-radius:10px}.cloud-bk-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:7px}.cloud-bk-kpis span{display:block;padding:5px 7px;border-radius:8px;background:#f5f8fc;color:#536984;font-size:8.8px}.cloud-bk-kpis b{display:block;color:#1d3659;font-size:11px}.cloud-bk-note{margin-top:8px;padding:8px 9px;border:1px solid #e2e9f3;border-radius:9px;background:#fbfdff;color:#637691;font-size:9.5px;line-height:1.45}@media(max-width:800px){.cloud-bk-top{flex-direction:column}.cloud-bk-actions{justify-content:flex-start}.cloud-bk-kpis{grid-template-columns:1fr 1fr}}
+
+
+
+/* STEP92 — Hoàn thiện lịch sử cư trú */
+.res92-summary{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:0 0 9px;padding:8px 9px;border:1px solid #dfe8f4;border-radius:10px;background:#f8fbff}
+.res92-summary span{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border-radius:999px;background:#fff;border:1px solid #dce6f2;font-size:9px;font-weight:800;color:#4a6282}
+.res92-summary b{color:#1f64c7}
+.res92-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.res92-actions .btn{min-height:30px!important;height:30px!important;padding:0 10px!important;font-size:9.5px!important}
+.res92-timeline{max-height:310px;overflow:auto;padding-right:5px}
+.res92-timeline .tl-item{padding-bottom:11px}
+.res92-timeline .tl-item b{line-height:1.35}
+.history-type.transfer{background:#efeaff;color:#6a42c2}.history-type.away{background:#fff4e3;color:#a46900}.history-type.res{background:#eaf8ef;color:#14824e}.history-type.out{background:#fff0f2;color:#c83d52}.history-type.restore{background:#eaf3ff;color:#1765da}
+
+
+
+/* STEP94 — Dashboard việc cần xử lý nâng cao */
+.today-box.today-advanced{display:block!important;padding:10px 12px!important}
+.today-adv-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.today-adv-head>strong{font-size:12px;color:#173b68;margin-right:2px}
+.today-kpi{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:999px;border:1px solid #d7e3f2;background:#fff;font-size:9.5px;font-weight:800;color:#536b8c}
+.today-kpi.danger{background:#fff3f5;border-color:#f2c1ca;color:#c83e55}.today-kpi.warn{background:#fff9ec;border-color:#edd39a;color:#9a6900}.today-kpi.new{background:#eef5ff;border-color:#c8dcff;color:#2367c7}.today-kpi.done{background:#eff9f3;border-color:#bfe4cd;color:#168652}
+.today-adv-filters{display:grid;grid-template-columns:repeat(3,minmax(105px,160px)) 1fr auto;gap:7px;margin-top:8px;align-items:center}
+.today-adv-filters select{min-height:30px!important;height:30px!important;padding:4px 8px!important;font-size:9.8px!important;border-radius:8px!important}
+.today-adv-filters .today-open-center{justify-self:end;white-space:nowrap}
+.today-issue-list{margin-top:8px;display:grid;gap:5px;max-height:190px;overflow:auto;padding-right:2px}
+.today-issue-row{display:grid;grid-template-columns:7px minmax(120px,1.05fr) minmax(180px,1.8fr) auto;gap:8px;align-items:center;padding:7px 8px;border:1px solid #e1eaf5;border-radius:9px;background:#fff}
+.today-issue-row:hover{background:#f8fbff;border-color:#ceddf1}.today-issue-row.unread{box-shadow:inset 3px 0 0 #2f76e8}.today-issue-row .dot{width:7px;height:7px;border-radius:50%;background:#e3a32a}.today-issue-row.danger .dot{background:#e34a5e}.today-issue-row.info .dot{background:#3478e5}
+.today-issue-who{min-width:0}.today-issue-title{font-size:10.5px;font-weight:800;color:#203a60;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.today-issue-meta{margin-top:2px;font-size:8.8px;color:#72839d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.today-issue-detail{font-size:9.6px;color:#5d7291;line-height:1.3}
+.today-issue-actions{display:flex;gap:5px;align-items:center}.today-issue-actions button{min-height:27px!important;height:27px!important;padding:0 8px!important;border-radius:7px!important;font-size:9px!important;white-space:nowrap}.today-resolve{background:#eef8f2!important;color:#168652!important;border:1px solid #bfe4cd!important}.today-quick{background:#eaf3ff!important;color:#2367c7!important;border:1px solid #bdd6ff!important}
+.today-empty{padding:14px;text-align:center;border:1px dashed #cfdcec;border-radius:9px;background:#fff;color:#6c7f9a;font-size:10px}
+@media(max-width:900px){.today-adv-filters{grid-template-columns:1fr 1fr}.today-adv-filters .today-open-center{justify-self:stretch}.today-issue-row{grid-template-columns:7px 1fr}.today-issue-detail,.today-issue-actions{grid-column:2}.today-issue-actions{justify-content:flex-start}}
+
+
+
+/* STEP96 — Trung tâm báo cáo */
+#reports .rc96-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+#reports .rc96-head h3{margin:0;font-size:15px;color:#17365f}#reports .rc96-head .mut{font-size:10px;margin-top:3px}
+#reports .rc96-presets{display:flex;gap:6px;flex-wrap:wrap}#reports .rc96-chip{border:1px solid #d8e4f2;background:#fff;color:#516987;border-radius:999px;padding:6px 10px;font-size:9.5px;font-weight:800;cursor:pointer}#reports .rc96-chip.on{background:#eaf3ff;border-color:#91b9f8;color:#1f64c7}
+#reports .rc96-controls{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:8px;align-items:end}#reports .rc96-controls label{font-size:9.5px;color:#667c99;font-weight:700}#reports .rc96-controls input,#reports .rc96-controls select{width:100%;margin-top:4px;min-height:34px!important;height:34px!important;font-size:10.5px!important}
+#reports .rc96-types{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}#reports .rc96-type{border:1px solid #dde7f3;border-radius:12px;background:#fff;padding:10px;text-align:left;cursor:pointer;min-height:68px;transition:.15s ease}#reports .rc96-type:hover{transform:translateY(-1px);border-color:#b9cff0;background:#f9fbff}#reports .rc96-type.on{border-color:#79a9f5;background:#edf5ff;box-shadow:0 5px 14px rgba(47,111,232,.10)}#reports .rc96-type b{display:block;font-size:11px;color:#213c63}#reports .rc96-type span{display:block;margin-top:4px;font-size:9px;color:#70829d;line-height:1.3}
+#reports .rc96-actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:8px 0 10px}#reports .rc96-actions .btn{min-height:34px!important;height:34px!important}
+#reports .rc96-preview{border:1px solid #dfe8f3;border-radius:12px;background:#fff;overflow:hidden}#reports .rc96-preview-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-bottom:1px solid #e8eef6;background:#f9fbfe}#reports .rc96-preview-head b{font-size:11.5px;color:#1d3c67}#reports .rc96-preview-head span{font-size:9.5px;color:#6c7f9a}
+#reports .rc96-preview .wrap{max-height:355px;overflow:auto}#reports .rc96-preview table{width:100%;table-layout:auto}#reports .rc96-preview th{position:sticky;top:0;z-index:2;background:#f4f8fd;font-size:9px}#reports .rc96-preview td{font-size:10px}
+#reports .rc96-note{margin-top:7px;font-size:9px;color:#7587a0}
+#reports .rc96-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-bottom:10px}#reports .rc96-kpi{border:1px solid #dfe8f3;border-radius:11px;background:#fff;padding:9px}#reports .rc96-kpi span{display:block;font-size:8.8px;color:#72839b;font-weight:800;text-transform:uppercase}#reports .rc96-kpi b{display:block;margin-top:3px;font-size:18px;color:#17375f}#reports .rc96-kpi.good b{color:#13945d}#reports .rc96-kpi.warn b{color:#b87300}#reports .rc96-kpi.bad b{color:#d43d54}
+@media(max-width:1050px){#reports .rc96-controls{grid-template-columns:repeat(3,1fr)}#reports .rc96-types{grid-template-columns:repeat(2,1fr)}#reports .rc96-kpis{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){#reports .rc96-controls{grid-template-columns:1fr 1fr}#reports .rc96-types{grid-template-columns:1fr}#reports .rc96-kpis{grid-template-columns:1fr 1fr}}
+
+
+
+/* STEP97 — Cảnh báo: bỏ tìm kiếm nhanh khỏi mọi trang, chuyển việc cần xử lý về Trung tâm cảnh báo */
+.global-search{display:none!important}
+#alerts .today97{margin-bottom:12px;padding:12px;border:1px solid #dbe8f8;border-radius:12px;background:linear-gradient(135deg,#f7fbff,#eef6ff)}
+#alerts .today97-head{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:8px}
+#alerts .today97-head strong{font-size:12px;color:#173b68;margin-right:2px}
+#alerts .today97-filters{display:grid;grid-template-columns:repeat(3,minmax(110px,160px)) 1fr;gap:7px;align-items:center;margin-bottom:8px}
+#alerts .today97-filters select{min-height:30px!important;height:30px!important;font-size:9.8px!important;padding:4px 8px!important;border-radius:8px!important}
+#alerts .today97-list{display:grid;gap:5px;max-height:230px;overflow:auto;padding-right:2px}
+#alerts .today97-row{display:grid;grid-template-columns:7px minmax(150px,1.05fr) minmax(190px,1.8fr) auto;gap:8px;align-items:center;padding:7px 8px;border:1px solid #e1eaf5;border-radius:9px;background:#fff}
+#alerts .today97-row.unread{box-shadow:inset 3px 0 0 #2f76e8}
+#alerts .today97-row .dot{width:7px;height:7px;border-radius:50%;background:#e3a32a}
+#alerts .today97-row.danger .dot{background:#e34a5e}
+#alerts .today97-row.info .dot{background:#3478e5}
+#alerts .today97-title{font-size:10.5px;font-weight:800;color:#203a60;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#alerts .today97-meta{margin-top:2px;font-size:8.8px;color:#72839d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#alerts .today97-detail{font-size:9.6px;color:#5d7291;line-height:1.3}
+#alerts .today97-actions{display:flex;gap:5px}.today97-actions button{min-height:27px!important;height:27px!important;padding:0 8px!important;border-radius:7px!important;font-size:9px!important;white-space:nowrap}
+@media(max-width:900px){#alerts .today97-filters{grid-template-columns:1fr 1fr}#alerts .today97-row{grid-template-columns:7px 1fr}#alerts .today97-detail,#alerts .today97-actions{grid-column:2}}
+
+
+
+/* STEP98 — tinh gọn Trung tâm cảnh báo */
+#alerts{font-size:11px}
+#alerts .alert-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:8px}
+#alerts .alert-card{padding:8px 10px;border-radius:10px;min-height:54px}
+#alerts .alert-card span{font-size:8.5px;font-weight:800;letter-spacing:.25px}
+#alerts .alert-card b{font-size:17px;line-height:1.05;margin-top:3px}
+#alerts .today97-box{padding:9px 10px!important;margin-bottom:8px!important;border-radius:11px!important}
+#alerts .today97-head{margin-bottom:7px!important}
+#alerts .today97-head strong{font-size:11.5px!important}
+#alerts .today97-filters{grid-template-columns:repeat(3,minmax(95px,145px)) 1fr;gap:6px;margin-bottom:7px}
+#alerts .today97-filters select{height:28px!important;min-height:28px!important;font-size:9.5px!important}
+#alerts .today97-list{max-height:190px;gap:4px}
+#alerts .today97-row{grid-template-columns:6px minmax(145px,1.1fr) minmax(180px,1.6fr) auto;padding:6px 7px;gap:7px;border-radius:8px}
+#alerts .today97-title{font-size:10px}.today97-meta{font-size:8.3px!important}.today97-detail{font-size:9.2px!important}
+#alerts .today97-actions button{height:25px!important;min-height:25px!important;font-size:8.7px!important;padding:0 7px!important}
+#alerts>.card{padding:10px 12px!important}
+#alerts>.card>.row:first-child{margin-bottom:6px!important}
+#alerts .alert-filterbar{padding:6px 0 7px!important;gap:5px!important;background:transparent!important;border:0!important}
+#alerts .alert-filterbar button{padding:4px 8px!important;font-size:9px!important;min-height:27px!important}
+#alerts .alert-search{padding:0 0 7px!important;background:transparent!important}
+#alerts .alert-search input{min-height:30px!important;height:30px!important}
+#alerts .alert-list{gap:5px}
+#alerts .alert-row{grid-template-columns:18px minmax(135px,1fr) minmax(190px,1.8fr) auto;gap:7px;padding:7px 8px;border-radius:9px}
+#alerts .alert-row .who{font-size:10px}.alert-row .why{font-size:9.3px!important}.alert-row .btn{height:27px!important;min-height:27px!important;font-size:8.8px!important;padding:0 8px!important}
+@media(max-width:900px){#alerts .alert-grid{grid-template-columns:1fr 1fr}#alerts .today97-filters{grid-template-columns:1fr 1fr}#alerts .alert-row{grid-template-columns:18px 1fr}#alerts .alert-row .why,#alerts .alert-row .btn{grid-column:2}}
+

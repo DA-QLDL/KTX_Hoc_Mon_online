@@ -1,0 +1,4 @@
+/* STEP100 visual master: preserve B1 readable worker table */
+@media(min-width:861px){#work #wl .cmp2 th{white-space:normal!important;word-break:normal!important;overflow-wrap:normal!important;color:#183a66!important}#work #wl .cmp2{min-width:1653px!important}#work #wl .cmp2 td{overflow-wrap:anywhere!important}}
+/* All icon foregrounds follow button text even on hover. */
+button:hover svg.i,button:hover .i,.btn:hover svg.i,.btn:hover .i{stroke:currentColor!important;color:inherit!important}
