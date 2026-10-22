@@ -1,0 +1,18 @@
+/* Production v1.0.0 — unified accessible action palette, desktop and mobile. */
+:root{--ktx-action-blue:#246deb;--ktx-action-green:#0daa78;--ktx-action-purple:#7752eb;--ktx-action-orange:#ec8b10;--ktx-action-red:#f43f57;--ktx-action-slate:#4a6792}
+/* Default primary action; leave pills, tabs, icon-only navigation and plain text controls alone. */
+button.btn:not(.s):not(.outline):not(.r):not(.g):not(.ta-slate):not(.ta-blue):not(.ta-green):not(.ta-indigo):not(.ta-emerald):not(.ta-violet):not(.ta-amber):not(.ta-purple),
+#mobile180 button.mbtn:not(.outline):not(.m196-logout):not(.ktx-install-action){background:var(--ktx-action-blue)!important;color:#fff!important;border-color:transparent!important}
+button.btn.g,#mobile180 button.mbtn.green{background:var(--ktx-action-green)!important;color:#fff!important;border-color:transparent!important}
+button.btn.r,button.btn.danger,#mobile180 button.m196-logout{background:var(--ktx-action-red)!important;color:#fff!important;border-color:transparent!important}
+button.btn.ta-violet,button.btn.ta-purple,button.btn.purple{background:var(--ktx-action-purple)!important;color:#fff!important;border-color:transparent!important}
+button.btn.ta-amber,button.btn.warning{background:var(--ktx-action-orange)!important;color:#fff!important;border-color:transparent!important}
+button.btn.ta-green,button.btn.ta-emerald,button.btn.ta-emerald,button.btn.ta-green{background:var(--ktx-action-green)!important;color:#fff!important;border-color:transparent!important}
+button.btn.ta-blue,button.btn.ta-indigo{background:var(--ktx-action-blue)!important;color:#fff!important;border-color:transparent!important}
+button.btn.ta-slate{background:var(--ktx-action-slate)!important;color:#fff!important;border-color:transparent!important}
+button.btn.s,button.btn.outline,#mobile180 button.mbtn.outline{background:#eef4ff!important;color:#235aab!important;border:1px solid #bcd2f2!important}
+#mobile180 button.ktx-install-action{background:var(--ktx-action-purple)!important;color:white!important;border:1px solid transparent!important;min-height:44px!important;font-weight:800!important;border-radius:10px!important}
+:is(button.btn,#mobile180 button.mbtn):not(:disabled){transition:filter .15s ease,transform .15s ease,box-shadow .15s ease}
+:is(button.btn,#mobile180 button.mbtn):not(:disabled):hover{filter:brightness(.94);box-shadow:0 3px 9px #22436720}
+:is(button.btn,#mobile180 button.mbtn):focus-visible{outline:3px solid #9bc1ff!important;outline-offset:2px}
+:is(button.btn,#mobile180 button.mbtn):disabled{opacity:.5!important;cursor:not-allowed!important}
