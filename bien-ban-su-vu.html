@@ -56,6 +56,15 @@ button,input,select,textarea{touch-action:manipulation}
 #choose .people .item{background:#f8fbff;border-left:3px solid #236ae4}
 #choose .grid.two textarea{min-height:145px}
 @media(max-width:700px){.bb-second{grid-template-columns:1fr}.people{grid-template-columns:1fr}#choose .grid.two textarea{min-height:120px}.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* STEP254 - đồng bộ checkbox trong tiện ích biên bản */
+input[type=checkbox],input[type=radio]{accent-color:#2f78ed}
+input[type=checkbox]{-webkit-appearance:none;appearance:none;display:inline-grid;place-content:center;width:18px!important;height:18px!important;margin:0;border:1.8px solid #95add0;border-radius:5px;background:#fff;box-shadow:0 1px 2px rgba(20,46,90,.08);cursor:pointer;vertical-align:middle;transition:background .16s,border-color .16s,transform .16s,box-shadow .16s}
+input[type=checkbox]::before{content:"";width:9px;height:5px;border:2px solid transparent;border-right-color:#fff;border-bottom-color:#fff;transform:rotate(45deg) scale(0);margin-top:-1px;transition:transform .14s ease}
+input[type=checkbox]:checked{background:linear-gradient(145deg,#2f78ed,#5b57f4);border-color:#2f78ed;box-shadow:0 3px 9px rgba(47,120,237,.26)}
+input[type=checkbox]:checked::before{transform:rotate(45deg) scale(1)}
+label.row,label .row{align-items:center}
+
 </style><style id="step173-utility-visual-standard">
 :root{--ui-space:10px}button,input,select,textarea{box-sizing:border-box}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #2563eb;outline-offset:2px}input,select,textarea{max-width:100%}button{min-height:34px}main,section,.card{min-width:0}@media(max-width:640px){body{overflow-x:hidden}table{max-width:100%}}
 </style><style id="ktx-step245-design">

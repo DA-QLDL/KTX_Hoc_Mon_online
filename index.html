@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ký túc xá Hóc Môn</title>
-<meta name="app-version" content="KTX-STEP250-APPROVED-WORKERS-UI">
+<meta name="app-version" content="KTX-STEP254-UNIFIED-SELECTION-MEAL-MOBILE">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -284,6 +284,97 @@ html.ktx-subaccount .sync-offline-card,
 html.ktx-subaccount #menuAdminHint,
 html.ktx-subaccount #menuAdminTools,
 html.ktx-subaccount #menuCloudTechHelp {display:none!important;}
+
+/* STEP254 — checkbox/radio/nút chọn đồng bộ + Báo cáo suất ăn mobile đẹp hơn */
+:root{
+  --choice-bg:#ffffff;
+  --choice-bg-active:#eef5ff;
+  --choice-bd:#d6e2f2;
+  --choice-bd-active:#2f78ed;
+  --choice-text:#29466f;
+  --choice-text-active:#155cc7;
+  --choice-shadow:0 2px 7px rgba(27,67,124,.08);
+}
+main input[type=checkbox],main input[type=radio],#mobile180 input[type=checkbox],#mobile180 input[type=radio]{accent-color:#2f78ed}
+main input[type=checkbox]:not(.native),main input[type=radio]:not(.native),#mobile180 input[type=checkbox]:not(.native),#mobile180 input[type=radio]:not(.native){
+  -webkit-appearance:none;appearance:none;display:inline-grid;place-content:center;vertical-align:middle;flex:0 0 auto;
+  margin:0;width:18px;height:18px;background:#fff;border:1.8px solid #95add0;box-shadow:0 1px 2px rgba(20,46,90,.08);
+  cursor:pointer;transition:background .16s,border-color .16s,transform .16s,box-shadow .16s;
+}
+main input[type=checkbox]:not(.native),#mobile180 input[type=checkbox]:not(.native){border-radius:5px}
+main input[type=radio]:not(.native),#mobile180 input[type=radio]:not(.native){border-radius:50%}
+main input[type=checkbox]:not(.native)::before,#mobile180 input[type=checkbox]:not(.native)::before{
+  content:"";width:9px;height:5px;border:2px solid transparent;border-right-color:#fff;border-bottom-color:#fff;transform:rotate(45deg) scale(0);margin-top:-1px;transition:transform .14s ease;
+}
+main input[type=radio]:not(.native)::before,#mobile180 input[type=radio]:not(.native)::before{
+  content:"";width:8px;height:8px;border-radius:50%;background:#fff;transform:scale(0);transition:transform .14s ease;
+}
+main input[type=checkbox]:checked:not(.native),main input[type=radio]:checked:not(.native),#mobile180 input[type=checkbox]:checked:not(.native),#mobile180 input[type=radio]:checked:not(.native){
+  background:linear-gradient(145deg,#2f78ed,#5b57f4);border-color:#2f78ed;box-shadow:0 3px 9px rgba(47,120,237,.26)
+}
+main input[type=checkbox]:checked:not(.native)::before,main input[type=radio]:checked:not(.native)::before,#mobile180 input[type=checkbox]:checked:not(.native)::before,#mobile180 input[type=radio]:checked:not(.native)::before{transform:rotate(45deg) scale(1)}
+main input[type=radio]:checked:not(.native)::before,#mobile180 input[type=radio]:checked:not(.native)::before{transform:scale(1)}
+main input[type=checkbox]:hover:not(.native),main input[type=radio]:hover:not(.native),#mobile180 input[type=checkbox]:hover:not(.native),#mobile180 input[type=radio]:hover:not(.native){border-color:#5a9af5;transform:translateY(-1px)}
+main input[type=checkbox]:disabled:not(.native),main input[type=radio]:disabled:not(.native),#mobile180 input[type=checkbox]:disabled:not(.native),#mobile180 input[type=radio]:disabled:not(.native){opacity:.55;cursor:not-allowed;transform:none}
+
+main label:not(.meal-supplier):has(>input[type=checkbox]),
+main label:not(.meal-supplier):has(>input[type=radio]),
+#mobile180 label:has(>input[type=checkbox]),
+#mobile180 label:has(>input[type=radio]){
+  cursor:pointer;transition:background .16s,border-color .16s,box-shadow .16s,color .16s;
+}
+.bkopt label,#t2 .dup-check,#acc #ac147Form .ac147-pick label,#mobile180 .m195-select label,.tgl,#mp label{
+  border:1px solid var(--choice-bd)!important;background:var(--choice-bg)!important;color:var(--choice-text)!important;border-radius:12px!important;
+  box-shadow:var(--choice-shadow)!important;
+}
+.bkopt label:has(input:checked),#t2 .dup-check:has(input:checked),#acc #ac147Form .ac147-pick label:has(input:checked),#mobile180 .m195-select label:has(input:checked),.tgl:has(input:checked),#mp label:has(input:checked){
+  border-color:var(--choice-bd-active)!important;background:var(--choice-bg-active)!important;color:var(--choice-text-active)!important;box-shadow:0 4px 12px rgba(47,120,237,.12)!important;
+}
+#acc #ac147Form .ac147-pick{gap:10px!important;padding:10px!important;background:#f6f9ff!important;border:1px solid #dbe6f4!important;border-radius:12px!important}
+#acc #ac147Form .ac147-pick label{padding:8px 11px!important;font-size:11.5px!important;font-weight:700!important;gap:7px!important}
+#mp{display:flex;flex-wrap:wrap;gap:8px}
+#mp label{padding:8px 11px!important;display:inline-flex!important;align-items:center!important;gap:7px!important;font-size:12px!important;font-weight:700!important;margin:0!important}
+.bkopt label{padding:10px 12px!important;font-weight:700}
+#t2 .dup-check{align-items:center!important}
+.tgl{padding:7px 12px!important;gap:8px!important}
+.cmp input[type=checkbox],.cmp2 input[type=checkbox],.cmp3 input[type=checkbox]{width:17px!important;height:17px!important}
+
+/* Làm đẹp trang Báo cáo suất ăn mobile */
+#mobile180 .m195-config{padding:17px 16px 16px!important;background:linear-gradient(180deg,#ffffff,#f8fbff)!important}
+#mobile180 .m195-results,#mobile180 .m195-report{padding:17px 16px!important}
+#mobile180 .m195-results h3,#mobile180 .m195-report h3,#mobile180 .m195-config h3{display:flex;align-items:center;gap:8px;font-size:18px!important;letter-spacing:-.01em}
+#mobile180 .m195-results h3::before{content:"🍱"}#mobile180 .m195-report h3::before{content:"📝"}
+#mobile180 .m198-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+#mobile180 .m198-actions>.mbtn{width:100%;min-height:50px;font-size:15px;font-weight:800;box-shadow:0 8px 20px rgba(38,104,222,.16)}
+#mobile180 .m195-select{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:4px}
+#mobile180 .m195-select label{min-height:56px;padding:11px 12px;display:flex;align-items:center;gap:9px;font-size:13px;font-weight:800;line-height:1.35}
+#mobile180 .m195-select span{display:block;min-width:0;overflow-wrap:anywhere}
+#mobile180 .m195-select input{width:19px;height:19px}
+#mobile180 .m195-select label:has(input:checked){background:linear-gradient(180deg,#f9fbff,#eef5ff)!important}
+#mobile180 .m195-vendor{border:1px solid #d4e1f3;border-radius:18px;padding:14px!important;margin:12px 0!important;background:linear-gradient(180deg,#ffffff,#fbfdff)!important;box-shadow:0 8px 18px rgba(30,76,141,.08)!important}
+#mobile180 .m195-vendor strong{display:flex;align-items:center;gap:8px;color:#143d75;font-size:15px;margin-bottom:2px}
+#mobile180 .m195-vendor strong::before{content:"📦";font-size:16px}
+#mobile180 .m195-qty-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:11px}
+#mobile180 .m195-qty{display:grid;gap:6px;padding:10px;border:1px solid #e2eaf5;border-radius:13px;background:#fff;box-shadow:0 2px 6px rgba(23,58,109,.04)}
+#mobile180 .m195-qty input{width:100%;min-width:0;box-sizing:border-box;padding:11px 8px;border:1px solid #d4e0f1;border-radius:10px;font-size:16px;font-weight:800;text-align:center;background:#fbfdff}
+#mobile180 .m195-total{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:11px 0 0;padding:10px 12px;border-radius:12px;background:#eef5ff;color:#1a4f95;font-size:12px;font-weight:700}
+#mobile180 .m195-total b{font-size:20px;color:#0f5aca;line-height:1}
+#mobile180 .m195-menu{margin-top:12px!important;line-height:1.5;background:#f7faff!important;border:1px solid #dee7f5;border-radius:13px;padding:11px 12px!important;font-size:12px!important}
+#mobile180 .m195-menu small{display:block;color:#4d6f9f!important;font-weight:800!important;margin:8px 0 4px!important;text-transform:uppercase;letter-spacing:.03em}
+#mobile180 .m195-menu small:first-child{margin-top:0!important}
+#mobile180 .m195-preview{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12.5px;line-height:1.6;background:#f8fbff;border:1px dashed #cfdced;border-radius:14px;padding:13px;min-height:110px}
+#mobile180 .m195-report .mactionrow{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}
+#mobile180 #m213CloudStatus{display:block;padding:9px 11px;background:#f8fbff;border:1px solid #dfe8f6;border-radius:11px;color:#5a7193;margin-bottom:12px}
+@media(max-width:420px){
+  #mobile180 .m195-select{grid-template-columns:1fr}
+  #mobile180 .m195-qty-grid{grid-template-columns:1fr 1fr 1fr}
+}
+@media(max-width:360px){
+  #mobile180 .m195-qty-grid{gap:7px}
+  #mobile180 .m195-qty{padding:8px}
+  #mobile180 .m195-total{padding:9px 10px}
+}
+
 </style>
 
 <style>
@@ -7759,7 +7850,7 @@ function mealMobile(){
   const fields=[['td8','TĐ 8'],['td111','TĐ 11.1'],['td113','TĐ 11.3']].map(([key,label])=>`<label class="m195-qty">${label}<input type="number" min="0" inputmode="numeric" data-meal-vendor="${escapeHtml(n)}" data-meal-key="${key}" value="${escapeHtml(f[key]??'')}" placeholder="0"></label>`).join('');
   return `<div class="m195-vendor"><strong>${i+1}. ${escapeHtml(n)}</strong><div class="m195-qty-grid">${fields}</div><div class="m195-total">Tổng suất: <b data-total-ncc="${escapeHtml(n)}">${typeof mealTot==='function'?mealTot(n)??0:0}</b></div><div class="m195-menu"><small>Mặn</small><div>${escapeHtml(f.man||'Chưa có thực đơn')}</div><small>Chay</small><div>${escapeHtml(f.chay||'Chưa có thực đơn')}</div></div></div>`;
  }).join('');
- return `<button class="mback" data-mobile="home">← Tổng quan</button><h2 class="mtitle">Báo cáo suất ăn</h2><p class="msub">Chọn nhiều NCC, nhập số lượng giống bản PC.</p><section class="mpanel"><div class="mfields"><label>Ngày<input id="m195Date" type="date" value="${escapeHtml(m.date)}"></label><label>Buổi<select id="m195Session">${[['sang','Sáng'],['trua','Trưa'],['chieu','Chiều']].map(([k,v])=>`<option value="${k}" ${k===m.ses?'selected':''}>${v}</option>`).join('')}</select></label><label>KTX<select id="m195Ktx">${['KTX1','KTX2','KTX3'].map(k=>`<option ${k===m.ktx?'selected':''}>${k}</option>`).join('')}</select></label><label>Đơn giá<input id="m195Price" value="${escapeHtml(m.price)}" inputmode="text"></label></div><div class="m198-actions"><button type="button" class="mbtn" data-mobile="meal-show">Hiển thị thực đơn / Nhập số lượng</button><button type="button" class="mbtn outline" data-mobile="meal-select-all">✓ Chọn tất cả NCC</button></div><h3 style="margin:16px 0 8px">Chọn nhà cung cấp</h3><div class="m195-select">${vendors.map(n=>`<label><input type="checkbox" data-meal-select="${escapeHtml(n)}" ${m.on.has(n)?'checked':''}><span>${escapeHtml(n)}</span></label>`).join('')}</div></section><section class="mpanel" id="m198MealResults"><p id="m213CloudStatus" class="msub">Thực đơn sẽ được tải từ Supabase theo ngày và bữa đã chọn.</p><h3>Thực đơn & số lượng từng NCC</h3><p class="msub" style="margin-bottom:12px">Chọn một hoặc nhiều NCC phía trên; nhập trực tiếp TĐ 8, TĐ 11.1, TĐ 11.3 và đối chiếu món Mặn/Chay.</p>${rows||'<p>Vui lòng chọn ít nhất một nhà cung cấp.</p>'}</section><section class="mpanel"><h3>Nội dung báo cáo</h3><pre class="m195-preview" id="m195Preview">${escapeHtml(typeof mealText==='function'?mealText():'')}</pre><div class="mactionrow"><button class="mbtn" data-mobile="meal-copy">Sao chép báo cáo</button><button class="mbtn outline" data-mobile="meal-download">Xuất Word</button></div></section>`;
+ return `<button class="mback" data-mobile="home">← Tổng quan</button><h2 class="mtitle">Báo cáo suất ăn</h2><p class="msub">Chọn nhiều NCC, nhập số lượng giống bản PC.</p><section class="mpanel m195-config"><div class="mfields"><label>Ngày<input id="m195Date" type="date" value="${escapeHtml(m.date)}"></label><label>Buổi<select id="m195Session">${[['sang','Sáng'],['trua','Trưa'],['chieu','Chiều']].map(([k,v])=>`<option value="${k}" ${k===m.ses?'selected':''}>${v}</option>`).join('')}</select></label><label>KTX<select id="m195Ktx">${['KTX1','KTX2','KTX3'].map(k=>`<option ${k===m.ktx?'selected':''}>${k}</option>`).join('')}</select></label><label>Đơn giá<input id="m195Price" value="${escapeHtml(m.price)}" inputmode="text"></label></div><div class="m198-actions"><button type="button" class="mbtn" data-mobile="meal-show">Hiển thị thực đơn / Nhập số lượng</button><button type="button" class="mbtn outline" data-mobile="meal-select-all">✓ Chọn tất cả NCC</button></div><h3 style="margin:16px 0 8px">Chọn nhà cung cấp</h3><div class="m195-select">${vendors.map(n=>`<label><input type="checkbox" data-meal-select="${escapeHtml(n)}" ${m.on.has(n)?'checked':''}><span>${escapeHtml(n)}</span></label>`).join('')}</div></section><section class="mpanel m195-results" id="m198MealResults"><p id="m213CloudStatus" class="msub">Thực đơn sẽ được tải từ Supabase theo ngày và bữa đã chọn.</p><h3>Thực đơn & số lượng từng NCC</h3><p class="msub" style="margin-bottom:12px">Chọn một hoặc nhiều NCC phía trên; nhập trực tiếp TĐ 8, TĐ 11.1, TĐ 11.3 và đối chiếu món Mặn/Chay.</p>${rows||'<p>Vui lòng chọn ít nhất một nhà cung cấp.</p>'}</section><section class="mpanel m195-report"><h3>Nội dung báo cáo</h3><pre class="m195-preview" id="m195Preview">${escapeHtml(typeof mealText==='function'?mealText():'')}</pre><div class="mactionrow"><button class="mbtn" data-mobile="meal-copy">Sao chép báo cáo</button><button class="mbtn outline" data-mobile="meal-download">Xuất Word</button></div></section>`;
 }
 
 function assetsMobile(){return `<button class="mback" data-mobile="home">← Tổng quan</button><h2 class="mtitle">Cơ sở vật chất KTX</h2><p class="msub">Nhập và chỉnh sửa tài sản như bản PC.</p><div class="mcloudwarn">Dữ liệu tiện ích dùng chung cơ chế Cloud hiện có; cần kiểm tra trạng thái đồng bộ trong biểu mẫu bên dưới.</div><iframe id="m181AssetsFrame" title="Cơ sở vật chất KTX" src="./cosovatchat.html" style="display:block;width:100%;height:72dvh;border:1px solid #d2e1f5;border-radius:14px;background:white" loading="lazy"></iframe>`}
