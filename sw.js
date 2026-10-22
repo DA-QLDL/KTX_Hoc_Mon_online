@@ -1,44 +1,8 @@
-/* KTX Hóc Môn v1.0.0-B. Cache public static assets only. */
-const CACHE_NAME = 'ktx-hoc-mon-production-v1.0.0-b';
-const CORE = ['./','./index.html','./assets/css/app.css','./manifest.webmanifest','./pwa-icon-192.png','./pwa-icon-512.png','./ktx-logo.png'];
-const PUBLIC_ASSET = /\.(?:js|css|png|jpg|jpeg|webp|svg|ico|webmanifest)$/i;
-self.addEventListener('install', event => {
-  event.waitUntil((async () => {
-    const cache = await caches.open(CACHE_NAME);
-    const results = await Promise.allSettled(CORE.map(url => cache.add(url)));
-    if (results.some(result => result.status === 'rejected')) {
-      console.warn('[KTX] Some public offline shell assets could not be cached');
-    }
-  })());
-  self.skipWaiting();
-});
-self.addEventListener('activate', event => event.waitUntil((async () => {
-  const old = await caches.keys();
-  await Promise.all(old.filter(key => key.startsWith('ktx-hoc-mon-') && key !== CACHE_NAME).map(key => caches.delete(key)));
-  await self.clients.claim();
-})()));
-self.addEventListener('fetch', event => {
-  const request = event.request;
-  if(request.method !== 'GET') return;
-  const url = new URL(request.url);
-  if(url.origin !== self.location.origin || url.pathname.startsWith('/api/') || request.headers.has('authorization')) return;
-  if(request.mode === 'navigate') {
-    event.respondWith(fetch(request, {cache:'no-store'}).catch(async () => (await caches.match(request)) || (await caches.match('./index.html')) || Response.error()));
-    return;
-  }
-  if(!PUBLIC_ASSET.test(url.pathname)) return;
-  event.respondWith((async () => {
-    const cache = await caches.open(CACHE_NAME);
-    // Network first for executable assets to avoid stale STEP versions.
-    try {
-      const response = await fetch(request, {cache:'no-store'});
-      if(response.ok && response.type === 'basic') cache.put(request, response.clone()).catch(() => {});
-      return response;
-    } catch(e) {
-      return (await cache.match(request)) || Response.error();
-    }
-  })());
-});
-self.addEventListener('message', e => {
-  if(e.data?.type === 'SKIP_WAITING') self.skipWaiting();
-});
+const CACHE_NAME='ktx-hoc-mon-production-v1.0.0';
+const SHELL=["./","./index.html","./manifest.webmanifest","./pwa-icon-192.png","./pwa-icon-512.png","./assets/css/app.css","./assets/js/core/script-07.js","./assets/js/core/script-08.js","./assets/js/modules/workers/script-09.js","./assets/js/modules/workers/script-10.js","./assets/js/modules/workers/script-11.js","./assets/js/modules/reports/script-12.js","./assets/js/modules/workers/script-13.js","./assets/js/modules/residency/script-14.js","./assets/js/modules/reports/script-15.js","./assets/js/modules/residency/script-16.js","./assets/js/modules/admin/script-17.js","./assets/js/modules/workers/script-18.js","./assets/js/modules/admin/script-19.js","./assets/js/modules/admin/script-20.js","./assets/js/modules/residency/script-21.js","./assets/js/modules/overview/script-22.js","./assets/js/modules/overview/script-23.js","./assets/js/modules/reports/script-24.js","./assets/js/modules/overview/script-25.js","./assets/js/modules/admin/script-26.js","./assets/js/modules/admin/script-27.js","./assets/js/modules/admin/script-28.js","./assets/js/modules/admin/script-29.js","./assets/js/modules/admin/script-30.js","./assets/js/modules/admin/script-31.js","./assets/js/modules/workers/script-32.js","./assets/js/modules/admin/script-33.js","./assets/js/modules/admin/script-34.js","./assets/js/modules/admin/script-35.js","./assets/js/modules/admin/script-36.js","./assets/js/core/script-37.js","./assets/js/modules/meals/script-38.js","./assets/js/modules/meals/script-39.js","./assets/js/core/script-40.js","./assets/js/modules/attendance/script-41.js","./assets/js/modules/admin/script-42.js","./assets/js/modules/admin/script-43.js","./assets/js/modules/workers/script-44.js","./assets/js/core/script-45.js","./assets/js/modules/admin/script-46.js","./assets/js/modules/admin/script-47.js","./assets/js/core/script-48.js","./assets/js/core/script-49.js","./assets/js/modules/rooms/script-50.js","./assets/js/modules/admin/script-51.js","./assets/js/modules/admin/script-52.js","./assets/js/modules/admin/script-53.js","./assets/js/modules/rooms/script-54.js","./assets/js/modules/admin/script-55.js","./assets/js/core/script-56.js","./assets/js/core/script-57.js","./assets/js/modules/admin/script-58.js","./assets/js/modules/attendance/script-59.js","./assets/js/modules/reports/script-60.js","./assets/js/modules/attendance/script-61.js","./assets/js/modules/attendance/script-62.js","./assets/js/modules/reports/script-63.js","./assets/js/modules/admin/script-64.js","./assets/js/modules/admin/script-65.js","./assets/js/modules/meals/script-67.js","./assets/js/core/script-68.js","./assets/js/modules/admin/script-69.js","./qr-config.js","./qr-sessions.js","./qr-form.html","./attendance-form.html","./kiem-tra-menu-ncc.html","./thuc-don-moi.html","./meal-xlsx-reader.js","./ncc-suat-an.js","./excel-import.js","./utility-cloud.js","./so-tang-giam.html","./cccd-scan.js","./bien-ban-su-vu.html"];
+self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(SHELL)).catch(()=>{}));self.skipWaiting()});
+self.addEventListener('activate',e=>{e.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k.startsWith('ktx-hoc-mon-')&&k!==CACHE_NAME).map(k=>caches.delete(k)));await self.clients.claim()})())});
+self.addEventListener('fetch',e=>{const req=e.request;if(req.method!=='GET')return;const u=new URL(req.url);if(u.origin!==self.location.origin)return;if(u.pathname.startsWith('/api/')||req.headers.has('authorization'))return;
+if(req.mode==='navigate'||/\.(js|html|css|json|webmanifest)$/i.test(u.pathname)){e.respondWith(fetch(req,{cache:'no-store'}).then(async res=>{if(res.ok){(await caches.open(CACHE_NAME)).put(req,res.clone()).catch(()=>{})}return res}).catch(async()=>await caches.match(req)||Response.error()));return}
+e.respondWith((async()=>{const c=await caches.match(req);if(c)return c;try{const r=await fetch(req);if(r.ok)(await caches.open(CACHE_NAME)).put(req,r.clone()).catch(()=>{});return r}catch(_){return Response.error()}})())});
+self.addEventListener('message',e=>{if(e.data&&e.data.type==='SKIP_WAITING')self.skipWaiting()});
