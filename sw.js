@@ -1,44 +1,56 @@
-/* KTX Hóc Môn v1.0.1-step100 Cache public static assets only. */
-const CACHE_NAME = 'ktx-hoc-mon-production-v1.0.1-step100';
-const CORE = ['./','./index.html','./assets/css/app.css','./assets/css/worker-table.css','./manifest.webmanifest','./pwa-icon-192.png','./pwa-icon-512.png','./ktx-logo.png'];
-const PUBLIC_ASSET = /\.(?:js|css|png|jpg|jpeg|webp|svg|ico|webmanifest)$/i;
+const CACHE_NAME = 'ktx-hoc-mon-pwa-v102';
+const APP_SHELL = [
+  './', './index.html', './manifest.webmanifest',
+  './pwa-icon-192.png', './pwa-icon-512.png',
+  './qr-form.html', './qr-config.js'
+];
+
 self.addEventListener('install', event => {
-  event.waitUntil((async () => {
-    const cache = await caches.open(CACHE_NAME);
-    const results = await Promise.allSettled(CORE.map(url => cache.add(url)));
-    if (results.some(result => result.status === 'rejected')) {
-      console.warn('[KTX] Some public offline shell assets could not be cached');
-    }
-  })());
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)).catch(()=>{}));
   self.skipWaiting();
 });
-self.addEventListener('activate', event => event.waitUntil((async () => {
-  const old = await caches.keys();
-  await Promise.all(old.filter(key => key.startsWith('ktx-hoc-mon-') && key !== CACHE_NAME).map(key => caches.delete(key)));
-  await self.clients.claim();
-})()));
-self.addEventListener('fetch', event => {
-  const request = event.request;
-  if(request.method !== 'GET') return;
-  const url = new URL(request.url);
-  if(url.origin !== self.location.origin || url.pathname.startsWith('/api/') || request.headers.has('authorization')) return;
-  if(request.mode === 'navigate') {
-    event.respondWith(fetch(request, {cache:'no-store'}).catch(async () => (await caches.match(request)) || (await caches.match('./index.html')) || Response.error()));
-    return;
-  }
-  if(!PUBLIC_ASSET.test(url.pathname)) return;
-  event.respondWith((async () => {
-    const cache = await caches.open(CACHE_NAME);
-    // Network first for executable assets to avoid stale STEP versions.
-    try {
-      const response = await fetch(request, {cache:'no-store'});
-      if(response.ok && response.type === 'basic') cache.put(request, response.clone()).catch(() => {});
-      return response;
-    } catch(e) {
-      return (await cache.match(request)) || Response.error();
-    }
+
+self.addEventListener('activate', event => {
+  event.waitUntil((async()=>{
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(k => k.startsWith('ktx-hoc-mon-pwa-') && k !== CACHE_NAME).map(k => caches.delete(k)));
+    await self.clients.claim();
   })());
 });
-self.addEventListener('message', e => {
-  if(e.data?.type === 'SKIP_WAITING') self.skipWaiting();
+
+self.addEventListener('fetch', event => {
+  const req = event.request;
+  if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;
+
+  if (req.mode === 'navigate') {
+    event.respondWith((async()=>{
+      try {
+        const fresh = await fetch(req);
+        const cache = await caches.open(CACHE_NAME);
+        cache.put('./index.html', fresh.clone()).catch(()=>{});
+        return fresh;
+      } catch (e) {
+        return (await caches.match(req)) || (await caches.match('./index.html')) || Response.error();
+      }
+    })());
+    return;
+  }
+
+  event.respondWith((async()=>{
+    const cached = await caches.match(req);
+    const network = fetch(req).then(async res => {
+      if (res && res.ok) {
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(req, res.clone()).catch(()=>{});
+      }
+      return res;
+    }).catch(()=>null);
+    return cached || (await network) || Response.error();
+  })());
+});
+
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
 });

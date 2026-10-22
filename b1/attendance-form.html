@@ -1,0 +1,117 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Điểm danh KTX Hóc Môn</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./qr-config.js"></script><style>*{box-sizing:border-box}body{margin:0;background:#edf4ff;color:#15294b;font:14px/1.5 system-ui,sans-serif;min-height:100dvh;display:grid;place-items:center;padding:16px}.card{background:white;width:min(530px,100%);border-radius:19px;padding:25px;border:1px solid #d6e4f6;box-shadow:0 12px 38px #1737661a}h1{margin:5px 0;font-size:23px}.mut{color:#59728d}label{display:block;margin-top:14px;font-weight:650;font-size:12px}input,select{display:block;width:100%;margin-top:5px;padding:13px;border:1px solid #d0dff1;border-radius:10px;font:inherit}button{cursor:pointer;border:0;border-radius:11px;padding:13px 16px;font:inherit;font-weight:800;background:#2468e9;color:white;width:100%;margin-top:18px}button:disabled{opacity:.55}.tip{padding:12px;background:#edf5ff;border-radius:11px;margin-top:18px}.msg{margin-top:12px;font-weight:650;white-space:pre-wrap}.bad{color:#be2440}.good{color:#07824f}.brand{font-weight:900;color:#2265d9}</style><style id="ktx-step245-design">
+/* STEP245 - shared design system. Presentation only, no business logic. */
+:root{--ktx-brand:#2765ea;--ktx-purple:#6755ef;--ktx-brand-soft:#edf3ff;--ktx-success:#0c9a65;--ktx-danger:#d83a4d;--ktx-warning:#c97917;--ktx-ui-radius:11px;--ktx-ui-shadow:0 3px 12px rgba(30,70,145,.09)}
+button,a,input,select,textarea{font-family:inherit}
+button{touch-action:manipulation}
+button:not(:disabled){transition:background-color .16s,border-color .16s,box-shadow .16s,transform .13s,filter .13s}
+button:not(:disabled):active{transform:scale(.985)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ktx-brand);outline-offset:2px}
+input,textarea,select{min-width:0;box-sizing:border-box}
+.ktx-header-brand{display:inline-flex;align-items:center;gap:9px;min-width:0}
+.ktx-header-brand img{height:42px;width:42px;aspect-ratio:1;object-fit:cover;border-radius:12px;flex-shrink:0;box-shadow:0 3px 12px rgba(54,76,219,.15)}
+.ktx-page-logo{width:42px;height:42px;border-radius:12px;object-fit:cover;box-shadow:0 4px 12px rgba(40,65,190,.16)}
+.ktx-heading-row{display:flex;align-items:center;gap:11px;min-width:0}
+.ktx-heading-row h1{min-width:0;overflow-wrap:anywhere}
+@media(max-width:640px){.ktx-header-brand img,.ktx-page-logo{width:36px;height:36px;border-radius:10px}.ktx-heading-row{gap:9px}}
+
+.brand{display:flex;align-items:center;gap:10px;color:#174bad}
+button#send{background:linear-gradient(125deg,#2765ea,#6755ef)!important;border-radius:12px;color:white!important}
+@media(max-width:600px){main.card{max-width:100%;margin:12px!important;padding:18px 15px!important}input,select{font-size:16px!important}button#send{min-height:48px}}
+</style>
+<link rel="icon" type="image/png" href="./pwa-icon-192.png"/>
+<meta name="theme-color" content="#2765ea"/>
+<style id="step248-button-palette">
+/* STEP248 – shared vivid action palette: visible text, consistent semantic actions. */
+:root{--act-blue:#1769ed;--act-blue-h:#0950c4;--act-green:#087c53;--act-green-h:#066542;--act-red:#cb2439;--act-red-h:#a71429;--act-amber:#a75a00;--act-purple:#6843d9;--act-ink:#193b70;--act-light:#e9f2ff;--act-outline:#b4cdec}
+button.ktx-action, .btn.ktx-action, a.ktx-action, label.ktx-action{border-radius:11px!important;font-weight:750!important;line-height:1.28!important;letter-spacing:0!important;transition:background-color .14s, box-shadow .14s, transform .14s!important;text-shadow:none!important;cursor:pointer}
+.ktx-action[data-action-tone=primary]{background:#1769ed!important;border-color:#1769ed!important;color:#fff!important;box-shadow:0 3px 10px #1769ed25!important}
+.ktx-action[data-action-tone=primary]:hover{background:#0950c4!important;border-color:#0950c4!important}
+.ktx-action[data-action-tone=success]{background:#087c53!important;border-color:#087c53!important;color:#fff!important;box-shadow:0 3px 10px #087c5322!important}
+.ktx-action[data-action-tone=success]:hover{background:#066542!important}
+.ktx-action[data-action-tone=danger]{background:#cb2439!important;border-color:#cb2439!important;color:#fff!important;box-shadow:0 3px 10px #cb243927!important}
+.ktx-action[data-action-tone=danger]:hover{background:#a71429!important}
+.ktx-action[data-action-tone=warning]{background:#a75a00!important;border-color:#a75a00!important;color:#fff!important}
+.ktx-action[data-action-tone=accent]{background:#6843d9!important;border-color:#6843d9!important;color:#fff!important}
+.ktx-action[data-action-tone=secondary]{background:#e9f2ff!important;border:1px solid #b4cdec!important;color:#193b70!important;box-shadow:none!important}
+.ktx-action[data-action-tone=secondary]:hover{background:#d6e8ff!important}
+.ktx-action[data-action-tone=neutral]{background:#fff!important;border:1px solid #c5d4eb!important;color:#183b6d!important;box-shadow:none!important}
+.ktx-action[data-action-tone=neutral]:hover{background:#eff5ff!important}
+.ktx-action:focus-visible{outline:3px solid #ffbf4b!important;outline-offset:2px!important}
+.ktx-action:disabled,.ktx-action[aria-disabled=true]{opacity:.48!important;box-shadow:none!important;cursor:not-allowed!important;transform:none!important}
+.ktx-action svg,.ktx-action .i{color:inherit!important;stroke:currentColor!important}
+@media(hover:hover){.ktx-action:not(:disabled):not([aria-disabled=true]):hover{transform:translateY(-1px)}}
+@media(max-width:700px){button.ktx-action,.btn.ktx-action,a.ktx-action{min-height:38px;white-space:normal;overflow-wrap:anywhere}button.ktx-action.ktx-long{font-size:12px!important}}
+@media(prefers-reduced-motion:reduce){.ktx-action{transition:none!important}.ktx-action:hover{transform:none!important}}
+</style>
+<style id="step249-raised-buttons">
+/* STEP249 - Đồng bộ nút nổi khối / phối màu nhận diện KTX PC và Mobile */
+:root{
+  --ktx-royal:#2776f2;--ktx-violet:#6b53ed;--ktx-emerald:#0f9f73;
+  --ktx-coral:#d82e49;--ktx-sun:#bd710b;--ktx-ink:#153a70;
+  --ktx-soft:#eaf2ff;--ktx-raised-edge:inset 0 1px 0 rgba(255,255,255,.34);
+}
+button.ktx-action,.btn.ktx-action,a.ktx-action,label.ktx-action{
+  border-radius:12px!important;
+  border:1px solid rgba(255,255,255,.17)!important;
+  box-shadow:var(--ktx-raised-edge),0 3px 0 rgba(21,40,85,.19),0 8px 15px rgba(35,67,133,.16)!important;
+  text-shadow:0 1px 1px rgba(0,0,0,.09)!important;
+  transition:transform .14s ease,box-shadow .14s ease,filter .14s ease!important;
+}
+.ktx-action[data-action-tone=primary]{background:linear-gradient(140deg,#237df5,#3261e6 58%,#6950ea)!important;color:#fff!important}
+.ktx-action[data-action-tone=success]{background:linear-gradient(145deg,#13b889,#05865c)!important;color:#fff!important}
+.ktx-action[data-action-tone=danger]{background:linear-gradient(145deg,#f04a62,#c51f3b)!important;color:#fff!important}
+.ktx-action[data-action-tone=warning]{background:linear-gradient(145deg,#df9020,#ad5d06)!important;color:#fff!important}
+.ktx-action[data-action-tone=accent]{background:linear-gradient(140deg,#9071f4,#6946df)!important;color:#fff!important}
+.ktx-action[data-action-tone=secondary]{background:linear-gradient(160deg,#f7faff,#dbeaff)!important;color:#173e76!important;border:1px solid #bed3f2!important;text-shadow:none!important;box-shadow:inset 0 1px 0 #fff,0 2px 0 #bfd3eb,0 6px 12px rgba(31,69,120,.12)!important}
+.ktx-action[data-action-tone=neutral]{background:linear-gradient(160deg,#fff,#edf4ff)!important;color:#173b70!important;border:1px solid #c5d8ef!important;text-shadow:none!important;box-shadow:inset 0 1px 0 #fff,0 2px 0 #cbd8e8,0 6px 12px rgba(31,69,120,.11)!important}
+.ktx-action[data-action-tone=danger] *, .ktx-action[data-action-tone=primary] *, .ktx-action[data-action-tone=success] *, .ktx-action[data-action-tone=accent] *, .ktx-action[data-action-tone=warning] *{color:inherit!important}
+button.ktx-action:disabled,.ktx-action[aria-disabled=true]{filter:saturate(.5)!important;opacity:.52!important;transform:none!important;box-shadow:none!important}
+@media (hover:hover){.ktx-action:not(:disabled):not([aria-disabled=true]):hover{filter:brightness(1.06)!important;transform:translateY(-2px)!important;box-shadow:var(--ktx-raised-edge),0 5px 0 rgba(21,40,85,.18),0 12px 20px rgba(35,67,133,.22)!important}}
+.ktx-action:not(:disabled):active{transform:translateY(2px)!important;filter:brightness(.98)!important;box-shadow:inset 0 2px 6px rgba(8,29,74,.15),0 1px 1px rgba(21,40,85,.16)!important}
+.ktx-action:focus-visible{outline:3px solid #ffc654!important;outline-offset:3px!important}
+/* Nút chính của biểu mẫu độc lập cũng nổi khối, kể cả khi không dùng class ktx-action */
+#send:not(.ktx-action),button[type=submit]:not(.ktx-action){box-shadow:inset 0 1px 0 #ffffff57,0 4px 0 #2449a7,0 9px 18px #223f8433!important;border-radius:12px!important}
+@media(max-width:700px){button.ktx-action,.btn.ktx-action,a.ktx-action,label.ktx-action{min-height:42px!important;box-sizing:border-box!important}}
+@media(prefers-reduced-motion:reduce){.ktx-action{transition:none!important}.ktx-action:not(:disabled):hover,.ktx-action:not(:disabled):active{transform:none!important}}
+</style>
+</head><body><main class="card"><div class="brand"><img class="ktx-page-logo" src="./ktx-logo.png" alt="Logo KTX Hóc Môn"><span>KÝ TÚC XÁ HÓC MÔN</span></div><h1>Điểm danh công nhân</h1><form id="attForm"><label>Mã nhân viên *<input name="worker_code" required maxlength="60" autocomplete="off"></label><label>Họ và tên *<input name="worker_name" required maxlength="120"></label><label>KTX *<select name="ktx" required><option value="">Chọn KTX</option><option>KTX 1</option><option>KTX 2</option></select></label><label>Dãy *<select name="day" required><option value="">Chọn dãy</option><option>Dãy 1</option><option>Dãy 2</option><option>Dãy 3</option><option>Dãy 4</option><option>Dãy 5</option><option>Dãy 6</option></select></label><label>Phòng *<select name="room" required><option value="">Chọn phòng</option><option value="1">Phòng 1</option><option value="2">Phòng 2</option><option value="3">Phòng 3</option><option value="4">Phòng 4</option><option value="5">Phòng 5</option><option value="6">Phòng 6</option><option value="7">Phòng 7</option><option value="8">Phòng 8</option><option value="9">Phòng 9</option><option value="10">Phòng 10</option><option value="11">Phòng 11</option><option value="12">Phòng 12</option><option value="13">Phòng 13</option><option value="14">Phòng 14</option><option value="15">Phòng 15</option></select></label><label>Loại điểm danh *<select name="direction" required><option value="in">Điểm danh Vào</option><option value="out">Điểm danh Ra</option></select></label><button type="submit" id="send">Gửi điểm danh</button></form><div id="result" class="msg" role="status"></div></main><script>
+const sid=new URLSearchParams(location.search).get('session');
+async function ensureSession(){if(!sid)return true; if(!/^[0-9a-f-]{36}$/i.test(sid))throw Error('Mã phiên không hợp lệ.');const {data,error}=await sb.from('ktx_attendance_sessions').select('id,session_day,ktx,status').eq('id',sid).maybeSingle();if(error||!data)throw Error('Không tìm thấy phiên điểm danh.');if(data.status!=='open')throw Error('Phiên điểm danh đã đóng.');const now=new Date().toLocaleDateString('en-CA');if(data.session_day!==now)throw Error('Mã QR không có hiệu lực hôm nay.');if(data.ktx){const choice=form.querySelector('[name="ktx"]');choice.value=data.ktx;choice.disabled=true;}return data;}
+const form=document.getElementById('attForm'),msg=document.getElementById('result'),btn=document.getElementById('send');let sb;try{const c=window.KTX_QR_CONFIG||{};if(!/^https:\/\//.test(c.url)||!c.key)throw Error('Chưa cấu hình kết nối QR.');sb=supabase.createClient(c.url,c.key,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})}catch(e){msg.textContent=e.message;msg.className='msg bad';btn.disabled=true}
+form.addEventListener('submit',async e=>{e.preventDefault();if(!sb)return;const fd=new FormData(form);const payload={worker_code:String(fd.get('worker_code')||'').trim(),worker_name:String(fd.get('worker_name')||'').trim(),ktx:String(fd.get('ktx')||''),direction:String(fd.get('direction')||'in'),day:String(fd.get('day')||''),room:String(fd.get('room')||'')};if(!payload.worker_code||!payload.worker_name||!payload.ktx||!payload.day||!payload.room)return;btn.disabled=true;msg.textContent='Đang gửi...';msg.className='msg';try{const session=await ensureSession();if(sid){payload.session_id=sid;if(session.ktx&&payload.ktx!==session.ktx)throw Error('Sai KTX của phiên.')}const {error}=await sb.from('ktx_attendance_qr_requests').insert(payload);if(error)throw error;msg.textContent='Đã gửi yêu cầu điểm danh. Vui lòng chờ Ban quản lý xác nhận.';msg.className='msg good';form.reset()}catch(err){msg.textContent='Không gửi được: '+(err.message||err)+'. Kiểm tra thiết lập bảng điểm danh QR trên Supabase.';msg.className='msg bad'}finally{btn.disabled=false}});
+</script><script id="step248-button-behavior">
+/* STEP248 – classify action buttons by meaning, including dynamically rendered dialogs. */
+(function(){
+ const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').trim();
+ function tone(el){
+   if(el.dataset.actionTone) return el.dataset.actionTone;
+   const label=norm((el.innerText||el.textContent||'').replace(/[\s\u00a0]+/g,' '));
+   const cls=' '+String(el.className||'')+' ';
+   if(/(^|\s)(danger|sf-danger|r)(\s|$)/.test(cls)||/\b(xoa|xoa han|huy bo|tu choi|khoi phuc mac dinh|dat lai|delete|remove)\b/.test(label))return 'danger';
+   if(/\b(hoan tac|canh bao|khoa)\b/.test(label))return 'warning';
+   if(/(^|\s)(primary|sf-green|g)(\s|$)/.test(cls)||/^(xac nhan|luu|duyet|tao |them |dang nhap|gui |hoan thanh|cap nhat|ap dung|chuyen phong)/.test(label))return 'success';
+   if(/\b(xuat|tai |import|chon file|chon nhieu|scan|quet|trich xuat|xem va xuat)\b/.test(label))return 'primary';
+   if(/\b(chinh sua|sua |nhap |chon|tiep theo|phuong an)\b/.test(label))return 'accent';
+   if(/\b(quay lai|dong|huy$|tro ve|back)\b/.test(label))return 'secondary';
+   return 'neutral';
+ }
+ function eligible(el){
+   if(!(el instanceof HTMLElement)) return false;
+   if(el.closest('nav,aside,.sidebar,.tabs,.tabbar,.bottom-nav,.mobile-nav,.m-nav,.system-hub-nav,.sysfunc-grid,.sysfunc-btn')) return false;
+   if(el.matches('[data-ui-no-tone],.sysfunc-btn,.tab,.alert-float,[role=tab]')) return false;
+   if(el.classList.contains('ib') && !el.getAttribute('aria-label') && !el.getAttribute('title'))return false;
+   return true;
+ }
+ function apply(el){
+   if(!eligible(el))return;
+   // Keep styled dashboard tiles and external component buttons intact.
+   if(el.classList.contains('ktx-action'))return;
+   const t=tone(el);el.classList.add('ktx-action');el.dataset.actionTone=t;
+   if((el.textContent||'').length>45)el.classList.add('ktx-long');
+ }
+ function scan(root){if(root.matches&&root.matches('button,.btn,a.btn,label.upload'))apply(root);if(root.querySelectorAll)root.querySelectorAll('button,.btn,a.btn,label.upload').forEach(apply)}
+ function start(){scan(document.body);const observer=new MutationObserver(ms=>{for(const m of ms){if(m.type==='childList')for(const n of m.addedNodes)if(n.nodeType===1)scan(n);}});observer.observe(document.body,{childList:true,subtree:true});}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+</script>
+</body></html>
