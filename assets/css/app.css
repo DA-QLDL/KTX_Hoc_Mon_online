@@ -2067,38 +2067,7 @@ body[data-page="sysfunc"] #sysfunc{display:block!important;visibility:visible!im
 @media(max-width:620px){#vdl .step165-view-actions{gap:6px;padding:10px 12px max(12px,env(safe-area-inset-bottom));}#vdl .step165-view-actions .btn{font-size:12px;padding:9px 10px}}
 
 
-/* Original style #79 id="step243-desktop-sidebar-viewport-fix" */
-
-/* STEP243: desktop left navigation fills the visible viewport; account stays at its bottom.
-   This deliberately overrides older STEP146/151/157/173 sidebar rules. */
-@media (min-width:861px){
-  html{min-height:100%!important}
-  body{min-height:100dvh!important;display:block!important}
-  body>nav{
-    position:fixed!important;left:0!important;top:0!important;bottom:0!important;
-    height:100vh!important;height:100dvh!important;min-height:100dvh!important;
-    max-height:100dvh!important;width:188px!important;max-width:188px!important;
-    display:flex!important;flex-direction:column!important;align-items:stretch!important;
-    overflow:hidden!important;box-sizing:border-box!important;padding:10px 7px 12px!important;
-    background:#fff!important;border-right:1px solid #dfe7f3!important;z-index:20!important;
-  }
-  body>nav>.brand{flex:0 0 auto!important;min-height:0!important}
-  body>nav>#step146NavScroll{
-    display:block!important;flex:1 1 0!important;min-height:0!important;
-    overflow-x:hidden!important;overflow-y:auto!important;padding:0 0 8px!important;
-    margin:0!important;scrollbar-width:thin!important;
-  }
-  body>nav>#authUserbar{
-    position:relative!important;top:auto!important;bottom:auto!important;left:auto!important;right:auto!important;
-    order:99!important;display:flex!important;flex-direction:column!important;flex:0 0 auto!important;
-    width:calc(100% - 8px)!important;max-width:calc(100% - 8px)!important;
-    margin:8px 4px 0!important;padding:8px!important;box-sizing:border-box!important;
-    z-index:2!important;
-  }
-  body>nav>#authUserbar #aubOut{width:100%!important;min-height:36px!important}
-  body>main{margin:0 0 0 188px!important;width:calc(100% - 188px)!important;max-width:none!important;min-width:0!important;flex:none!important}
-}
-
+/* STEP243 desktop sidebar superseded by canonical Production sidebar layout below. */
 
 /* Original style #80 id="step129SystemLayoutStyle" */
 
@@ -2861,18 +2830,25 @@ nav #aubOut svg{width:15px;height:15px;flex:none}
 #incident152{min-width:0}#incident152 .incident152-shell{background:#fff;border:1px solid #d7e3f3;border-radius:14px;padding:14px;margin-top:12px}#incident152 iframe{display:block;border:1px solid #dce7f5;border-radius:12px;width:100%;height:calc(100vh - 250px);min-height:660px;background:#eef4fc}#incident152 .incident152-note{font-size:12px;color:#617492;margin-top:8px}#incident152 .incident152-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 
 
-/* Original style #99 id="step157-sidebar" */
-
+/* Production sidebar layout: desktop viewport-height navigation, one canonical rule.
+   Replaces legacy STEP157 rules conflicting with STEP243 width and main offset. */
 @media (min-width:861px){
- html,body{min-height:100%!important}
- body{display:flex!important;flex-direction:row!important;align-items:stretch!important;min-height:100dvh!important}
- body>nav{height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;position:sticky!important;top:0!important;display:flex!important;flex-direction:column!important;align-self:stretch!important;overflow:hidden!important;padding-bottom:0!important}
- body>nav>.brand{flex:0 0 auto!important}
- body>nav>#step146NavScroll{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding:2px 0 4px!important;scrollbar-width:none!important;-ms-overflow-style:none!important}
- body>nav>#step146NavScroll::-webkit-scrollbar{display:none!important;width:0!important}
- body>nav>#authUserbar{position:static!important;order:99!important;flex:0 0 auto!important;bottom:auto!important;left:auto!important;right:auto!important;width:calc(100% - 16px)!important;max-width:none!important;margin:auto 8px 8px!important;z-index:4!important}
- body>nav>#ft{display:none!important}
- body>main{display:block!important;flex:1 1 auto!important;min-width:0!important;max-width:none!important;width:calc(100% - 188px)!important;margin:0!important}
+  html{min-height:100%!important}
+  body{display:block!important;min-height:100dvh!important}
+  body>nav{position:fixed!important;top:0!important;left:0!important;bottom:0!important;
+    height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;
+    width:248px!important;min-width:248px!important;max-width:248px!important;
+    display:flex!important;flex-direction:column!important;overflow:hidden!important;align-items:stretch!important;
+    padding:12px 10px!important;box-sizing:border-box!important;z-index:20!important}
+  body>nav>.brand{flex:0 0 auto!important}
+  body>nav>#step146NavScroll{display:block!important;flex:1 1 0!important;min-height:0!important;
+    overflow-y:auto!important;overflow-x:hidden!important;padding:2px 0 8px!important}
+  body>nav>#authUserbar{position:static!important;order:99!important;flex:0 0 auto!important;
+    width:calc(100% - 8px)!important;max-width:calc(100% - 8px)!important;
+    margin:8px 4px 0!important;bottom:auto!important;left:auto!important;right:auto!important}
+  body>nav>#ft{display:none!important}
+  body>main{display:block!important;flex:none!important;min-width:0!important;max-width:none!important;
+    width:calc(100% - 248px)!important;margin:0 0 0 248px!important}
 }
 @media(max-width:860px){body>nav{height:auto!important;min-height:0!important;max-height:none!important;overflow-x:auto!important}}
 
