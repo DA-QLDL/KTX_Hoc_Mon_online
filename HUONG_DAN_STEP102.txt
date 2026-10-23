@@ -1,7 +1,0 @@
-KTX STEP102 - MENU SACH
-Nguon: STEP100 FULL QA.
-Da loai bo quy tac zoom desktop 80%, khong chen lop CSS STEP101.
-Menu PC rong 330 px, cao theo man hinh. Menu di dong giu hien thi ngang.
-Cap nhat PWA cache v102.
-Neu ban web van hien giao dien cu, tai lai bang Ctrl+Shift+R hoac xoa cache PWA.
-Du lieu nghiep vu trong trinh duyet khong bi xoa boi file cap nhat.
