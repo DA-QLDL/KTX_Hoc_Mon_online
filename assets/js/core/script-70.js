@@ -7,11 +7,12 @@
     if(!window.$){
       window.$=function(id){return document.getElementById(id)};
     }
-    if(window.page==='home'){
+    var cur=(typeof page!=='undefined'?page:window.page);
+    if(cur==='home'){
       ids.forEach(function(id){var e=$(id); if(e) e.classList.toggle('hide', homeOnly.indexOf(id)===-1);});
       if(tools) tools.classList.remove('hide');
       if($('gk')) $('gk').classList.add('home-ktx-select');
-    }else if(window.page==='work'){
+    }else if(cur==='work'){
       ids.forEach(function(id){var e=$(id); if(e) e.classList.toggle('hide', workOnly.indexOf(id)===-1);});
       if(tools) tools.classList.remove('hide');
       if($('gk')) $('gk').classList.remove('home-ktx-select');

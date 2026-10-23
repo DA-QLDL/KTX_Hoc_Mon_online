@@ -458,11 +458,7 @@ table{font-size:12.8px!important}th{font-size:11.5px!important;font-weight:700!i
 /* Original style #10  */
 
 /* STEP 62/64: scale giao diện 80% và bù chiều cao viewport trên desktop */
-@media (min-width: 900px){
-  body{zoom:.80;min-height:125vh;}
-  nav{height:125vh;}
-  main{min-height:125vh;}
-}
+@media (min-width: 900px){ body{min-height:100vh;} nav{height:100vh;height:100dvh;} main{min-height:100vh;} } /* v1.0.1: bỏ zoom 80% */
 
 
 /* Original style #11  */
@@ -2067,38 +2063,7 @@ body[data-page="sysfunc"] #sysfunc{display:block!important;visibility:visible!im
 @media(max-width:620px){#vdl .step165-view-actions{gap:6px;padding:10px 12px max(12px,env(safe-area-inset-bottom));}#vdl .step165-view-actions .btn{font-size:12px;padding:9px 10px}}
 
 
-/* Original style #79 id="step243-desktop-sidebar-viewport-fix" */
-
-/* STEP243: desktop left navigation fills the visible viewport; account stays at its bottom.
-   This deliberately overrides older STEP146/151/157/173 sidebar rules. */
-@media (min-width:861px){
-  html{min-height:100%!important}
-  body{min-height:100dvh!important;display:block!important}
-  body>nav{
-    position:fixed!important;left:0!important;top:0!important;bottom:0!important;
-    height:100vh!important;height:100dvh!important;min-height:100dvh!important;
-    max-height:100dvh!important;width:188px!important;max-width:188px!important;
-    display:flex!important;flex-direction:column!important;align-items:stretch!important;
-    overflow:hidden!important;box-sizing:border-box!important;padding:10px 7px 12px!important;
-    background:#fff!important;border-right:1px solid #dfe7f3!important;z-index:20!important;
-  }
-  body>nav>.brand{flex:0 0 auto!important;min-height:0!important}
-  body>nav>#step146NavScroll{
-    display:block!important;flex:1 1 0!important;min-height:0!important;
-    overflow-x:hidden!important;overflow-y:auto!important;padding:0 0 8px!important;
-    margin:0!important;scrollbar-width:thin!important;
-  }
-  body>nav>#authUserbar{
-    position:relative!important;top:auto!important;bottom:auto!important;left:auto!important;right:auto!important;
-    order:99!important;display:flex!important;flex-direction:column!important;flex:0 0 auto!important;
-    width:calc(100% - 8px)!important;max-width:calc(100% - 8px)!important;
-    margin:8px 4px 0!important;padding:8px!important;box-sizing:border-box!important;
-    z-index:2!important;
-  }
-  body>nav>#authUserbar #aubOut{width:100%!important;min-height:36px!important}
-  body>main{margin:0 0 0 188px!important;width:calc(100% - 188px)!important;max-width:none!important;min-width:0!important;flex:none!important}
-}
-
+/* STEP243 desktop sidebar superseded by canonical Production sidebar layout below. */
 
 /* Original style #80 id="step129SystemLayoutStyle" */
 
@@ -2861,18 +2826,25 @@ nav #aubOut svg{width:15px;height:15px;flex:none}
 #incident152{min-width:0}#incident152 .incident152-shell{background:#fff;border:1px solid #d7e3f3;border-radius:14px;padding:14px;margin-top:12px}#incident152 iframe{display:block;border:1px solid #dce7f5;border-radius:12px;width:100%;height:calc(100vh - 250px);min-height:660px;background:#eef4fc}#incident152 .incident152-note{font-size:12px;color:#617492;margin-top:8px}#incident152 .incident152-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 
 
-/* Original style #99 id="step157-sidebar" */
-
+/* Production sidebar layout: desktop viewport-height navigation, one canonical rule.
+   Replaces legacy STEP157 rules conflicting with STEP243 width and main offset. */
 @media (min-width:861px){
- html,body{min-height:100%!important}
- body{display:flex!important;flex-direction:row!important;align-items:stretch!important;min-height:100dvh!important}
- body>nav{height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;position:sticky!important;top:0!important;display:flex!important;flex-direction:column!important;align-self:stretch!important;overflow:hidden!important;padding-bottom:0!important}
- body>nav>.brand{flex:0 0 auto!important}
- body>nav>#step146NavScroll{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding:2px 0 4px!important;scrollbar-width:none!important;-ms-overflow-style:none!important}
- body>nav>#step146NavScroll::-webkit-scrollbar{display:none!important;width:0!important}
- body>nav>#authUserbar{position:static!important;order:99!important;flex:0 0 auto!important;bottom:auto!important;left:auto!important;right:auto!important;width:calc(100% - 16px)!important;max-width:none!important;margin:auto 8px 8px!important;z-index:4!important}
- body>nav>#ft{display:none!important}
- body>main{display:block!important;flex:1 1 auto!important;min-width:0!important;max-width:none!important;width:calc(100% - 188px)!important;margin:0!important}
+  html{min-height:100%!important}
+  body{display:block!important;min-height:100dvh!important}
+  body>nav{position:fixed!important;top:0!important;left:0!important;bottom:0!important;
+    height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;
+    width:248px!important;min-width:248px!important;max-width:248px!important;
+    display:flex!important;flex-direction:column!important;overflow:hidden!important;align-items:stretch!important;
+    padding:12px 10px!important;box-sizing:border-box!important;z-index:20!important}
+  body>nav>.brand{flex:0 0 auto!important}
+  body>nav>#step146NavScroll{display:block!important;flex:1 1 0!important;min-height:0!important;
+    overflow-y:auto!important;overflow-x:hidden!important;padding:2px 0 8px!important}
+  body>nav>#authUserbar{position:static!important;order:99!important;flex:0 0 auto!important;
+    width:calc(100% - 8px)!important;max-width:calc(100% - 8px)!important;
+    margin:8px 4px 0!important;bottom:auto!important;left:auto!important;right:auto!important}
+  body>nav>#ft{display:none!important}
+  body>main{display:block!important;flex:none!important;min-width:0!important;max-width:none!important;
+    width:calc(100% - 248px)!important;margin:0 0 0 248px!important}
 }
 @media(max-width:860px){body>nav{height:auto!important;min-height:0!important;max-height:none!important;overflow-x:auto!important}}
 
@@ -3170,3 +3142,108 @@ main input[type="checkbox"],main input[type="radio"],#mobile180 input[type="chec
 }
 main input[type="checkbox"]::before,main input[type="radio"]::before,#mobile180 input[type="checkbox"]::before,#mobile180 input[type="radio"]::before{content:none!important}
 
+
+
+/* Production v1.0.0 — targeted worker desktop layout + STEP100 action palette (2026-10-22).
+   Single last rule set; does not alter data, module JS, auth or responsive mobile behavior. */
+@media(min-width:861px){
+  #tools.top-actions{display:flex!important;flex-flow:row wrap!important;align-items:center!important;justify-content:flex-end!important;align-content:flex-start!important;gap:7px!important;min-width:0!important;width:auto!important;max-width:100%!important;}
+  #tools.top-actions>button,#tools.top-actions>label{flex:0 0 auto!important;white-space:nowrap!important;min-width:0!important;}
+  #tools.top-actions>select:not(.hide){flex:0 0 auto!important;max-width:230px!important;}
+  #work #wl>.wrap{overflow-x:auto!important;overflow-y:auto!important;max-width:100%!important;}
+  #work .cmp2{min-width:1090px!important;width:100%!important;table-layout:auto!important;}
+  #work .cmp2 thead th{height:50px!important;white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;writing-mode:horizontal-tb!important;line-height:1.25!important;padding:9px 6px!important;vertical-align:middle!important;font-size:10.5px!important;}
+  #work .cmp2 thead th :is(button,.thbtn,span,b,small,div){white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;writing-mode:horizontal-tb!important;}
+  #work .cmp2 th:nth-child(3),#work .cmp2 td:nth-child(3){min-width:145px!important;}
+}
+/* Color codes match the second reference screenshot: blue, green, violet, amber and red. */
+#tools :is(button,label).btn{color:#fff!important;border:1px solid transparent!important;box-shadow:0 3px 9px rgba(29,63,105,.14)!important;border-radius:9px!important;font-weight:750!important;}
+#tools :is(button,label).ta-slate{background:#4b6d9c!important;color:#fff!important;}
+#tools :is(button,label).ta-blue{background:#2176ee!important;color:#fff!important;}
+#tools :is(button,label).ta-green{background:#0fa773!important;color:#fff!important;}
+#tools :is(button,label).ta-indigo{background:#4267e8!important;color:#fff!important;}
+#tools :is(button,label).ta-emerald{background:#13ad79!important;color:#fff!important;}
+#tools :is(button,label).ta-violet{background:#7752ed!important;color:#fff!important;}
+#tools :is(button,label).ta-amber{background:#ec8a09!important;color:#fff!important;}
+#tools :is(button,label).ta-purple{background:#923fde!important;color:#fff!important;}
+#tools :is(button,label).r{background:#f43f57!important;color:#fff!important;}
+#tools :is(button,label).btn:hover{filter:brightness(.93)!important;color:#fff!important;transform:translateY(-1px)!important;}
+#tools :is(button,label).btn :is(span,b,strong,svg,.i){color:inherit!important;stroke:currentColor!important;}
+
+
+/* STEP110 — final override for Utility/System colored 4-column grids */
+#sysfunc .sysfunc-group .sysfunc-grid,
+#utilhub .sysfunc-group .sysfunc-grid{
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:10px !important;
+  align-items:stretch !important;
+}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn,
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn,
+#utilhub button.sysfunc-btn{
+  width:100% !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  min-height:58px !important;
+  padding:10px 11px !important;
+  gap:10px !important;
+  align-items:center !important;
+  border-radius:10px !important;
+  border:1px solid #d7e2ef !important;
+  border-left:4px solid var(--group,#2f7df4) !important;
+  background:#fff !important;
+  box-shadow:0 4px 10px rgba(33,64,110,.08) !important;
+  color:#24364f !important;
+  position:relative !important;
+  overflow:hidden !important;
+}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn:hover,
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn:hover,
+#utilhub button.sysfunc-btn:hover{
+  transform:translateY(-1px) !important;
+  border-color:#aec4df !important;
+  border-left-color:var(--group,#2f7df4) !important;
+  box-shadow:0 8px 16px rgba(33,64,110,.11) !important;
+  background:#f9fbff !important;
+}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn .sficon,
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn .sficon,
+#utilhub button.sysfunc-btn .sficon{
+  width:30px !important;height:30px !important;flex:0 0 30px !important;border-radius:9px !important;
+  background:#fff !important;border:1px solid color-mix(in srgb,var(--group,#2f7df4) 42%,#dbe4ef) !important;
+  color:var(--group,#2f7df4) !important;box-shadow:none !important;display:grid !important;place-items:center !important;
+}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn .sficon .i,
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn .sficon .i,
+#utilhub button.sysfunc-btn .sficon .i{width:15px !important;height:15px !important;}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn > span:last-child,
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn > span:last-child,
+#utilhub button.sysfunc-btn > span:last-child{display:block !important;min-width:0 !important;}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn b,
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn b,
+#utilhub button.sysfunc-btn b{display:block !important;margin:0 0 2px !important;font-size:10.2px !important;line-height:1.25 !important;color:#1f3350 !important;font-weight:750 !important;white-space:normal !important;}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn small,
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn small,
+#utilhub button.sysfunc-btn small{display:block !important;margin:0 !important;color:#6d7d92 !important;font-size:8.2px !important;line-height:1.28 !important;}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn.sf-green,
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn.sf-green{--group:#18a669}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn.sf-purple,
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn.sf-purple{--group:#7c5cff}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn.sf-warn,
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn.sf-warn{--group:#f59e0b}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn.sf-danger,
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn.sf-danger{--group:#ef476f}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn:nth-child(5n+1),
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn:nth-child(5n+1){--group:#2f7df4}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn:nth-child(5n+2),
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn:nth-child(5n+2){--group:#18a669}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn:nth-child(5n+3),
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn:nth-child(5n+3){--group:#7c5cff}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn:nth-child(5n+4),
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn:nth-child(5n+4){--group:#f59e0b}
+#sysfunc .sysfunc-group .sysfunc-grid > .sysfunc-btn:nth-child(5n),
+#utilhub .sysfunc-group .sysfunc-grid > .sysfunc-btn:nth-child(5n){--group:#ef476f}
+@media (max-width:1200px){#sysfunc .sysfunc-group .sysfunc-grid,#utilhub .sysfunc-group .sysfunc-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;}}
+@media (max-width:860px){#sysfunc .sysfunc-group .sysfunc-grid,#utilhub .sysfunc-group .sysfunc-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}}
+@media (max-width:560px){#sysfunc .sysfunc-group .sysfunc-grid,#utilhub .sysfunc-group .sysfunc-grid{grid-template-columns:1fr !important;}}
