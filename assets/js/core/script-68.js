@@ -50,14 +50,17 @@ function cloudHint(){if(cloudBusy)return 'Đang tải danh sách công nhân t�
 async function tryCloudRead(force=false){
  if(!mobile()||cloudBusy||(!force&&workers().length>0)||(!force&&Date.now()-lastCloudCheck<15000))return;
  if(typeof SUPA_SYNC==='undefined'||!SUPA_SYNC.session||!SUPA_SYNC.ready)return;
- cloudBusy=true;cloudError='';lastCloudCheck=Date.now();render();
+ cloudBusy=true;cloudError='';lastCloudCheck=Date.now();if(window.ktxDownloadStatus)window.ktxDownloadStatus('loading','Đang tải dữ liệu từ Cloud…');render();
  try{
   if(typeof syncFetchAll!=='function'||typeof syncApplyRows!=='function'||typeof SYNC_TABLES==='undefined')throw Error('Thiếu mô-đun đọc dữ liệu Supabase.');
   const rows=await syncFetchAll(SYNC_TABLES.workers,'record_id,payload');
   if(!rows.length){cloudError='Supabase trả về 0 công nhân. Không thay đổi dữ liệu trên máy; kiểm tra quyền RLS hoặc kết nối.'}
   else {if(typeof W!=='undefined'&&W.length===0)syncApplyRows('workers',rows);else if(force&&typeof W!=='undefined'&&W.length>0){cloudError='Máy đang có dữ liệu. Để tránh ghi đè khi chưa đối chiếu, vui lòng đồng bộ qua Chức năng hệ thống trên PC.'}cloudReady=true}
  }catch(e){cloudError='Không tải được danh sách Cloud: '+(e.message||String(e))}
- finally{cloudBusy=false;render()}
+ finally{
+  if(window.ktxDownloadStatus)window.ktxDownloadStatus(cloudError?'error':'success',cloudError||('Đã đọc dữ liệu Cloud. Danh sách hiện có '+(typeof W!=='undefined'?W.length.toLocaleString('vi-VN'):'0')+' hồ sơ.'));
+  cloudBusy=false;render();
+ }
 }
 function mealMobile(){
  const m=typeof RP!=='undefined'?RP:{date:'',ses:'trua',ktx:'KTX1',on:new Set(),f:{},A:{},price:''};
