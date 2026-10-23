@@ -3247,3 +3247,21 @@ main input[type="checkbox"]::before,main input[type="radio"]::before,#mobile180 
 @media (max-width:1200px){#sysfunc .sysfunc-group .sysfunc-grid,#utilhub .sysfunc-group .sysfunc-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;}}
 @media (max-width:860px){#sysfunc .sysfunc-group .sysfunc-grid,#utilhub .sysfunc-group .sysfunc-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}}
 @media (max-width:560px){#sysfunc .sysfunc-group .sysfunc-grid,#utilhub .sysfunc-group .sysfunc-grid{grid-template-columns:1fr !important;}}
+
+/* v1.0.3 — table stability, controlled worker actions */
+#work .ktx250-worker-table-scroll{overflow:auto!important;max-height:calc(100dvh - 260px);position:relative;}
+#work .cmp2{min-width:1260px!important;table-layout:auto!important;}
+#work .cmp2 th{position:sticky;top:0;z-index:2;white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;writing-mode:horizontal-tb!important;height:auto!important;min-height:46px;padding:12px 9px!important;line-height:1.4!important;background:#eaf2ff!important;}
+#work .cmp2 td{white-space:normal;min-width:55px;}
+.ktx-more-action{position:relative;display:inline-flex;align-items:center;}
+.ktx-more-panel{position:absolute;right:0;top:calc(100% + 6px);z-index:90;background:#fff;border:1px solid #d8e4f3;border-radius:12px;box-shadow:0 12px 28px #223b5a30;padding:8px;display:flex;flex-direction:column;gap:7px;min-width:180px;}
+.ktx-more-panel[hidden]{display:none!important;}
+.ktx-more-panel>button{width:100%;justify-content:center;}
+#tools .ktx-more-action.hide{display:none!important;}
+@media(max-width:760px){#work .ktx250-worker-table-scroll{max-height:75dvh;}}
+
+/* v1.0.3 worker table optional-column controls */
+.ktx-column-controls{position:relative;display:flex;justify-content:flex-end;margin:8px 0;}
+.ktx-column-popover{position:absolute;z-index:100;right:0;top:100%;display:grid;grid-template-columns:repeat(2,minmax(140px,1fr));gap:9px;background:#fff;border:1px solid #d7e3f3;border-radius:12px;padding:14px;box-shadow:0 12px 24px #143d6126;}
+.ktx-column-popover[hidden]{display:none!important;}
+.ktx-column-popover label{display:flex;align-items:center;gap:6px;font-size:12px;white-space:nowrap;}

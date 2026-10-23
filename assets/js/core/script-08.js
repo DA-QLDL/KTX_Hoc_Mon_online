@@ -916,13 +916,13 @@ const isNam=g=>{const k=sa(g);return k.startsWith('nam')||k=='m'}; const isNu=g=
 const iso=v=>{if(v==null||v==='')return '';if(v instanceof Date){if(isNaN(v))return '';return v.getFullYear()+'-'+String(v.getMonth()+1).padStart(2,'0')+'-'+String(v.getDate()).padStart(2,'0')}if(typeof v==='number')return new Date(Math.round((v-25569)*864e5)).toISOString().slice(0,10);
  const m=String(v).trim().match(/^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})/);if(m)return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;return /^\d{4}-\d{2}-\d{2}/.test(String(v))?String(v).slice(0,10):''};
 const since=w=>{if(!w.date)return null;const a=String(w.date).slice(0,10).split('-').map(Number);if(a.length<3||!a[0]||!a[1]||!a[2])return null;const start=new Date(a[0],a[1]-1,a[2],12),now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12),n=Math.floor((today-start)/864e5);return n>=0?n:null};
-const K=w=>w.ktx||'KTX 1',D=w=>w.day||'Dãy 1',R=w=>w.room||'';
+const K=w=>String(w.ktx||'').trim()||'Chưa phân',D=w=>String(w.day||'').trim()||'Chưa phân',R=w=>w.room||'';
 const add=(a,t,k)=>{LOG.unshift({t:new Date().toLocaleString('vi-VN'),a,d:t,k,day:ldy(),actor:(typeof ME!='undefined'&&(ME.name||ME.id))||(localStorage.getItem('ktx_actor')||'Người dùng'),role:(typeof ME!='undefined'&&ME.role)||'local',at:Date.now()});sv()};
 const vis=()=>{const k=$('gk').value,L=W.filter(w=>can('view',w));return k?L.filter(w=>K(w)==k):L};
 const miss=w=>!w.cccd||!w.sdt;
 
 function pill(){$('np').textContent=W.length.toLocaleString('vi-VN');const ks=[...new Set(W.map(K))].sort(num),c=$('gk').value;$('gk').innerHTML='<option value="">Tất cả KTX</option>'+ks.map(k=>`<option ${k==c?'selected':''}>${esc(k)}</option>`).join('')}
-function rooms(L,withUnassigned){const t={};L.forEach(w=>{if(!R(w)&&!withUnassigned)return;const k=K(w)+'|'+D(w)+'|'+(R(w)||'?');(t[k]=t[k]||{ktx:K(w),day:D(w),room:R(w)||'?',n:0,m:0,f:0,u:0,l:[]});const r=t[k];r.n++;r.l.push(w);if(isNu(w.gt))r.f++;else if(isNam(w.gt))r.m++;else r.u++});return Object.values(t)}
+function rooms(L,withUnassigned){const t={};L.forEach(w=>{if((!R(w)||K(w)==='Chưa phân'||D(w)==='Chưa phân')&&!withUnassigned)return;const k=K(w)+'|'+D(w)+'|'+(R(w)||'?');(t[k]=t[k]||{ktx:K(w),day:D(w),room:R(w)||'?',n:0,m:0,f:0,u:0,l:[]});const r=t[k];r.n++;r.l.push(w);if(isNu(w.gt))r.f++;else if(isNam(w.gt))r.m++;else r.u++});return Object.values(t)}
 
 const KR={'KTX 1':60,'KTX 2':69,'KTX 3':49},nRoom=(k,rs)=>KR[k]||rs.length;/* số phòng mặc định mỗi KTX (x20 chỗ): 1.200 / 1.380 / 980 */
 const COLL=new Set();let SELK='',HOMEDAY='';
@@ -1011,7 +1011,7 @@ function work(){if(!$('work').dataset.init){$('work').dataset.init=1;$('work').i
   $('wrf').onclick=()=>{['q','fk','fd','fr','fu','fh'].forEach(i=>{$(i).value=''});pg=1;work()};
   $('sm').onchange=fillSv;$('sg').onclick=()=>{sgrp().forEach(w=>sel.add(w.id));SO=sel.size>0;pg=1;wl()};$('so').onchange=e=>{SO=e.target.checked&&sel.size>0;pg=1;wl()};$('su').onclick=()=>{sgrp().forEach(w=>sel.delete(w.id));wl()};$('sc').onclick=()=>{sel.clear();wl()};
   $('ds2').onclick=async()=>{if(!sel.size){alert('Hãy tick chọn công nhân cần xóa.');return}const L=W.filter(w=>sel.has(w.id)),nm=L.slice(0,5).map(w=>'• '+w.name).join('\n')+(L.length>5?`\n… và ${L.length-5} người khác`:'');const inf=await askLeave(L);if(!inf)return;delWorkers(L,inf)};
-  $('dsall').onclick=async()=>{if(!W.length){alert('Danh sách công nhân đang trống.');return}if(!can('del')){alert('Bạn không có quyền xóa công nhân.');return}const L=W.slice(),inf=await askLeave(L,{reason:'Khác',note:'Thao tác Xóa tất cả từ Quản lý công nhân'});if(!inf)return;sel.clear();delWorkers(L,inf)}}
+  $('dsall').onclick=async()=>{if(!W.length){alert('Danh sách công nhân đang trống.');return}if(!can('del')){alert('Bạn không có quyền xóa công nhân.');return}const typed=prompt('THAO TÁC KHÔNG THỂ HOÀN TÁC DỄ DÀNG. Nhập chính xác XÓA TẤT CẢ để tiếp tục:');if(typed!=='XÓA TẤT CẢ'){alert('Đã hủy thao tác xóa toàn bộ.');return}const L=W.slice(),inf=await askLeave(L,{reason:'Khác',note:'Thao tác Xóa tất cả từ Quản lý công nhân'});if(!inf)return;sel.clear();delWorkers(L,inf)}}
  const cur={};FL.forEach(([id])=>cur[id]=$(id).value);FL.forEach(([id,l,fn])=>{const vals=W.map(fn).filter(v=>v&&v!='—'),uniq=[...new Set(vals)].sort(num);$(id).innerHTML=`<option value="">${l}: tất cả</option>`+uniq.map(v=>`<option value="${esc(v)}" ${v==cur[id]?'selected':''}>${esc(v)}</option>`).join('')});fillSv();wl()}
 const selUi=()=>{{const m2=$('mnn');if(m2){const n=W.filter(noCode).length;m2.textContent=n;m2.style.display=n?'':'none'}}{const w2=$('wdn');if(w2){w2.textContent=window.DUP_N||'';w2.style.display=window.DUP_N?'':'none'}}$('sn').textContent=`Đã chọn ${sel.size.toLocaleString('vi-VN')} / ${W.length.toLocaleString('vi-VN')}`;$('sn').classList.toggle('on',sel.size>0);$('dst').textContent=sel.size?`Xóa mục đã chọn (${sel.size})`:'Xóa mục đã chọn';$('xwt').textContent=sel.size?`Xuất Excel (${sel.size} đã chọn)`:'Xuất Excel'};
 const gkey=(w,m)=>m=='ktx'?K(w):m=='day'?K(w)+'|'+D(w):K(w)+'|'+D(w)+'|'+(R(w)||'—');
@@ -1944,7 +1944,7 @@ $('sp').onclick=async()=>{const ks=[...document.querySelectorAll('.pk:checked')]
 $('zp').onclick=async()=>{if(!PG.length)return;$('zp').disabled=true;try{await zipOf(PG,new Set(PG.map(p=>p.file)).size==1?PG[0].file+'_anh.zip':'anh-tu-pdf.zip')}finally{$('zp').disabled=false}};
 
 function sync(){const fs=['name','mnv','sdt','cccd','dob','gt','td','ktx','day','tinh','thon','xa','huyen','tinh2'];
- D.A=W.map((w,i)=>{const raw={};fs.forEach(f=>raw[f]=w[f]||'');raw.ktx=w.ktx||'KTX 1';raw.day=w.day||'Dãy 1';raw.room=w.room||'';raw.dob=vn(w.dob);const o={row:i+1,src:'Danh sách hiện tại',wi:i,raw,k:{}};for(const f in N)o.k[f]=N[f](raw[f]);return o});
+ D.A=W.map((w,i)=>{const raw={};fs.forEach(f=>raw[f]=w[f]||'');raw.ktx=K(w);raw.day=D(w);raw.room=w.room||'';raw.dob=vn(w.dob);const o={row:i+1,src:'Danh sách hiện tại',wi:i,raw,k:{}};for(const f in N)o.k[f]=N[f](raw[f]);return o});
  D.A.file='Danh sách hiện tại';D.A.cols=fs.filter(f=>W.some(w=>w[f]))}
 ['go','go3','go4'].forEach(id=>{const g=$(id).onclick;$(id).onclick=()=>{sync();g();if(id=='go3')$('ap3').disabled=!AD}});
 $('ap3').onclick=()=>{if(!AD)return;AD.forEach(r=>{const w=W[r.o.wi];if(w){w.thon=r.thon;w.xa=r.xa;w.huyen=r.huyen;w.tinh2=r.tinh}});sv();add('UPDATE','Áp dụng tách địa chỉ cho '+AD.length+' công nhân');alert('Đã lưu kết quả tách vào danh sách. Có thể gộp lại ở tab Gộp địa chỉ.')};

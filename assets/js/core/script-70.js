@@ -8,6 +8,7 @@
       window.$=function(id){return document.getElementById(id)};
     }
     var cur=(typeof page!=='undefined'?page:window.page);
+    var more=document.getElementById('ktxMoreActions');if(more)more.classList.toggle('hide',cur!=='work');
     if(cur==='home'){
       ids.forEach(function(id){var e=$(id); if(e) e.classList.toggle('hide', homeOnly.indexOf(id)===-1);});
       if(tools) tools.classList.remove('hide');
