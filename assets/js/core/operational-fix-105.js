@@ -27,7 +27,25 @@ document.addEventListener('click',async ev=>{
  if(typeof ME==='undefined'||ME.role!=='admin'){alert('Chỉ Admin mới được xóa toàn bộ.');return}
  if(typeof W==='undefined'||!W.length){alert('Danh sách công nhân trống.');return}
  if(typeof SUPA_SYNC==='undefined'||!SUPA_SYNC.enabled||!SUPA_SYNC.ready||!SUPA_SYNC.session){alert('Chưa kết nối Supabase. Không thể xác nhận xóa toàn bộ dữ liệu dùng chung.');return}
- if(SUPA_SYNC.pending||SUPA_SYNC.pushing||SUPA_SYNC.pulling||(SUPA_SYNC.conflicts||[]).length){alert('Còn thay đổi chưa đồng bộ hoặc xung đột. Xử lý trước khi xóa toàn bộ.');return}
+ // Pending is a queue state, not proof that a conflict exists. Flush it first.
+ if(SUPA_SYNC.pushing||SUPA_SYNC.pulling||SUPA_SYNC.applying){
+  status('Cloud đang đồng bộ. Hãy thử lại sau khi thao tác hiện tại hoàn tất.',true);return;
+ }
+ if((SUPA_SYNC.conflicts||[]).length){
+  status('Có '+SUPA_SYNC.conflicts.length+' xung đột. Mở Chức năng hệ thống → Đồng bộ Supabase để xử lý trước khi xóa.',true);return;
+ }
+ if(SUPA_SYNC.pending){
+  status('Đang kiểm tra và đồng bộ những thay đổi còn chờ trước khi xóa...');
+  b.disabled=true;
+  try{
+   const result=await syncPushAll();
+   if(!result||!result.ok||result.conflicts||SUPA_SYNC.pending||(SUPA_SYNC.conflicts||[]).length){
+    status('Chưa thể xóa: '+(SUPA_SYNC.lastError||'Cloud còn hàng đợi hoặc xung đột. Mở Chức năng hệ thống → Đồng bộ Supabase để kiểm tra.'),true);return;
+   }
+  }catch(e){status('Đồng bộ thất bại: '+(e.message||String(e)),true);return}
+  finally{b.disabled=false}
+ }
+ if(!navigator.onLine){status('Không có Internet, chưa thể xóa dữ liệu Cloud.',true);return;}
  const qty=W.length;
  if(prompt('XÓA TOÀN BỘ '+qty+' HỒ SƠ CÔNG NHÂN TRÊN CLOUD. Hãy sao lưu trước. Gõ chính xác XÓA TẤT CẢ:')!=='XÓA TẤT CẢ')return;
  if(!confirm('Xác nhận lần cuối: Xóa '+qty+' hồ sơ trên Supabase? Không thể hoàn tác bằng nút Hoàn tác import.'))return;
