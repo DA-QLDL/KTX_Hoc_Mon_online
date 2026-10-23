@@ -1,0 +1,3 @@
+-- Không cần chạy nếu bạn import bằng CSV trong Supabase Table Editor.
+-- Mẫu cột CSV cho workers:
+-- name,mnv,cccd,phone,gender,dob,unit,battalion,leader,ktx,day,room,bed,address,temporary_residence,check_in_date
