@@ -1,4 +1,0 @@
-KTX STEP103 - STEP102 làm nền, tích hợp toàn bộ ứng dụng V1.0.0-B1 trong nhóm menu Ứng dụng V1.0.0-B1.
-Mở index.html. Bản B1 độc lập trong thư mục b1 nhằm ngăn xung đột CSS, JS và giữ nguyên màn hình STEP102.
-Lưu ý: dữ liệu localStorage của hai ứng dụng có thể dùng các khóa khác nhau; không tự động hợp nhất hay xóa dữ liệu. Trang B1 có thể yêu cầu cấu hình Supabase riêng.
-Các biểu mẫu B1 có thể mở từ menu; ứng dụng tổng B1 có toàn bộ module gốc.
