@@ -27,23 +27,29 @@ document.addEventListener('click',async ev=>{
  if(typeof ME==='undefined'||ME.role!=='admin'){alert('Chỉ Admin mới được xóa toàn bộ.');return}
  if(typeof W==='undefined'||!W.length){alert('Danh sách công nhân trống.');return}
  if(typeof SUPA_SYNC==='undefined'||!SUPA_SYNC.enabled||!SUPA_SYNC.ready||!SUPA_SYNC.session){alert('Chưa kết nối Supabase. Không thể xác nhận xóa toàn bộ dữ liệu dùng chung.');return}
- // Pending is a queue state, not proof that a conflict exists. Flush it first.
- // Tạm ngưng lượt tải tự động đã lên lịch, không vô hiệu hóa phân quyền hoặc đồng bộ thật.
- if(SUPA_SYNC.reloadTimer){clearTimeout(SUPA_SYNC.reloadTimer);SUPA_SYNC.reloadTimer=null;}
+ // Suspend scheduled background fetches/pushes for a single controlled operation.
+ // Never clear active network flags: in-flight requests must actually settle.
+ const cancelScheduled=()=>{
+  for(const key of ['reloadTimer','pushTimer']){
+   if(SUPA_SYNC[key]){clearTimeout(SUPA_SYNC[key]);SUPA_SYNC[key]=null;}
+  }
+ };
+ cancelScheduled();
  if(SUPA_SYNC.pushing||SUPA_SYNC.pulling||SUPA_SYNC.applying){
-  status('Đang chờ lượt đồng bộ Cloud hiện tại hoàn tất để kiểm tra quyền xóa...');
+  status('Có phiên Cloud đang chạy. Đang đợi hoàn tất trước khi kiểm tra lệnh xóa…');
   b.disabled=true;
   try{
-   const started=Date.now();
-   while((SUPA_SYNC.pushing||SUPA_SYNC.pulling||SUPA_SYNC.applying)&&Date.now()-started<15000){
-    await new Promise(resolve=>setTimeout(resolve,300));
-   }
-   if(SUPA_SYNC.pushing||SUPA_SYNC.pulling||SUPA_SYNC.applying){
-    status('Cloud vẫn đang đồng bộ sau 15 giây. Không thực hiện xóa; kiểm tra mạng, đồng bộ và thử lại.',true);
-    return;
+   const start=Date.now();
+   while(SUPA_SYNC.pushing||SUPA_SYNC.pulling||SUPA_SYNC.applying){
+    if(Date.now()-start>45000){
+     status('Phiên Cloud vẫn đang chạy sau 45 giây. Không xóa khi yêu cầu mạng chưa kết thúc. Hãy kiểm tra kết nối Supabase và tải lại ứng dụng trước khi thử lại.',true);
+     return;
+    }
+    await new Promise(resolve=>setTimeout(resolve,350));
    }
   }finally{b.disabled=false}
  }
+ cancelScheduled();
  if(SUPA_SYNC.lastError){
   status('Cloud báo lỗi: '+SUPA_SYNC.lastError+'. Kiểm tra Đồng bộ Supabase trước khi xóa.',true);return;
  }
@@ -65,7 +71,8 @@ document.addEventListener('click',async ev=>{
  const qty=W.length;
  if(prompt('XÓA TOÀN BỘ '+qty+' HỒ SƠ CÔNG NHÂN TRÊN CLOUD. Hãy sao lưu trước. Gõ chính xác XÓA TẤT CẢ:')!=='XÓA TẤT CẢ')return;
  if(!confirm('Xác nhận lần cuối: Xóa '+qty+' hồ sơ trên Supabase? Không thể hoàn tác bằng nút Hoàn tác import.'))return;
- running=true;b.disabled=true;
+ running=true;b.disabled=true;SUPA_SYNC.deletingWorkers=true;
+ if(SUPA_SYNC.pushTimer){clearTimeout(SUPA_SYNC.pushTimer);SUPA_SYNC.pushTimer=null;}
  if(SUPA_SYNC.reloadTimer){clearTimeout(SUPA_SYNC.reloadTimer);SUPA_SYNC.reloadTimer=null;}
  try{
   const client=syncClient();const table=SYNC_TABLES.workers;
@@ -75,10 +82,11 @@ document.addEventListener('click',async ev=>{
   if(q.count!==qty)throw Error('Cloud có '+q.count+' hồ sơ nhưng thiết bị đang có '+qty+'. Hãy đối chiếu trước khi xóa, không xóa lệch.');
   if(!window.navigator.onLine)throw Error('Không có Internet');
   // Delete by explicit verified identifiers, not by a broad unconditional filter.
-  const ids=(SUPA_SYNC.remoteIds.workers?Array.from(SUPA_SYNC.remoteIds.workers):[]).map(String);
-  if(ids.length!==qty)throw Error('Danh sách định danh Cloud chưa khớp. Đồng bộ và kiểm tra lại trước khi xóa.');
-  status('Đang xóa dữ liệu từ Supabase và kiểm tra kết quả...');
-  for(let i=0;i<ids.length;i+=100){const r=await client.from(table).delete().in('record_id',ids.slice(i,i+100)).select('record_id');if(r.error)throw r.error;if((r.data||[]).length!==ids.slice(i,i+100).length)throw Error('Cloud không xác nhận đủ số bản ghi đã xóa. Cần kiểm tra lại dữ liệu.');}
+  const liveRows=await syncFetchAll(table,'record_id');
+  const ids=liveRows.map(x=>String(x.record_id));
+  if(ids.length!==qty||new Set(ids).size!==ids.length)throw Error('Danh sách định danh Cloud không khớp số lượng. Dừng xóa để bảo vệ dữ liệu.');
+  status('Đang xóa dữ liệu từ Supabase (0/'+ids.length+')…');
+  for(let i=0;i<ids.length;i+=100){const batch=ids.slice(i,i+100);const r=await client.from(table).delete().in('record_id',batch).select('record_id');if(r.error)throw r.error;if((r.data||[]).length!==batch.length)throw Error('Cloud xác nhận thiếu bản ghi ở đợt '+(Math.floor(i/100)+1)+'. Cần kiểm tra RLS và dữ liệu.');status('Đang xóa dữ liệu Cloud: '+Math.min(i+100,ids.length)+'/'+ids.length+' hồ sơ…');}
   const q2=await client.from(table).select('*',{count:'exact',head:true});if(q2.error)throw q2.error;
   if(q2.count!==0)throw Error('Cloud vẫn còn '+q2.count+' hồ sơ. Chưa xóa trên thiết bị để tránh sai lệch.');
   W.splice(0,W.length); if(typeof sel!=='undefined')sel.clear();
@@ -87,7 +95,7 @@ document.addEventListener('click',async ev=>{
   if(typeof all==='function')all();
   status('Đã kiểm tra: Cloud còn 0 hồ sơ công nhân.');
  }catch(e){status('CHƯA XÓA HOÀN TẤT: '+(e.message||e)+'. Kiểm tra Cloud trước khi thử lại.',true);alert('Thao tác chưa hoàn tất. '+(e.message||e)+'\nKhông tải lại hay import ngay; hãy kiểm tra Supabase.');}
- finally{running=false;b.disabled=false}
+ finally{SUPA_SYNC.deletingWorkers=false;running=false;b.disabled=false}
 },true);
 window.addEventListener('beforeunload',e=>{
  if(typeof SUPA_SYNC!=='undefined'&&SUPA_SYNC.enabled&&(SUPA_SYNC.pending||SUPA_SYNC.pushing||(SUPA_SYNC.conflicts||[]).length)){
@@ -96,7 +104,7 @@ window.addEventListener('beforeunload',e=>{
 });
 // Import confirmation: offer an explicit Cloud verification after importer completes.
 let imported=false;
-document.addEventListener('change',ev=>{if(ev.target&&ev.target.id==='fx'&&ev.target.files&&ev.target.files.length){imported=true;status('Đang xử lý import. Chưa đóng trang cho đến khi dữ liệu ghi lên Cloud.')}},true);
+document.addEventListener('change',ev=>{if(ev.target&&ev.target.id==='fx'&&ev.target.files&&ev.target.files.length){imported=true;status('Đã nhận file Import. Hãy kiểm tra kết quả và chọn Kiểm tra lưu Cloud.');setTimeout(()=>{const n=el('ktx105SyncNotice');if(n&&n.textContent.includes('Đã nhận file Import'))n.remove()},6000)}},true);
 const verify=document.createElement('button');verify.type='button';verify.id='ktx105SaveNow';verify.textContent='Kiểm tra lưu Cloud';verify.className='btn ta-green';verify.style.cssText='padding:8px 12px;';verify.onclick=guardedPush;
 function mount(){const bar=el('tools');if(bar&&!bar.contains(verify))bar.appendChild(verify);verify.hidden=!(typeof page!=='undefined'&&page==='work');}
 new MutationObserver(()=>{const visible=typeof page!=='undefined'&&page==='work';verify.hidden=!visible;}).observe(document.body,{attributes:true,subtree:false,attributeFilter:['data-page']});
