@@ -4,6 +4,7 @@
 const root=document.getElementById('mobile180');
 if(!root)return;
 const mobile=()=>matchMedia('(max-width:760px)').matches;
+let mealRequestId=0;
 let screen='home', query='',ktx='',day='',room='',status='',chosen=null,limit=35;let cloudBusy=false,cloudError='',lastCloudCheck=0,cloudReady=false;
 const escapeHtml=x=>String(x==null?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const workers=()=>{try{return (typeof W!=='undefined'&&Array.isArray(W)?W:[]).filter(w=>typeof can==='function'?can('view',w):true)}catch(e){return []}};
@@ -70,7 +71,7 @@ function mealMobile(){
   const fields=[['td8','TĐ 8'],['td111','TĐ 11.1'],['td113','TĐ 11.3']].map(([key,label])=>`<label class="m195-qty">${label}<input type="number" min="0" inputmode="numeric" data-meal-vendor="${escapeHtml(n)}" data-meal-key="${key}" value="${escapeHtml(f[key]??'')}" placeholder="0"></label>`).join('');
   return `<div class="m195-vendor"><strong>${i+1}. ${escapeHtml(n)}</strong><div class="m195-qty-grid">${fields}</div><div class="m195-total">Tổng suất: <b data-total-ncc="${escapeHtml(n)}">${typeof mealTot==='function'?mealTot(n)??0:0}</b></div><div class="m195-menu"><small>Mặn</small><div>${escapeHtml(f.man||'Chưa có thực đơn')}</div><small>Chay</small><div>${escapeHtml(f.chay||'Chưa có thực đơn')}</div></div></div>`;
  }).join('');
- return `<button class="mback" data-mobile="home">← Tổng quan</button><h2 class="mtitle">Báo cáo suất ăn</h2><p class="msub">Chọn nhiều NCC, nhập số lượng giống bản PC.</p><section class="mpanel m195-config"><div class="mfields"><label>Ngày<input id="m195Date" type="date" value="${escapeHtml(m.date)}"></label><label>Buổi<select id="m195Session">${[['sang','Sáng'],['trua','Trưa'],['chieu','Chiều']].map(([k,v])=>`<option value="${k}" ${k===m.ses?'selected':''}>${v}</option>`).join('')}</select></label><label>KTX<select id="m195Ktx">${['KTX1','KTX2','KTX3'].map(k=>`<option ${k===m.ktx?'selected':''}>${k}</option>`).join('')}</select></label><label>Đơn giá<input id="m195Price" value="${escapeHtml(m.price)}" inputmode="text"></label></div><div class="m198-actions"><button type="button" class="mbtn" data-mobile="meal-show">Xem thực đơn ngay / Nhập số lượng</button><button type="button" class="mbtn outline" data-mobile="meal-select-all"><svg class="mi" aria-hidden="true"><use href="#i-check"/></svg> Chọn tất cả NCC</button></div><h3 style="margin:16px 0 8px">Chọn nhà cung cấp</h3><div class="m195-select">${vendors.map(n=>`<label><input type="checkbox" data-meal-select="${escapeHtml(n)}" ${m.on.has(n)?'checked':''}><span>${escapeHtml(n)}</span></label>`).join('')}</div></section><section class="mpanel m195-results" id="m198MealResults"><p id="m213CloudStatus" class="msub">Thực đơn sẽ được tải từ Supabase theo ngày và bữa đã chọn.</p><h3>Thực đơn & số lượng từng NCC</h3><p class="msub" style="margin-bottom:12px">Chọn một hoặc nhiều NCC phía trên; nhập trực tiếp TĐ 8, TĐ 11.1, TĐ 11.3 và đối chiếu món Mặn/Chay.</p>${rows||'<p>Vui lòng chọn ít nhất một nhà cung cấp.</p>'}</section><section class="mpanel m195-report"><h3>Nội dung báo cáo</h3><pre class="m195-preview" id="m195Preview">${escapeHtml(typeof mealText==='function'?mealText():'')}</pre><div class="mactionrow"><button class="mbtn" data-mobile="meal-copy">Sao chép báo cáo</button><button class="mbtn outline" data-mobile="meal-download">Xuất Word</button></div></section>`;
+ return `<button class="mback" data-mobile="home">← Tổng quan</button><h2 class="mtitle">Báo cáo suất ăn</h2><p class="msub">Chọn nhiều NCC, nhập số lượng giống bản PC.</p><section class="mpanel m195-config"><div class="mfields"><label>Ngày<input id="m195Date" type="date" value="${escapeHtml(m.date)}"></label><label>Buổi<select id="m195Session">${[['sang','Sáng'],['trua','Trưa'],['chieu','Chiều']].map(([k,v])=>`<option value="${k}" ${k===m.ses?'selected':''}>${v}</option>`).join('')}</select></label><label>KTX<select id="m195Ktx">${['KTX1','KTX2','KTX3'].map(k=>`<option ${k===m.ktx?'selected':''}>${k}</option>`).join('')}</select></label><label>Đơn giá<input id="m195Price" value="${escapeHtml(m.price)}" inputmode="text"></label></div><div class="m198-actions"><button type="button" class="mbtn outline" data-mobile="meal-today">Hôm nay</button><button type="button" class="mbtn outline" data-mobile="meal-tomorrow">Ngày mai</button><button type="button" class="mbtn outline" data-mobile="meal-next">Buổi tiếp theo</button><button type="button" class="mbtn" data-mobile="meal-show">Xem thực đơn đã chọn / Nhập số lượng</button><button type="button" class="mbtn outline" data-mobile="meal-select-all"><svg class="mi" aria-hidden="true"><use href="#i-check"/></svg> Chọn tất cả NCC</button></div><h3 style="margin:16px 0 8px">Chọn nhà cung cấp</h3><div class="m195-select">${vendors.map(n=>`<label><input type="checkbox" data-meal-select="${escapeHtml(n)}" ${m.on.has(n)?'checked':''}><span>${escapeHtml(n)}</span></label>`).join('')}</div></section><section class="mpanel m195-results" id="m198MealResults"><p id="m213CloudStatus" class="msub" role="status" aria-live="polite">Chọn ngày và buổi bất kỳ để xem thực đơn, không cần chờ đến giờ tự hiển thị.</p><h3>Thực đơn & số lượng từng NCC</h3><p class="msub" style="margin-bottom:12px">Chọn một hoặc nhiều NCC phía trên; nhập trực tiếp TĐ 8, TĐ 11.1, TĐ 11.3 và đối chiếu món Mặn/Chay.</p>${rows||'<p>Vui lòng chọn ít nhất một nhà cung cấp.</p>'}</section><section class="mpanel m195-report"><h3>Nội dung báo cáo</h3><pre class="m195-preview" id="m195Preview">${escapeHtml(typeof mealText==='function'?mealText():'')}</pre><div class="mactionrow"><button class="mbtn" data-mobile="meal-copy">Sao chép báo cáo</button><button class="mbtn outline" data-mobile="meal-download">Xuất Word</button></div></section>`;
 }
 
 function assetsMobile(){return `<button class="mback" data-mobile="home">← Tổng quan</button><h2 class="mtitle">Cơ sở vật chất KTX</h2><p class="msub">Nhập và chỉnh sửa tài sản như bản PC.</p><div class="mcloudwarn">Dữ liệu tiện ích dùng chung cơ chế Cloud hiện có; cần kiểm tra trạng thái đồng bộ trong biểu mẫu bên dưới.</div><iframe id="m181AssetsFrame" title="Cơ sở vật chất KTX" src="./cosovatchat.html" style="display:block;width:100%;height:72dvh;border:1px solid #d2e1f5;border-radius:14px;background:white" loading="lazy"></iframe>`}
@@ -85,6 +86,21 @@ function bind(){
   else if(k==='refresh'){lastCloudCheck=0;tryCloudRead(true)}
   else if(k==='meal'){if(typeof RP!=='undefined'){RP.f=RP.A[mkey()]=RP.A[mkey()]||{};mealFill()}page('meal');refreshMeal213()}
   
+  else if(['meal-today','meal-tomorrow','meal-next'].includes(k)){
+    if(typeof RP==='undefined')return;
+    const iso=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+    const today=new Date();
+    if(k==='meal-today')RP.date=iso(today);
+    if(k==='meal-tomorrow'){today.setDate(today.getDate()+1);RP.date=iso(today)}
+    if(k==='meal-next'){
+      const order=['sang','trua','chieu'];let i=order.indexOf(RP.ses);
+      if(i<0)i=0;
+      if(i===2){const [y,m,d]=RP.date.split('-').map(Number);const next=new Date(y,m-1,d+1);RP.date=iso(next);RP.ses='sang'}
+      else RP.ses=order[i+1];
+      if(typeof mealDefaultPrice==='function')RP.price=mealDefaultPrice(RP.ses);
+    }
+    mealSwitch();render();refreshMeal213();
+  }
   else if(k==='meal-show'){
     if(typeof RP!=='undefined'&&RP.on&&RP.on.size===0&&typeof NCCS!=='undefined'){NCCS.forEach(n=>RP.on.add(n));render()}
     refreshMeal213().catch(e=>{const st=root.querySelector('#m213CloudStatus');if(st)st.textContent='Không tải được: '+(e.message||e)});requestAnimationFrame(()=>root.querySelector('#m198MealResults')?.scrollIntoView({behavior:'smooth',block:'start'}));
@@ -130,17 +146,37 @@ function bind(){
  });
 }
 async function refreshMeal213(){
- if(typeof RP==='undefined'||typeof window.KTX213_PULL_MENUS!=='function')return;
- const date=RP.date,period=RP.ses;
- let out=await window.KTX213_PULL_MENUS(date,period);
- if(!out.ok&&String(out.error||'').includes('Chưa kết nối')){
-  // Connection often becomes ready after the Mobile page has already rendered.
-  await new Promise(resolve=>setTimeout(resolve,1100));
-  if(screen==='meal'&&RP.date===date&&RP.ses===period)out=await window.KTX213_PULL_MENUS(date,period);
+ if(typeof RP==='undefined'||typeof window.KTX213_PULL_MENUS!=='function'||screen!=='meal')return;
+ const date=RP.date,period=RP.ses,requestId=++mealRequestId;
+ const stat=root.querySelector('#m213CloudStatus');
+ if(stat)stat.textContent='Đang tải thực đơn '+date+' · '+({sang:'Sáng',trua:'Trưa',chieu:'Chiều'}[period]||period)+'…';
+ try{
+  let out=await window.KTX213_PULL_MENUS(date,period);
+  if(!out.ok&&String(out.error||'').includes('Chưa kết nối')){
+   await new Promise(resolve=>setTimeout(resolve,1100));
+   if(screen==='meal'&&RP.date===date&&RP.ses===period&&requestId===mealRequestId)out=await window.KTX213_PULL_MENUS(date,period);
+  }
+  if(screen!=='meal'||RP.date!==date||RP.ses!==period||requestId!==mealRequestId)return;
+  if(out.ok){
+   if(typeof mealFill==='function')mealFill();
+   // Refresh only menu text, preserving focused quantity fields and edits.
+   const cards=root.querySelectorAll('[data-meal-vendor]');
+   const active=document.activeElement;
+   if(cards.length&&active&&root.contains(active)&&active.matches('input,textarea,select')){
+    const fresh=document.createElement('div');fresh.innerHTML=mealMobile();
+    const next=fresh.querySelector('#m198MealResults');const old=root.querySelector('#m198MealResults');
+    if(next&&old){
+     const updated=next.querySelectorAll('.m195-menu');const existing=old.querySelectorAll('.m195-menu');
+     existing.forEach((el,i)=>{if(updated[i])el.innerHTML=updated[i].innerHTML});
+    }
+    updateMealReport();
+   }else render();
+  }
+  const el=root.querySelector('#m213CloudStatus');
+  if(el)el.textContent=out.ok?(out.count?'Đã tải '+out.count+' bảng Mặn/Chay · '+date+' · '+period+'.':'Cloud chưa có thực đơn cho '+date+' · '+period+'. Hãy kiểm tra việc nhập và lưu Menu Cloud trên PC.'):'Không tải được thực đơn Cloud: '+out.error;
+ }catch(e){
+  if(screen==='meal'&&requestId===mealRequestId){const el=root.querySelector('#m213CloudStatus');if(el)el.textContent='Không tải được thực đơn: '+(e.message||e)}
  }
- if(screen!=='meal'||RP.date!==date||RP.ses!==period)return;
- const el=root.querySelector('#m213CloudStatus');if(el)el.textContent=out.ok?(out.count?'Đã tải '+out.count+' bảng Mặn/Chay từ Cloud.':'Cloud chưa có thực đơn cho ngày/bữa này.'):'Không tải được thực đơn Cloud: '+out.error;
- if(out.ok){const active=root.contains(document.activeElement)&&document.activeElement?.matches('input,select,textarea');if(!active)render();}
 }
 function updateMealReport(){const pre=root.querySelector('#m195Preview');if(pre&&typeof mealText==='function')pre.textContent=mealText()}
 
