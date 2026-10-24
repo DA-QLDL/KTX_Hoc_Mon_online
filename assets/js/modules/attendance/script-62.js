@@ -20,7 +20,6 @@
     var toolbar=document.createElement('div');toolbar.className='qr166-tools';
     function tool(label,fn){var b=document.createElement('button');b.className='btn s sm';b.type='button';b.textContent=label;b.onclick=fn;toolbar.appendChild(b)}
     if(can('qrApprove')){tool('Duyệt đăng ký vào',function(){QT='regin';qrPage()});tool('Duyệt đăng ký ra',function(){QT='regout';qrPage()})}
-    if(can('attendance'))tool('Danh sách người gửi điểm danh',function(){window.__qrAttReview=true;QT='make';selected='att';qrPage();var b=document.getElementById('qr160load');if(b)b.click()});
     host.insertBefore(toolbar,document.getElementById('qb'));
     if(QT==='make'){
       var grid=host.querySelector('#qb > .g2');
