@@ -59,13 +59,13 @@ function summaryByKtx(){
  const tabs=[['all','Toàn KTX'],...choices.map(k=>[k,k])];
  const locationName=overviewKtx==='all'?'Toàn KTX':overviewKtx;
  const showDays=[...dys.values()].sort((a,b)=>((a.ktx+a.day).localeCompare(b.ktx+b.day,'vi',{numeric:true}))).slice(0,12);
- const actions=`<section class="mpanel m131-actions"><h3>Truy cập nhanh</h3><div class="mactions"><button class="maction" data-mobile="list"><i><svg class="mi"><use href="#i-users"/></svg></i>Danh sách công nhân →</button><button class="maction" data-mobile="dayman"><i><svg class="mi"><use href="#i-bld"/></svg></i>Quản lý dãy →</button><button class="maction" data-mobile="qr"><i><svg class="mi"><use href="#i-qr"/></svg></i>QR điểm danh →</button><button class="maction amber" data-mobile="meal" ${typeof can==='function'&&can('report')?'':'style="display:none"'}><i><svg class="mi"><use href="#i-chart"/></svg></i>BC suất ăn →</button></div></section>`;
+ const actions=`<section class="mpanel m131-actions"><h3>Truy cập nhanh</h3><div class="mactions"><button class="maction" data-mobile="list"><i><svg class="mi"><use href="#i-users"/></svg></i>Danh sách công nhân →</button><button class="maction green" data-mobile="add" ${typeof can==='function'&&can('add')?'':'style="display:none"'}><i><svg class="mi"><use href="#i-plus"/></svg></i>Thêm công nhân →</button><button class="maction" data-mobile="dayman"><i><svg class="mi"><use href="#i-bld"/></svg></i>Quản lý dãy →</button><button class="maction amber" data-mobile="menu238"><i><svg class="mi"><use href="#i-menu"/></svg></i>Xem thực đơn →</button><button class="maction" data-mobile="qr"><i><svg class="mi"><use href="#i-qr"/></svg></i>QR điểm danh →</button><button class="maction amber" data-mobile="meal" ${typeof can==='function'&&can('report')?'':'style="display:none"'}><i><svg class="mi"><use href="#i-chart"/></svg></i>BC suất ăn →</button></div></section>`;
  return `<div class="m131-heading"><div><h2 class="mtitle">Tổng quan</h2><p class="msub">Quân số &amp; tình trạng cư trú theo từng KTX</p></div><button class="m131-reload" type="button" data-mobile="refresh" aria-label="Tải dữ liệu Cloud">↻</button></div>
  <div class="m131-switch" role="group" aria-label="Chọn phạm vi KTX">${tabs.map(([k,name])=>`<button type="button" data-overview-ktx="${escapeHtml(k)}" aria-pressed="${overviewKtx===k}" class="${overviewKtx===k?'is-active':''}">${escapeHtml(name)}</button>`).join('')}</div>
  <div class="m131-hero"><div><span class="m131-kicker">QUÂN SỐ · ${escapeHtml(locationName)}</span><strong>${fmt(total)}</strong><small>Công nhân trong phạm vi hiển thị</small></div><div class="m131-hero-mark"><svg class="mi"><use href="#i-bld"/></svg></div></div>
  <div class="m131-grid">${stat('Nam',men,'male','♂')}${stat('Nữ',women,'female','♀')}${stat('Dãy có người',dys.size,'blue','▦')}${stat('Phòng có người',activeRooms,'green','⌂')}${stat('Phòng quá tải',over,'orange','!')}${stat('Thiếu CCCD/SĐT',missingId,'red','!')}</div>
  <section class="mpanel m131-residence"><div class="m131-section-title"><h3>Đăng ký tạm trú</h3><b>${pct}%</b></div><div class="m131-progress"><span style="width:${pct}%"></span></div><div class="m131-residence-foot"><span>Đã đăng ký: <b>${fmt(registered)}</b></span><span>Chưa đăng ký: <b>${fmt(total-registered)}</b></span></div></section>
- <section class="mpanel m131-days"><div class="m131-section-title"><h3>Quân số theo dãy</h3><span>${dys.size} dãy có người</span></div>${showDays.map(g=>`<button type="button" class="m131-day" data-day-ktx="${escapeHtml(g.ktx)}" data-day-name="${escapeHtml(g.day)}"><span><b>${escapeHtml(g.day)}</b><small>${overviewKtx==='all'?escapeHtml(g.ktx)+' · ':''}${g.rooms.size} phòng có người</small></span><strong>${fmt(g.total)} <em>người</em></strong><span aria-hidden="true">›</span></button>`).join('')||'<div class="mempty">Chưa có công nhân trong phạm vi này.</div>'}${dys.size>showDays.length?'<p class="m131-note">Hiển thị 12 dãy đầu tiên. Chọn Quản lý dãy để xem toàn bộ.</p>':''}</section>
+
  ${unknown?`<p class="m131-note">${fmt(unknown)} hồ sơ chưa xác định giới tính.</p>`:''}${!allowed.length?'<div class="mcloudwarn">Chưa có dữ liệu trong phạm vi được cấp. Hãy kiểm tra kết nối Cloud.</div>':''}
  ${actions}`;
 }
@@ -124,7 +124,7 @@ function bind(){
   const k=b.dataset.mobile;
   if(['home','list','account','qr','dayman'].includes(k))page(k);
   else if(k==='menu238'){if(typeof window.openKiemTraMenuNCC==='function')window.openKiemTraMenuNCC()}
-  else if(k==='add'){if(typeof edit==='function')edit();else alert('Chức năng chưa sẵn sàng')}
+  else if(k==='add'){if(typeof can==='function'&&!can('add'))return alert('Tài khoản không có quyền thêm công nhân.');if(typeof edit==='function')edit();else alert('Chức năng chưa sẵn sàng')}
   else if(k==='install'){if(typeof pwaOpenInstall==='function')pwaOpenInstall();else {const dlg=document.getElementById('pwaInstallDlg');if(dlg&&typeof dlg.showModal==='function')dlg.showModal();else alert('Dùng mục Cài đặt ứng dụng trong menu trình duyệt để thêm KTX Hóc Môn vào màn hình chính.');}}
   else if(k==='refresh'){lastCloudCheck=0;tryCloudRead(true)}
   else if(k==='meal'){if(typeof RP!=='undefined'){RP.f=RP.A[mkey()]=RP.A[mkey()]||{};mealFill()}page('meal');refreshMeal213()}
@@ -140,7 +140,23 @@ function bind(){
   else if(k==='more'){limit+=35;render()}
  }));
  root.querySelectorAll('[data-day-mode]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.dayMode==='all'&&!hasGlobalRead())return;dayViewAll=b.dataset.dayMode==='all';render()}));
- root.querySelectorAll('[data-overview-ktx]').forEach(b=>b.addEventListener('click',()=>{overviewKtx=b.dataset.overviewKtx;render()}));
+ root.querySelectorAll('[data-overview-ktx]').forEach(b=>b.addEventListener('click',()=>{
+  const next=b.dataset.overviewKtx;
+  if(next===overviewKtx)return;
+  overviewKtx=next;
+  // Keep the tab buttons mounted: rebuilding them caused multiple taps/flicker on Android.
+  root.querySelectorAll('[data-overview-ktx]').forEach(tab=>{
+    const active=tab.dataset.overviewKtx===next;
+    tab.classList.toggle('is-active',active);
+    tab.setAttribute('aria-pressed',String(active));
+  });
+  const staging=document.createElement('div');
+  staging.innerHTML=summaryByKtx();
+  for(const selector of ['.m131-hero','.m131-grid','.m131-residence']){
+    const oldNode=root.querySelector(selector),newNode=staging.querySelector(selector);
+    if(oldNode&&newNode)oldNode.replaceWith(newNode);
+  }
+}));
  root.querySelectorAll('[data-day-ktx]').forEach(b=>b.addEventListener('click',()=>{fromDayView=true;ktx=b.dataset.dayKtx;day=b.dataset.dayName;room=b.dataset.dayRoom||'';query='';status='';page('list')}));
  bindWorkerButtons();
  const f=root.querySelector('#mobileFind');
