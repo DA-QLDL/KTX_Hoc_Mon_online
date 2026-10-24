@@ -11,7 +11,7 @@ window.ktxDownloadStatus=function(type,message){
 };
 const pull=window.syncPullAll;
 if(typeof pull==='function')window.syncPullAll=async function(){
- if(typeof SUPA_SYNC!=='undefined'&&SUPA_SYNC.pulling)return pull.apply(this,arguments);
+ if(typeof SUPA_SYNC!=='undefined'&&SUPA_SYNC.pulling){window.ktxDownloadStatus('loading','Đang chờ lượt tải Cloud hiện tại hoàn tất…');return pull.apply(this,arguments);}
  window.ktxDownloadStatus('loading','Đang tải dữ liệu mới nhất từ Supabase…');
  try{const r=await pull.apply(this,arguments);
  if(typeof SUPA_SYNC!=='undefined'&&SUPA_SYNC.lastError)window.ktxDownloadStatus('error','Tải thất bại: '+SUPA_SYNC.lastError);

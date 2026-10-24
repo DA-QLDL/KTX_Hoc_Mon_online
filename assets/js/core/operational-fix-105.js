@@ -28,8 +28,24 @@ document.addEventListener('click',async ev=>{
  if(typeof W==='undefined'||!W.length){alert('Danh sách công nhân trống.');return}
  if(typeof SUPA_SYNC==='undefined'||!SUPA_SYNC.enabled||!SUPA_SYNC.ready||!SUPA_SYNC.session){alert('Chưa kết nối Supabase. Không thể xác nhận xóa toàn bộ dữ liệu dùng chung.');return}
  // Pending is a queue state, not proof that a conflict exists. Flush it first.
+ // Tạm ngưng lượt tải tự động đã lên lịch, không vô hiệu hóa phân quyền hoặc đồng bộ thật.
+ if(SUPA_SYNC.reloadTimer){clearTimeout(SUPA_SYNC.reloadTimer);SUPA_SYNC.reloadTimer=null;}
  if(SUPA_SYNC.pushing||SUPA_SYNC.pulling||SUPA_SYNC.applying){
-  status('Cloud đang đồng bộ. Hãy thử lại sau khi thao tác hiện tại hoàn tất.',true);return;
+  status('Đang chờ lượt đồng bộ Cloud hiện tại hoàn tất để kiểm tra quyền xóa...');
+  b.disabled=true;
+  try{
+   const started=Date.now();
+   while((SUPA_SYNC.pushing||SUPA_SYNC.pulling||SUPA_SYNC.applying)&&Date.now()-started<15000){
+    await new Promise(resolve=>setTimeout(resolve,300));
+   }
+   if(SUPA_SYNC.pushing||SUPA_SYNC.pulling||SUPA_SYNC.applying){
+    status('Cloud vẫn đang đồng bộ sau 15 giây. Không thực hiện xóa; kiểm tra mạng, đồng bộ và thử lại.',true);
+    return;
+   }
+  }finally{b.disabled=false}
+ }
+ if(SUPA_SYNC.lastError){
+  status('Cloud báo lỗi: '+SUPA_SYNC.lastError+'. Kiểm tra Đồng bộ Supabase trước khi xóa.',true);return;
  }
  if((SUPA_SYNC.conflicts||[]).length){
   status('Có '+SUPA_SYNC.conflicts.length+' xung đột. Mở Chức năng hệ thống → Đồng bộ Supabase để xử lý trước khi xóa.',true);return;
@@ -50,6 +66,7 @@ document.addEventListener('click',async ev=>{
  if(prompt('XÓA TOÀN BỘ '+qty+' HỒ SƠ CÔNG NHÂN TRÊN CLOUD. Hãy sao lưu trước. Gõ chính xác XÓA TẤT CẢ:')!=='XÓA TẤT CẢ')return;
  if(!confirm('Xác nhận lần cuối: Xóa '+qty+' hồ sơ trên Supabase? Không thể hoàn tác bằng nút Hoàn tác import.'))return;
  running=true;b.disabled=true;
+ if(SUPA_SYNC.reloadTimer){clearTimeout(SUPA_SYNC.reloadTimer);SUPA_SYNC.reloadTimer=null;}
  try{
   const client=syncClient();const table=SYNC_TABLES.workers;
   if(!client||!table)throw Error('Không tìm thấy cấu hình Cloud');

@@ -3300,3 +3300,24 @@ main input[type="checkbox"]::before,main input[type="radio"]::before,#mobile180 
   #mobile180 .mbottom button span{font-size:11px!important;line-height:1.2!important;}
   #mobile180 .maction svg.mi{width:23px!important;height:23px!important;}
 }
+
+/* v1.0.10 — iOS Safari worker form, visual viewport safe-area */
+@media (max-width: 760px) {
+ html,body { -webkit-text-size-adjust:100%; }
+ body:has(#dlg[open]) #dlg.de[open] {
+  position:fixed!important;inset:auto!important;top:50%!important;left:50%!important;
+  transform:translate(-50%,-50%)!important;
+  display:flex!important;flex-direction:column!important;
+  width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;
+  height:min(calc(100dvh - 20px),var(--ktx-ios-visual-height,100dvh))!important;
+  max-height:min(calc(100dvh - 20px),var(--ktx-ios-visual-height,100dvh))!important;
+  margin:0!important;overflow:hidden!important;
+ }
+ #dlg.de[open] .eh{flex:0 0 auto!important;padding:10px 13px!important;}
+ #dlg.de[open] .ebody{flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;padding:12px 14px 28px!important;}
+ #dlg.de[open] .vf{flex:0 0 auto!important;position:relative!important;bottom:auto!important;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px))!important;background:#fff!important;}
+ #dlg.de[open] .eg,#dlg.de[open] .fg,#dlg.de[open] .fields{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:11px!important;}
+ #dlg.de[open] .eg .s2{grid-column:auto!important;}
+ #dlg.de[open] input,#dlg.de[open] select,#dlg.de[open] textarea{font-size:16px!important;min-height:42px!important;max-width:100%!important;box-sizing:border-box!important;}
+ #dlg.de[open] :is(label,.field,.fg>div){min-width:0!important;max-width:100%!important;overflow-wrap:anywhere!important;}
+}
