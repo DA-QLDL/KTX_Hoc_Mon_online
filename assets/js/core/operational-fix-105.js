@@ -81,12 +81,11 @@ document.addEventListener('click',async ev=>{
   const q=await client.from(table).select('*',{count:'exact',head:true});if(q.error)throw q.error;
   if(q.count!==qty)throw Error('Cloud có '+q.count+' hồ sơ nhưng thiết bị đang có '+qty+'. Hãy đối chiếu trước khi xóa, không xóa lệch.');
   if(!window.navigator.onLine)throw Error('Không có Internet');
-  // Delete by explicit verified identifiers, not by a broad unconditional filter.
-  const liveRows=await syncFetchAll(table,'record_id');
-  const ids=liveRows.map(x=>String(x.record_id));
-  if(ids.length!==qty||new Set(ids).size!==ids.length)throw Error('Danh sách định danh Cloud không khớp số lượng. Dừng xóa để bảo vệ dữ liệu.');
-  status('Đang xóa dữ liệu từ Supabase (0/'+ids.length+')…');
-  for(let i=0;i<ids.length;i+=100){const batch=ids.slice(i,i+100);const r=await client.from(table).delete().in('record_id',batch).select('record_id');if(r.error)throw r.error;if((r.data||[]).length!==batch.length)throw Error('Cloud xác nhận thiếu bản ghi ở đợt '+(Math.floor(i/100)+1)+'. Cần kiểm tra RLS và dữ liệu.');status('Đang xóa dữ liệu Cloud: '+Math.min(i+100,ids.length)+'/'+ids.length+' hồ sơ…');}
+  // Single transactional RPC on server. No batch loop from browser.
+  status('Đang gửi lệnh xóa an toàn đến Supabase…');
+  const {data:deleted,error:rpcError}=await client.rpc('ktx_admin_delete_all_workers',{p_expected_count:qty,p_phrase:'XÓA TẤT CẢ'});
+  if(rpcError)throw new Error('RPC xóa chưa sẵn sàng hoặc bị từ chối: '+rpcError.message+' (chưa thay đổi dữ liệu trên máy)');
+  if(Number(deleted)!==qty)throw new Error('Server xác nhận '+deleted+'/'+qty+' bản ghi; cần kiểm tra lại trước khi tiếp tục');
   const q2=await client.from(table).select('*',{count:'exact',head:true});if(q2.error)throw q2.error;
   if(q2.count!==0)throw Error('Cloud vẫn còn '+q2.count+' hồ sơ. Chưa xóa trên thiết bị để tránh sai lệch.');
   W.splice(0,W.length); if(typeof sel!=='undefined')sel.clear();
