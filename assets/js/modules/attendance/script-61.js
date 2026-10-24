@@ -29,9 +29,37 @@
   const {data,error}=await sb.from('ktx_attendance_qr_requests').select('*').order('created_at',{ascending:false}).limit(1000);
   if(error){el.textContent='Lỗi: '+error.message+' — hãy kiểm tra SQL STEP160 / RLS.';return}
   const visible=(data||[]).filter(r=>ME.role==='admin'||ME.role==='quantri'||ME.role==='owner'||W.some(w=>can('view',w)&&K(w)===r.ktx)||typeof canAccessKtx==='function'&&canAccessKtx(r.ktx));
+  // Match only a unique worker code + name; never infer identity from name alone.
+  const norm=v=>String(v??'').trim().normalize('NFC').toLocaleLowerCase('vi-VN');
+  const roomNorm=v=>norm(v).replace(/^phòng\s*/,'').replace(/^p\.?\s*/,'').replace(/^0+(?=\d)/,'');
+  const dayNorm=v=>norm(v).replace(/^dãy\s*/,'').replace(/^d\.?\s*/,'');
+  const matches=r=>(Array.isArray(W)?W:[]).filter(w=>norm(w.mnv)&&norm(w.mnv)===norm(r.worker_code)&&norm(w.name)===norm(r.worker_name));
+  const sameLocation=(w,r)=>norm(K(w))===norm(r.ktx)&&dayNorm(D(w))===dayNorm(r.day)&&roomNorm(R(w))===roomNorm(r.room);
+  const locationText=w=>[K(w),D(w),'Phòng '+(R(w)||'—')].join(' · ');
+  // Only an authenticated, authorized reviewer can auto-approve. Never grant public UPDATE.
+  // Limit each load to avoid flooding network and blocking the UI.
+  if(can('attendance')){
+   const openSessions=new Set();
+   const {data:opened,error:sessionError}=await sb.from('ktx_attendance_sessions').select('id').eq('status','open');
+   if(!sessionError)(opened||[]).forEach(x=>openSessions.add(String(x.id)));
+   const eligible=visible.filter(r=>(r.status||'pending')==='pending'&&r.session_id&&openSessions.has(String(r.session_id))&&matches(r).length===1&&sameLocation(matches(r)[0],r)).slice(0,30);
+   if(eligible.length){
+    const authResult=await sb.auth.getUser();const reviewer=authResult?.data?.user?.id;
+    if(reviewer){
+     for(const r of eligible){
+      const {data:changed,error:approveError}=await sb.from('ktx_attendance_qr_requests').update({status:'approved',reviewed_at:new Date().toISOString(),reviewed_by:reviewer}).eq('id',r.id).eq('status','pending').select('id');
+      if(approveError){console.warn('Auto-approve QR failed:',approveError.message);break}
+      if(changed?.length){r.status='approved';const w=matches(r)[0];
+       // Only reflect the Cloud-confirmed approval in the local attendance ledger.
+       if(typeof ATT!=='undefined'&&!ATT.some(a=>String(a.qrRequestId)===String(r.id))){ATT.unshift({id:'a'+Date.now().toString(36)+Math.random().toString(36).slice(2,8),workerId:w.id,name:w.name||'',mnv:w.mnv||'',type:r.direction,at:Date.now(),day:typeof ldy==='function'?ldy():'',actor:ME.name||ME.id||'Người dùng',role:ME.role,source:'qr-form',qrRequestId:r.id,unmatched:false,ktx:r.ktx||'',room:r.room||''});if(typeof sv==='function')sv()}
+      }
+     }
+    }
+   }
+  }
   const allowed=['pending','approved','rejected'];
   const counts=Object.fromEntries(allowed.map(k=>[k,visible.filter(r=>(r.status||'pending')===k).length]));
-  el.innerHTML='<div class="row" style="gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap"><label class="mut">Trạng thái <select id="qr160filter"><option value="all">Tất cả ('+visible.length+')</option><option value="pending">Chờ duyệt ('+counts.pending+')</option><option value="approved">Đã duyệt ('+counts.approved+')</option><option value="rejected">Từ chối ('+counts.rejected+')</option></select></label><label class="mut">Tìm kiếm <input id="qr160search" placeholder="Tên, mã NV, KTX, dãy, phòng"></label></div><div class="mut" id="qr160count"></div><div class="wrap qr247-review-wrap"><table class="cmp3 qr247-review-table"><thead><tr><th>STT</th><th>Họ tên</th><th>Mã NV</th><th>KTX / Dãy / Phòng</th><th>Vào/Ra</th><th>Thời gian gửi</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody></tbody></table></div>';
+  el.innerHTML='<div class="row" style="gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap"><label class="mut">Trạng thái <select id="qr160filter"><option value="all">Tất cả ('+visible.length+')</option><option value="pending">Chờ duyệt ('+counts.pending+')</option><option value="approved">Đã duyệt ('+counts.approved+')</option><option value="rejected">Từ chối ('+counts.rejected+')</option></select></label><label class="mut">Tìm kiếm <input id="qr160search" placeholder="Tên, mã NV, KTX, dãy, phòng"></label></div><div class="mut" id="qr160count"></div><div class="wrap qr247-review-wrap"><table class="cmp3 qr247-review-table"><thead><tr><th>STT</th><th>Họ tên</th><th>Mã NV</th><th>KTX / Dãy / Phòng</th><th>Vào/Ra</th><th>Thời gian gửi</th><th>Trạng thái</th><th>Đối chiếu danh sách tổng</th><th>Thao tác</th></tr></thead><tbody></tbody></table></div>';
   const tbody=el.querySelector('tbody');
   const render=()=>{
     const filter=el.querySelector('#qr160filter').value,query=el.querySelector('#qr160search').value.trim().toLocaleLowerCase('vi-VN');
@@ -40,12 +68,17 @@
     rows.forEach((r,i)=>{const tr=document.createElement('tr');
       const status=r.status||'pending';const label={pending:'Chờ duyệt',approved:'Đã duyệt',rejected:'Từ chối'}[status]||status;
       [i+1,r.worker_name||'—',r.worker_code||'—',[r.ktx,r.day,r.room?'P.'+r.room:''].filter(Boolean).join(' · ')||'—',r.direction==='in'?'Vào':'Ra',r.created_at?new Date(r.created_at).toLocaleString('vi-VN'):'—',label].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});
+      const compare=document.createElement('td');const candidates=matches(r);
+      if(candidates.length===1){const w=candidates[0];compare.textContent=sameLocation(w,r)?'✓ Khớp hồ sơ và vị trí':'⚠ Khác vị trí · Đang ở '+locationText(w);if(!sameLocation(w,r))compare.style.color='#b45309';}
+      else if(candidates.length===0){compare.textContent='Chưa tìm thấy mã NV + họ tên trong danh sách tổng';compare.style.color='#b91c1c'}
+      else {compare.textContent='Trùng hồ sơ · Cần kiểm tra thủ công';compare.style.color='#b91c1c'}
+      tr.appendChild(compare);
       const actions=document.createElement('td');actions.className='qr247-actions';
       if(status==='pending')for(const [action,label] of [['edit','Sửa'],['approved','Duyệt'],['rejected','Từ chối']]){const btn=document.createElement('button');btn.className='btn '+(action==='approved'?'g':'s')+' sm';btn.type='button';btn.textContent=label;btn.onclick=()=>review160(r,action);actions.appendChild(btn)}
       else actions.textContent='Đã xử lý';
       tr.appendChild(actions);tbody.appendChild(tr);
     });
-    if(!rows.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=8;td.textContent='Không có yêu cầu điểm danh phù hợp.';tr.appendChild(td);tbody.appendChild(tr)}
+    if(!rows.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=9;td.textContent='Không có yêu cầu điểm danh phù hợp.';tr.appendChild(td);tbody.appendChild(tr)}
   };
   el.querySelector('#qr160filter').addEventListener('change',render);
   el.querySelector('#qr160search').addEventListener('input',render);render();
