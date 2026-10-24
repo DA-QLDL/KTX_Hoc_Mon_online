@@ -58,7 +58,6 @@ function summaryByKtx(){
  const stat=(label,n,cls,icon)=>`<div class="m131-stat ${cls}"><span class="m131-stat-icon">${icon}</span><b>${fmt(n)}</b><small>${label}</small></div>`;
  const tabs=[['all','Toàn KTX'],...choices.map(k=>[k,k])];
  const locationName=overviewKtx==='all'?'Toàn KTX':overviewKtx;
- const showDays=[...dys.values()].sort((a,b)=>((a.ktx+a.day).localeCompare(b.ktx+b.day,'vi',{numeric:true}))).slice(0,12);
  const actions=`<section class="mpanel m131-actions"><h3>Truy cập nhanh</h3><div class="mactions"><button class="maction" data-mobile="list"><i><svg class="mi"><use href="#i-users"/></svg></i>Danh sách công nhân →</button><button class="maction green" data-mobile="add" ${typeof can==='function'&&can('add')?'':'style="display:none"'}><i><svg class="mi"><use href="#i-plus"/></svg></i>Thêm công nhân →</button><button class="maction" data-mobile="dayman"><i><svg class="mi"><use href="#i-bld"/></svg></i>Quản lý dãy →</button><button class="maction amber" data-mobile="menu238"><i><svg class="mi"><use href="#i-menu"/></svg></i>Xem thực đơn →</button><button class="maction" data-mobile="qr"><i><svg class="mi"><use href="#i-qr"/></svg></i>QR điểm danh →</button><button class="maction amber" data-mobile="meal" ${typeof can==='function'&&can('report')?'':'style="display:none"'}><i><svg class="mi"><use href="#i-chart"/></svg></i>BC suất ăn →</button></div></section>`;
  return `<div class="m131-heading"><div><h2 class="mtitle">Tổng quan</h2><p class="msub">Quân số &amp; tình trạng cư trú theo từng KTX</p></div><button class="m131-reload" type="button" data-mobile="refresh" aria-label="Tải dữ liệu Cloud">↻</button></div>
  <div class="m131-switch" role="group" aria-label="Chọn phạm vi KTX">${tabs.map(([k,name])=>`<button type="button" data-overview-ktx="${escapeHtml(k)}" aria-pressed="${overviewKtx===k}" class="${overviewKtx===k?'is-active':''}">${escapeHtml(name)}</button>`).join('')}</div>
@@ -139,7 +138,7 @@ function bind(){
   else if(k==='logout'&&typeof authHubLogout==='function')authHubLogout('local');
   else if(k==='more'){limit+=35;render()}
  }));
- root.querySelectorAll('[data-day-mode]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.dayMode==='all'&&!hasGlobalRead())return;dayViewAll=b.dataset.dayMode==='all';render()}));
+ root.querySelectorAll('[data-day-mode]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.dayMode==='all'&&!hasGlobalRead())return;const next=b.dataset.dayMode==='all';if(dayViewAll===next)return;dayViewAll=next;render()}));
  root.querySelectorAll('[data-overview-ktx]').forEach(b=>b.addEventListener('click',()=>{
   const next=b.dataset.overviewKtx;
   if(next===overviewKtx)return;
@@ -150,12 +149,7 @@ function bind(){
     tab.classList.toggle('is-active',active);
     tab.setAttribute('aria-pressed',String(active));
   });
-  const staging=document.createElement('div');
-  staging.innerHTML=summaryByKtx();
-  for(const selector of ['.m131-hero','.m131-grid','.m131-residence']){
-    const oldNode=root.querySelector(selector),newNode=staging.querySelector(selector);
-    if(oldNode&&newNode)oldNode.replaceWith(newNode);
-  }
+  updateHomeWithoutRemount();
 }));
  root.querySelectorAll('[data-day-ktx]').forEach(b=>b.addEventListener('click',()=>{fromDayView=true;ktx=b.dataset.dayKtx;day=b.dataset.dayName;room=b.dataset.dayRoom||'';query='';status='';page('list')}));
  bindWorkerButtons();
@@ -236,7 +230,24 @@ function utils238(){return `<button class="mback" data-mobile="home">← Tổng 
 function duplicate238(){return `<button class="mback" data-mobile="utils238">← Tiện ích</button><h2 class="mtitle">Lọc trùng</h2><section class="mpanel step238-dedup" id="step238DuplicateHost"></section>`}
 function incident238(){return `<button class="mback" data-mobile="home">← Tổng quan</button><h2 class="mtitle">Biên bản sự vụ</h2><iframe class="step238-frame" loading="lazy" title="Biên bản sự vụ" src="./bien-ban-su-vu.html"></iframe>`}
 function qrMobile(){return `<button class="mback" data-mobile="home">← Tổng quan</button><h2 class="mtitle">QR code</h2><div class="msub">Đăng ký vào/ra, duyệt yêu cầu và điểm danh · Dữ liệu chung với PC</div><section class="mpanel m196-qrbox"><div id="m196QrHost"></div></section>`}
-function render(){if(!mobile()){restoreQr();return}if(screen==='incident'||screen==='utils238'||screen==='duplicate')screen='home';if(root.contains(document.activeElement)&&document.activeElement?.matches('input:not([type=checkbox]):not([type=radio]),textarea,select')){window.__ktx200DeferredRender=true;return}restoreQr();restoreDedup238();root.innerHTML=shell(screen==='home'?summary():screen==='list'?list():screen==='detail'?detail():screen==='meal'?mealMobile():screen==='qr'?qrMobile():screen==='dayman'?dayman():screen==='utils238'?utils238():screen==='duplicate'?duplicate238():account());if(screen==='duplicate'&&dedupSection238){const host=root.querySelector('#step238DuplicateHost');if(host){dedupAnchor238=document.createComment('STEP238 dedup original location');dedupSection238.parentNode.insertBefore(dedupAnchor238,dedupSection238);host.appendChild(dedupSection238);dedupSection238.classList.remove('hide')}}
+function updateHomeWithoutRemount(){
+ if(screen!=='home'||!root.querySelector('.m131-switch'))return false;
+ const staging=document.createElement('div');staging.innerHTML=summaryByKtx();
+ const oldTabs=root.querySelectorAll('[data-overview-ktx]');
+ const newTabs=staging.querySelectorAll('[data-overview-ktx]');
+ if(oldTabs.length!==newTabs.length||[...oldTabs].some((b,i)=>b.dataset.overviewKtx!==newTabs[i].dataset.overviewKtx))return false;
+ oldTabs.forEach(b=>{const on=b.dataset.overviewKtx===overviewKtx;b.classList.toggle('is-active',on);b.setAttribute('aria-pressed',String(on))});
+ for(const selector of ['.m131-hero','.m131-grid','.m131-residence','.m131-note','.mcloudwarn']){
+  const oldNode=root.querySelector(selector),newNode=staging.querySelector(selector);
+  if(oldNode&&newNode){if(oldNode.outerHTML!==newNode.outerHTML)oldNode.replaceWith(newNode)}
+  else if(oldNode&&!newNode)oldNode.remove();
+  else if(newNode&&!oldNode){const anchor=root.querySelector('.m131-actions');if(anchor)anchor.before(newNode)}
+ }
+ return true;
+}
+function render(){if(!mobile()){restoreQr();return}
+ if(updateHomeWithoutRemount())return;
+if(screen==='incident'||screen==='utils238'||screen==='duplicate')screen='home';if(root.contains(document.activeElement)&&document.activeElement?.matches('input:not([type=checkbox]):not([type=radio]),textarea,select')){window.__ktx200DeferredRender=true;return}restoreQr();restoreDedup238();root.innerHTML=shell(screen==='home'?summary():screen==='list'?list():screen==='detail'?detail():screen==='meal'?mealMobile():screen==='qr'?qrMobile():screen==='dayman'?dayman():screen==='utils238'?utils238():screen==='duplicate'?duplicate238():account());if(screen==='duplicate'&&dedupSection238){const host=root.querySelector('#step238DuplicateHost');if(host){dedupAnchor238=document.createComment('STEP238 dedup original location');dedupSection238.parentNode.insertBefore(dedupAnchor238,dedupSection238);host.appendChild(dedupSection238);dedupSection238.classList.remove('hide')}}
 if(screen==='qr'&&qrSection){try{if(!qrSection.querySelector('#qb')&&typeof window.qrPage==='function')window.qrPage()}catch(e){console.warn('QR render:',e)}const h=root.querySelector('#m196QrHost');if(h){qrAnchor=document.createComment('qr mobile mount point');qrSection.parentNode.insertBefore(qrAnchor,qrSection);h.appendChild(qrSection);qrSection.classList.remove('hide');qrSection.classList.add('m196-mounted')}}bind()}
 document.addEventListener('focusin',e=>{if(root.contains(e.target)&&e.target.matches('input,textarea,select'))window.__ktx200InputActive=true},true);document.addEventListener('focusout',e=>{if(root.contains(e.target)&&e.target.matches('input,textarea,select')){window.__ktx200InputActive=false;if(window.__ktx200DeferredRender){window.__ktx200DeferredRender=false;setTimeout(()=>{if(!root.contains(document.activeElement)||!document.activeElement?.matches('input,textarea,select'))render()},120)}}},true);
 function refresh(){if(mobile())render();else root.innerHTML=''}

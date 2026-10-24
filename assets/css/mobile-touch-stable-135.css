@@ -1,0 +1,14 @@
+/* v1.0.35: avoid Android tap feedback bleeding across neighbouring controls */
+@media(max-width:760px){
+ #mobile180 button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;animation:none!important}
+ #mobile180 .m131-switch button,#mobile180 .m32-tabs button,#mobile180 .step230-room,#mobile180 .step230-open-day{
+  transform:none!important;transition:background-color .13s ease,color .13s ease,border-color .13s ease!important;
+  -webkit-appearance:none;appearance:none;backface-visibility:hidden;
+ }
+ #mobile180 .m131-switch button:not(.is-active):hover{background:transparent!important;color:#536c92!important}
+ #mobile180 .m131-switch button.is-active{background:#fff!important;color:#185cc9!important}
+ #mobile180 .m131-switch button:focus:not(:focus-visible),
+ #mobile180 .m32-tabs button:focus:not(:focus-visible),
+ #mobile180 .step230-room:focus:not(:focus-visible){outline:none!important;box-shadow:none!important}
+ #mobile180 .m131-days{display:none!important}
+}
