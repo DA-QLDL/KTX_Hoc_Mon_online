@@ -7,12 +7,12 @@
    const url=new URL('attendance-form.html',location.href).href;
    const grid=root.querySelector('.g2');if(!grid)return;
    const box=document.createElement('div');box.className='card';
-   box.innerHTML='<h3>Điểm danh công nhân</h3><p class="mut" style="font-size:12.5px">Công nhân quét mã QR dùng chung, nhập mã nhân viên, họ tên và chọn Vào/Ra. Ban quản lý đối chiếu, duyệt trước khi ghi vào dữ liệu điểm danh.</p><canvas id="qr160" style="width:100%;max-width:330px;display:block;margin:10px auto;border:2px solid #159963;border-radius:12px"></canvas><div class="row" style="justify-content:center"><button class="btn g" id="qr160p">Tải áp phích</button><button class="btn s" id="qr160q">Tải mã QR</button></div><label class="fl">Link điểm danh<input id="qr160link" readonly></label><div class="row" style="margin-top:10px"><button class="btn s" id="qr160load">Xem yêu cầu điểm danh</button></div><div id="qr160pending"></div>';
+   box.innerHTML='<h3>Điểm danh công nhân</h3><p class="mut" style="font-size:12.5px">Công nhân quét mã QR dùng chung, nhập mã nhân viên, họ tên và chọn Vào/Ra. Ban quản lý đối chiếu, duyệt trước khi ghi vào dữ liệu điểm danh.</p><canvas id="qr160" style="width:100%;max-width:330px;display:block;margin:10px auto;border:2px solid #159963;border-radius:12px"></canvas><div class="row" style="justify-content:center"><button class="btn g" id="qr160p">Tải áp phích</button><button class="btn s" id="qr160q">Tải mã QR</button></div><label class="fl">Link điểm danh<input id="qr160link" readonly></label><div class="row" style="margin-top:10px"><button class="btn s" id="qr160load">Danh sách người điểm danh</button></div><div id="qr160pending"></div>';
    grid.appendChild(box);document.getElementById('qr160link').value=url;
    if(window.__qrAttReview){
      grid.style.display='none';
      const review=document.createElement('section');review.className='card';review.id='qr247review';
-     review.innerHTML='<h3>Yêu cầu điểm danh chờ duyệt</h3><p class="mut">Danh sách yêu cầu cần kiểm tra và ghi nhận.</p>';
+     review.innerHTML='<h3>Danh sách người gửi điểm danh</h3><p class="mut">Hiển thị yêu cầu đã gửi, chờ duyệt, đã duyệt và từ chối.</p>';
      root.appendChild(review);
      review.appendChild(document.getElementById('qr160pending'));
    }
@@ -25,16 +25,30 @@
   const el=document.getElementById('qr160pending');if(!el)return;
   if(!can('attendance')){el.textContent='Bạn không có quyền duyệt điểm danh.';return}
   const sb=qrSb();if(!sb){el.textContent='Không kết nối được Supabase.';return}
-  el.textContent='Đang tải yêu cầu...';
-  const {data,error}=await sb.from('ktx_attendance_qr_requests').select('*').eq('status','pending').order('created_at',{ascending:false}).limit(100);
+  el.textContent='Đang tải danh sách điểm danh...';
+  const {data,error}=await sb.from('ktx_attendance_qr_requests').select('*').order('created_at',{ascending:false}).limit(1000);
   if(error){el.textContent='Lỗi: '+error.message+' — hãy kiểm tra SQL STEP160 / RLS.';return}
   const visible=(data||[]).filter(r=>ME.role==='admin'||ME.role==='quantri'||ME.role==='owner'||W.some(w=>can('view',w)&&K(w)===r.ktx)||typeof canAccessKtx==='function'&&canAccessKtx(r.ktx));
-  el.innerHTML=visible.length?'<div class="wrap qr247-review-wrap"><table class="cmp3 qr247-review-table"><thead><tr><th>Họ tên</th><th>Mã NV</th><th>KTX / Dãy / Phòng</th><th>Vào/Ra</th><th>Thời gian</th><th>Thao tác</th></tr></thead><tbody></tbody></table></div>':'<p class="mut">Không có yêu cầu chờ duyệt trong phạm vi.</p>';
+  const allowed=['pending','approved','rejected'];
+  const counts=Object.fromEntries(allowed.map(k=>[k,visible.filter(r=>(r.status||'pending')===k).length]));
+  el.innerHTML='<div class="row" style="gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap"><label class="mut">Trạng thái <select id="qr160filter"><option value="all">Tất cả ('+visible.length+')</option><option value="pending">Chờ duyệt ('+counts.pending+')</option><option value="approved">Đã duyệt ('+counts.approved+')</option><option value="rejected">Từ chối ('+counts.rejected+')</option></select></label><label class="mut">Tìm kiếm <input id="qr160search" placeholder="Tên, mã NV, KTX, dãy, phòng"></label></div><div class="mut" id="qr160count"></div><div class="wrap qr247-review-wrap"><table class="cmp3 qr247-review-table"><thead><tr><th>STT</th><th>Họ tên</th><th>Mã NV</th><th>KTX / Dãy / Phòng</th><th>Vào/Ra</th><th>Thời gian gửi</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody></tbody></table></div>';
   const tbody=el.querySelector('tbody');
-  visible.forEach(r=>{const tr=document.createElement('tr');
-    [r.worker_name||'—',r.worker_code||'—',[r.ktx,r.day,r.room?'P.'+r.room:''].filter(Boolean).join(' · ')||'—',r.direction==='in'?'Vào':'Ra',r.created_at?new Date(r.created_at).toLocaleString('vi-VN'):'—'].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});
-    const actions=document.createElement('td');actions.className='qr247-actions';
-    for(const [action,label] of [['edit','Sửa'],['approved','Duyệt'],['rejected','Từ chối']]){const btn=document.createElement('button');btn.className='btn '+(action==='approved'?'g':'s')+' sm';btn.type='button';btn.textContent=label;btn.onclick=()=>review160(r,action);actions.appendChild(btn)}tr.appendChild(actions);tbody.appendChild(tr)});
+  const render=()=>{
+    const filter=el.querySelector('#qr160filter').value,query=el.querySelector('#qr160search').value.trim().toLocaleLowerCase('vi-VN');
+    const rows=visible.filter(r=>(filter==='all'||(r.status||'pending')===filter)&&(!query||[r.worker_name,r.worker_code,r.ktx,r.day,r.room].join(' ').toLocaleLowerCase('vi-VN').includes(query)));
+    tbody.replaceChildren();el.querySelector('#qr160count').textContent='Hiển thị '+rows.length+' / '+visible.length+' yêu cầu (tối đa 1.000 yêu cầu mới nhất).';
+    rows.forEach((r,i)=>{const tr=document.createElement('tr');
+      const status=r.status||'pending';const label={pending:'Chờ duyệt',approved:'Đã duyệt',rejected:'Từ chối'}[status]||status;
+      [i+1,r.worker_name||'—',r.worker_code||'—',[r.ktx,r.day,r.room?'P.'+r.room:''].filter(Boolean).join(' · ')||'—',r.direction==='in'?'Vào':'Ra',r.created_at?new Date(r.created_at).toLocaleString('vi-VN'):'—',label].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});
+      const actions=document.createElement('td');actions.className='qr247-actions';
+      if(status==='pending')for(const [action,label] of [['edit','Sửa'],['approved','Duyệt'],['rejected','Từ chối']]){const btn=document.createElement('button');btn.className='btn '+(action==='approved'?'g':'s')+' sm';btn.type='button';btn.textContent=label;btn.onclick=()=>review160(r,action);actions.appendChild(btn)}
+      else actions.textContent='Đã xử lý';
+      tr.appendChild(actions);tbody.appendChild(tr);
+    });
+    if(!rows.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=8;td.textContent='Không có yêu cầu điểm danh phù hợp.';tr.appendChild(td);tbody.appendChild(tr)}
+  };
+  el.querySelector('#qr160filter').addEventListener('change',render);
+  el.querySelector('#qr160search').addEventListener('input',render);render();
  }
  async function review160(r,status){
   const sb=qrSb();const matched=W.filter(w=>can('view',w)&&can('attendance',w)&&String(w.mnv||'').trim().toLowerCase()===String(r.worker_code||'').trim().toLowerCase()&&K(w)===r.ktx);
