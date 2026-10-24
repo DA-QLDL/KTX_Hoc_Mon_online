@@ -3321,3 +3321,21 @@ main input[type="checkbox"]::before,main input[type="radio"]::before,#mobile180 
  #dlg.de[open] input,#dlg.de[open] select,#dlg.de[open] textarea{font-size:16px!important;min-height:42px!important;max-width:100%!important;box-sizing:border-box!important;}
  #dlg.de[open] :is(label,.field,.fg>div){min-width:0!important;max-width:100%!important;overflow-wrap:anywhere!important;}
 }
+
+/* STEP119: identical PC meal report mounted in Mobile shell. Only layout changes. */
+@media(max-width:760px){
+ #m119PcMealHost{width:100%;min-width:0;max-width:100%;padding-bottom:60px}
+ #m119PcMealHost #meal.m119-shared-meal{display:block!important;position:relative!important;width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;padding:0!important;overflow:visible!important}
+ #m119PcMealHost #meal .ctl{display:flex!important;flex-wrap:wrap!important;gap:10px!important}
+ #m119PcMealHost #meal .ctl>.fl,#m119PcMealHost #meal .ctl>label.fl{min-width:135px;flex:1 1 43%}
+ #m119PcMealHost #meal .ctl input,#m119PcMealHost #meal .ctl select{max-width:100%;width:100%;box-sizing:border-box}
+ #m119PcMealHost #meal .ctl>.row{width:100%;margin-left:0!important;flex-wrap:wrap}
+ #m119PcMealHost #meal .g2{display:grid;grid-template-columns:minmax(0,1fr)!important}
+ #m119PcMealHost #meal .card{min-width:0;max-width:100%;overflow-wrap:anywhere}
+ #m119PcMealHost #meal textarea{width:100%;box-sizing:border-box}
+ #m119PcMealHost #meal pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+ #m119PcMealHost #meal .seg{display:flex;flex-wrap:wrap}
+}
+
+/* v1.0.20: worker toolbar never bleeds into system tools / utilities. */
+html body:not([data-page="work"]) #tools.top-actions{display:none!important}

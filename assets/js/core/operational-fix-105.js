@@ -29,9 +29,7 @@ window.addEventListener('beforeunload',e=>{
 });
 // Import confirmation: offer an explicit Cloud verification after importer completes.
 let imported=false;
-document.addEventListener('change',ev=>{if(ev.target&&ev.target.id==='fx'&&ev.target.files&&ev.target.files.length){imported=true;status('Đã nhận file Import. Hãy kiểm tra kết quả và chọn Kiểm tra lưu Cloud.');setTimeout(()=>{const n=el('ktx105SyncNotice');if(n&&n.textContent.includes('Đã nhận file Import'))n.remove()},6000)}},true);
-const verify=document.createElement('button');verify.type='button';verify.id='ktx105SaveNow';verify.textContent='Kiểm tra lưu Cloud';verify.className='btn ta-green';verify.style.cssText='padding:8px 12px;';verify.onclick=guardedPush;
-function mount(){const bar=el('tools');if(bar&&!bar.contains(verify))bar.appendChild(verify);verify.hidden=!(typeof page!=='undefined'&&page==='work');}
-new MutationObserver(()=>{const visible=typeof page!=='undefined'&&page==='work';verify.hidden=!visible;}).observe(document.body,{attributes:true,subtree:false,attributeFilter:['data-page']});
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
+document.addEventListener('change',ev=>{if(ev.target&&ev.target.id==='fx'&&ev.target.files&&ev.target.files.length){imported=true;status('Đã nhận file Import. Vui lòng theo dõi kết quả đồng bộ trên trang Đồng bộ Supabase.');setTimeout(()=>{const n=el('ktx105SyncNotice');if(n&&n.textContent.includes('Đã nhận file Import'))n.remove()},6000)}},true);
+// v1.0.20: No Cloud verification button is injected into the global toolbar.
+// Save-check internals are kept available without exposing this extra control.
 })();
