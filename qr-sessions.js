@@ -14,7 +14,44 @@ function activeSession(){return S.sessions.find(x=>x.id===S.selected)||S.session
 function btn(label,fn,cls='s'){const b=document.createElement('button');b.type='button';b.className='btn '+cls+' sm';b.textContent=label;b.onclick=fn;return b}
 function msg(t,bad=false){const n=node()?.querySelector('#qr168msg');if(n){n.textContent=t;n.style.color=bad?'#b91c1c':'#47627e'}}
 async function load(){const sb=client();if(!sb){msg('Chưa có kết nối Supabase. Vui lòng đăng nhập và kiểm tra cấu hình.',true);return}try{const a=await sb.from('ktx_attendance_sessions').select('id,session_day,ktx,day_name,room,status,created_at,closed_at,created_by').order('created_at',{ascending:false}).limit(100);if(a.error)throw a.error;S.sessions=a.data||[];if(S.selected&&!S.sessions.some(x=>x.id===S.selected))S.selected=null;
- const b=await sb.from('ktx_attendance_qr_requests').select('id,session_id,worker_code,worker_name,ktx,direction,status,created_at').order('created_at',{ascending:false}).limit(3000);if(b.error)throw b.error;S.requests=b.data||[];const c=await sb.from('ktx_attendance_session_marks').select('session_id,worker_code,state').limit(10000);if(c.error)throw c.error;S.marks=c.data||[];render();}catch(e){msg('Không thể tải dữ liệu phiên: '+e.message+'. Cần chạy SQL 014 trong Supabase.',true)}}
+ const b=await sb.from('ktx_attendance_qr_requests').select('id,session_id,worker_code,worker_name,ktx,day,room,direction,status,created_at').order('created_at',{ascending:false}).limit(3000);if(b.error)throw b.error;S.requests=b.data||[];await autoReviewSessionRequests(sb);const c=await sb.from('ktx_attendance_session_marks').select('session_id,worker_code,state').limit(10000);if(c.error)throw c.error;S.marks=c.data||[];render();}catch(e){msg('Không thể tải dữ liệu phiên: '+e.message+'. Cần chạy SQL 014 trong Supabase.',true)}}
+
+// Automatic approval is restricted to currently open sessions and an authenticated reviewer.
+// No public client writes an approval; Supabase UPDATE/RLS must verify the reviewer.
+let reviewBusy=false;
+async function autoReviewSessionRequests(sb){
+ if(reviewBusy||!can('attendance')||!Array.isArray(W)||!W.length)return;
+ reviewBusy=true;
+ try{
+  const {data:auth,error:authError}=await sb.auth.getUser();
+  const reviewer=auth?.user?.id;
+  if(authError||!reviewer)return;
+  const normalize=v=>String(v??'').normalize('NFC').trim().toLocaleLowerCase('vi-VN').replace(/\s+/g,' ');
+  const dayKey=v=>normalize(v).replace(/^(dãy|day|d)\s*\.?\s*/i,'').replace(/^0+(?=\d)/,'');
+  const roomKey=v=>normalize(v).replace(/^(phòng|phong|p)\s*\.?\s*/i,'').replace(/^0+(?=\d)/,'');
+  const open=new Map(S.sessions.filter(x=>x.status==='open').map(x=>[String(x.id),x]));
+  const all=(Array.isArray(W)?W:[]);
+  const seen=new Set();let count=0;
+  for(const req of S.requests){
+   if(count>=30)break;
+   if(req.status!=='pending'||!req.session_id||!open.has(String(req.session_id))||seen.has(String(req.id)))continue;
+   if(!normalize(req.worker_code)||!normalize(req.worker_name)||!normalize(req.ktx)||!dayKey(req.day)||!roomKey(req.room))continue;
+   const session=open.get(String(req.session_id));
+   if(session.ktx&&normalize(session.ktx)!==normalize(req.ktx))continue;
+   if(session.day_name&&dayKey(session.day_name)!==dayKey(req.day))continue;
+   if(session.room&&roomKey(session.room)!==roomKey(req.room))continue;
+   const matched=all.filter(w=>normalize(w.mnv)===normalize(req.worker_code)&&normalize(w.name)===normalize(req.worker_name));
+   if(matched.length!==1)continue;
+   const w=matched[0];
+   if(!can('view',w)||!can('attendance',w)||normalize(K(w))!==normalize(req.ktx)||dayKey(D(w))!==dayKey(req.day)||roomKey(R(w))!==roomKey(req.room))continue;
+   seen.add(String(req.id));count++;
+   const {data:approved,error}=await sb.from('ktx_attendance_qr_requests').update({status:'approved',reviewed_at:new Date().toISOString(),reviewed_by:reviewer}).eq('id',req.id).eq('session_id',session.id).eq('status','pending').select('id');
+   if(error){console.warn('QR auto review failed:',error.message);break}
+   if(approved?.length){req.status='approved';}
+  }
+ }catch(e){console.warn('QR auto review unavailable:',e?.message||e)}
+ finally{reviewBusy=false}
+}
 function filtered(){const s=activeSession();if(!s)return [];return (Array.isArray(W)?W:[]).filter(w=>(!s.ktx||K(w)===s.ktx)&&(!s.day_name||String(D(w))===String(s.day_name))&&(!s.room||String(R(w))===String(s.room))&&can('view',w))}
 const workerKey=w=>String(w.mnv||w.maNV||w.code||'').trim().toLowerCase();
 function outsiders(s){if(!s)return [];const known=new Set((Array.isArray(W)?W:[]).map(workerKey).filter(Boolean));const seen=new Set();return S.requests.filter(r=>r.session_id===s.id&&(!s.ktx||r.ktx===s.ktx)&&(!r.worker_code||!known.has(String(r.worker_code).trim().toLowerCase()))).filter(r=>{const key=String(r.worker_code||'')+'|'+String(r.worker_name||'');if(seen.has(key))return false;seen.add(key);return true})}
