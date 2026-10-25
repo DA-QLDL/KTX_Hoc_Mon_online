@@ -26,7 +26,6 @@
     ];
     if (typeof can === 'function' && (can('qrApprove') || can('attendance'))) list.push(['review','Trung tâm duyệt','Duyệt, sửa và từ chối hồ sơ chờ xử lý']);
     if (typeof can === 'function' && (can('qrApprove') || can('attendance'))) list.push(['history','Lịch sử','Tra cứu hồ sơ đã duyệt hoặc đã từ chối']);
-    if (typeof can === 'function' && can('attendance')) list.push(['reports','Báo cáo','Bảng điểm danh, chưa điểm danh và chưa đăng ký']);
     return list;
   };
 
