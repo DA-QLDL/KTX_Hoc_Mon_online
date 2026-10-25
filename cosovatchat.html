@@ -33,9 +33,25 @@ body{min-height:0;padding:12px!important;background:#f1f6ff}
  .fac-backup{display:none!important}
 }
 @media(min-width:761px){.fac-mobile-list{display:none!important}}
+</style><style id="ktx78-mobile-asset-fix">
+.fac-internal-cloud-state[hidden]{display:none!important}
+@media(max-width:760px){
+ html,body{max-width:100%;overflow-x:hidden!important;scroll-behavior:auto}
+ .fac-header{position:static!important;top:auto!important;z-index:auto!important}
+ .fac-mobile-list{width:100%;min-width:0;overflow:visible;contain:layout}
+ .fac-mobile-card{max-width:100%;box-sizing:border-box;overflow:hidden}
+ .fac-mobile-assets{min-width:0}
+ .fac-mobile-item{min-width:0;overflow-wrap:anywhere}
+ .fac-mobile-actions{flex-wrap:wrap}
+ .fac-mobile-actions button{flex:1;min-width:0}
+ .fac-stats{gap:6px!important}
+ .fac-stat{min-width:0}
+ .fac-tabs{position:static!important}
+ .fac-tablehead{position:static!important}
+}
 </style></head><body>
 <div class="fac-header"><div><h2>Quản lý Cơ sở vật chất</h2><p>Theo dõi và cập nhật trang thiết bị từng phòng/khu vực</p></div><div class="fac-actions"><button class="btn primary" id="exportTop">↓ Xuất Excel</button><button class="btn primary" id="importTop">↑ Import Excel</button><button class="btn primary" id="addTop">＋ Thêm phòng mới</button></div></div>
-<div id="fac69StorageNote" style="padding:8px 12px;font-size:11px;color:#526989;background:#fff5e6;border:1px solid #f1d4a8;border-radius:9px;margin-bottom:9px">Đang kiểm tra kết nối Supabase. Dữ liệu cũ trên trình duyệt được giữ riêng; không tự đẩy lên Cloud.</div><div class="fac-tabs" id="ktxTabs"><button class="fac-tab active" data-ktx="1">KTX 1</button><button class="fac-tab" data-ktx="2">KTX 2</button><button class="fac-tab" data-ktx="3">KTX 3</button><button class="fac-tab" data-ktx="all">Tất cả</button></div>
+<div id="fac69StorageNote" class="fac-internal-cloud-state" aria-live="polite" hidden>Đang kiểm tra kết nối Supabase.</div><div class="fac-tabs" id="ktxTabs"><button class="fac-tab active" data-ktx="1">KTX 1</button><button class="fac-tab" data-ktx="2">KTX 2</button><button class="fac-tab" data-ktx="3">KTX 3</button><button class="fac-tab" data-ktx="all">Tất cả</button></div>
 <div class="fac-filters"><label>⌕ Bộ lọc: <select id="dayFilter"><option value="">Tất cả Dãy</option></select></label><input id="search" placeholder="⌕ Tìm phòng hoặc khu vực..."></div>
 <div class="fac-stats" id="facStats"></div>
 <div class="card" style="padding:0;overflow:hidden"><div class="fac-tablehead" id="facTableTitle">Cơ sở vật chất</div><div id="facMobileList" class="fac-mobile-list" aria-label="Danh sách tài sản theo phòng"></div><div class="tablewrap fac-row-table"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div><p class="hint" id="msg" style="margin:10px 14px"></p></div>
@@ -46,7 +62,7 @@ body{min-height:0;padding:12px!important;background:#f1f6ff}
 (()=>{'use strict';const key='ktx_step169_cosovatchat';const cols=["KTX", "Dãy", "Phòng/Khu vực", "Giường", "Điều hòa", "Tủ", "Quạt", "Ổ cắm điện", "Remote", "Bóng tuýp", "Bàn ăn", "Ghế ăn", "Ghi chú"];const nums=new Set([3, 4, 5, 6, 7, 8, 9, 10, 11]);let data=[],editing=-1;const $=x=>document.getElementById(x);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));try{const v=JSON.parse(localStorage.getItem(key)||'[]');window.__facLocalBackup=Array.isArray(v)?v:[];data=[]}catch{}let cloudClient=null,cloudRev=null,cloudReady=false,cloudBusy=false,cloudAdmin=false,cloudUserId=null,cloudRowExists=false;
 const cloudKey='ktx_step169_cosovatchat';
 const cloudHint=()=>document.getElementById('fac69StorageNote');
-function cloudStatus(t,isError=false){const h=cloudHint();if(h){h.style.background=isError?'#fff2f2':'#ecfdf5';h.style.borderColor=isError?'#ffc4c4':'#a7f3d0';const label=h.querySelector('[data-cloud-state]');if(label)label.textContent=t;else h.textContent=t;}}
+function cloudStatus(t,isError=false){const h=cloudHint();if(h){h.hidden=!isError;h.style.background=isError?'#fff2f2':'#ecfdf5';h.style.borderColor=isError?'#ffc4c4':'#a7f3d0';const label=h.querySelector('[data-cloud-state]');if(label)label.textContent=t;else h.textContent=t;}}
 function cloudLock(locked){cloudBusy=locked;['save','add','addTop','importTop'].forEach(id=>{const el=$(id);if(el)el.disabled=locked||!cloudAdmin||!cloudReady});}
 async function remoteSnapshot(){const {data:row,error}=await cloudClient.from('ktx_utility_snapshots').select('module_key,revision,updated_at,rows').eq('module_key',cloudKey).maybeSingle();if(error)throw error;return row}
 function deepRows(a){return JSON.parse(JSON.stringify(a))}
