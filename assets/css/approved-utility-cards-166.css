@@ -1,0 +1,22 @@
+/* v1.0.66 — exact approved utility card treatment; leaves routing and permissions untouched. */
+#utilhub .sysfunc-intro{display:none!important}
+#utilhub .sysfunc-group{background:#fff!important;border:1px solid #edf0fb!important;border-radius:17px!important;padding:16px!important;box-shadow:0 6px 22px rgba(26,48,104,.045)!important}
+#utilhub .sysfunc-group h3{font-size:18px!important;font-weight:800!important;color:#132655!important;margin:0 0 16px!important}
+#utilhub .sysfunc-group .sysfunc-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;align-items:stretch!important}
+#utilhub .sysfunc-group .sysfunc-grid>.sysfunc-btn{box-sizing:border-box!important;position:relative!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;align-items:center!important;text-align:center!important;gap:9px!important;height:188px!important;min-height:188px!important;max-width:none!important;padding:16px 11px 13px!important;background:#fff!important;border:1px solid #e5eaf7!important;border-left:1px solid #e5eaf7!important;border-radius:16px!important;box-shadow:0 3px 14px rgba(33,48,96,.045)!important;white-space:normal!important;transition:border-color .12s ease,box-shadow .12s ease!important;transform:none!important;overflow:hidden!important}
+#utilhub .sysfunc-group .sysfunc-grid>.sysfunc-btn:hover{border-color:#aab8f8!important;box-shadow:0 6px 18px rgba(76,96,243,.10)!important;transform:none!important}
+#utilhub .sysfunc-btn .sficon{width:62px!important;height:62px!important;min-height:62px!important;flex:0 0 62px!important;border-radius:17px!important;display:grid!important;place-items:center!important;background:#e7eeff!important;color:#246bfd!important;border:0!important;margin:0!important;font-size:30px!important}
+#utilhub .sysfunc-btn .sficon .i{width:33px!important;height:33px!important;color:inherit!important}
+#utilhub .sysfunc-btn>span:last-child{display:flex!important;flex-direction:column!important;align-items:center!important;gap:7px!important;width:100%!important;min-width:0!important;line-height:normal!important}
+#utilhub .sysfunc-btn b{font-size:14px!important;font-weight:750!important;line-height:1.3!important;color:#122251!important;margin:0!important;text-align:center!important;white-space:normal!important;overflow-wrap:break-word!important}
+#utilhub .sysfunc-btn small{display:-webkit-box!important;-webkit-line-clamp:3!important;-webkit-box-orient:vertical!important;overflow:hidden!important;font-size:11.5px!important;font-weight:400!important;line-height:1.4!important;color:#57709d!important;text-align:center!important;white-space:normal!important;max-width:100%!important}
+#utilhub .sysfunc-btn.sf-warn .sficon{background:#fff0df!important;color:#f18b0d!important}
+#utilhub .sysfunc-btn.sf-danger .sficon{background:#ffe7ef!important;color:#e83666!important}
+#utilhub .sysfunc-btn.sf-purple .sficon{background:#eee6ff!important;color:#7144e9!important}
+#utilhub .sysfunc-btn.sf-green .sficon{background:#dcfaed!important;color:#03a86a!important}
+#utilhub .sysfunc-btn:nth-child(4n+1):not(.sf-green):not(.sf-danger):not(.sf-purple) .sficon{background:#fff0df!important;color:#f18b0d!important}
+#utilhub .sysfunc-btn:nth-child(4n+2):not(.sf-green):not(.sf-danger):not(.sf-purple) .sficon{background:#ffe7ef!important;color:#e83666!important}
+#utilhub .sysfunc-btn:nth-child(4n+3):not(.sf-green):not(.sf-danger):not(.sf-purple) .sficon{background:#eee6ff!important;color:#7144e9!important}
+#utilhub .sysfunc-btn:nth-child(4n+4):not(.sf-green):not(.sf-danger):not(.sf-purple) .sficon{background:#e7eeff!important;color:#246bfd!important}
+@media(max-width:1120px){#utilhub .sysfunc-group .sysfunc-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:760px){#utilhub .sysfunc-group{padding:10px!important}#utilhub .sysfunc-group .sysfunc-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}#utilhub .sysfunc-group .sysfunc-grid>.sysfunc-btn{height:158px!important;min-height:158px!important;padding:12px 7px!important;gap:7px!important}#utilhub .sysfunc-btn .sficon{height:46px!important;width:46px!important;min-height:46px!important;flex-basis:46px!important}#utilhub .sysfunc-btn .sficon .i{width:25px!important;height:25px!important}#utilhub .sysfunc-btn b{font-size:12px!important}#utilhub .sysfunc-btn small{font-size:10px!important;-webkit-line-clamp:3!important}}
