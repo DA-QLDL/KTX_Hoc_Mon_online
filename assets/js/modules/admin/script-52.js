@@ -3,6 +3,7 @@
  function cleanup(){
   const locked=document.body.classList.contains('auth-locked');
   const gate=document.getElementById('authHubGate');
+  [...document.body.childNodes].filter(n=>n.nodeType===3 && /^\s*(?:\\n)+\s*$/.test(n.textContent||'')).forEach(n=>n.remove());
   if(locked){
    if(gate){gate.classList.remove('hide');gate.setAttribute('role','dialog');gate.setAttribute('aria-modal','true');gate.setAttribute('aria-label','Đăng nhập KTX Hóc Môn')}
    for(const id of ['alertFloat','alertQuickDrawer']){const el=document.getElementById(id);if(el)el.style.setProperty('display','none','important')}
