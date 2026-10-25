@@ -35,7 +35,9 @@
     if(!allowed.includes(state.section)) state.section = allowed[0] || 'regin';
   }
 
+  let countRequestId = 0;
   async function refreshCounts(){
+    const requestId = ++countRequestId;
     try {
       if(typeof qrLoadRequests === 'function' && typeof can === 'function' && can('qrApprove')) await qrLoadRequests();
     } catch(e){ console.warn('qrLoadRequests', e); }
@@ -54,7 +56,7 @@
         }
       }catch(e){ console.warn('attendance counts', e); }
     }
-    updateCountBadges();
+    if(requestId === countRequestId && host()) updateCountBadges();
   }
 
   function updateCountBadges(){
@@ -66,6 +68,8 @@
     if(elOut) elOut.textContent = state.counts.regout || 0;
     if(elAtt) elAtt.textContent = state.counts.attPending || 0;
     if(elAttApproved) elAttApproved.textContent = state.counts.attApproved || 0;
+    const values = [state.counts.regin, state.counts.regout, state.counts.attPending, state.counts.attApproved];
+    document.querySelectorAll('#qr .qrhub-stat b').forEach((e,i) => { if(i < values.length) e.textContent = String(values[i] || 0); });
   }
 
   function buildPage(){
@@ -97,6 +101,7 @@
         <section id="qrHubContent" class="qrhub-content"></section>
       </div>`;
     h.querySelectorAll('[data-qrhub]').forEach(b => b.onclick = () => {
+      if(state.section === b.dataset.qrhub) return;
       state.section = b.dataset.qrhub;
       buildPage();
       renderSection();
@@ -236,6 +241,10 @@
           status: r.status
         }));
       }
+      const failures = [];
+      if(resA.error && state.historySource !== 'attendance') failures.push('Đăng ký vào/ra: '+resA.error.message);
+      if(resB.error && state.historySource !== 'residency') failures.push('Điểm danh: '+resB.error.message);
+      if(failures.length){ const e = c.querySelector('.qrhub-loading'); if(e) e.textContent = 'Không tải đủ lịch sử từ Cloud: '+failures.join(' · '); return; }
       rows.sort((a,b) => new Date(b.created || 0) - new Date(a.created || 0));
       const html = rows.length ? `
         <div class="qrhub-meta"><div class="qrhub-note">Hiển thị ${rows.length} hồ sơ đã xử lý gần nhất từ Supabase.</div></div>
