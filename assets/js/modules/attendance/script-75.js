@@ -70,14 +70,14 @@
 
   function buildPage(){
     ensureSection();
-    const wrap = cards().map(([key,title,desc]) => `<button type="button" data-qrhub="${key}" class="${state.section===key?'active':''}"><b>${safe(title)}</b><small>${safe(desc)}</small></button>`).join('');
+    const wrap = cards().map(([key,title,desc]) => `<button type="button" data-qrhub="${key}" class="${state.section===key?'active':''}"><b>${safe(title)}</b></button>`).join('');
     const h = host(); if(!h) return;
     h.innerHTML = `
       <div class="qrhub-wrap">
         <section class="qrhub-head">
           <div>
             <h3>QR code</h3>
-            <p>Trung tâm quản lý đăng ký vào / ra, điểm danh QR, duyệt hồ sơ và xuất báo cáo trong một màn hình thống nhất.</p>
+            
           </div>
           <div class="qrhub-chips">
             <span class="qrhub-chip">Công nhân trong phạm vi: ${safe(totalWorkers())}</span>
@@ -113,7 +113,7 @@
     cleanupDynamic();
     const c = content(); if(!c) return;
     c.innerHTML = `
-      <div class="qrhub-card"><h4>${kind==='regin'?'Đăng ký vào KTX':'Đăng ký ra khỏi KTX'}</h4><p>${kind==='regin'?'Tạo mã QR hoặc áp phích để công nhân gửi hồ sơ vào KTX. Hồ sơ sau khi gửi sẽ vào Trung tâm duyệt.':'Tạo mã QR hoặc áp phích để công nhân gửi yêu cầu ra khỏi KTX. Quản lý có thể sửa và duyệt trước khi cập nhật dữ liệu.'}</p></div>
+      <div class="qrhub-card"><h4>${kind==='regin'?'Đăng ký vào KTX':'Đăng ký ra khỏi KTX'}</h4></div>
       <div id="qb"></div>`;
     window.__qrAttReview = false;
     window.QT = 'make';
@@ -132,8 +132,8 @@
     cleanupDynamic();
     const c = content(); if(!c) return;
     c.innerHTML = `
-      <div class="qrhub-card"><h4>${mode==='report'?'Báo cáo điểm danh QR':'Điểm danh QR theo phiên'}</h4><p>${mode==='report'?'Theo dõi bảng điểm danh, danh sách chưa điểm danh, chưa đăng ký và xuất Excel ngay trong QR code.':'Tạo phiên điểm danh, lấy QR hợp lệ cho từng phiên và theo dõi quân số theo KTX · Dãy · Phòng.'}</p></div>
-      <div class="qrhub-note">${mode==='report'?'Màn hình dưới đây mở trực tiếp bảng điểm danh. Anh có thể chuyển sang các tab Chưa điểm danh hoặc Chưa đăng ký ngay trong cùng màn hình.':'Màn hình dưới đây mở trực tiếp chức năng phiên điểm danh. Sau khi mở phiên, bấm “Xem” để lấy QR và quản lý quân số.'}</div>
+      <div class="qrhub-card"><h4>${mode==='report'?'Báo cáo điểm danh QR':'Điểm danh QR theo phiên'}</h4></div>
+      
       <div class="qr166-switch qrhub-hidden-switch"><button type="button" data-mode="att" class="active">Điểm danh</button></div>
       <div id="qb"></div>`;
     window.__qrAttReview = false;
@@ -162,7 +162,7 @@
     cleanupDynamic();
     const c = content(); if(!c) return;
     c.innerHTML = `
-      <div class="qrhub-card"><h4>Trung tâm duyệt</h4><p>Gom toàn bộ hồ sơ chờ xử lý về một nơi duy nhất: đăng ký vào, đăng ký ra và điểm danh QR.</p></div>
+      <div class="qrhub-card"><h4>Trung tâm duyệt</h4></div>
       <div class="qrhub-subtabs">
         <button type="button" data-review-tab="regin" class="${state.reviewTab==='regin'?'active':''}">Đăng ký vào (${safe(state.counts.regin||0)})</button>
         <button type="button" data-review-tab="regout" class="${state.reviewTab==='regout'?'active':''}">Đăng ký ra (${safe(state.counts.regout||0)})</button>
@@ -172,7 +172,7 @@
     c.querySelectorAll('[data-review-tab]').forEach(b => b.onclick = () => { state.reviewTab = b.dataset.reviewTab; renderReviewCenter(); });
     const body = c.querySelector('#qrHubReviewBody');
     if(state.reviewTab === 'att'){
-      body.innerHTML = '<div class="qrhub-note">Danh sách dưới đây hỗ trợ sửa, duyệt hoặc từ chối yêu cầu điểm danh do công nhân gửi lên.</div><div id="qb"></div>';
+      body.innerHTML = '<div id="qb"></div>';
       window.__qrAttReview = true;
       window.QT = 'make';
       originalQrMake();
@@ -194,7 +194,7 @@
     cleanupDynamic();
     const c = content(); if(!c) return;
     c.innerHTML = `
-      <div class="qrhub-card"><h4>Lịch sử xử lý QR</h4><p>Tra cứu các hồ sơ đã duyệt hoặc đã từ chối của đăng ký vào, đăng ký ra và điểm danh QR.</p></div>
+      <div class="qrhub-card"><h4>Lịch sử xử lý QR</h4></div>
       <div class="qrhub-subtabs">
         <button type="button" data-history-source="all" class="${state.historySource==='all'?'active':''}">Tất cả</button>
         <button type="button" data-history-source="residency" class="${state.historySource==='residency'?'active':''}">Đăng ký vào / ra</button>

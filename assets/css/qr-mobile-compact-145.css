@@ -1,0 +1,37 @@
+/* QR v1.0.45 – Less prose, true compact mobile layout */
+#qr .qrhub-menu button small, #qr .qrhub-head p, #qr .qrhub-card p{display:none!important}
+#qr .qrhub-menu button{min-height:66px;gap:0;padding:12px 15px;align-items:center;text-align:center}
+#qr .qrhub-menu button b{font-size:14px;line-height:1.3}
+#qr .qrhub-head h3{margin:0}
+#qr .qrhub-wrap{gap:12px}
+#qr .qrhub-card{padding:10px 14px}
+#qr .qrhub-card h4{font-size:16px;margin:0}
+/* Keep validation, confirmation and error text visible; hide only duplicate nonfunctional explanation. */
+#qr #qb > .g2 > .card > p.mut,#qr #qb > .card > p.mut{display:none!important}
+@media(max-width:760px){
+  #qr .qrhub-wrap{gap:10px}
+  #qr .qrhub-head{padding:0;border:0;background:transparent;box-shadow:none}
+  #qr .qrhub-head h3{font-size:20px}
+  #qr .qrhub-chips,#qr .qrhub-stats{display:none!important}
+  #qr .qrhub-menu{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+  #qr .qrhub-menu button{min-height:56px;padding:9px 5px;border-radius:12px;box-shadow:none}
+  #qr .qrhub-menu button b{font-size:12px;font-weight:800;overflow-wrap:break-word}
+  #qr .qrhub-menu button.active{box-shadow:0 4px 12px rgba(36,107,253,.17)}
+  #qr .qrhub-card{padding:8px 12px;border-radius:12px}
+  #qr .qrhub-card h4{font-size:15px}
+  #qr .qrhub-subtabs{gap:5px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  #qr .qrhub-subtabs button{min-height:42px;padding:7px 4px;font-size:11px;white-space:normal;line-height:1.35;border-radius:10px}
+  #qr #qb .card{padding:12px!important;margin-bottom:8px!important}
+  #qr #qb .card h3{font-size:16px!important}
+  #qr #qb .g2{grid-template-columns:minmax(0,1fr)!important;gap:0!important}
+  #qr #qb canvas{max-width:min(240px,100%)!important;margin:8px auto!important}
+  #qr .qr168-head p,#qr #qr168 .qr168-note{display:none!important}
+  #qr #qr168 .qr168-head h3{font-size:17px!important}
+  #qr #qr168 .qr168-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #qr #qr168 .qr168-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important}
+  #qr #qr168 .qr168-tabs button{min-width:0!important;white-space:normal!important;min-height:42px!important}
+  #qr .qrhub-history-wrap,#qr .qr168-scroller,#qr #qb .wrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  #qr .qrhub-history-table,#qr #qb .cmp3{min-width:690px}
+  #qr #qb .qr247-actions{white-space:nowrap}
+  #qr .qrhub-note{padding:8px 10px;font-size:12px}
+}
