@@ -30,7 +30,7 @@ function make(label,cls,fn){const b=document.createElement('button');b.type='but
 function decorate(mode){
  const root=document.querySelector(mode==='in'?'#qr .qr-review-in':'#qr .qr-review-out');if(!root)return;
  root.querySelectorAll('table tr').forEach((tr,index)=>{
-  if(!index)return;
+  if(!index || tr.dataset.qr50Decorated==='1')return;
   const idNode=tr.querySelector(mode==='in'?'[data-qi]':'[data-qo]')||tr.querySelector('[data-qx]');
   const id=idNode?.dataset.qi||idNode?.dataset.qo||idNode?.dataset.qx;
   if(!id)return;
@@ -42,9 +42,10 @@ function decorate(mode){
   row.append(make(mode==='in'?'Duyệt':'Duyệt ra',mode==='in'?'g':'r',()=>{if(mode==='in')window.qrApproveIn?.(id);else window.qrApproveOut?.(id)}));
   row.append(make('Từ chối','s',()=>window.qrReject?.(id)));
   if(admin())row.append(make('Xóa','r',btn=>removeRequest(id,btn)));
-  cell.replaceChildren(row);
+  cell.replaceChildren(row);tr.dataset.qr50Decorated='1';
  });
 }
+window.qr50Decorate=decorate;
 if(typeof previousIn==='function')window.qrRenderIn=function(){const v=previousIn.apply(this,arguments);decorate('in');return v};
 if(typeof previousOut==='function')window.qrRenderOut=function(){const v=previousOut.apply(this,arguments);decorate('out');return v};
 })();

@@ -32,6 +32,7 @@
   function ensureSection(){
     const allowed = cards().map(x => x[0]);
     if(!allowed.includes(state.section)) state.section = allowed[0] || 'regin';
+    if(state.reviewTab==='att') state.reviewTab='regin';
   }
 
   let countRequestId = 0;
@@ -55,7 +56,7 @@
         }
       }catch(e){ console.warn('attendance counts', e); }
     }
-    if(requestId === countRequestId && host()) updateCountBadges();
+    if(requestId === countRequestId && host()) { updateCountBadges(); if(state.section==='review') updateReviewTabCounts(); }
   }
 
   function updateCountBadges(){
@@ -67,10 +68,17 @@
     if(elOut) elOut.textContent = state.counts.regout || 0;
     if(elAtt) elAtt.textContent = state.counts.attPending || 0;
     if(elAttApproved) elAttApproved.textContent = state.counts.attApproved || 0;
-    const values = [state.counts.regin, state.counts.regout, state.counts.attPending, state.counts.attApproved];
+    const values = [state.counts.regin, state.counts.regout];
     document.querySelectorAll('#qr .qrhub-stat b').forEach((e,i) => { if(i < values.length) e.textContent = String(values[i] || 0); });
   }
 
+  function updateReviewTabCounts(){
+    const c=content(); if(!c) return;
+    const a=c.querySelector('[data-review-tab="regin"]');
+    const b=c.querySelector('[data-review-tab="regout"]');
+    if(a) a.textContent='Đăng ký vào ('+state.counts.regin+')';
+    if(b) b.textContent='Đăng ký ra ('+state.counts.regout+')';
+  }
   function buildPage(){
     ensureSection();
     const wrap = cards().map(([key,title,desc]) => `<button type="button" data-qrhub="${key}" class="${state.section===key?'active':''}"><b>${safe(title)}</b></button>`).join('');
@@ -86,16 +94,16 @@
             <span class="qrhub-chip">Công nhân trong phạm vi: ${safe(totalWorkers())}</span>
             <span class="qrhub-chip">Đăng ký vào chờ duyệt: <b id="qrhubCountIn">0</b></span>
             <span class="qrhub-chip">Đăng ký ra chờ duyệt: <b id="qrhubCountOut">0</b></span>
-            <span class="qrhub-chip">Điểm danh chờ duyệt: <b id="qrhubCountAtt">0</b></span>
-            <span class="qrhub-chip">Điểm danh đã duyệt: <b id="qrhubCountAttApproved">0</b></span>
+
+
           </div>
         </section>
         <section class="qrhub-menu">${wrap}</section>
         <section class="qrhub-stats">
           <div class="qrhub-stat"><small>ĐĂNG KÝ VÀO</small><b>${safe(state.counts.regin||0)}</b></div>
           <div class="qrhub-stat"><small>ĐĂNG KÝ RA</small><b>${safe(state.counts.regout||0)}</b></div>
-          <div class="qrhub-stat"><small>ĐIỂM DANH CHỜ DUYỆT</small><b>${safe(state.counts.attPending||0)}</b></div>
-          <div class="qrhub-stat"><small>ĐIỂM DANH ĐÃ DUYỆT</small><b>${safe(state.counts.attApproved||0)}</b></div>
+
+
         </section>
         <section id="qrHubContent" class="qrhub-content"></section>
       </div>`;
@@ -170,10 +178,11 @@
       <div class="qrhub-subtabs">
         <button type="button" data-review-tab="regin" class="${state.reviewTab==='regin'?'active':''}">Đăng ký vào (${safe(state.counts.regin||0)})</button>
         <button type="button" data-review-tab="regout" class="${state.reviewTab==='regout'?'active':''}">Đăng ký ra (${safe(state.counts.regout||0)})</button>
-        <button type="button" data-review-tab="att" class="${state.reviewTab==='att'?'active':''}">Điểm danh QR (${safe(state.counts.attPending||0)})</button>
+
       </div>
       <div id="qrHubReviewBody"></div>`;
     c.querySelectorAll('[data-review-tab]').forEach(b => b.onclick = () => { state.reviewTab = b.dataset.reviewTab; renderReviewCenter(); });
+    if(state.reviewTab==='att') state.reviewTab='regin';
     const body = c.querySelector('#qrHubReviewBody');
     if(state.reviewTab === 'att'){
       body.innerHTML = '<div id="qb"></div>';
