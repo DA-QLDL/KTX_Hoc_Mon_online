@@ -9,6 +9,8 @@
     reviewTab: 'regin',
     historySource: 'all',
     reportView: 'list',
+    filterStatus: 'pending',
+    filterKtx: '',filterDay:'',filterRoom:'',filterQuery:'',
     counts: { regin: 0, regout: 0, attPending: 0, attApproved: 0 }
   });
 
@@ -190,10 +192,30 @@
         <button type="button" data-review-tab="regout" class="${state.reviewTab==='regout'?'active':''}">Đăng ký ra (${safe(state.counts.regout||0)})</button>
 
       </div>
+      <div class="qr58-state-bar" id="qr58States">
+        <button type="button" data-review-status="pending" class="${state.filterStatus==='pending'?'active':''}">Chờ duyệt</button>
+        <button type="button" data-review-status="approved" class="${state.filterStatus==='approved'?'active':''}">Đã duyệt</button>
+        <button type="button" data-review-status="rejected" class="${state.filterStatus==='rejected'?'active':''}">Từ chối</button>
+      </div>
+      <div class="qr58-filter-bar">
+        <input id="qr58Search" type="search" placeholder="Tìm họ tên, mã NV, CCCD, SĐT" value="${safe(state.filterQuery)}" aria-label="Tìm hồ sơ">
+        <select id="qr58Ktx" aria-label="Lọc KTX"><option value="">Tất cả KTX</option></select>
+        <select id="qr58Day" aria-label="Lọc dãy"><option value="">Tất cả dãy</option></select>
+        <select id="qr58Room" aria-label="Lọc phòng"><option value="">Tất cả phòng</option></select>
+      </div>
       <div id="qrHubReviewBody"></div>`;
     c.querySelectorAll('[data-review-tab]').forEach(b => b.onclick = () => { state.reviewTab = b.dataset.reviewTab; renderReviewCenter(); });
+    c.querySelectorAll('[data-review-status]').forEach(b=>b.onclick=()=>{state.filterStatus=b.dataset.reviewStatus;renderReviewCenter();});
+    ['Search','Ktx','Day','Room'].forEach(key=>{
+      const field=c.querySelector('#qr58'+key);if(!field)return;
+      field.addEventListener(key==='Search'?'input':'change',()=>{
+        state[{Search:'filterQuery',Ktx:'filterKtx',Day:'filterDay',Room:'filterRoom'}[key]]=field.value;
+        if(state.filterStatus==='pending')applyReviewFilters();else renderReviewHistory();
+      });
+    });
     if(state.reviewTab==='att') state.reviewTab='regin';
     const body = c.querySelector('#qrHubReviewBody');
+    if(state.filterStatus!=='pending'){renderReviewHistory();return;}
     if(state.reviewTab === 'att'){
       body.innerHTML = '<div id="qb"></div>';
       window.__qrAttReview = true;
@@ -207,21 +229,67 @@
       body.innerHTML = '<div id="qb"></div>';
       window.__qrAttReview = false;
       window.QT = state.reviewTab === 'regin' ? 'regin' : 'regout';
-      Promise.resolve(originalApprovePage(state.reviewTab === 'regin' ? 'in' : 'out')).then(()=>refreshCounts()).catch(err => {
+      Promise.resolve(originalApprovePage(state.reviewTab === 'regin' ? 'in' : 'out')).then(()=>{fillReviewFilters();applyReviewFilters();refreshCounts();}).catch(err => {
         body.innerHTML = '<div class="qrhub-note">Không thể tải danh sách duyệt: '+ safe(err?.message || err) +'</div>';
       });
     }
   }
 
+
+  function reviewRows(){
+    const req=typeof QRREQ!=='undefined'&&Array.isArray(QRREQ)?QRREQ:[];
+    return req.filter(r=>r.request_type===(state.reviewTab==='regin'?'in':'out')&&r.status===state.filterStatus);
+  }
+  function fillReviewFilters(){
+    const c=content();if(!c)return;
+    const rows=typeof QRREQ!=='undefined'&&Array.isArray(QRREQ)?QRREQ:[];
+    const data=rows.filter(r=>r.request_type===(state.reviewTab==='regin'?'in':'out'));
+    for(const [id,key,value] of [['qr58Ktx','ktx',state.filterKtx],['qr58Day','day',state.filterDay],['qr58Room','room',state.filterRoom]]){
+      const sel=c.querySelector('#'+id);if(!sel)return;
+      const vals=[...new Set(data.map(r=>String(r[key]||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'vi',{numeric:true}));
+      sel.innerHTML='<option value="">'+({ktx:'Tất cả KTX',day:'Tất cả dãy',room:'Tất cả phòng'}[key])+'</option>'+vals.map(v=>'<option value="'+safe(v)+'">'+safe(v)+'</option>').join('');
+      sel.value=vals.includes(value)?value:'';
+    }
+  }
+  function matchesReview(r){
+    const txt=[r.name,r.worker_code,r.cccd,r.phone].join(' ').toLocaleLowerCase('vi');
+    const query=state.filterQuery.trim().toLocaleLowerCase('vi');
+    return (!query||txt.includes(query)) && (!state.filterKtx||String(r.ktx||'')===state.filterKtx) && (!state.filterDay||String(r.day||'')===state.filterDay) && (!state.filterRoom||String(r.room||'')===state.filterRoom);
+  }
+  function applyReviewFilters(){
+    const c=content();if(!c)return;
+    const rows=reviewRows();
+    const table=c.querySelector('.qr-review-cards table');if(!table)return;
+    const trs=[...table.querySelectorAll('tr')].slice(1);
+    let count=0;
+    trs.forEach((tr,i)=>{const visible=!!rows[i]&&matchesReview(rows[i]);tr.hidden=!visible;if(visible)count++;});
+    let empty=c.querySelector('#qr58NoMatches');
+    if(!empty){empty=document.createElement('div');empty.id='qr58NoMatches';empty.className='qrhub-note';table.parentElement.after(empty);}
+    empty.hidden=count!==0;empty.textContent='Không có hồ sơ phù hợp với bộ lọc.';
+    table.classList.add('qr58-table');
+    table.querySelectorAll('[data-qdelete],[data-qdel]').forEach(el=>el.remove());
+  }
+  async function renderReviewHistory(){
+    const c=content(), body=c?.querySelector('#qrHubReviewBody');if(!body)return;
+    body.innerHTML='<div class="qrhub-loading">Đang tải hồ sơ...</div>';
+    const sb=typeof qrSb==='function'?qrSb():null;
+    if(!sb){body.textContent='Không có kết nối Supabase';return;}
+    try{
+      const res=await sb.from('residency_requests').select('*').eq('request_type',state.reviewTab==='regin'?'in':'out').eq('status',state.filterStatus).order('created_at',{ascending:false}).limit(500);
+      if(res.error)throw res.error;
+      const rows=(res.data||[]).filter(matchesReview);
+      body.innerHTML=rows.length?'<div class="qrhub-history-wrap"><table class="qrhub-history-table"><thead><tr><th>Họ tên / Mã NV</th><th>Liên hệ / CCCD</th><th>Vị trí</th><th>Ngày gửi</th><th>Trạng thái</th></tr></thead><tbody>'+rows.map(r=>'<tr><td><b>'+safe(r.name)+'</b><div>'+safe(r.worker_code||'—')+'</div></td><td>'+safe(r.phone||'—')+'<div>'+safe(r.cccd||'—')+'</div></td><td>'+safe([r.ktx,r.day,r.room&&'P.'+r.room].filter(Boolean).join(' · '))+'</td><td>'+safe(r.created_at?new Date(r.created_at).toLocaleString('vi-VN'):'—')+'</td><td>'+ (state.filterStatus==='approved'?'Đã duyệt':'Từ chối')+'</td></tr>').join('')+'</tbody></table></div>':'<div class="qrhub-note">Không có hồ sơ phù hợp.</div>';
+    }catch(e){body.innerHTML='<div class="qrhub-note">Không tải được hồ sơ: '+safe(e.message||e)+'</div>';}
+  }
   async function renderHistory(){
     cleanupDynamic();
     const c = content(); if(!c) return;
     c.innerHTML = `
-      <div class="qrhub-card"><h4>Lịch sử xử lý QR</h4></div>
+      <div class="qrhub-card"><h4>Lịch sử đăng ký vào / ra</h4></div>
       <div class="qrhub-subtabs">
         <button type="button" data-history-source="all" class="${state.historySource==='all'?'active':''}">Tất cả</button>
         <button type="button" data-history-source="residency" class="${state.historySource==='residency'?'active':''}">Đăng ký vào / ra</button>
-        <button type="button" data-history-source="attendance" class="${state.historySource==='attendance'?'active':''}">Điểm danh QR</button>
+
       </div>
       <div class="qrhub-loading">Đang tải lịch sử xử lý...</div>`;
     c.querySelectorAll('[data-history-source]').forEach(b => b.onclick = () => { state.historySource = b.dataset.historySource; renderHistory(); });
@@ -232,8 +300,8 @@
     }catch(_){ }
     try {
       const residencyPromise = sb.from('residency_requests').select('*').order('created_at',{ascending:false}).limit(500);
-      const attPromise = sb.from('ktx_attendance_qr_requests').select('*').order('created_at',{ascending:false}).limit(500);
-      const [resA,resB] = await Promise.all([residencyPromise, attPromise]);
+      const resA = await residencyPromise;
+      const resB = {data:[],error:null};
       const rows = [];
       if(!resA.error && state.historySource !== 'attendance'){
         (resA.data||[]).filter(r => ['approved','rejected'].includes(r.status)).forEach(r => rows.push({
