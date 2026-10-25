@@ -1,0 +1,6 @@
+/* v1.0.50 — keep actions in a single horizontal row, with local table scroll */
+#qr .qr50-action-cell{min-width:235px;white-space:nowrap!important}
+#qr .qr50-action-row{display:flex!important;flex-flow:row nowrap!important;align-items:center!important;justify-content:center;gap:5px;white-space:nowrap}
+#qr .qr50-action-row .btn{display:inline-flex!important;flex:0 0 auto!important;align-items:center;justify-content:center;min-width:0!important;padding:8px 9px!important;margin:0!important;line-height:1.15}
+#qr .qr-review-in,#qr .qr-review-out{max-width:100%;overflow-x:auto!important}
+@media(max-width:760px){#qr .qr50-action-cell{min-width:222px}#qr .qr50-action-row .btn{font-size:11px!important;padding:8px 7px!important}}
