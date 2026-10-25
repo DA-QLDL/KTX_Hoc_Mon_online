@@ -1,0 +1,108 @@
+/* v1.0.42 — phân màu nút loại phòng, nới khoảng cách phòng hiện tại,
+   và đưa toolbar Quản lý công nhân về bố cục bản v1.0.35 bằng cách
+   không nạp restore-toolbar-141.css. */
+
+/* 1) Tô màu phân biệt rõ 4 nút loại phòng */
+#rdl .roomd-type-actions{gap:10px!important}
+#rdl .roomd-type{
+  border-radius:12px!important;
+  border-width:1px!important;
+  font-weight:800!important;
+  box-shadow:none!important;
+  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease!important;
+}
+#rdl .roomd-type.auto{
+  background:#eef7f6!important;
+  border-color:#9bd1ca!important;
+  color:#137465!important;
+}
+#rdl .roomd-type.m{
+  background:#edf5ff!important;
+  border-color:#bfd6ff!important;
+  color:#1765da!important;
+}
+#rdl .roomd-type.f{
+  background:#fff0f7!important;
+  border-color:#f3bfd8!important;
+  color:#c4387c!important;
+}
+#rdl .roomd-type.mix{
+  background:#fff7e9!important;
+  border-color:#efd39a!important;
+  color:#996200!important;
+}
+#rdl .roomd-type:hover{
+  transform:translateY(-1px)!important;
+  filter:brightness(.98)!important;
+}
+#rdl .roomd-type.on{
+  box-shadow:0 0 0 2px rgba(37,118,233,.10),0 6px 16px rgba(30,56,110,.10)!important;
+}
+#rdl .roomd-type.auto.on{
+  background:#dff3ef!important;
+  border-color:#66b7ab!important;
+  color:#0d695c!important;
+}
+#rdl .roomd-type.m.on{
+  background:#deecff!important;
+  border-color:#7eaef7!important;
+  color:#0f56c2!important;
+}
+#rdl .roomd-type.f.on{
+  background:#ffe5f2!important;
+  border-color:#eb94bd!important;
+  color:#b12d6c!important;
+}
+#rdl .roomd-type.mix.on{
+  background:#ffefcb!important;
+  border-color:#ddb25f!important;
+  color:#8d5c00!important;
+}
+
+/* 2) Nới khoảng cách dòng “Phòng hiện tại …” cho dễ nhìn */
+#transferDlg .transfer-current{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  flex-wrap:wrap!important;
+}
+#transferDlg .tr227-location{
+  display:flex!important;
+  align-items:center!important;
+  flex-wrap:wrap!important;
+  gap:6px 12px!important;
+  min-width:0!important;
+  flex:1 1 auto!important;
+}
+#transferDlg .tr227-location b{
+  white-space:nowrap!important;
+  font-size:11px!important;
+  color:#16417b!important;
+  margin-right:2px!important;
+}
+#transferDlg .tr227-location span{
+  display:inline-flex!important;
+  align-items:center!important;
+  min-height:28px!important;
+  padding:4px 10px!important;
+  border-radius:999px!important;
+  background:#f7fbff!important;
+  border:1px solid #d8e4f5!important;
+  color:#435f82!important;
+  line-height:1.35!important;
+  font-size:11px!important;
+}
+#transferDlg .tr227-gender{
+  margin-left:auto!important;
+  white-space:nowrap!important;
+  font-size:10px!important;
+  padding:4px 9px!important;
+  border-radius:999px!important;
+  background:#eef4ff!important;
+  border:1px solid #d7e4fb!important;
+  color:#4d678d!important;
+}
+@media (max-width:700px){
+  #transferDlg .tr227-gender{margin-left:0!important}
+}
