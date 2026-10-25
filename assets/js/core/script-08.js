@@ -1965,7 +1965,7 @@ $('sp').onclick=async()=>{const ks=[...document.querySelectorAll('.pk:checked')]
 $('zp').onclick=async()=>{if(!PG.length)return;$('zp').disabled=true;try{await zipOf(PG,new Set(PG.map(p=>p.file)).size==1?PG[0].file+'_anh.zip':'anh-tu-pdf.zip')}finally{$('zp').disabled=false}};
 
 function sync(){const fs=['name','mnv','sdt','cccd','dob','gt','td','ktx','day','tinh','thon','xa','huyen','tinh2'];
- D.A=W.map((w,i)=>{const raw={};fs.forEach(f=>raw[f]=w[f]||'');raw.ktx=K(w);raw.day=D(w);raw.room=w.room||'';raw.dob=vn(w.dob);const o={row:i+1,src:'Danh sách hiện tại',wi:i,raw,k:{}};for(const f in N)o.k[f]=N[f](raw[f]);return o});
+ D.A=W.map((w,i)=>{const raw={};fs.forEach(f=>raw[f]=w[f]||'');raw.ktx=K(w);raw.day=String(w.day||'');raw.room=w.room||'';raw.dob=vn(w.dob);const o={row:i+1,src:'Danh sách hiện tại',wi:i,raw,k:{}};for(const f in N)o.k[f]=N[f](raw[f]);return o});
  D.A.file='Danh sách hiện tại';D.A.cols=fs.filter(f=>W.some(w=>w[f]))}
 ['go','go3','go4'].forEach(id=>{const g=$(id).onclick;$(id).onclick=()=>{sync();g();if(id=='go3')$('ap3').disabled=!AD}});
 $('ap3').onclick=()=>{if(!AD)return;AD.forEach(r=>{const w=W[r.o.wi];if(w){w.thon=r.thon;w.xa=r.xa;w.huyen=r.huyen;w.tinh2=r.tinh}});sv();add('UPDATE','Áp dụng tách địa chỉ cho '+AD.length+' công nhân');alert('Đã lưu kết quả tách vào danh sách. Có thể gộp lại ở tab Gộp địa chỉ.')};
