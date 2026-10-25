@@ -1905,7 +1905,7 @@ $('go').onclick=()=>{try{
  $('x2').disabled=!rows.length;window.DEDUP_ON=true;window.DUP_N=gi;const nd=$('nd');if(nd){nd.textContent=gi;nd.style.display=gi?'':'none'}const w2=$('wdn');if(w2){w2.textContent=gi;w2.style.display=gi?'':'none'}
  $('r2').querySelectorAll('[data-de]').forEach(b=>b.onclick=()=>{const w=W.find(x=>String(x.id)===String(b.dataset.de));if(w)edit(w)});$('r2').querySelectorAll('[data-dx]').forEach(b=>b.onclick=async()=>{const w=W.find(x=>String(x.id)===String(b.dataset.dx));if(!w)return;const inf=await askLeave([w],{reason:'Trùng dữ liệu'});if(inf)delWorkers([w],inf)});
  }catch(err){console.error('Lọc trùng:',err);$('r2').innerHTML=`<div class="bkstatus wn"><b>Không thể lọc trùng</b><div class="mut">${esc(err&&err.message||String(err))}</div></div>`}}
-$('x2').onclick=()=>{const{rows,Z}=OUT,f=['name','mnv','sdt','cccd','dob','td','ktx','day','room'];const sv=v=>v instanceof Date?window.ktxLocalISO(v):v;
+$('x2').onclick=()=>{const{rows,Z}=OUT,f=['name','mnv','sdt','cccd','dob','td','ktx','day','room'];const sv=v=>v instanceof Date?v.toISOString().slice(0,10):v;
  save([['Nhóm','Mức độ','File','Dòng gốc','Họ tên','Mã NV','SĐT','CCCD','Ngày sinh','Tiểu đoàn','KTX','Dãy','Phòng','Trùng ở'],...rows.map(r=>{const o=Z[r.i];return [r.gi,r.lv,o.src,o.row,...f.map(x=>sv(o.raw[x])??''),r.fl]})],'loc_trung.xlsx','Bản ghi trùng')};
 // ---- Tách địa chỉ
 const HAM=/^(ap|thon|khom|xom|to|khu pho|kp|ban|buon|so nha)\b/;
@@ -1965,7 +1965,7 @@ $('sp').onclick=async()=>{const ks=[...document.querySelectorAll('.pk:checked')]
 $('zp').onclick=async()=>{if(!PG.length)return;$('zp').disabled=true;try{await zipOf(PG,new Set(PG.map(p=>p.file)).size==1?PG[0].file+'_anh.zip':'anh-tu-pdf.zip')}finally{$('zp').disabled=false}};
 
 function sync(){const fs=['name','mnv','sdt','cccd','dob','gt','td','ktx','day','tinh','thon','xa','huyen','tinh2'];
- D.A=W.map((w,i)=>{const raw={};fs.forEach(f=>raw[f]=w[f]||'');raw.ktx=K(w);raw.day=String(w.day||'');raw.room=w.room||'';raw.dob=vn(w.dob);const o={row:i+1,src:'Danh sách hiện tại',wi:i,raw,k:{}};for(const f in N)o.k[f]=N[f](raw[f]);return o});
+ D.A=W.map((w,i)=>{const raw={};fs.forEach(f=>raw[f]=w[f]||'');raw.ktx=w.ktx||'KTX 1';raw.day=w.day||'Dãy 1';raw.room=w.room||'';raw.dob=vn(w.dob);const o={row:i+1,src:'Danh sách hiện tại',wi:i,raw,k:{}};for(const f in N)o.k[f]=N[f](raw[f]);return o});
  D.A.file='Danh sách hiện tại';D.A.cols=fs.filter(f=>W.some(w=>w[f]))}
 ['go','go3','go4'].forEach(id=>{const g=$(id).onclick;$(id).onclick=()=>{sync();g();if(id=='go3')$('ap3').disabled=!AD}});
 $('ap3').onclick=()=>{if(!AD)return;AD.forEach(r=>{const w=W[r.o.wi];if(w){w.thon=r.thon;w.xa=r.xa;w.huyen=r.huyen;w.tinh2=r.tinh}});sv();add('UPDATE','Áp dụng tách địa chỉ cho '+AD.length+' công nhân');alert('Đã lưu kết quả tách vào danh sách. Có thể gộp lại ở tab Gộp địa chỉ.')};
