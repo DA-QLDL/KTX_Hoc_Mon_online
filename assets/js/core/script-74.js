@@ -9,11 +9,6 @@
     st.id='ktx74-inline-style';
     st.textContent=`
       body[data-page="qr"] #tools.top-actions{display:none!important}
-      #tools.top-actions.ktx74-inline-row{flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;justify-content:flex-end!important;scrollbar-width:thin}
-      #tools.top-actions.ktx74-inline-row > *{flex:0 0 auto!important}
-      @media (max-width:1180px){
-        #tools.top-actions.ktx74-inline-row{justify-content:flex-start!important}
-      }
       .qr74-actions{display:flex;align-items:center;justify-content:flex-start;gap:6px;flex-wrap:nowrap;white-space:nowrap}
       .qr74-actions .btn{margin:0!important;min-width:auto!important}
       .qr74-actions-cell{min-width:185px}
@@ -43,7 +38,7 @@
     const more=$('ktxMoreActions');
     if(more) more.classList.toggle('hide',cur!=='work');
     tools.classList.toggle('hide',!showMap);
-    tools.classList.add('ktx74-inline-row');
+    tools.classList.remove('ktx74-inline-row');
     const gk=$('gk');
     if(gk) gk.classList.toggle('home-ktx-select',cur==='home');
   }

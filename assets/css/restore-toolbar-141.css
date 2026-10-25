@@ -1,0 +1,12 @@
+/* v1.0.41: Return the worker toolbar to the former responsive wrapping layout. */
+@media (min-width:861px) {
+  #tools.top-actions:not(.hide) {display:flex!important;flex-flow:row wrap!important;gap:7px!important;row-gap:8px!important;justify-content:flex-end!important;align-items:center!important;overflow:visible!important;max-width:100%!important;min-width:0!important}
+  #tools.top-actions:not(.hide)>button,
+  #tools.top-actions:not(.hide)>label,
+  #tools.top-actions:not(.hide)>select:not(.hide){flex:0 0 auto!important;white-space:nowrap!important}
+  main>.top {min-width:0}
+  main>.top>div:first-child {min-width:0}
+}
+@media (max-width:1180px) and (min-width:861px) {
+  #tools.top-actions:not(.hide){justify-content:flex-start!important;width:100%!important}
+}
