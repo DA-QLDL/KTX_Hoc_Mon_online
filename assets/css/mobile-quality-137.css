@@ -1,0 +1,18 @@
+/* Mobile quality improvements, preserve PC */
+@media(max-width:760px){
+ #mobile180 .mbottom{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:2px!important;padding:6px 5px calc(6px + env(safe-area-inset-bottom))!important}
+ #mobile180 .mbottom button{min-width:0!important;font-size:10px!important;min-height:51px!important;line-height:1.25!important;padding:5px 2px!important;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+ #mobile180 button,#mobile180 select,#mobile180 a,.m37-filter-toggle{touch-action:manipulation}
+ #mobile180 .m131-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #mobile180 .m131-stat small,#mobile180 .mworkertext small{font-size:12px!important;line-height:1.45}
+ #mobile180 .miconbtn{width:44px!important;height:44px!important;min-width:44px!important}
+ #mobile180 input[type=checkbox]{min-width:20px;min-height:20px}
+ #mobile180 .mfilters{display:none!important}
+ #mobile180 .mfilters.m37-open{display:grid!important}
+ #mobile180 .m37-filter-toggle{display:block;width:100%;margin:9px 0 7px;border:1px solid #bfd4f2;background:#eef5ff;color:#1855a7;border-radius:12px;padding:12px 16px;min-height:44px;font-weight:700;text-align:left}
+ #mobile180 .m37-sync{margin:5px 0 10px;padding:8px 12px;border-radius:10px;background:#f2f7ff;border:1px solid #dce9fa;color:#365879;font-size:12px;font-weight:700}
+ #mobile180 .m37-dismissible{position:relative;padding-right:46px!important;margin-bottom:10px!important}
+ #mobile180 .m37-dismissible button{position:absolute;top:3px;right:4px;font-size:21px;min-width:40px;min-height:40px;border:0;background:transparent;color:inherit}
+ #mobile180 .maction{min-height:48px!important;font-size:13px!important}
+ #mobile180 .m131-switch button:focus:not(:focus-visible){outline:0!important}
+}

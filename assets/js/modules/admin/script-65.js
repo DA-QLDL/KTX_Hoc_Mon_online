@@ -1,0 +1,1 @@
+(function(){function clearFields(){const u=document.getElementById('ahEmail'),p=document.getElementById('ahPass');if(u)u.value='';if(p)p.value='';}document.addEventListener('DOMContentLoaded',()=>{clearFields();window.addEventListener('pageshow',clearFields);});})();

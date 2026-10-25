@@ -1,0 +1,1 @@
+(function(){window.openKiemTraMenuNCC=function(){var d=document.getElementById('menuNcc211'),f=document.getElementById('menuNcc211Frame');if(!d||!f)return;d.style.display='flex';if(!f.src)f.src=f.dataset.url};var c=document.getElementById('menuNcc211Close');if(c)c.onclick=function(){document.getElementById('menuNcc211').style.display='none'}})();

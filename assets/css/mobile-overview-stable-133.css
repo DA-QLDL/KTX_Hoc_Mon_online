@@ -1,0 +1,19 @@
+/* v1.0.33 — stable Android touch feedback, no overview-day duplication */
+@media(max-width:760px){
+ #mobile180 .m131-days{display:none!important}
+ #mobile180 .m131-switch{isolation:isolate}
+ #mobile180 .m131-switch button{
+   -webkit-tap-highlight-color:transparent!important;
+   touch-action:manipulation;
+   animation:none!important;
+   transition:background-color .12s ease,border-color .12s ease,color .12s ease!important;
+ }
+ #mobile180 .m131-switch button:active,
+ #mobile180 .m131-switch button:focus,
+ #mobile180 .m131-switch button:focus-visible{
+   transform:none!important;
+   box-shadow:none!important;
+ }
+ #mobile180 .m131-switch button:not(.is-active):focus-visible{outline:2px solid #9ebcf3;outline-offset:1px}
+ #mobile180 .m131-switch button.is-active{box-shadow:0 2px 8px rgba(37,99,235,.12)!important}
+}

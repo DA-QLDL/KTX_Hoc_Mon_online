@@ -1,0 +1,223 @@
+{
+  "modules": [
+    {
+      "file": "assets/js/core/script-08.js",
+      "empty_catch": 17,
+      "innerHTML": 75
+    },
+    {
+      "file": "assets/js/core/script-48.js",
+      "empty_catch": 0,
+      "innerHTML": 2
+    },
+    {
+      "file": "assets/js/core/script-49.js",
+      "empty_catch": 0,
+      "innerHTML": 2
+    },
+    {
+      "file": "assets/js/core/script-68.js",
+      "empty_catch": 1,
+      "innerHTML": 6
+    },
+    {
+      "file": "assets/js/modules/admin/script-17.js",
+      "empty_catch": 2,
+      "innerHTML": 17
+    },
+    {
+      "file": "assets/js/modules/admin/script-19.js",
+      "empty_catch": 8,
+      "innerHTML": 4
+    },
+    {
+      "file": "assets/js/modules/admin/script-20.js",
+      "empty_catch": 5,
+      "innerHTML": 9
+    },
+    {
+      "file": "assets/js/modules/admin/script-26.js",
+      "empty_catch": 3,
+      "innerHTML": 3
+    },
+    {
+      "file": "assets/js/modules/admin/script-27.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/admin/script-28.js",
+      "empty_catch": 2,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/admin/script-29.js",
+      "empty_catch": 6,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/admin/script-30.js",
+      "empty_catch": 2,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/admin/script-31.js",
+      "empty_catch": 3,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/admin/script-33.js",
+      "empty_catch": 1,
+      "innerHTML": 2
+    },
+    {
+      "file": "assets/js/modules/admin/script-34.js",
+      "empty_catch": 3,
+      "innerHTML": 12
+    },
+    {
+      "file": "assets/js/modules/admin/script-35.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/admin/script-36.js",
+      "empty_catch": 4,
+      "innerHTML": 7
+    },
+    {
+      "file": "assets/js/modules/admin/script-43.js",
+      "empty_catch": 1,
+      "innerHTML": 0
+    },
+    {
+      "file": "assets/js/modules/admin/script-46.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/admin/script-51.js",
+      "empty_catch": 0,
+      "innerHTML": 5
+    },
+    {
+      "file": "assets/js/modules/admin/script-53.js",
+      "empty_catch": 0,
+      "innerHTML": 2
+    },
+    {
+      "file": "assets/js/modules/admin/script-55.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/admin/script-58.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/admin/script-64.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/attendance/script-41.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/attendance/script-59.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/attendance/script-61.js",
+      "empty_catch": 0,
+      "innerHTML": 3
+    },
+    {
+      "file": "assets/js/modules/attendance/script-62.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/meals/script-67.js",
+      "empty_catch": 1,
+      "innerHTML": 0
+    },
+    {
+      "file": "assets/js/modules/overview/script-22.js",
+      "empty_catch": 1,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/overview/script-23.js",
+      "empty_catch": 0,
+      "innerHTML": 2
+    },
+    {
+      "file": "assets/js/modules/overview/script-25.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/reports/script-24.js",
+      "empty_catch": 0,
+      "innerHTML": 2
+    },
+    {
+      "file": "assets/js/modules/reports/script-60.js",
+      "empty_catch": 0,
+      "innerHTML": 2
+    },
+    {
+      "file": "assets/js/modules/reports/script-63.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/residency/script-14.js",
+      "empty_catch": 2,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/residency/script-16.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/residency/script-21.js",
+      "empty_catch": 1,
+      "innerHTML": 3
+    },
+    {
+      "file": "assets/js/modules/workers/script-09.js",
+      "empty_catch": 0,
+      "innerHTML": 1
+    },
+    {
+      "file": "assets/js/modules/workers/script-10.js",
+      "empty_catch": 0,
+      "innerHTML": 2
+    },
+    {
+      "file": "assets/js/modules/workers/script-11.js",
+      "empty_catch": 4,
+      "innerHTML": 0
+    },
+    {
+      "file": "assets/js/modules/workers/script-18.js",
+      "empty_catch": 1,
+      "innerHTML": 8
+    },
+    {
+      "file": "assets/js/modules/workers/script-32.js",
+      "empty_catch": 1,
+      "innerHTML": 2
+    }
+  ],
+  "totals": {
+    "empty_catch": 69,
+    "innerHTML": 189
+  }
+}
