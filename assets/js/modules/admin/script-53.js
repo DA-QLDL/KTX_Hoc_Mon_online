@@ -22,7 +22,9 @@
     await writeSnapshot(v);
   }finally{saving=false}}
   window.KTX143_BACKUP={save,read:readSnapshot};
+  const hiddenKey='ktx_backup_143_notice_suppressed';
   async function recoveryCheck(){
+    try{if(localStorage.getItem(hiddenKey)==='1')return}catch(_){}
     if(typeof W==='undefined'||W.length){if(W.length)await save();return}
     let prev;
     try{prev=await readSnapshot()}catch(e){return}
@@ -30,8 +32,13 @@
     const host=document.querySelector('main')||document.body;
     if(document.getElementById('ktx143Recovery'))return;
     const el=document.createElement('div');el.id='ktx143Recovery';el.className='show';
-    el.innerHTML='<b>Phát hiện dữ liệu công nhân đã lưu dự phòng ('+prev.W.length.toLocaleString('vi-VN')+' hồ sơ).</b><div>Danh sách đang hiển thị trống. Có thể khôi phục dữ liệu từ bản sao trên thiết bị này; thao tác không xóa bản dự phòng.</div><button type="button" class="btn s" id="ktx143Restore">Khôi phục dữ liệu</button>';
+    el.setAttribute('role','status');
+    el.style.position='relative';
+    el.style.paddingRight='42px';
+    el.innerHTML='<button type="button" id="ktx143Close" aria-label="Đóng thông báo bản sao lưu" title="Đóng thông báo" style="position:absolute;right:9px;top:9px;min-width:30px;min-height:30px;border:1px solid #d1d5db;background:#fff;border-radius:9px;font-size:21px;line-height:1;cursor:pointer">×</button><b>Phát hiện dữ liệu công nhân đã lưu dự phòng ('+prev.W.length.toLocaleString('vi-VN')+' hồ sơ).</b><div>Bản sao chỉ lưu trên thiết bị này, không tự khôi phục hoặc đồng bộ lên Cloud. Nếu không muốn dùng, anh có thể tắt lời nhắc.</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:9px"><button type="button" class="btn s" id="ktx143Restore">Khôi phục dữ liệu</button><button type="button" class="btn s" id="ktx143Suppress">Không nhắc lại trên thiết bị này</button></div>';
     host.prepend(el);
+    el.querySelector('#ktx143Close').onclick=()=>el.remove();
+    el.querySelector('#ktx143Suppress').onclick=()=>{try{localStorage.setItem(hiddenKey,'1')}catch(_){}el.remove()};
     el.querySelector('#ktx143Restore').onclick=()=>{
       if(W.length){alert('Dữ liệu hiện tại đã được nạp. Hãy kiểm tra lại trước khi khôi phục.');return}
       if(!confirm('Khôi phục '+prev.W.length+' hồ sơ công nhân từ bản lưu trên thiết bị này?'))return;
