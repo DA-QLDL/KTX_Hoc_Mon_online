@@ -1,0 +1,7 @@
+/* v1.0.57 - Align return-to-dorm form without changing its business logic */
+.ktx57-restore-dialog form{gap:14px!important;padding:22px!important;}
+.ktx57-restore-dialog form>label{display:grid!important;grid-template-columns:106px minmax(0,1fr)!important;align-items:center!important;column-gap:16px!important;margin:0!important;min-height:38px!important;white-space:normal!important;}
+.ktx57-restore-dialog form>label>span{display:block!important;white-space:nowrap!important;font-weight:600!important;}
+.ktx57-restore-dialog form>label>input{display:block!important;box-sizing:border-box!important;width:100%!important;min-width:0!important;min-height:38px!important;margin:0!important;padding:8px 12px!important;border-radius:9px!important;}
+.ktx57-restore-dialog form>.row{margin-top:6px!important;gap:10px!important;justify-content:flex-end!important;flex-wrap:wrap!important;}
+@media(max-width:420px){.ktx57-restore-dialog form{padding:16px!important}.ktx57-restore-dialog form>label{grid-template-columns:92px minmax(0,1fr)!important;column-gap:10px!important}}

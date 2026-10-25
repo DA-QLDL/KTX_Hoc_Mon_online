@@ -1,0 +1,81 @@
+/* KTX Hóc Môn v1.0.59 · Indigo design tokens · PC and Mobile */
+:root,:root[data-theme="light"] {
+ --bg:#F5F7FF;--pn:#FFFFFF;--pn2:#F2F4FF;--ln:#DEE4F4;
+ --ink:#17233D;--mut:#64748B;--bl:#4C60F3;--bl2:#3544B8;
+ --gr:#16834B;--am:#B46D00;--rd:#DC3545;--pk:#C4387C;
+ --grbg:#E4F7EB;--ambg:#FFF4DA;--rdbg:#FFE9EC;
+ --sh:0 5px 20px rgba(27,42,91,.07);--gl:rgba(76,96,243,.13);--gl2:rgba(76,96,243,.07);
+ --u-blue:#4C60F3;--u-blue-h:#3544B8;--u-blue-soft:#E8ECFF;
+ --u-blue-line:#C8D1FB;--u-blue-ink:#3544B8;
+ --u-red:#DC3545;--u-red-h:#B92D3A;--u-red-soft:#FFE9EC;--u-red-line:#F3BBC1;
+ --u-amber:#986000;--u-amber-soft:#FFF4DA;--u-amber-line:#EDD195;
+ --u-ink:#17233D;--u-mut:#64748B;--u-line:#DEE4F4;
+ --ktx27-navy:#17233D;--ktx27-line:#DEE4F4;
+ --ktx-primary:#4C60F3;--ktx-accent:#3544B8;
+ color-scheme:light;
+}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+ --bg:#F5F7FF;--pn:#fff;--pn2:#F2F4FF;--ln:#DEE4F4;--ink:#17233D;--mut:#64748B;
+ --bl:#4C60F3;--bl2:#3544B8;--gr:#16834B;--am:#B46D00;--rd:#DC3545;
+ --grbg:#E4F7EB;--ambg:#FFF4DA;--rdbg:#FFE9EC;
+ --u-blue:#4C60F3;--u-blue-h:#3544B8;--u-blue-soft:#E8ECFF;--u-blue-line:#C8D1FB;--u-blue-ink:#3544B8;
+ }}
+/* Common visual surfaces: keep original page layouts intact */
+html body{background:#F5F7FF;color:#17233D}
+nav,aside,#side,.sidebar{background:#fff!important;border-color:#DEE4F4!important}
+nav button.on,.gi>button.on,.system-hub-nav.on{background:#E8ECFF!important;color:#3544B8!important}
+nav button.on::before,.gi>button.on::before{background:#4C60F3!important}
+nav button.on svg,.gi>button.on svg{color:#4C60F3!important}
+.brand b,main>.top h2,#ttl,.card h3,.card h4{color:#17233D!important}
+.logo,nav .pill{background:linear-gradient(135deg,#4C60F3,#3544B8)!important}
+.card,.qrhub-card,.qrhub-stat,.qrhub-head{border-color:#DEE4F4!important;background-color:#fff!important}
+main>.top{border-color:#DEE4F4!important}
+main>.top .eb{color:#4C60F3!important}
+:where(input:not([type=checkbox]):not([type=radio]),select,textarea):focus{border-color:#4C60F3!important;box-shadow:0 0 0 3px rgba(76,96,243,.12)!important}
+input[type=checkbox],input[type=radio]{accent-color:#4C60F3!important}
+/* Action semantics. Correct the legacy palette's success=blue override. */
+html body .btn:not(.s):not(.g):not(.r):not(.warning):not(.danger):not([data-action-tone]),
+html body .ktx-action[data-action-tone=primary]{
+ --b-bg:#4C60F3;--b-fg:#fff;--b-bd:#4C60F3;
+ --b-bg-h:#3544B8;--b-fg-h:#fff;--b-bd-h:#3544B8;
+}
+html body .btn.s,html body .ktx-action[data-action-tone=secondary],
+html body .ktx-action[data-action-tone=neutral]{
+ --b-bg:#fff;--b-fg:#3544B8;--b-bd:#C8D1FB;
+ --b-bg-h:#E8ECFF;--b-fg-h:#3544B8;--b-bd-h:#7888F8;
+}
+html body .btn.g,html body .ktx-action[data-action-tone=success]{
+ --b-bg:#16834B;--b-fg:#fff;--b-bd:#16834B;
+ --b-bg-h:#11663B;--b-fg-h:#fff;--b-bd-h:#11663B;
+}
+html body .btn.r,html body .ktx-action[data-action-tone=danger]{
+ --b-bg:#DC3545;--b-fg:#fff;--b-bd:#DC3545;
+ --b-bg-h:#B92D3A;--b-fg-h:#fff;--b-bd-h:#B92D3A;
+}
+html body .btn.warning,html body .ktx-action[data-action-tone=warning]{
+ --b-bg:#FFF4DA;--b-fg:#986000;--b-bd:#EDD195;
+ --b-bg-h:#FDE8B4;--b-fg-h:#765000;--b-bd-h:#DDB55F;
+}
+html body .btn,html body .ktx-action{box-shadow:none!important}
+html body .btn:focus-visible,html body button:focus-visible{outline:2px solid #4C60F3!important;outline-offset:2px}
+/* Unified tables */
+.table-wrap,.tbl-wrap,.wrap,[class*=table-wrap]{border-color:#DEE4F4!important}
+table thead th{background:#F0F3FF!important;color:#35476B!important;border-color:#DEE4F4!important}
+table tbody tr:nth-child(even){background:#FAFBFF!important}
+table tbody tr:hover{background:#F0F3FF!important}
+.tag.g,.badge.g{background:#E4F7EB!important;color:#16834B!important}
+.tag.a,.badge.a{background:#FFF4DA!important;color:#986000!important}
+.tag.r,.badge.r{background:#FFE9EC!important;color:#B92D3A!important}
+/* QR hub specific colors */
+#qr .qrhub-menu button.active{background:linear-gradient(135deg,#4C60F3,#3544B8)!important;border-color:#4C60F3!important;color:#fff!important}
+#qr .qrhub-menu button.active small{color:#EEF0FF!important}
+#qr .qrhub-menu button:not(.active){background:#fff!important;border-color:#DEE4F4!important;color:#3544B8!important}
+#qr .qrhub-chip{background:#E8ECFF!important;border-color:#C8D1FB!important;color:#3544B8!important}
+#qr .qrhub-subtabs button.active{background:#E8ECFF!important;border-color:#4C60F3!important;color:#3544B8!important}
+#qr .qrhub-head h3{color:#17233D!important}
+/* Mobile retains its established three-tab navigation and compact spacing */
+@media(max-width:760px){
+ #mobile180 .m131-hero,.m131-hero{background:linear-gradient(135deg,#4C60F3,#3544B8)!important}
+ #mobile180 .m131-switch button.is-active{background:#fff!important;color:#3544B8!important;border-color:#C8D1FB!important}
+ #qr .qrhub-menu button.active{background:linear-gradient(135deg,#4C60F3,#3544B8)!important}
+}
