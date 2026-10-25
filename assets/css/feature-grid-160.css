@@ -1,0 +1,23 @@
+/* Feature dashboard v1.0.60: applies to utility and system pages only */
+#utilhub .sysfunc-intro,#sysfunc .sysfunc-intro{padding:8px 12px;background:transparent;border:0}
+#utilhub .sysfunc-intro p,#sysfunc .sysfunc-intro p,#utilhub .sysfunc-footer,#sysfunc .sysfunc-footer{display:none}
+#utilhub .sysfunc-wrap,#sysfunc .sysfunc-wrap{gap:15px}
+#utilhub .sysfunc-group,#sysfunc .sysfunc-group{background:#fff;border:1px solid #e6eaf7;border-radius:18px;padding:18px;box-shadow:0 6px 25px rgba(37,51,115,.04)}
+#utilhub .sysfunc-group h3,#sysfunc .sysfunc-group h3{font-size:16px;margin-bottom:14px;color:#17233d}
+#utilhub .sysfunc-grid,#sysfunc .sysfunc-grid{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:12px!important;align-items:stretch!important}
+#utilhub .sysfunc-btn,#sysfunc .sysfunc-btn{display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;text-align:center!important;width:100%!important;min-width:0!important;min-height:118px!important;padding:14px 8px!important;border:1px solid #e7ebf6!important;border-radius:15px!important;background:#fff!important;color:#17233d!important;gap:10px!important;box-shadow:0 3px 14px rgba(31,48,101,.035)!important;white-space:normal!important;transform:none!important}
+#utilhub .sysfunc-btn:hover,#sysfunc .sysfunc-btn:hover{border-color:#a5b0f5!important;box-shadow:0 5px 17px rgba(76,96,243,.12)!important;transform:none!important}
+#utilhub .sysfunc-btn .sficon,#sysfunc .sysfunc-btn .sficon{width:52px!important;height:52px!important;flex:0 0 52px!important;border-radius:15px!important;background:#e8ecff!important;color:#4c60f3!important;display:grid!important;place-items:center!important;box-shadow:none!important}
+#utilhub .sysfunc-btn.sf-green .sficon,#sysfunc .sysfunc-btn.sf-green .sficon{background:#e9f8f0!important;color:#16834b!important}
+#utilhub .sysfunc-btn.sf-warn .sficon,#sysfunc .sysfunc-btn.sf-warn .sficon{background:#fff2df!important;color:#d88a08!important}
+#utilhub .sysfunc-btn.sf-danger .sficon,#sysfunc .sysfunc-btn.sf-danger .sficon{background:#ffe9ec!important;color:#dc3545!important}
+#utilhub .sysfunc-btn.sf-purple .sficon,#sysfunc .sysfunc-btn.sf-purple .sficon{background:#f1edff!important;color:#7951c5!important}
+#utilhub .sysfunc-btn .sficon .i,#sysfunc .sysfunc-btn .sficon .i{height:26px!important;width:26px!important;color:inherit!important}
+#utilhub .sysfunc-btn b,#sysfunc .sysfunc-btn b{font-size:12px!important;line-height:1.35!important;font-weight:700!important;margin:0!important;color:#17233d!important}
+#utilhub .sysfunc-btn small,#sysfunc .sysfunc-btn small{display:none!important}
+#utilhub .sysfunc-btn:focus-visible,#sysfunc .sysfunc-btn:focus-visible{outline:2px solid #4c60f3!important;outline-offset:2px!important}
+#sysfunc .ktx60-more{padding:10px 14px;border:1px solid #d8dff0;border-radius:10px;color:#364a86;background:#f8faff;cursor:pointer;font-weight:700}
+#sysfunc .ktx60-hidden{display:none!important}
+@media(max-width:1100px){#utilhub .sysfunc-grid,#sysfunc .sysfunc-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(max-width:760px){#utilhub .sysfunc-grid,#sysfunc .sysfunc-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}#utilhub .sysfunc-btn,#sysfunc .sysfunc-btn{min-height:91px!important;padding:9px 4px!important}#utilhub .sysfunc-btn .sficon,#sysfunc .sysfunc-btn .sficon{width:39px!important;height:39px!important;flex-basis:39px!important}#utilhub .sysfunc-btn .sficon .i,#sysfunc .sysfunc-btn .sficon .i{width:22px!important;height:22px!important}#utilhub .sysfunc-group,#sysfunc .sysfunc-group{padding:10px}}
+@media(max-width:400px){#utilhub .sysfunc-btn b,#sysfunc .sysfunc-btn b{font-size:10px!important}}
