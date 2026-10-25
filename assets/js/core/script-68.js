@@ -252,6 +252,35 @@ function mobileQrPreview(){
  const rows=(typeof QRREQ!=='undefined'&&Array.isArray(QRREQ)?QRREQ:[]).filter(r=>r.status==='pending').slice(0,2);
  return `<section class="m71-preview"><div class="m71-previewhead"><h3>Hồ sơ chờ duyệt</h3><button type="button" data-m71-nav="review">Xem tất cả ›</button></div>${rows.length?rows.map(r=>`<article class="m71-request"><div class="m71-person"><span class="m71-avatar">${mobileQrSafe((r.name||'?').slice(0,1).toUpperCase())}</span><div><strong>${mobileQrSafe(r.name||'Chưa có họ tên')}</strong><p>${mobileQrSafe([r.ktx,r.day,r.room?'Phòng '+r.room:''].filter(Boolean).join(' · '))}</p><small>${r.request_type==='out'?'Đăng ký ra':'Đăng ký vào'} · ${mobileQrSafe(r.created_at?new Date(r.created_at).toLocaleString('vi-VN'):'')}</small></div><span class="m71-pending">Chờ duyệt</span></div><div class="m71-request-actions"><button data-m71-nav="${r.request_type==='out'?'outreview':'review'}">Sửa</button><button data-m71-nav="${r.request_type==='out'?'outreview':'review'}">Duyệt</button><button data-m71-nav="${r.request_type==='out'?'outreview':'review'}">Từ chối</button></div></article>`).join(''):'<div class="m71-empty">Chưa có hồ sơ chờ duyệt đã tải trên thiết bị.</div>'}</section>`;
 }
+function ktx78CardifyQr(){
+ if(screen!=='qr'||mobileQrMode==='landing')return;
+ const host=root.querySelector('#m196QrHost');if(!host)return;
+ host.querySelectorAll('table').forEach(table=>{
+  if(table.classList.contains('ktx78-cardified')||table.closest('.qr-review-cards')||table.closest('.ktx78-mobile-cards'))return;
+  const heads=[...table.querySelectorAll('thead th')].map(x=>x.textContent.trim());
+  const trs=[...table.querySelectorAll('tbody tr')];if(!trs.length)return;
+  const cards=document.createElement('div');cards.className='ktx78-mobile-cards';
+  for(const tr of trs){const cells=[...tr.querySelectorAll(':scope > td')];if(!cells.length)continue;
+   const info=cells.map((td,i)=>({name:heads[i]||('Thông tin '+(i+1)),text:(td.innerText||td.textContent||'').trim(),cell:td}));
+   const name=info.find(v=>/họ tên|công nhân/i.test(v.name))||info[0];
+   const stat=info.find(v=>/trạng thái/i.test(v.name));
+   const card=document.createElement('article');card.className='ktx78-mobile-card';
+   const head=document.createElement('div');head.className='ktx78-mobile-card-title';
+   const title=document.createElement('div');title.className='ktx78-mobile-card-name';title.textContent=name.text.split('\n')[0]||'Hồ sơ';head.append(title);
+   if(stat){const badge=document.createElement('span');badge.className='ktx78-mobile-card-status';badge.textContent=stat.text||'—';if(/duyệt|approved/i.test(stat.text)&&!/chờ/i.test(stat.text))badge.classList.add('is-approved');if(/từ chối|rejected/i.test(stat.text))badge.classList.add('is-rejected');head.append(badge)}
+   card.append(head);const details=document.createElement('div');details.className='ktx78-mobile-card-details';
+   for(const item of info){if(item===name||item===stat||/thao tác/i.test(item.name))continue;const field=document.createElement('div');field.className='ktx78-mobile-card-field';const label=document.createElement('small');label.textContent=item.name;const value=document.createElement('strong');value.textContent=item.text||'—';field.append(label,value);details.append(field)}card.append(details);
+   // Historical records are read-only; never synthesize new approval actions.
+   cards.append(card);
+  }
+  if(cards.children.length){table.classList.add('ktx78-cardified');table.parentElement.insertBefore(cards,table.nextSibling)}
+ });
+}
+let ktx78QrObserver=null;
+function ktx78WatchQr(){if(ktx78QrObserver)ktx78QrObserver.disconnect();const host=root.querySelector('#m196QrHost');if(!host)return;let scheduled=false;
+ ktx78QrObserver=new MutationObserver(()=>{if(scheduled)return;scheduled=true;queueMicrotask(()=>{scheduled=false;ktx78CardifyQr()})});
+ ktx78QrObserver.observe(host,{subtree:true,childList:true});ktx78CardifyQr();
+}
 function qrMobile(){
  const n=mobileQrCounts();const allowed=typeof can==='function'&&(can('qrApprove')||can('attendance'));
  if(mobileQrMode==='landing')return `<section class="m71-landing"><div class="m71-heading"><span class="m71-qrmark">▦</span><div><h2>QR code</h2><p>Quản lý đăng ký KTX</p></div></div><div class="m71-stats"><button type="button" data-m71-nav="review"><span>Chờ duyệt vào</span><strong>${n.in}</strong></button><button type="button" data-m71-nav="outreview"><span>Chờ duyệt ra</span><strong>${n.out}</strong></button></div><div class="m71-actions"><button type="button" data-m71-nav="regin"><span class="m71-icon">↪</span><b>Đăng ký vào</b><small>Tạo mã QR vào KTX</small></button><button type="button" data-m71-nav="regout"><span class="m71-icon">↩</span><b>Đăng ký ra</b><small>Tạo mã QR ra KTX</small></button>${allowed?'<button type="button" data-m71-nav="review"><span class="m71-icon">✓</span><b>Duyệt hồ sơ</b><small>Xử lý đăng ký</small></button><button type="button" data-m71-nav="history"><span class="m71-icon">◷</span><b>Lịch sử</b><small>Tra cứu vào / ra</small></button>':''}</div>${mobileQrPreview()}</section>`;
@@ -275,7 +304,7 @@ function updateHomeWithoutRemount(){
 function render(){if(!mobile()){restoreQr();return}
  if(updateHomeWithoutRemount())return;
 if(screen==='incident'||screen==='utils238'||screen==='duplicate')screen='home';if(root.contains(document.activeElement)&&document.activeElement?.matches('input:not([type=checkbox]):not([type=radio]),textarea,select')){window.__ktx200DeferredRender=true;return}restoreQr();restoreDedup238();root.innerHTML=shell(screen==='home'?summary():screen==='list'?list():screen==='detail'?detail():screen==='meal'?mealMobile():screen==='qr'?qrMobile():screen==='dayman'?dayman():screen==='moreview'?moreMobile():screen==='assets'?assetsMobile():screen==='utils238'?utils238():screen==='duplicate'?duplicate238():account());if(screen==='duplicate'&&dedupSection238){const host=root.querySelector('#step238DuplicateHost');if(host){dedupAnchor238=document.createComment('STEP238 dedup original location');dedupSection238.parentNode.insertBefore(dedupAnchor238,dedupSection238);host.appendChild(dedupSection238);dedupSection238.classList.remove('hide')}}
-if(screen==='qr'&&mobileQrMode!=='landing'&&qrSection){try{if(typeof window.qrPage==='function')window.qrPage()}catch(e){console.warn('QR render:',e)}const h=root.querySelector('#m196QrHost');if(h){qrAnchor=document.createComment('qr mobile mount point');qrSection.parentNode.insertBefore(qrAnchor,qrSection);h.appendChild(qrSection);qrSection.classList.remove('hide');qrSection.classList.add('m196-mounted')}}bind()}
+if(screen==='qr'&&mobileQrMode!=='landing'&&qrSection){try{if(typeof window.qrPage==='function')window.qrPage()}catch(e){console.warn('QR render:',e)}const h=root.querySelector('#m196QrHost');if(h){qrAnchor=document.createComment('qr mobile mount point');qrSection.parentNode.insertBefore(qrAnchor,qrSection);h.appendChild(qrSection);qrSection.classList.remove('hide');qrSection.classList.add('m196-mounted');ktx78WatchQr()}}bind()}
 document.addEventListener('focusin',e=>{if(root.contains(e.target)&&e.target.matches('input,textarea,select'))window.__ktx200InputActive=true},true);document.addEventListener('focusout',e=>{if(root.contains(e.target)&&e.target.matches('input,textarea,select')){window.__ktx200InputActive=false;if(window.__ktx200DeferredRender){window.__ktx200DeferredRender=false;setTimeout(()=>{if(!root.contains(document.activeElement)||!document.activeElement?.matches('input,textarea,select'))render()},120)}}},true);
 function refresh(){if(mobile())render();else root.innerHTML=''}
 const originalAll=typeof all==='function'?all:null;
