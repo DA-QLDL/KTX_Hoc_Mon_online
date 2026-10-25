@@ -121,7 +121,7 @@ function mealMobile(){
 function assetsMobile(){return `<button class="mback" data-mobile="home">← Tổng quan</button><h2 class="mtitle">Cơ sở vật chất KTX</h2><p class="msub">Nhập và chỉnh sửa tài sản như bản PC.</p><div class="mcloudwarn">Dữ liệu tiện ích dùng chung cơ chế Cloud hiện có; cần kiểm tra trạng thái đồng bộ trong biểu mẫu bên dưới.</div><iframe id="m181AssetsFrame" title="Cơ sở vật chất KTX" src="./cosovatchat.html" style="display:block;width:100%;height:72dvh;border:1px solid #d2e1f5;border-radius:14px;background:white" loading="lazy"></iframe>`}
 function bindWorkerButtons(){root.querySelectorAll('[data-open-worker]').forEach(b=>b.onclick=()=>{chosen=b.dataset.openWorker;page('detail')});root.querySelectorAll('[data-edit-worker]').forEach(b=>b.onclick=()=>{const w=byId(b.dataset.editWorker);if(w&&assigned(w)&&can('edit',w)&&typeof edit==='function')edit(w)});root.querySelectorAll('[data-move-worker]').forEach(b=>b.onclick=()=>{const w=byId(b.dataset.moveWorker);if(w&&assigned(w)&&can('transfer',w)&&typeof openTransfer==='function')openTransfer(w)});root.querySelectorAll('[data-full-worker]').forEach(b=>b.onclick=()=>{const w=byId(b.dataset.fullWorker);if(w&&typeof view==='function')view(w)})}
 function bind(){
- root.querySelectorAll('[data-mobile]').forEach(b=>b.addEventListener('click',()=>{
+ root.querySelectorAll('[data-mobile]').forEach(b=>b.addEventListener('click',(event)=>{event.stopPropagation();
   const k=b.dataset.mobile;
   if(['home','list','account','qr','dayman','moreview'].includes(k))page(k);
   else if(k==='residence'){if(typeof go==='function')go('t6')}
