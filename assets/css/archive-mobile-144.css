@@ -1,8 +1,0 @@
-/* v1.0.44 — khôi phục thanh điều hướng Mobile về 3 nút. */
-@media(max-width:860px){
- #mobile180 .mbottom{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}
- #mobile180 .mbottom button{min-width:0!important;min-height:52px!important;font-size:12px!important;padding:6px!important}
-}
-#arc .arc44-panel{margin-top:12px;padding:14px;border:1px solid #d5e2f7;border-radius:12px;background:#f6faff;color:#385573;font-size:13px;line-height:1.55}
-#arc .arc44-panel button{margin-top:8px}
-#arc .arc44-panel strong{color:#153c76}
