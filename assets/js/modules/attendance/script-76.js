@@ -41,7 +41,7 @@ function decorate(mode){
   if(typeof edit==='function')row.append(make('Sửa','s',()=>edit(id)));
   row.append(make(mode==='in'?'Duyệt':'Duyệt ra',mode==='in'?'g':'r',()=>{if(mode==='in')window.qrApproveIn?.(id);else window.qrApproveOut?.(id)}));
   row.append(make('Từ chối','s',()=>window.qrReject?.(id)));
-  if(admin())row.append(make('Xóa','r',btn=>removeRequest(id,btn)));
+  // Không hiển thị Xóa: dùng Từ chối để xử lý hồ sơ chờ duyệt.
   cell.replaceChildren(row);tr.dataset.qr50Decorated='1';
  });
 }

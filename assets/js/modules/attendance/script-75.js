@@ -15,14 +15,13 @@
   const safe = v => typeof esc === 'function' ? esc(v==null?'':String(v)) : String(v==null?'':v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const host = () => document.getElementById('qr');
   const content = () => document.getElementById('qrHubContent');
-  const pendingIn = () => Array.isArray(window.QRREQ) ? QRREQ.filter(x => x.request_type === 'in' && x.status === 'pending').length : 0;
-  const pendingOut = () => Array.isArray(window.QRREQ) ? QRREQ.filter(x => x.request_type === 'out' && x.status === 'pending').length : 0;
+  const pendingIn = () => typeof QRREQ !== 'undefined' && Array.isArray(QRREQ) ? QRREQ.filter(x => x.request_type === 'in' && x.status === 'pending').length : 0;
+  const pendingOut = () => typeof QRREQ !== 'undefined' && Array.isArray(QRREQ) ? QRREQ.filter(x => x.request_type === 'out' && x.status === 'pending').length : 0;
   const totalWorkers = () => Array.isArray(window.W) ? W.filter(w => typeof can === 'function' ? can('view',w) : true).length : 0;
   const cards = () => {
     const list = [
       ['regin','Đăng ký vào','Tạo QR và tiếp nhận hồ sơ vào KTX'],
-      ['regout','Đăng ký ra','Tạo QR và tiếp nhận hồ sơ ra KTX'],
-      ['attendance','Điểm danh QR','Phiên điểm danh, mã QR và kiểm soát quân số']
+      ['regout','Đăng ký ra','Tạo QR và tiếp nhận hồ sơ ra KTX']
     ];
     if (typeof can === 'function' && (can('qrApprove') || can('attendance'))) list.push(['review','Trung tâm duyệt','Duyệt, sửa và từ chối hồ sơ chờ xử lý']);
     if (typeof can === 'function' && (can('qrApprove') || can('attendance'))) list.push(['history','Lịch sử','Tra cứu hồ sơ đã duyệt hoặc đã từ chối']);
@@ -39,10 +38,21 @@
   async function refreshCounts(){
     const requestId = ++countRequestId;
     try {
-      if(typeof qrLoadRequests === 'function' && typeof can === 'function' && can('qrApprove')) await qrLoadRequests();
-    } catch(e){ console.warn('qrLoadRequests', e); }
-    state.counts.regin = pendingIn();
-    state.counts.regout = pendingOut();
+      if(typeof can === 'function' && can('qrApprove') && typeof qrSb === 'function') {
+        const sb=qrSb();
+        if(sb){
+          const response=await sb.from('residency_requests').select('request_type,status').eq('status','pending').limit(2000);
+          if(response.error) throw response.error;
+          const rows=response.data||[];
+          if(requestId!==countRequestId)return;
+          state.counts.regin=rows.filter(r=>r.request_type==='in').length;
+          state.counts.regout=rows.filter(r=>r.request_type==='out').length;
+        }
+      }
+    } catch(e){
+      console.warn('Không tải được số lượng hồ sơ QR:', e);
+      // Không gán về 0 khi Cloud lỗi, tránh số liệu sai.
+    }
     if(typeof can === 'function' && can('attendance') && typeof qrSb === 'function'){
       try{
         const sb = qrSb();
@@ -197,7 +207,7 @@
       body.innerHTML = '<div id="qb"></div>';
       window.__qrAttReview = false;
       window.QT = state.reviewTab === 'regin' ? 'regin' : 'regout';
-      Promise.resolve(originalApprovePage(state.reviewTab === 'regin' ? 'in' : 'out')).catch(err => {
+      Promise.resolve(originalApprovePage(state.reviewTab === 'regin' ? 'in' : 'out')).then(()=>refreshCounts()).catch(err => {
         body.innerHTML = '<div class="qrhub-note">Không thể tải danh sách duyệt: '+ safe(err?.message || err) +'</div>';
       });
     }
