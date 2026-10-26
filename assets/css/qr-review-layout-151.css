@@ -1,9 +1,0 @@
-/* QR review layout – PC actions on one line; scroll within table on narrow screens. */
-#qr .qrhub-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-#qr .qrhub-subtabs{gap:10px}
-#qr .qr-review-cards{overflow-x:auto!important;max-width:100%!important}
-#qr .qr50-action-cell{min-width:285px!important;width:285px;white-space:nowrap!important}
-#qr .qr50-action-row{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:center!important;gap:6px!important;white-space:nowrap!important}
-#qr .qr50-action-row button{display:inline-flex!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;margin:0!important;padding:8px 10px!important;line-height:1.3!important;white-space:nowrap!important}
-#qr .qr-review-cards table{min-width:1040px!important;width:max-content!important;min-width:100%!important}
-@media(max-width:760px){#qr .qr50-action-cell{min-width:260px!important}#qr .qr50-action-row button{padding:8px!important;font-size:11px!important}}
