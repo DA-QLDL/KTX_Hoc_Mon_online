@@ -917,7 +917,7 @@ const iso=v=>{if(v==null||v==='')return '';if(v instanceof Date){if(isNaN(v))ret
  const m=String(v).trim().match(/^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})/);if(m)return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;return /^\d{4}-\d{2}-\d{2}/.test(String(v))?String(v).slice(0,10):''};
 const since=w=>{if(!w.date)return null;const a=String(w.date).slice(0,10).split('-').map(Number);if(a.length<3||!a[0]||!a[1]||!a[2])return null;const start=new Date(a[0],a[1]-1,a[2],12),now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12),n=Math.floor((today-start)/864e5);return n>=0?n:null};
 const K=w=>String(w.ktx||'').trim()||'Chưa phân',D=w=>String(w.day||'').trim()||'Chưa phân',R=w=>w.room||'';
-const add=(a,t,k)=>{LOG.unshift({t:new Date().toLocaleString('vi-VN'),a,d:t,k,day:ldy(),actor:(typeof ME!='undefined'&&(ME.name||ME.id))||(localStorage.getItem('ktx_actor')||'Người dùng'),role:(typeof ME!='undefined'&&ME.role)||'local',at:Date.now()});sv()};
+const add=(a,t,k)=>{LOG.unshift({t:new Date().toLocaleString('vi-VN'),a,d:t,k,day:ldy(),actor:(typeof ME!='undefined'&&(ME.name||ME.id))||(localStorage.getItem('ktx_actor')||'Người dùng'),role:(typeof ME!='undefined'&&ME.role)||'local',at:Date.now(),_sid:'l_'+(typeof crypto!=='undefined'&&crypto.randomUUID?crypto.randomUUID():String(Date.now())+'_'+Math.random().toString(36).slice(2))});sv()};
 const vis=()=>{const k=$('gk').value,L=W.filter(w=>can('view',w));return k?L.filter(w=>K(w)==k):L};
 const miss=w=>!w.cccd||!w.sdt;
 
