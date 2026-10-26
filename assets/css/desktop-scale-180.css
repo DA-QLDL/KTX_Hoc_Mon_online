@@ -1,0 +1,6 @@
+/* v1.0.80 — desktop display density 80%, preserve mobile ergonomics.
+   zoom participates in layout unlike transform:scale, avoiding clipping of menus/dialogs. */
+@media screen and (min-width: 900px) and (pointer: fine) {
+  html { zoom: 0.8; }
+}
+@media print { html { zoom: 1 !important; } }
