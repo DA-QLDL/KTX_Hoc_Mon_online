@@ -107,3 +107,24 @@ if(typeof markAllAlertsRead==='function'&&!window.__step86AlertRead){window.__st
 // Đồng bộ cấu hình backup hiện tại khi backup thay đổi; Bước 3 mới bổ sung quản lý version/restore online.
 if(typeof bkSaveAutos==='function'&&!window.__step86BkSave){window.__step86BkSave=true;const oldBk86=bkSaveAutos;bkSaveAutos=function(a){oldBk86(a);if(SUPA_SYNC.ready&&SUPA_SYNC.enabled)syncSchedulePush()}}
 setTimeout(syncInit,450);
+
+/* v1.0.85: polling fallback for PC/Mobile when realtime events are missed.
+   Only pull on clean sessions; never overwrite unsent edits or unresolved conflicts. */
+(function(){
+ if(window.__KTX_SYNC_FRESHNESS_85__)return;
+ window.__KTX_SYNC_FRESHNESS_85__=true;
+ let lastCheck=0;
+ function checkFresh(){
+   if(typeof document!=='undefined' && document.hidden)return;
+   if(typeof SUPA_SYNC==='undefined'||!SUPA_SYNC.ready||!SUPA_SYNC.enabled||!SUPA_SYNC.session)return;
+   if(SUPA_SYNC.pushing||SUPA_SYNC.pulling||SUPA_SYNC.applying||SUPA_SYNC.pending)return;
+   if((SUPA_SYNC.conflicts||[]).length)return;
+   if(typeof syncLs==='function'&&syncLs('ktx_sb_sync_pending',false))return;
+   if(Date.now()-lastCheck<18000)return;
+   lastCheck=Date.now();
+   if(typeof syncScheduleReload==='function')syncScheduleReload();
+ }
+ document.addEventListener('visibilitychange',checkFresh);
+ window.addEventListener('focus',checkFresh);
+ setInterval(checkFresh,20000);
+})();
