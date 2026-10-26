@@ -1,0 +1,9 @@
+-- DESIGN ONLY -- DO NOT RUN IN PRODUCTION.
+-- Many synchronized rows store ktx/day inside payload jsonb, not dedicated columns.
+-- Before enabling tenant scope restrictions: choose authoritative user scope in app_accounts, add indexed ktx/day columns
+-- (or secure generated columns), backfill without guessing empty values, verify all old policies are removed,
+-- and examine the global sync architecture: reads, writes and deletes may currently assume whole-dataset access.
+-- Use an isolated staging database with test accounts for Admin, KTX1, KTX2 and unassigned records.
+-- RLS must restrict SELECT/INSERT/UPDATE/DELETE and related global aggregate/snapshot tables,
+-- not merely filter the UI; permissive policies combine with OR.
+-- Never use service_role in browser code. Unassigned data should be visible only to an authorized allocator/Admin.

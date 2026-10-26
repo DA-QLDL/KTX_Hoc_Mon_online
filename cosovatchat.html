@@ -1,0 +1,221 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cơ sở vật chất KTX</title><style>
+:root{font-family:Arial,sans-serif;color:#183153;background:#f1f6ff;font-size:13px}*{box-sizing:border-box}body{margin:0;padding:18px}.card{background:white;border:1px solid #d3e1f3;border-radius:12px;padding:16px;margin-bottom:12px}h2{margin:0 0 7px;font-size:21px}p{color:#657995;margin:5px 0 15px}.toolbar{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}.btn{border-radius:8px;border:1px solid #c4d6ee;background:#fff;color:#184a9b;padding:10px 12px;cursor:pointer;font-weight:700;min-height:36px}.primary{background:#2369e9;color:white;border-color:#2369e9}.danger{color:#ad2733}.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}label{display:flex;flex-direction:column;gap:5px;font-size:11px;font-weight:700;color:#536a86}input,select{border:1px solid #cddaf0;border-radius:8px;padding:9px;min-width:0;width:100%;font-size:13px;background:#fff;color:#233958}.tablewrap{max-width:100%;overflow:auto;border:1px solid #d4e2f3;border-radius:9px}table{border-collapse:collapse;min-width:900px;width:100%}th{background:#eaf2ff;color:#214f90;text-align:left;white-space:nowrap}th,td{padding:9px;border-bottom:1px solid #e4eaf3}tbody tr:nth-child(even){background:#f7faff}.status{font-size:12px;color:#55739a}.summary{display:flex;gap:12px;flex-wrap:wrap}.stat{border:1px solid #cfe0f4;border-radius:10px;padding:10px 16px;background:#f9fbff}.stat b{font-size:19px;color:#1251a9}.stat small{display:block;color:#64748b}.note{padding:11px;background:#fff9eb;border:1px solid #f0e3be;border-radius:8px;color:#845f16}.rowbtn{white-space:nowrap}.filter{max-width:400px}.hint{font-size:11px;color:#617d9c}.hide{display:none}@media(max-width:750px){body{padding:8px}.fields{grid-template-columns:1fr 1fr}}@media(max-width:480px){.fields{grid-template-columns:1fr}}
+</style><style id="step173-utility-visual-standard">
+:root{--ui-space:10px}button,input,select,textarea{box-sizing:border-box}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #2563eb;outline-offset:2px}input,select,textarea{max-width:100%}button{min-height:34px}main,section,.card{min-width:0}@media(max-width:640px){body{overflow-x:hidden}table{max-width:100%}}
+</style><style id="step178-utility-height">
+html{min-height:100%;scrollbar-gutter:stable}
+body{min-height:0;padding:12px!important;background:#f1f6ff}
+#impPreview{max-height:min(48dvh,550px)!important;min-height:170px;overflow:auto!important;overscroll-behavior:contain}
+#impMap{grid-template-columns:repeat(auto-fit,minmax(175px,1fr))!important}
+.tablewrap{max-height:none;overflow-x:auto;overflow-y:visible;overscroll-behavior:contain}
+@media(max-width:760px){#impMap{grid-template-columns:repeat(2,minmax(0,1fr))!important}.tablewrap{max-height:none}}
+@media(max-width:500px){#impMap{grid-template-columns:1fr!important}}
+</style><style id="facilities-step201">
+:root{font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#192b46;background:#f4f6fa} body{background:#f4f6fa!important;padding:14px!important;font-size:13px}.card{border-radius:12px;border:1px solid #dfe5ef;box-shadow:0 3px 14px rgba(12,37,73,.035);padding:14px}.fac-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px}.fac-header h2{margin:0;font-size:20px}.fac-header p{margin:3px 0 0;font-size:12px}.fac-actions{display:flex;gap:7px;flex-wrap:wrap}.fac-actions .btn{font-size:12px;min-height:36px;padding:8px 12px}.fac-tabs{display:flex;gap:6px;margin:6px 0 14px}.fac-tab{border:0;background:#e9eef5;border-radius:8px;padding:10px 16px;font-weight:700;color:#536987;cursor:pointer}.fac-tab.active{color:#1757d1;background:#fff;box-shadow:0 2px 9px rgba(15,36,75,.10);border-bottom:2px solid #2667e5}.fac-filters{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.fac-filters select,.fac-filters input{width:auto;min-width:150px;min-height:35px;background:#fff;font-size:12px}.fac-filters label{flex-direction:row;align-items:center}.fac-stats{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:8px;margin:6px 0 15px}.fac-stat{border:1px solid #d9e1ed;border-radius:10px;background:#fff;padding:12px 10px;display:flex;flex-direction:column;justify-content:space-between;gap:5px;min-height:78px}.fac-stat .ic{font-size:16px;color:#2970da}.fac-stat small{font-size:10px;color:#61748e}.fac-stat b{font-size:19px;color:#132742}.fac-tablehead{padding:10px 12px;font-weight:800;border-bottom:1px solid #dde5ef;background:#fff}.fac-tablehead small{font-size:11px;color:#637a98;font-weight:500}.tablewrap{border:0!important;border-radius:0!important;overflow-x:auto!important}.tablewrap table{font-size:12px;min-width:1100px}.tablewrap th{background:#fff;color:#526782;font-size:10px;text-transform:uppercase;letter-spacing:.025em}.tablewrap td,.tablewrap th{padding:9px 10px}.tablewrap tbody tr:nth-child(even){background:#f7f9fc}.tablewrap tbody tr:hover{background:#eaf3ff}.fac-pill{display:inline-block;border:1px solid #cbdcf8;border-radius:999px;padding:2px 6px;font-size:10px;color:#2861aa;background:#f6f9ff;font-weight:700}.fac-rowactions{display:flex;gap:5px;justify-content:center}.fac-rowactions button{min-height:27px;padding:4px 6px;font-size:11px;border:1px solid #d9e4f3;border-radius:6px;background:white;color:#446585;cursor:pointer}.fac-rowactions button.danger{color:#c74150}.fac-editor{margin-bottom:12px}.fac-editor h3{margin:0 0 12px}.fac-backup{border-top:1px solid #e4eaf3;margin-top:13px;padding-top:10px}.fac-backup .btn{font-size:11px;padding:7px 9px}.fac-botnote{font-size:11px;color:#788da9;margin-top:10px}.fac-status{font-size:12px;color:#4f6c90}.fac-toolbar-original{display:none!important}#summary{display:none}#search{max-width:270px}.fac-stat:nth-child(2) .ic{color:#10a7b5}.fac-stat:nth-child(3) .ic{color:#ed9c2b}.fac-stat:nth-child(4) .ic{color:#16a34a}.fac-stat:nth-child(5) .ic{color:#f59e0b}.fac-stat:nth-child(6) .ic{color:#8b5cf6}.fac-stat:nth-child(7) .ic{color:#ef7830}.fac-empty{padding:22px;color:#7d8aa0;text-align:center}
+@media(max-width:1050px){.fac-stats{grid-template-columns:repeat(5,minmax(0,1fr))}}@media(max-width:700px){body{padding:8px!important}.fac-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.fac-filters{display:grid;grid-template-columns:1fr 1fr}.fac-filters select,.fac-filters input{width:100%;min-width:0}.fac-header h2{font-size:18px}.fac-actions{width:100%}.fac-actions .btn{flex:1}.fac-tab{padding:10px 12px}.fac-stat{min-height:68px}.fac-stat b{font-size:17px}}
+</style><link rel="stylesheet" href="./assets/css/production-action-palette.css?v=106">
+<style id="ktx69-mobile-assets-style">
+@media(max-width:760px){
+ body{margin:0!important;padding:12px!important;overflow-x:hidden!important;background:#f4f7ff!important;font-size:14px}
+ .fac-header{display:block}.fac-header h2{font-size:19px}.fac-header p{display:none}
+ .fac-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.fac-actions .btn{font-size:12px!important;min-height:43px!important}.fac-actions #addTop{grid-column:1/-1;grid-row:1;background:#16834b!important}
+ .fac-tabs{display:flex;overflow-x:auto;padding-bottom:4px;gap:7px}.fac-tab{flex:1 0 auto;white-space:nowrap;min-height:42px}
+ .fac-filters{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.fac-filters label{min-width:0}.fac-filters #search{max-width:none;min-width:0;width:100%}
+ .fac-stats{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important}.fac-stat{min-height:64px!important;padding:9px!important}.fac-stat small{font-size:11px!important}.fac-stat b{font-size:17px!important}
+ .fac-tablehead{border-radius:12px;margin-bottom:8px;border:1px solid #e2e7f4}
+ .fac-row-table{display:none!important}
+ .fac-mobile-list{display:grid;gap:10px;margin:0 0 12px}
+ .fac-mobile-card{background:#fff;border:1px solid #dfe7f5;border-radius:14px;padding:13px;box-shadow:0 3px 12px rgba(20,50,100,.04)}
+ .fac-mobile-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.fac-mobile-title{font-size:15px;font-weight:800;color:#172f58}.fac-mobile-location{font-size:12px;color:#64748b;margin:3px 0 9px}
+ .fac-mobile-assets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.fac-mobile-item{padding:6px;border-radius:8px;background:#f2f5fd;font-size:11px;color:#5b7090}.fac-mobile-item b{display:block;color:#243b65;font-size:14px;margin-top:2px}
+ .fac-mobile-note{margin:9px 0;color:#667692;font-size:12px;overflow-wrap:anywhere}.fac-mobile-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}.fac-mobile-actions button{min-height:44px;border:1px solid #cad8f6;background:#edf3ff;color:#214bb0;border-radius:10px;padding:0 16px;font-weight:700}.fac-mobile-actions .danger{color:#b62e48;background:#fff0f2;border-color:#f7c6ce}
+ .fac-editor{background:white}.fac-editor .fields{display:grid!important;grid-template-columns:1fr 1fr!important;gap:9px}.fac-editor .fields label{min-width:0;font-size:12px}.fac-editor .fields input{width:100%;min-width:0;font-size:16px!important;min-height:44px}
+ .fac-backup{display:none!important}
+}
+@media(min-width:761px){.fac-mobile-list{display:none!important}}
+</style><style id="ktx78-mobile-asset-fix">
+.fac-internal-cloud-state[hidden]{display:none!important}
+@media(max-width:760px){
+ html,body{max-width:100%;overflow-x:hidden!important;scroll-behavior:auto}
+ .fac-header{position:static!important;top:auto!important;z-index:auto!important}
+ .fac-mobile-list{width:100%;min-width:0;overflow:visible;contain:layout}
+ .fac-mobile-card{max-width:100%;box-sizing:border-box;overflow:hidden}
+ .fac-mobile-assets{min-width:0}
+ .fac-mobile-item{min-width:0;overflow-wrap:anywhere}
+ .fac-mobile-actions{flex-wrap:wrap}
+ .fac-mobile-actions button{flex:1;min-width:0}
+ .fac-stats{gap:6px!important}
+ .fac-stat{min-width:0}
+ .fac-tabs{position:static!important}
+ .fac-tablehead{position:static!important}
+}
+</style><style id="ktx79-mobile-assets-redesign">
+@media(max-width:760px){
+ body{padding:10px!important;background:#f4f6fe!important;color:#142849!important}
+ .fac-header{margin-bottom:10px!important}.fac-header h2{font-size:21px!important;font-weight:850!important;letter-spacing:-.5px}
+ .fac-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ .fac-actions .btn{border-radius:11px!important;min-height:43px!important;font-size:12px!important}
+ .fac-tabs{margin:10px 0!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;overflow:visible!important;gap:6px!important}
+ .fac-tab{font-size:12px!important;min-width:0!important;padding:9px 2px!important;min-height:40px!important}
+ .fac-filters{display:grid!important;grid-template-columns:1fr 1fr!important;margin:8px 0 10px!important}
+ .fac-filters select,.fac-filters input{min-height:44px!important;border-radius:11px!important;font-size:13px!important}
+ .fac-filters input{font-size:16px!important}
+ .fac-stats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;margin:8px 0 4px!important}
+ .fac-stat{padding:10px!important;min-height:77px!important;border-radius:13px!important;background:white!important}
+ .fac-stat .ic{font-size:18px!important}.fac-stat b{font-size:20px!important}.fac-stat small{font-size:11px!important}
+ body:not(.fac-stats-expanded) .fac-stats .fac-stat:nth-child(n+4){display:none!important}
+ .fac-mobile-toggle,.fac-summary-toggle{min-height:38px;width:100%;border:1px solid #d8e3fc;background:#eef3ff;color:#2156b3;border-radius:10px;font-weight:750;font-size:12px;cursor:pointer}
+ .fac-summary-toggle{margin:3px 0 12px}
+ .fac-tablehead{margin:0!important;padding:12px!important;background:transparent!important;border:0!important;border-radius:0!important;font-size:15px!important}
+ .fac-mobile-list{padding:0 9px 10px!important;gap:10px!important}
+ .fac-mobile-card{border-radius:16px!important;padding:13px!important;box-shadow:0 3px 15px rgba(25,49,104,.05)!important}
+ .fac-mobile-title{font-size:16px!important}.fac-mobile-location{font-size:12px!important;margin:4px 0 7px!important}
+ .fac-mobile-assets{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+ .fac-mobile-item{background:#f3f6fd!important;padding:9px 7px!important;border-radius:9px!important;font-size:11px!important}
+ .fac-mobile-item b{font-size:17px!important;margin-top:4px!important}
+ .fac-mobile-card:not(.is-expanded) .fac-mobile-assets .fac-mobile-item:nth-child(n+4){display:none!important}
+ .fac-mobile-toggle{margin-top:9px}
+ .fac-mobile-actions{margin-top:9px!important}.fac-mobile-actions button{min-height:44px!important;border-radius:11px!important}
+ .fac-mobile-actions [data-mobile-edit]{background:#2466e5!important;border-color:#2466e5!important;color:white!important}
+ .fac-mobile-note{background:#fff9e9;border-radius:8px;padding:8px}
+ .fac-mobile-card:not(.is-expanded) .fac-mobile-note{display:none!important}
+ .fac-editor{border-radius:15px!important}.fac-editor .fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .fac-editor .fields label:nth-child(-n+3),.fac-editor .fields label:last-child{grid-column:1/-1}
+}
+</style><style id="ktx84-modal-style">
+.fac-editor-overlay{position:fixed!important;inset:0!important;z-index:99999!important;background:rgba(19,35,60,.56)!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:20px!important;box-sizing:border-box!important}
+.fac-editor-overlay.hide{display:none!important}
+.fac-editor-overlay .fac-editor{width:min(850px,100%)!important;max-height:min(85dvh,760px)!important;overflow:auto!important;margin:0!important;padding:20px!important;background:#fff!important;box-shadow:0 18px 70px rgba(13,33,60,.24)!important;border-radius:16px!important}
+.fac-editor-overlay #editTitle{margin:0 0 16px!important;font-size:19px!important}
+.fac-editor-overlay .fields{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important}
+.fac-editor-overlay .fields label{min-width:0!important}
+.fac-editor-overlay .fields input{width:100%!important;box-sizing:border-box!important}
+.fac-editor-overlay .toolbar{display:flex!important;justify-content:flex-end!important;gap:10px!important;margin-top:18px!important}
+@media(max-width:760px){.fac-editor-overlay{padding:10px!important}.fac-editor-overlay .fac-editor{max-height:88dvh!important}.fac-editor-overlay .fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+</style><style id="ktx82-flat-facility-panel">
+@media(min-width:761px){html{scrollbar-gutter:auto!important;overflow:hidden!important}body{margin:0!important;padding:0!important;background:transparent!important;overflow:hidden!important}.fac-header{margin-bottom:9px!important}.fac-header h2{font-size:18px!important}.fac-header p{display:none!important}.fac-stats{margin-top:10px!important}}
+</style><style id="ktx87-facility-mobile-flat">
+@media(max-width:760px){
+ html,body{background:transparent!important;margin:0!important;padding:0!important}
+ .fac-header{margin:0 0 12px!important;display:block!important}
+ .fac-header>div:first-child{display:none!important}
+ .fac-actions{margin:0!important;padding:0!important}
+ .fac-tabs{margin-top:12px!important}
+ .fac-editor-overlay{z-index:10000!important}
+}
+</style></head><body>
+<div class="fac-header"><div><h2>Quản lý Cơ sở vật chất</h2><p>Theo dõi và cập nhật trang thiết bị từng phòng/khu vực</p></div><div class="fac-actions"><button class="btn primary" id="exportTop">↓ Xuất Excel</button><button class="btn primary" id="importTop">↑ Import Excel</button><button class="btn primary" id="addTop">＋ Thêm phòng mới</button></div></div>
+<div id="fac69StorageNote" class="fac-internal-cloud-state" aria-live="polite" hidden>Đang kiểm tra kết nối Supabase.</div><div class="fac-tabs" id="ktxTabs"><button class="fac-tab active" data-ktx="1">KTX 1</button><button class="fac-tab" data-ktx="2">KTX 2</button><button class="fac-tab" data-ktx="3">KTX 3</button><button class="fac-tab" data-ktx="all">Tất cả</button></div>
+<div class="fac-filters"><label>⌕ Bộ lọc: <select id="dayFilter"><option value="">Tất cả Dãy</option></select></label><input id="search" placeholder="⌕ Tìm phòng hoặc khu vực..."></div>
+<div class="fac-stats" id="facStats"></div><button class="fac-summary-toggle" id="facStatToggle" type="button" aria-expanded="false">Xem tất cả 9 chỉ số thiết bị ▾</button>
+<div class="card" style="padding:0;overflow:hidden"><div class="fac-tablehead" id="facTableTitle">Cơ sở vật chất</div><div id="facMobileList" class="fac-mobile-list" aria-label="Danh sách tài sản theo phòng"></div><div class="tablewrap fac-row-table"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div><p class="hint" id="msg" style="margin:10px 14px"></p></div>
+<div class="card fac-backup"><div class="toolbar fac-import-bar"><button class="btn primary" id="add">＋ Thêm bản ghi</button><button class="btn" id="export">↓ Xuất Excel</button><button class="btn" id="backup">↓ Sao lưu JSON</button><button class="btn" id="restore">↑ Nhập JSON</button><input class="hide" type="file" id="jsonFile" accept=".json"></div><p class="fac-botnote">Dữ liệu đang sử dụng khóa lưu trữ của tiện ích Cơ sở vật chất cũ. Hãy sao lưu JSON trước khi nhập Excel hoặc khôi phục.</p></div>
+<div class="fac-editor-overlay hide" id="facEditOverlay" role="presentation"><div class="card fac-editor" role="dialog" aria-modal="true" aria-labelledby="editTitle"><div id="editor"><h3 id="editTitle">Thêm phòng mới</h3><div class="fields" id="fields"></div><div class="toolbar"><button class="btn primary" id="save">Lưu bản ghi</button><button class="btn" id="cancel">Hủy</button></div></div></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="excel-import.js"></script><script>
+(()=>{'use strict';const key='ktx_step169_cosovatchat';const cols=["KTX", "Dãy", "Phòng/Khu vực", "Giường", "Điều hòa", "Tủ", "Quạt", "Ổ cắm điện", "Remote", "Bóng tuýp", "Bàn ăn", "Ghế ăn", "Ghi chú"];const nums=new Set([3, 4, 5, 6, 7, 8, 9, 10, 11]);let data=[],editing=-1;const $=x=>document.getElementById(x);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));try{const v=JSON.parse(localStorage.getItem(key)||'[]');window.__facLocalBackup=Array.isArray(v)?v:[];data=[]}catch{}let cloudClient=null,cloudRev=null,cloudReady=false,cloudBusy=false,cloudAdmin=false,cloudUserId=null,cloudRowExists=false;
+const cloudKey='ktx_step169_cosovatchat';
+const cloudHint=()=>document.getElementById('fac69StorageNote');
+function cloudStatus(t,isError=false){const h=cloudHint();if(h){h.hidden=!isError;h.style.background=isError?'#fff2f2':'#ecfdf5';h.style.borderColor=isError?'#ffc4c4':'#a7f3d0';const label=h.querySelector('[data-cloud-state]');if(label)label.textContent=t;else h.textContent=t;}}
+function cloudLock(locked){cloudBusy=locked;['save','add','addTop','importTop'].forEach(id=>{const el=$(id);if(el)el.disabled=locked||!cloudAdmin||!cloudReady});}
+async function remoteSnapshot(){const {data:row,error}=await cloudClient.from('ktx_utility_snapshots').select('module_key,revision,updated_at,rows').eq('module_key',cloudKey).maybeSingle();if(error)throw error;return row}
+function deepRows(a){return JSON.parse(JSON.stringify(a))}
+let lastCommitted=[];
+async function persist(){
+ if(!cloudReady||!cloudAdmin||cloudBusy){cloudStatus('Chưa thể lưu: Cloud chưa sẵn sàng hoặc đang ghi dữ liệu.',true);return false}
+ cloudLock(true);const latest=deepRows(data);
+ try{
+  const payload={rows:latest,updated_by:cloudUserId,updated_at:new Date().toISOString()};let res;
+  if(cloudRowExists){
+   res=await cloudClient.from('ktx_utility_snapshots').update({...payload,revision:cloudRev+1}).eq('module_key',cloudKey).eq('revision',cloudRev).select('revision').maybeSingle();
+   if(!res.error&&!res.data)throw Error('Dữ liệu Cloud đã thay đổi trên thiết bị khác. Cần tải lại trước khi sửa tiếp.');
+  }else{
+   res=await cloudClient.from('ktx_utility_snapshots').insert({module_key:cloudKey,revision:1,...payload}).select('revision').single();
+  }
+  if(res.error)throw res.error;
+  cloudRev=res.data.revision;cloudRowExists=true;lastCommitted=deepRows(latest);
+  if((window.__facLocalBackup||[]).length&&!localStorage.getItem(key+'_pre_cloud_migration'))localStorage.setItem(key+'_pre_cloud_migration',JSON.stringify(window.__facLocalBackup));
+  localStorage.setItem(key,JSON.stringify(latest));
+  cloudStatus('Đã lưu Supabase ('+latest.length+' phòng/khu vực) · Phiên bản '+cloudRev+'.');return true;
+ }catch(e){data=deepRows(lastCommitted);render();cloudStatus('Lưu thất bại, đã hoàn tác thay đổi trên màn hình: '+(e.message||e),true);return false}
+ finally{cloudLock(false)}
+}
+async function initializeCloud(){
+ cloudLock(true);
+ const hint=cloudHint();if(hint){hint.innerHTML='<b data-cloud-state>Đang kết nối Supabase…</b> <button type="button" id="facImportExisting" style="margin-left:12px;padding:6px 10px;border-radius:7px;border:1px solid #a6b9de;background:#fff">Chuyển dữ liệu cũ lên Cloud (Admin)</button> <button type="button" id="facCloudRefresh" style="margin-left:6px;padding:6px 10px;border-radius:7px;border:1px solid #a6b9de;background:#fff">Tải lại Cloud</button>'}
+ $('facImportExisting').onclick=async()=>{
+  if(!cloudReady||!cloudAdmin)return cloudStatus('Chỉ Admin đã kết nối Cloud mới được chuyển dữ liệu.',true);
+  const saved=window.__facLocalBackup||[];
+  if(!saved.length)return cloudStatus('Thiết bị không có dữ liệu cũ để chuyển.',true);
+  if(cloudRowExists && lastCommitted.length)return cloudStatus('Cloud đã có dữ liệu. Không ghi đè hàng loạt; hãy xuất cả 2 bên và đối chiếu.',true);
+  if(!confirm('CHUYỂN DỮ LIỆU CƠ SỞ VẬT CHẤT LÊN SUPABASE\nThiết bị này: '+saved.length+' phòng/khu vực.\nCloud: '+lastCommitted.length+' phòng/khu vực.\nHãy xuất bản sao lưu trước. Chỉ tiếp tục nếu đây là bộ dữ liệu chuẩn.'))return;
+  data=deepRows(saved);render();await persist();
+ };
+ $('facCloudRefresh').onclick=async()=>{
+  if(cloudBusy)return;
+  if(JSON.stringify(data)!==JSON.stringify(lastCommitted))return cloudStatus('Có thay đổi chưa được xác nhận lưu. Không tải đè.',true);
+  await loadCloudRows();
+ };
+ try{
+  const p=window.parent;
+  if(p===window||typeof p.syncClient!=='function')throw Error('Hãy mở Cơ sở vật chất từ ứng dụng KTX đã đăng nhập.');
+  const sb=p.syncClient();if(!sb)throw Error('Chưa kết nối Supabase.');
+  const {data:auth,error:ae}=await sb.auth.getUser();if(ae||!auth?.user)throw Error('Phiên Cloud chưa đăng nhập.');
+  const {data:acc,error:err}=await sb.from('app_accounts').select('role,enabled').eq('user_id',auth.user.id).single();
+  if(err||!acc?.enabled)throw Error('Không xác nhận được quyền tài khoản.');
+  cloudAdmin=acc.role==='admin';cloudUserId=auth.user.id;cloudClient=sb;
+  await loadCloudRows();cloudReady=true;cloudLock(false);
+ }catch(e){cloudReady=false;cloudAdmin=false;cloudStatus('Không thể tải Supabase: '+(e.message||e)+'. Dừng chỉnh sửa để bảo vệ dữ liệu.',true);cloudLock(true);}
+}
+async function loadCloudRows(){
+ const r=await remoteSnapshot();if(r&&!Array.isArray(r.rows))throw Error('Cloud trả về dữ liệu không đúng định dạng.');
+ cloudRev=r?.revision??null;cloudRowExists=!!r;data=deepRows(r?.rows||[]);lastCommitted=deepRows(data);render();
+ cloudStatus('Dữ liệu Supabase: '+data.length+' phòng/khu vực · Phiên bản '+(cloudRev??'chưa tạo')+(cloudAdmin?' · Admin có quyền sửa.':' · Tài khoản chỉ xem.'));
+}
+// KTX84: Multi-device cloud refresh for the facilities module. Read-only polls; no automatic writes.
+let facPollBusy=false;
+async function facCheckRemote(){
+ if(facPollBusy||!cloudReady||cloudBusy||!cloudClient||!$('facEditOverlay').classList.contains('hide'))return;
+ if(JSON.stringify(data)!==JSON.stringify(lastCommitted))return;
+ facPollBusy=true;
+ try{
+  const snap=await remoteSnapshot();
+  if((snap?.revision??null)!==cloudRev){
+   await loadCloudRows();
+   cloudStatus('Đã nhận cập nhật Cơ sở vật chất từ thiết bị khác.');
+  }
+ }catch(e){cloudStatus('Chưa thể kiểm tra cập nhật Cloud: '+(e?.message||e),true)}
+ finally{facPollBusy=false}
+}
+window.addEventListener('focus',facCheckRemote);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)facCheckRemote()});
+setInterval(()=>{if(!document.hidden)facCheckRemote()},20000);
+$('facEditOverlay').addEventListener('click',e=>{if(e.target===$('facEditOverlay'))hide()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('facEditOverlay').classList.contains('hide'))hide()});
+let activeKtx='1';function getKtx(r){const x=String(r['KTX']??'').trim();const m=x.match(/(?:ktx\s*)?(\d+)/i);return m?m[1]:x}function getRows(){const q=$('search').value.toLocaleLowerCase('vi');const day=$('dayFilter').value;return data.map((r,i)=>({...r,_i:i})).filter(r=>(activeKtx==='all'||getKtx(r)===activeKtx)&&(!day||String(r['Dãy']??'')===day)&&(!q||cols.some(k=>String(r[k]??'').toLocaleLowerCase('vi').includes(q))))}function refreshDays(){const old=$('dayFilter').value;const vals=[...new Set(data.filter(r=>activeKtx==='all'||getKtx(r)===activeKtx).map(r=>String(r['Dãy']??'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'vi',{numeric:true}));$('dayFilter').innerHTML='<option value="">Tất cả Dãy</option>'+vals.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');if(vals.includes(old))$('dayFilter').value=old}function render(){refreshDays();const rows=getRows();const items=[['Giường','▣'],['Điều hòa','↔'],['Tủ','⬡'],['Quạt','✿'],['Ổ cắm điện','ϟ'],['Remote','▤'],['Bóng tuýp','◉'],['Bàn ăn','▥'],['Ghế ăn','▧']];$('facStats').innerHTML=items.map(([k,ic])=>'<div class="fac-stat"><span class="ic">'+ic+'</span><small>'+esc(k)+'</small><b>'+rows.reduce((a,r)=>a+(Number(r[k])||0),0).toLocaleString('vi-VN')+'</b></div>').join('');$('facTableTitle').innerHTML=''+(activeKtx==='all'?'Toàn KTX':'KTX '+activeKtx)+' — '+rows.length+' phòng/khu vực <small>· Hiển thị theo bộ lọc hiện tại</small>';$('thead').innerHTML='<tr>'+cols.map(c=>'<th>'+esc(c)+'</th>').join('')+'<th>Thao tác</th></tr>';$('tbody').innerHTML=rows.map(r=>'<tr>'+cols.map((c,i)=>'<td>'+(i===0?'<span class="fac-pill">'+esc(r[c]??'')+'</span>':esc(r[c]??''))+'</td>').join('')+'<td><div class="fac-rowactions"><button data-edit="'+r._i+'" title="Sửa">✎ Sửa</button><button class="danger" data-del="'+r._i+'" title="Xóa">♲ Xóa</button></div></td></tr>').join('')||'<tr><td colspan="'+(cols.length+1)+'" class="fac-empty">Chưa có phòng hoặc khu vực phù hợp bộ lọc.</td></tr>';const mobileList=$('facMobileList');if(mobileList){mobileList.innerHTML=rows.map(r=>{const names=['Giường','Điều hòa','Tủ','Quạt','Ổ cắm điện','Remote','Bóng tuýp','Bàn ăn','Ghế ăn'];return '<article class="fac-mobile-card"><div class="fac-mobile-top"><div><div class="fac-mobile-title">'+esc(r['Phòng/Khu vực']||'Chưa xác định')+'</div><div class="fac-mobile-location">'+esc(r.KTX||'—')+' · '+esc(r['Dãy']||'—')+'</div></div><span class="fac-pill">'+esc(r.KTX||'KTX')+'</span></div><div class="fac-mobile-assets">'+names.map(n=>'<div class="fac-mobile-item">'+esc(n)+'<b>'+esc(r[n]??'—')+'</b></div>').join('')+'</div>'+(r['Ghi chú']?'<div class="fac-mobile-note">Ghi chú: '+esc(r['Ghi chú'])+'</div>':'')+'<button type="button" class="fac-mobile-toggle" data-mobile-expand="'+r._i+'" aria-expanded="false">Xem đủ thiết bị ▾</button><div class="fac-mobile-actions"><button type="button" data-mobile-edit="'+r._i+'">Sửa / Cập nhật</button><button type="button" class="danger" data-mobile-del="'+r._i+'">Xóa</button></div></article>'}).join('')||'<div class="fac-empty">Không có phòng hoặc khu vực phù hợp.</div>'}$('ktxTabs').querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.ktx===activeKtx))}function show(i){editing=i;const r=data[i]||{};$('editor').classList.remove('hide');$('editTitle').textContent=i<0?'Thêm bản ghi':'Chỉnh sửa bản ghi';$('fields').innerHTML=cols.map((c,j)=>'<label>'+esc(c)+'<input data-col="'+j+'" '+(nums.has(j)?'type="number" min="0" step="1"':'type="text"')+' value="'+esc(r[c]??'')+'"></label>').join('');$('facEditOverlay').classList.remove('hide');if(!matchMedia('(max-width:760px)').matches){try{window.parent.scrollTo({top:Math.max(0,window.parent.scrollY+window.frameElement.getBoundingClientRect().top-105),behavior:'smooth'})}catch(_){}}}function hide(){$('editor').classList.add('hide');$('facEditOverlay').classList.add('hide');editing=-1} $('add').onclick=()=>{if(cloudReady&&cloudAdmin&&!cloudBusy)show(-1)};$('cancel').onclick=hide;$('save').onclick=async()=>{if(!cloudReady||!cloudAdmin||cloudBusy)return;const r={};$('fields').querySelectorAll('input').forEach(el=>{const i=Number(el.dataset.col);r[cols[i]]=nums.has(i)?(el.value===''?'':Number(el.value)):el.value.trim()});if(editing<0)data.push(r);else data[editing]=r;hide();render();await persist()};$('facMobileList').onclick=async e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.mobileExpand!==undefined){const card=b.closest('.fac-mobile-card');const open=card.classList.toggle('is-expanded');b.textContent=open?'Thu gọn ▴':'Xem đủ thiết bị ▾';b.setAttribute('aria-expanded',String(open));return}if(!cloudReady||!cloudAdmin||cloudBusy)return;if(b.dataset.mobileEdit!==undefined)show(Number(b.dataset.mobileEdit));else if(b.dataset.mobileDel!==undefined&&confirm('Xóa bản ghi cơ sở vật chất này?')){data.splice(Number(b.dataset.mobileDel),1);render();await persist()}};$('tbody').onclick=async e=>{if(!cloudReady||!cloudAdmin||cloudBusy)return;const a=e.target.closest('button');if(!a)return;if(a.dataset.edit!==undefined)show(Number(a.dataset.edit));if(a.dataset.del!==undefined&&confirm('Xóa bản ghi này?')){data.splice(Number(a.dataset.del),1);render();await persist()}};$('facStatToggle').onclick=()=>{const open=document.body.classList.toggle('fac-stats-expanded');$('facStatToggle').textContent=open?'Thu gọn thống kê ▴':'Xem tất cả 9 chỉ số thiết bị ▾';$('facStatToggle').setAttribute('aria-expanded',String(open))};$('search').oninput=render;$('dayFilter').onchange=render;$('ktxTabs').onclick=e=>{const b=e.target.closest('[data-ktx]');if(!b)return;activeKtx=b.dataset.ktx;$('dayFilter').value='';render()};$('exportTop').onclick=()=>$('export').click();$('addTop').onclick=()=>{if(cloudReady&&cloudAdmin&&!cloudBusy)show(-1)};$('importTop').onclick=()=>{const btn=[...document.querySelectorAll('button')].find(b=>/Import Excel/i.test(b.textContent));if(btn&&btn!==$('importTop'))btn.click();else alert('Chức năng Import Excel chưa được tải. Kiểm tra file excel-import.js trên GitHub.');};async function download(blob,name,types){if(window.showSaveFilePicker){try{const h=await showSaveFilePicker({suggestedName:name,types});const f=await h.createWritable();await f.write(blob);await f.close();return}catch(e){if(e.name==='AbortError')return}}const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}function csv(){const quote=v=>'"'+String(v??'').replace(/"/g,'""')+'"';return '﻿'+[cols,...data.map(r=>cols.map(c=>r[c]??''))].map(x=>x.map(quote).join(',')).join('\r\n')};$('export').onclick=async()=>{const name='cosovatchat_'+new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);if(window.XLSX){const ws=XLSX.utils.json_to_sheet(data.length?data.map(r=>Object.fromEntries(cols.map(c=>[c,r[c]??'']))):[Object.fromEntries(cols.map(c=>[c,'']))],{header:cols});const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Du lieu');const buf=XLSX.write(wb,{type:'array',bookType:'xlsx'});await download(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),name+'.xlsx',[{description:'Excel',accept:{'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':['.xlsx']}}])}else{await download(new Blob([csv()],{type:'text/csv;charset=utf-8'}),name+'.csv',[{description:'CSV',accept:{'text/csv':['.csv']}}]);$('msg').textContent='Thư viện XLSX không tải được; đã xuất CSV thay thế.'}};$('backup').onclick=()=>download(new Blob([JSON.stringify({module:key,columns:cols,rows:data},null,2)],{type:'application/json'}),key+'.json',[{description:'JSON',accept:{'application/json':['.json']}}]);$('restore').onclick=()=>$('jsonFile').click();$('jsonFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const p=JSON.parse(await f.text());if(p.module!==key||!Array.isArray(p.rows))throw Error('File không thuộc đúng tiện ích.');if(!confirm('Nhập file sẽ thay toàn bộ dữ liệu cục bộ của tiện ích này, tiếp tục?'))return;data=p.rows;render();await persist()}catch(err){alert('Lỗi nhập: '+err.message)}e.target.value=''};window.KTXExcelImporter?.init({toolbar:'.toolbar',columns:cols,numericFields:[...nums].map(i=>cols[i]),dateFields:cols.filter(c=>/ngày|thời gian/i.test(c)),getRecords:()=>data.slice(),setRecords:merged=>{if(!cloudReady||!cloudAdmin||cloudBusy){cloudStatus('Cloud chưa sẵn sàng để nhập dữ liệu.',true);return false}data=merged;render();persist();cloudStatus('Đang lưu dữ liệu Excel lên Supabase…');return true}});initializeCloud()})();
+</script><script id="ktx84-wheel-forward">
+(function(){
+ if(window.parent===window)return;
+ document.addEventListener('wheel',function(e){
+  if(window.matchMedia('(max-width:760px)').matches)return;
+  if(!document.getElementById('facEditOverlay').classList.contains('hide'))return;
+  if(e.ctrlKey||e.metaKey||e.shiftKey)return;
+  const target=e.target;
+  if(target.closest('textarea,select,[data-wheel-local]'))return;
+  try{ e.preventDefault();window.parent.scrollBy({top:e.deltaY,left:0,behavior:'instant'}); }catch(_){}
+ },{passive:false});
+})();
+</script><script id="ktx82-facility-height">
+(function(){
+ if(window.parent===window) return;
+ let last=0;
+ function publish(){
+  const h=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);
+  if(h===last)return;last=h;window.parent.postMessage({type:'ktx-facility-document-height',height:h},location.origin);
+ }
+ if('ResizeObserver' in window){new ResizeObserver(publish).observe(document.body);}
+ window.addEventListener('load',publish);
+ new MutationObserver(publish).observe(document.body,{childList:true,subtree:true,attributes:true});
+ requestAnimationFrame(publish);
+})();
+</script></body></html>
