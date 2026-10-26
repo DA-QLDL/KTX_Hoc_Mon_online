@@ -3342,3 +3342,10 @@ main input[type="checkbox"]::before,main input[type="radio"]::before,#mobile180 
 /* v1.0.29: accessible counters and sortable residence headers */
 #mnn,.pill#mnn{background:#ffdf8a!important;color:#713b00!important;border:1px solid #f0ba45!important;font-weight:800!important;box-shadow:none!important}
 .res-sort29{cursor:pointer!important;user-select:none;white-space:nowrap}.res-sort29:hover{background:#dceafe!important;color:#1356b2!important}
+
+/* v1.0.82 – Flat facility panel on desktop, one vertical page scroll */
+@media(min-width:861px){
+ #u169_cosovatchat{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+ #u169_cosovatchat .u169-head{padding:8px 0!important}
+ #u169_cosovatchat iframe{border:0!important;border-radius:0!important;background:transparent!important;min-height:500px!important;overflow:hidden!important;scrollbar-gutter:auto!important}
+}
