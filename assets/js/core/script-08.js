@@ -899,19 +899,28 @@ const F=[['name','Họ và tên'],['mnv','Mã NV'],['gt','Giới tính'],['dob',
 const MAP=[['name',/^(ho va ten|ho ten|ten)$/],['mnv',/^(ma nv|mnv|ma nhan vien)$/],['sdt',/^(sdt|so dien thoai)$/],['cccd',/cccd|can cuoc/],['gt',/^gioi tinh/],['unit',/^(don vi|nha thau)/],['td',/^(td|tieu doan)$/],['ktx',/^ktx$/],['day',/^day/],['room',/^(phong|so phong)$/],['bed',/^giuong/],['tinh',/^(tinh|ho khau|dia chi|que quan)/],['thon',/^(thon|xom|ap)/],['xa',/^(xa|phuong)/],['lsdt',/^(sdt|so dien thoai) to truong/],['leader',/^to truong/],['dob',/^(ngay sinh|nam sinh)$/],['date',/^ngay vao/],['out',/^ngay ra/],['tt',/^trang thai tam tru/]];
 let W=[],LOG=[],ARC=[],ATT=[],REG=[],CAP=20,pg=1,PS=50,sel=new Set(),SO=false,page='home';
 const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
-let ROOMMETA=ld('ktx_room_meta',{}),CURRENT_ROOM_KEY='';
-const saveRoomMeta=()=>{try{localStorage.setItem('ktx_room_meta',JSON.stringify(ROOMMETA))}catch(e){}if(window.KTX_SUPA_SYNC&&!window.KTX_SUPA_SYNC.applying)window.KTX_SUPA_SYNC.schedulePush()};
+let ROOMMETA={},CURRENT_ROOM_KEY='';
+const saveRoomMeta=()=>{if(window.KTX_SUPA_SYNC&&!window.KTX_SUPA_SYNC.applying)window.KTX_SUPA_SYNC.schedulePush()};
 const roomKeyPart=v=>String(v==null?'':v).trim().replace(/\s+/g,' ');
 const roomKeyNorm=(v,kind)=>{let x=roomKeyPart(v);if(kind=='room'&&/^0*\d+$/.test(x))return String(parseInt(x,10)||0);return sa(x).replace(/\s+/g,'')||'?'};
 const rk=(k,d,r)=>`${roomKeyNorm(k,'ktx')}|${roomKeyNorm(d,'day')}|${roomKeyNorm(r||'?','room')}`;
-(()=>{const next={};Object.entries(ROOMMETA||{}).forEach(([key,val])=>{const a=String(key).split('|'),nk=a.length>=3?rk(a[0],a[1],a.slice(2).join('|')):key;next[nk]=Object.assign({},next[nk]||{},val||{})});ROOMMETA=next;try{localStorage.setItem('ktx_room_meta',JSON.stringify(ROOMMETA))}catch(e){}})();
+(()=>{const next={};Object.entries(ROOMMETA||{}).forEach(([key,val])=>{const a=String(key).split('|'),nk=a.length>=3?rk(a[0],a[1],a.slice(2).join('|')):key;next[nk]=Object.assign({},next[nk]||{},val||{})});ROOMMETA=next;/* Cloud-first: don't write migrated metadata into browser storage. */})();
 const rmeta=(k,d,r)=>ROOMMETA[rk(k,d,r)]||{};
 const SD={db:null,U:null,on:false,last:{},rev:{},loaded:{},timer:0,ACC:{},REQ:[],gate:'',ready:false,sub:false,cid:'c'+Math.random().toString(36).slice(2,8)};
 let WORK_SEARCH_CACHE=new WeakMap();
 const resetWorkSearchCache=()=>{WORK_SEARCH_CACHE=new WeakMap()};
 const workSearchText=w=>{if(!w||typeof w!=='object')return '';let v=WORK_SEARCH_CACHE.get(w);if(v!==undefined)return v;v=sa([w.name,w.mnv,w.leader,w.cccd,w.sdt,R(w),K(w),D(w),w.unit,w.td,w.tinh,w.xa,w.thon].join(' '));WORK_SEARCH_CACHE.set(w,v);return v};
-const sv=()=>{resetWorkSearchCache();if(W.length&&window.KTX143_BACKUP)window.KTX143_BACKUP.save().catch(console.warn);try{localStorage.setItem('ktx_w',JSON.stringify(W));localStorage.setItem('ktx_l',JSON.stringify(LOG.slice(0,5000)));localStorage.setItem('ktx_arc',JSON.stringify(ARC));localStorage.setItem('ktx_att',JSON.stringify(ATT.slice(0,5000)));localStorage.setItem('ktx_reg',JSON.stringify(REG));localStorage.setItem('ktx_room_meta',JSON.stringify(ROOMMETA))}catch(e){}if(SD.on)schedFlush();if(window.KTX_SUPA_SYNC&&!window.KTX_SUPA_SYNC.applying)window.KTX_SUPA_SYNC.schedulePush()};
-W=ld('ktx_w',[]);LOG=ld('ktx_l',[]);ARC=ld('ktx_arc',[]);ATT=ld('ktx_att',[]);REG=ld('ktx_reg',[]);CAP=20;
+const sv=()=>{resetWorkSearchCache();
+ // v1.0.93: Never persist operational arrays as an independent browser dataset.
+ // NOTE: This function is still synchronous; workflows using it are NOT Cloud-acknowledged.
+ if(window.KTX_SUPA_SYNC&&!window.KTX_SUPA_SYNC.applying){
+  if(window.KTX_SUPA_SYNC.ready)window.KTX_SUPA_SYNC.schedulePush();
+  else console.warn('[KTX Cloud-only staging] Data changed without an authenticated Cloud session; this change is not saved.');
+ }
+};
+// Cloud-first: never bootstrap operational collections from stale browser storage.
+// Supabase syncPullAll remains responsible for hydrating these in-memory collections.
+W=[];LOG=[];ARC=[];ATT=[];REG=[];CAP=20;
 const isNam=g=>{const k=sa(g);return k.startsWith('nam')||k=='m'}; const isNu=g=>{const k=sa(g);return k.startsWith('nu')||k=='f'};
 const iso=v=>{if(v==null||v==='')return '';if(v instanceof Date){if(isNaN(v))return '';return v.getFullYear()+'-'+String(v.getMonth()+1).padStart(2,'0')+'-'+String(v.getDate()).padStart(2,'0')}if(typeof v==='number')return new Date(Math.round((v-25569)*864e5)).toISOString().slice(0,10);
  const m=String(v).trim().match(/^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})/);if(m)return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;return /^\d{4}-\d{2}-\d{2}/.test(String(v))?String(v).slice(0,10):''};
@@ -1025,13 +1034,42 @@ const selUi=()=>{{const m2=$('mnn');if(m2){const n=W.filter(noCode).length;m2.te
 const gkey=(w,m)=>m=='ktx'?K(w):m=='day'?K(w)+'|'+D(w):K(w)+'|'+D(w)+'|'+(R(w)||'—');
 function sgrp(){const m=$('sm').value,v=$('sx').value;return m=='all'?W:W.filter(w=>gkey(w,m)==v)}
 function fillSv(){const m=$('sm').value,x=$('sx'),c={};if(m=='all')x.classList.add('hide');else{x.classList.remove('hide');W.forEach(w=>{const k=gkey(w,m);c[k]=(c[k]||0)+1});const cur=x.value;x.innerHTML=Object.keys(c).sort(num).map(k=>`<option value="${esc(k)}" ${k==cur?'selected':''}>${esc(k.replace(/\|/g,' · '))} (${c[k]})</option>`).join('')}selUi()}
+async function ktx108AtomicWorkerExit(list,inf){
+  if(!window.SUPA_SYNC||!SUPA_SYNC.ready||!SUPA_SYNC.enabled||!SUPA_SYNC.session){
+    throw new Error('Chưa kết nối Supabase. Không thay đổi danh sách công nhân.');
+  }
+  if(SUPA_SYNC.pending||SUPA_SYNC.pushing||SUPA_SYNC.pulling||SUPA_SYNC.applying){
+    throw new Error('Có dữ liệu đang chờ đồng bộ; vui lòng xử lý trước khi chuyển/xóa công nhân.');
+  }
+  const sb=syncClient();
+  if(!sb)throw new Error('Chưa có kết nối Supabase.');
+  const payload=list.map(w=>({record_id:String(w.id),payload:syncClone(w)}));
+  if(!payload.length)return;
+  const {data,error}=await sb.rpc('ktx_worker_exit_atomic_v108',{
+    p_workers:payload,
+    p_mode:inf.mode==='purge'?'purge':'archive',
+    p_reason:String(inf.reason||'Khác'),
+    p_date:String(inf.date||ldy()),
+    p_note:String(inf.note||'')
+  });
+  if(error)throw new Error(error.message||String(error));
+  if(!data||Number(data.processed)!==payload.length)throw new Error('Không nhận được xác nhận đầy đủ từ giao dịch Supabase. Hãy kiểm tra trạng thái Cloud.');
+  // Không tạo dữ liệu nghiệp vụ cục bộ; làm mới từ Cloud sau khi COMMIT.
+  await syncPullAll(true);
+  if(SUPA_SYNC.lastError)throw new Error('Giao dịch Cloud đã ghi nhưng tải lại giao diện gặp lỗi: '+SUPA_SYNC.lastError);
+  list.forEach(w=>sel.delete(w.id));
+  all();
+  alert(inf.mode==='purge'?`Supabase xác nhận đã xóa hẳn ${payload.length} công nhân.`:`Supabase xác nhận đã chuyển ${payload.length} công nhân sang Điều chuyển – Nghỉ việc.`);
+}
 function delWorkers(list,inf){if(!list.length)return;const qrFlow=!!(inf&&inf.source==='qr');if(!can('del')&&!(qrFlow&&can('qrApprove'))){alert('Bạn không có quyền chuyển công nhân ra khỏi danh sách.');return}if(list.some(w=>!inScope(w))){alert('Danh sách chứa công nhân ngoài KTX/Dãy được phân quyền. Không có dữ liệu nào bị xóa.');return}inf=inf||{mode:'archive',reason:'Khác',date:ldy(),note:''};
- if(inf.mode==='purge'){const ids=new Set(list.map(w=>w.id)),now=new Date().toLocaleString('vi-VN');W=W.filter(w=>!ids.has(w.id));ids.forEach(i=>sel.delete(i));LOG.unshift({t:now,a:'PURGE',d:list.length==1?`Xóa hẳn công nhân: ${list[0].name}${list[0].mnv?' (Mã NV: '+list[0].mnv+')':''}`:`Xóa hẳn ${list.length} công nhân khỏi danh sách chính`,n:list.length,day:ldy()});sv();all();alert(`Đã xóa hẳn ${list.length.toLocaleString('vi-VN')} công nhân. Dữ liệu không được chuyển sang “Điều chuyển · Nghỉ việc”.`);return}
- const now=new Date().toLocaleString('vi-VN'),day=inf.date||ldy(),at=Date.now(),by={};
- list.forEach(w=>{const k=K(w);(by[k]=by[k]||[]).push(w);ARC.unshift({id:w.id,w:JSON.parse(JSON.stringify(w)),reason:inf.reason,date:day,note:inf.note||'',at})});
- Object.keys(by).forEach(k=>{const l=by[k];LOG.unshift({t:now,a:'DELETE',d:l.length==1?`Chuyển ra khỏi danh sách (${inf.reason}): ${l[0].name}${l[0].mnv?' (Mã NV: '+l[0].mnv+')':''}`:`Chuyển ${l.length} công nhân ra khỏi danh sách (${inf.reason}, ${k})`,k,n:l.length,day,reason:inf.reason})});
- const ids=new Set(list.map(w=>w.id));W=W.filter(w=>!ids.has(w.id));ids.forEach(i=>sel.delete(i));sv();all();
- alert(`Đã chuyển ${list.length.toLocaleString('vi-VN')} công nhân sang danh sách theo dõi "Điều chuyển · Nghỉ việc" (${inf.reason}). Có thể khôi phục lại bất cứ lúc nào.`)}
+ // v1.0.108: đường Cloud-Only — từ chối lưu khi RPC chưa sẵn sàng, không fallback cục bộ.
+ if(window.SUPA_SYNC&&typeof syncClient==='function'){
+   ktx108AtomicWorkerExit(list,inf).catch(e=>alert('Không thực hiện chuyển/xóa công nhân: '+(e.message||e)));
+   return;
+ }
+ alert('Chưa khởi tạo hệ thống Supabase; thao tác đã bị chặn để tránh lưu riêng trên thiết bị.');
+}
+
 function flt(){const q=sa($('q').value),g=Object.fromEntries(FL.map(([id,,fn])=>[id,[$(id).value,fn]])),h=$('fh').value;
  return W.filter(w=>can('view',w)&&(!SO||sel.has(w.id))&&(!q||workSearchText(w).includes(q))&&FL.every(([id,,fn])=>!g[id][0]||fn(w)==g[id][0])&&(!h||(h=='ok'?!miss(w)&&R(w):h=='no'?miss(w):!R(w))))}
 const kc=k=>'k'+(((parseInt(String(k).replace(/\D/g,''))||1)-1)%4+1),gp=g=>`<span class="pl ${isNu(g)?'g-f':'g-m'}">${esc(gtN(g))}</span>`;
@@ -1070,15 +1108,44 @@ function edit(w){if(w&&!can('editw',w)){alert('Bạn không có quyền sửa h�
  $('df').innerHTML=SEC.map(([t,ic,fs])=>`<div class="eb2"><div class="es">${ico(ic)}${t}</div><div class="eg">${fs.map(fld).join('')}</div></div>`).join('');$('dlg').showModal()}
 $('dx').onclick=()=>$('dlg').close();
 $('dc').onclick=()=>$('dlg').close();
+// v1.0.92: Core worker edits receive an explicit Cloud acknowledgement.
+// In case of rejection, restore the in-memory snapshot and prevent a later replay.
+async function workerCloudConfirm(snapshot){
+ const ss=window.KTX_SUPA_SYNC;
+ if(!ss||!ss.ready||!SUPA_SYNC.enabled||!navigator.onLine){
+   throw new Error('Chưa kết nối Supabase. Thay đổi chưa được ghi nhận.');
+ }
+ clearTimeout(SUPA_SYNC.pushTimer);
+ const result=await ss.push();
+ if(!result||!result.ok||SUPA_SYNC.pending||(SUPA_SYNC.conflicts||[]).length){
+   throw new Error((result&&(result.error||result.message))||'Supabase chưa xác nhận lưu thay đổi.');
+ }
+ return result;
+}
+function workerRestoreAfterCloudError(snapshot){
+ W=snapshot.W; LOG=snapshot.LOG;
+ // Do not let pending local modifications auto-resubmit after a failed save.
+ clearTimeout(SUPA_SYNC.pushTimer);
+ SUPA_SYNC.pending=false;
+ try{localStorage.setItem('ktx_sb_sync_pending','false')}catch(e){}
+ // Cloud-only staging: restore RAM snapshot only. Never persist failed writes as business records.
+ all();
+}
 $('ds').onclick=async()=>{const o={};F.forEach(([f])=>o[f]=$('f_'+f).value.trim());if(!o.name){alert('Hãy nhập họ và tên công nhân.');$('f_name').focus();return}o.sdt=o.sdt.replace(/\D/g,'');o.cccd=o.cccd.replace(/\D/g,'');if(!EW||!(EW.thon||EW.xa))autoSplit(o);normW(o);
  if(ME.role!=='admin'&&(!inScope(o)||(EW&&!inScope(EW)))){alert('Không được thêm/sửa công nhân ngoài KTX/Dãy được phân quyền.');return}
  if(EW){const dv=F.filter(([f])=>(EW[f]||'')!==o[f]);if(!dv.length){$('dlg').close();alert('Không có thay đổi nào để lưu.');return}
   const fm=(f,v)=>(f=='dob'||f=='date'||f=='out')?(vn(v)||'trống'):(v||'trống'),ln=dv.slice(0,8).map(([f])=>`• ${FLB[f]}: ${fm(f,EW[f]||'')} → ${fm(f,o[f])}`).join('\n')+(dv.length>8?`\n… và ${dv.length-8} thay đổi khác`:'');
   if(!await ask(`Bạn có chắc muốn lưu thay đổi cho "${EW.name}"?\n${ln}`,{title:'Xác nhận sửa',ok:'Lưu thay đổi',cls:''}))return;
-  Object.assign(EW,o);add('UPDATE','Cập nhật công nhân: '+o.name);sv();$('dlg').close();all();alert(`Đã cập nhật thông tin công nhân "${o.name}".`)}
- else{o.id='w'+Date.now()+Math.random().toString(36).slice(2,6);W.unshift(o);add('CREATE','Thêm công nhân: '+o.name);sv();$('dlg').close();all();alert(`Đã thêm công nhân "${o.name}".`)}};
+  const snapshot={W:syncClone(W),LOG:syncClone(LOG)};
+  Object.assign(EW,o);add('UPDATE','Cập nhật công nhân: '+o.name);sv();
+  try{await workerCloudConfirm(snapshot);$('dlg').close();all();alert(`Supabase đã xác nhận cập nhật công nhân "${o.name}".`)}
+  catch(e){workerRestoreAfterCloudError(snapshot);alert('Chưa lưu được công nhân lên Supabase: '+e.message)} }
+ else{const snapshot={W:syncClone(W),LOG:syncClone(LOG)};
+  o.id='w'+Date.now()+Math.random().toString(36).slice(2,6);W.unshift(o);add('CREATE','Thêm công nhân: '+o.name);sv();
+  try{await workerCloudConfirm(snapshot);$('dlg').close();all();alert(`Supabase đã xác nhận thêm công nhân "${o.name}".`)}
+  catch(e){workerRestoreAfterCloudError(snapshot);alert('Chưa lưu được công nhân lên Supabase: '+e.message)} }};
 
-function logp(){$('log').innerHTML=`<div class="card"><div class="mut">${LOG.length} bản ghi gần nhất (lưu trên trình duyệt này)</div><div class="wrap"><table><tr><th>Thời gian</th><th>Hành động</th><th>Chi tiết</th></tr>${LOG.slice(0,200).map(l=>`<tr><td>${esc(l.t)}</td><td><span class="tag">${l.a}</span></td><td>${esc(l.d)}</td></tr>`).join('')}</table></div></div>`}
+function logp(){$('log').innerHTML=`<div class="card"><div class="mut">${LOG.length} bản ghi gần nhất (cần kiểm tra trạng thái đồng bộ Cloud)</div><div class="wrap"><table><tr><th>Thời gian</th><th>Hành động</th><th>Chi tiết</th></tr>${LOG.slice(0,200).map(l=>`<tr><td>${esc(l.t)}</td><td><span class="tag">${l.a}</span></td><td>${esc(l.d)}</td></tr>`).join('')}</table></div></div>`}
 
 $('fx').onchange=async e=>{if(!can('import')){alert('Bạn không có quyền Import Excel.');e.target.value='';return}const f=e.target.files[0];if(!f)return;ASN=0;try{const wb=XLSX.read(await f.arrayBuffer(),{type:'array',cellDates:true}),out=[];
  wb.SheetNames.forEach(sn=>{if(/so do|csvc|dieu khien/.test(sa(sn)))return;const rows=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:true,defval:''});let h=-1,m={};
@@ -1281,45 +1348,67 @@ async function exportDailyReportDirect(){
 }
 $('xr').onclick=()=>page=='home'?exportDailyReportDirect():openRp;$('xt').onclick=()=>xlsForm([],true);$('rpc').onclick=()=>$('rpd').close();$('rpx').onclick=xlsRooms;
 // ---- Lưu trữ tài liệu
-const DOC={ready:false,cloud:[],local:[],assets:null,db:null,built:false,fcloud:[],floc:ld('ktx_folders',[]),cur:'all'};
-DOC.fl=()=>(DOC.db&&DOC.assets)?DOC.fcloud:DOC.floc;
+const DOC={ready:false,cloud:[],local:[],assets:null,db:null,built:false,fcloud:[],floc:[],cur:'all'};
+DOC.fl=()=>DOC.fcloud;
 const CLOUDT={pdf:'application/pdf',png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',gif:'image/gif',webp:'image/webp',svg:'image/svg+xml',mp4:'video/mp4',webm:'video/webm',txt:'text/plain',csv:'text/csv',md:'text/markdown',json:'application/json'};
 const IDB=(()=>{let pr;const open=()=>pr||(pr=new Promise((res,rej)=>{const r=indexedDB.open('ktx_docs',1);r.onupgradeneeded=()=>{r.result.createObjectStore('m',{keyPath:'id'});r.result.createObjectStore('b')};r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}));
  const run=async(st,mode,fn)=>{const d=await open();return new Promise((res,rej)=>{const t=d.transaction(st,mode);let q;try{q=fn(...st.map(n=>t.objectStore(n)))}catch(e){rej(e);return}t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)})};
  return{all:()=>run(['m'],'readonly',m=>m.getAll()),get:id=>run(['b'],'readonly',b=>b.get(id)),put:(meta,blob)=>run(['m','b'],'readwrite',(m,b)=>{m.put(meta);b.put(blob,meta.id)}),upd:meta=>run(['m'],'readwrite',m=>m.put(meta)),del:id=>run(['m','b'],'readwrite',(m,b)=>{m.delete(id);b.delete(id)})}})();
 const fsz=b=>b>=1048576?(b/1048576).toFixed(1)+' MB':Math.max(1,Math.round(b/1024))+' KB';
 const dext=n=>((String(n).split('.').pop()||'').toLowerCase()).slice(0,4)||'file';
-async function docsLoad(){try{DOC.local=(await IDB.all()).map(d=>({...d,store:'local'}))}catch(e){DOC.local=[]}}
+async function docsLoad(){DOC.local=[];}
+// v1.0.103: Kho tài liệu sử dụng duy nhất Supabase PostgreSQL + Storage.
+// Các adapter dưới đây giữ giao diện collection của module để không thay đổi UI cũ.
+const DOC_BUCKET='ktx-documents',DOC_TABLE='ktx_document_items';
+const docClient=()=>typeof syncClient==='function'?syncClient():null;
+const docEnsure=async()=>{const sb=docClient();if(!sb)throw Error('Chưa cấu hình Supabase');const {data:{session},error}=await sb.auth.getSession();if(error||!session)throw Error('Chưa có phiên Supabase Auth để truy cập Kho tài liệu');return sb};
+const docCheck=({error})=>{if(error)throw error};
+const docCollection=(kind)=>({
+ onSnapshot:()=>{},
+ doc:(id)=>({
+  set:async(v)=>{const sb=await docEnsure();docCheck(await sb.from(DOC_TABLE).upsert({id,kind,...v}));await docsRefresh()},
+  update:async(v)=>{const sb=await docEnsure();docCheck(await sb.from(DOC_TABLE).update(v).eq('id',id).eq('kind',kind));await docsRefresh()},
+  delete:async()=>{const sb=await docEnsure();docCheck(await sb.from(DOC_TABLE).delete().eq('id',id).eq('kind',kind));await docsRefresh()}
+ })
+});
+async function docsRefresh(){
+ const sb=await docEnsure();const {data,error}=await sb.from(DOC_TABLE).select('id,kind,name,fid,note,size,type,path,at').order('at',{ascending:false}).limit(1000);if(error)throw error;
+ DOC.fcloud=(data||[]).filter(x=>x.kind==='folders'); DOC.cloud=(data||[]).filter(x=>x.kind==='docs').map(x=>({...x,store:'cloud'}));
+ if(page==='t7')docsRender();
+}
 async function docsInit(){if(DOC.ready)return;DOC.ready=true;
- try{if(window.claude&&claude.use){DOC.assets=await claude.use('assets');DOC.db=await claude.use('db');
-  if(DOC.db&&DOC.assets)DOC.db.collection('folders').onSnapshot(sn=>{DOC.fcloud=sn.docs.map(d=>({...d.data(),id:d.id}));if(page=='t7')docsRender()},()=>{});
-  if(DOC.db&&DOC.assets)DOC.db.collection('docs').onSnapshot(sn=>{DOC.cloud=sn.docs.map(d=>({...d.data(),id:d.id,store:'cloud'}));if(page=='t7')docsRender()},()=>{});
-  claude.use('mcp').then(m=>{DOC.mcp=m;if(m&&page=='t7')docsRender()}).catch(()=>{})}}catch(e){}
- await docsLoad();docsRender()}
-const allDocs=()=>[...DOC.cloud,...DOC.local],cloudOK=()=>!!(DOC.db&&DOC.assets),fsave=()=>{try{localStorage.setItem('ktx_folders',JSON.stringify(DOC.floc))}catch(e){}};
+ DOC.db={collection:docCollection}; DOC.assets={
+  upload:async(file)=>{const sb=await docEnsure();const id=crypto.randomUUID(),path=`uploads/${id}/${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;docCheck(await sb.storage.from(DOC_BUCKET).upload(path,file,{upsert:false,contentType:file.type||'application/octet-stream'}));return {id,path}},
+  delete:async(id)=>{const sb=await docEnsure();const x=DOC.cloud.find(y=>y.id===id);if(x&&x.path)docCheck(await sb.storage.from(DOC_BUCKET).remove([x.path]))}
+ };
+ try{await docsRefresh()}catch(e){DOC.cloud=[];DOC.fcloud=[];alert('Không tải được Kho tài liệu Supabase: '+(e.message||e))}
+ docsRender();
+}
+const allDocs=()=>DOC.cloud,cloudOK=()=>!!(DOC.db&&DOC.assets&&docClient()),fsave=()=>{};
 const fname=id=>{const f=DOC.fl().find(x=>x.id==id);return f?f.name:''};
 async function folderCreate(n){n=(n||'').trim();if(!n){alert('Hãy nhập tên thư mục.');return null}
+ if(!cloudOK()){alert('Kho tài liệu chưa kết nối Supabase.');return null}
  if(DOC.fl().some(x=>x.name.toLowerCase()==n.toLowerCase())){alert(`Đã có thư mục tên "${n}". Hãy chọn tên khác.`);return null}
  const id='f'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),rec={id,name:n,at:Date.now()};
- try{if(cloudOK()){await DOC.db.collection('folders').doc(id).set({name:n,at:rec.at});DOC.fcloud.push(rec)}else{DOC.floc.push(rec);fsave()}}catch(e){alert('Không tạo được thư mục: '+(e&&e.message||e));return null}
+ try{await DOC.db.collection('folders').doc(id).set({name:n,at:rec.at})}catch(e){alert('Không tạo được thư mục: '+(e&&e.message||e));return null}
  add('CREATE','Tạo thư mục tài liệu: '+n);DOC.cur=id;docsRender();alert(`Đã tạo thư mục "${n}".`);return id}
 function folderDlg(f){$('dkf_t').textContent=f?'Đổi tên thư mục':'Thư mục mới';$('dkf_n').value=f?f.name:'';$('dkf_x').onclick=()=>$('dkf').close();
  const save=async()=>{const n=$('dkf_n').value.trim();if(!f){if(await folderCreate(n))$('dkf').close();return}
-  if(!n){alert('Hãy nhập tên thư mục.');return}if(n==f.name){$('dkf').close();return}
+  if(!cloudOK()){alert('Kho tài liệu chưa kết nối Cloud.');return}if(!n){alert('Hãy nhập tên thư mục.');return}if(n==f.name){$('dkf').close();return}
   if(DOC.fl().some(x=>x.id!=f.id&&x.name.toLowerCase()==n.toLowerCase())){alert(`Đã có thư mục tên "${n}". Hãy chọn tên khác.`);return}
   if(!await ask(`Đổi tên thư mục "${f.name}" thành "${n}"?`,{title:'Xác nhận sửa',ok:'Đổi tên',cls:''}))return;const old=f.name;
   try{if(cloudOK())await DOC.db.collection('folders').doc(f.id).update({name:n});f.name=n;if(!cloudOK())fsave();add('UPDATE',`Đổi tên thư mục: ${old} → ${n}`);$('dkf').close();docsRender();alert(`Đã đổi tên thư mục thành "${n}".`)}catch(e){alert('Không đổi tên được: '+(e&&e.message||e))}};
  $('dkf_s').onclick=save;$('dkf_n').onkeydown=e=>{if(e.key=='Enter')save()};$('dkf').showModal();setTimeout(()=>$('dkf_n').focus(),50)}
-async function folderDel(f){const ds=allDocs().filter(d=>d.fid==f.id);
+async function folderDel(f){if(!cloudOK()){alert('Kho tài liệu chưa kết nối Cloud.');return}const ds=allDocs().filter(d=>d.fid==f.id);
  if(!await ask(`Bạn có chắc muốn xóa thư mục "${f.name}"?\n${ds.length?`${ds.length} tài liệu trong thư mục sẽ được chuyển về "Chưa phân loại" (không bị xóa).\n`:''}Thao tác này không hoàn tác được.`,{title:'Xác nhận xóa thư mục',ok:'Xóa thư mục'}))return;
- try{for(const d of ds){if(d.store=='cloud')await DOC.db.collection('docs').doc(d.id).update({fid:''});else{const{store,...m}=d;await IDB.upd({...m,fid:''})}}
+ try{for(const d of ds){await DOC.db.collection('docs').doc(d.id).update({fid:''})}
   if(cloudOK()){await DOC.db.collection('folders').doc(f.id).delete();DOC.fcloud=DOC.fcloud.filter(x=>x.id!=f.id)}else{DOC.floc=DOC.floc.filter(x=>x.id!=f.id);fsave()}
   await docsLoad();if(DOC.cur==f.id)DOC.cur='all';add('DELETE','Xóa thư mục tài liệu: '+f.name);docsRender();alert(`Đã xóa thư mục "${f.name}".`)}catch(e){alert('Không xóa được: '+(e&&e.message||e))}}
 function docsPage(){if(!DOC.built){DOC.built=true;
  $('t7').innerHTML=`<div class="dkl"><div class="card dkside"><div class="row" style="justify-content:space-between;margin-bottom:10px"><h3 style="margin:0">Thư mục</h3><button class="btn sm" id="dk_nf">${ico('plus')}Thư mục mới</button></div><div id="dk_fl"></div></div>
  <div><div class="card"><h3>Tải tài liệu lên</h3><div class="dkz" id="dk_zone"><b>Kéo thả file vào đây</b><label class="btn" style="cursor:pointer">${ico('ul')}Chọn file<input type="file" id="dk_file" multiple hidden></label></div>
  <div class="row" style="margin-top:12px;align-items:flex-end"><label class="fl" style="min-width:200px">Lưu vào thư mục<select id="dk_tf"></select></label><label class="fl" style="flex:1;min-width:200px">Ghi chú (áp dụng cho các file vừa chọn)<input id="dk_note" placeholder="Không bắt buộc"></label>
- <label class="tgl" style="margin-bottom:2px"><input type="checkbox" id="dk_loc"> Chỉ lưu trên máy này (riêng tư)</label></div><div class="mut" id="dk_info" style="margin-top:10px;font-size:12.5px"></div></div>
+ </div><div class="mut" id="dk_info" style="margin-top:10px;font-size:12.5px"></div></div>
  <div class="card"><div class="row" style="justify-content:space-between;margin-bottom:4px"><h3 style="margin:0" id="dk_ct"></h3><b class="cnt" id="dk_n"></b></div><input id="dk_q" placeholder="Tìm theo tên, ghi chú..." style="width:100%;margin-top:6px"><div id="dk_list"></div></div></div></div>`;
  const up=fs=>docsUpload([...fs]);$('dk_file').onchange=e=>{up(e.target.files);e.target.value=''};
  const z=$('dk_zone');['dragover','dragleave','drop'].forEach(ev=>z.addEventListener(ev,e=>{e.preventDefault();z.classList.toggle('over',ev=='dragover');if(ev=='drop'&&e.dataTransfer.files.length)up(e.dataTransfer.files)}));
@@ -1336,19 +1425,19 @@ function docsRender(){if(!$('dk_list'))return;const F=DOC.fl().slice().sort((a,b
  const q=sa($('dk_q').value),L=docs.filter(d=>(DOC.cur=='all'||fid(d)==(DOC.cur=='none'?'':DOC.cur))&&(!q||sa([d.name,d.note,fname(d.fid)].join(' ')).includes(q)));
  $('dk_ct').innerHTML=`${ico('folder')} ${esc(DOC.cur=='all'?'Tất cả tài liệu':DOC.cur=='none'?'Chưa phân loại':fname(DOC.cur))}`;$('dk_ct').style.cssText='display:flex;gap:8px;align-items:center';
  $('dk_n').textContent=`${L.length} tài liệu · ${fsz(L.reduce((t,d)=>t+(d.size||0),0))}`;
- $('dk_info').textContent=cloudOK()?'PDF, ảnh, video, txt, csv, md, json (tối đa 20 MB) lưu trên claude.ai, những ai được chia sẻ trang này đều xem được. Word, Excel, ZIP và các loại khác (hoặc khi bật "Chỉ lưu trên máy này") chỉ lưu trong trình duyệt này.':'Chưa dùng được lưu trữ chung nên mọi tài liệu và thư mục được lưu trong trình duyệt này (chỉ có trên máy này).';
- $('dk_list').innerHTML=L.length?`<div class="dkg">${L.map(d=>`<div class="dkc"><div class="row" style="flex-wrap:nowrap;gap:10px"><div class="ft">${esc(dext(d.name).toUpperCase())}</div><h4>${esc(d.name)}</h4></div><div class="row" style="gap:6px">${DOC.cur=='all'&&fid(d)?`<span class="pl dy2">${esc(fname(d.fid))}</span>`:''}<span class="pl ${d.store=='cloud'?'k1':'k2'}">${d.store=='cloud'?'claude.ai':'Máy này'}</span></div>${d.note?`<div class="mut" style="font-size:12.5px">${esc(d.note)}</div>`:''}<div class="mut" style="font-size:12px">${fsz(d.size||0)} · ${d.at?new Date(d.at).toLocaleDateString('vi-VN'):''}</div>
+ $('dk_info').textContent=cloudOK()?'Mọi tài liệu đều lưu trên Supabase Storage (tối đa 20 MB/file). Không lưu trong trình duyệt.':'Chưa kết nối Supabase. Không thể tải tài liệu lên.';
+ $('dk_list').innerHTML=L.length?`<div class="dkg">${L.map(d=>`<div class="dkc"><div class="row" style="flex-wrap:nowrap;gap:10px"><div class="ft">${esc(dext(d.name).toUpperCase())}</div><h4>${esc(d.name)}</h4></div><div class="row" style="gap:6px">${DOC.cur=='all'&&fid(d)?`<span class="pl dy2">${esc(fname(d.fid))}</span>`:''}<span class="pl ${d.store=='cloud'?'k1':'k2'}">${d.store=='cloud'?'Supabase':'Máy này'}</span></div>${d.note?`<div class="mut" style="font-size:12.5px">${esc(d.note)}</div>`:''}<div class="mut" style="font-size:12px">${fsz(d.size||0)} · ${d.at?new Date(d.at).toLocaleDateString('vi-VN'):''}</div>
  <div class="ac"><button class="btn s sm" data-dv="${esc(d.id)}">${ico('eye')}Xem</button><button class="btn s sm" data-dd="${esc(d.id)}">${ico('dl')}Tải về</button>${DOC.mcp?`<button class="btn s sm" data-dg="${esc(d.id)}">${ico('ul')}Gửi lên Drive</button>`:''}<button class="btn s sm" data-de2="${esc(d.id)}">${ico('edit')}Sửa</button><button class="btn r sm" data-dx2="${esc(d.id)}">${ico('trash')}Xóa</button></div></div>`).join('')}</div>`:`<p class="mut" style="margin:14px 0 0">${docs.length?(q?'Không có tài liệu phù hợp.':'Thư mục này chưa có tài liệu. Hãy kéo thả hoặc chọn file ở phía trên.'):'Chưa có tài liệu nào. Hãy kéo thả hoặc chọn file ở phía trên.'}</p>`;
  const get=id=>allDocs().find(d=>d.id==id),on=(a,f)=>$('dk_list').querySelectorAll('['+a+']').forEach(b=>b.onclick=()=>{const d=get(b.getAttribute(a));if(d)f(d)});
  on('data-dv',docView);on('data-dd',docDl);on('data-dg',docDrive);on('data-de2',docEdit);on('data-dx2',docDel)}
-async function docsUpload(files){if(!files.length)return;const fid=$('dk_tf').value||'',note=$('dk_note').value.trim(),lo=$('dk_loc').checked;let ok=0,cl=0;const bad=[];
+async function docsUpload(files){if(!files.length)return;if(!cloudOK()){alert('Kho tài liệu chưa kết nối Cloud. Không lưu file xuống trình duyệt.');return}const fid=$('dk_tf').value||'',note=$('dk_note').value.trim();let ok=0,cl=0;const bad=[];
  alert(`Đang tải lên ${files.length} file...`);
  for(const f of files){const ct=CLOUDT[dext(f.name)];try{
-  if(!lo&&ct&&DOC.assets&&DOC.db&&f.size<=20*1048576){const r=await DOC.assets.upload(f,{type:ct});await DOC.db.collection('docs').doc(r.id).set({name:f.name,fid,note,size:f.size,type:ct,at:Date.now()});cl++}
-  else await IDB.put({id:'l'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:f.name,fid,note,size:f.size,type:f.type||'',at:Date.now()},f);ok++}catch(e){bad.push(f.name)}}
+  if(DOC.assets&&DOC.db&&f.size<=20*1048576){const r=await DOC.assets.upload(f,{type:ct||f.type||'application/octet-stream'});try{await DOC.db.collection('docs').doc(r.id).set({name:f.name,fid,note,size:f.size,type:ct||f.type||'application/octet-stream',path:r.path,at:Date.now()})}catch(e){const sb=await docEnsure();await sb.storage.from(DOC_BUCKET).remove([r.path]);throw e}cl++}
+  else throw new Error('Định dạng hoặc dung lượng chưa được kho Cloud hỗ trợ: '+f.name);ok++}catch(e){bad.push(f.name)}}
  await docsLoad();if(DOC.cur!='all')DOC.cur=fid||'none';docsRender();if(ok)add('CREATE',`Lưu trữ tài liệu: tải lên ${ok} file${fid?' vào thư mục '+fname(fid):''}`);
- alert(ok?`Đã tải lên ${ok} tài liệu${cl?` (${cl} lưu trên claude.ai, ${ok-cl} lưu trên máy này)`:' (lưu trên máy này)'}.${bad.length?`\nKhông tải được: ${bad.join(', ')}.`:''}`:`Không tải lên được: ${bad.join(', ')}.`)}
-async function docBlob(d){if(d.store=='cloud'){const r=await fetch('/_blob/'+d.id);if(!r.ok)throw new Error('HTTP '+r.status);return await r.blob()}return await IDB.get(d.id)}
+ alert(ok?`Đã tải lên ${ok} tài liệu${cl?` (${cl} lưu trên Supabase)`:' (lưu trên Supabase)'}.${bad.length?`\nKhông tải được: ${bad.join(', ')}.`:''}`:`Không tải lên được: ${bad.join(', ')}.`)}
+async function docBlob(d){if(d.store!=='cloud'||!d.path)throw new Error('Tài liệu chưa có đường dẫn Supabase');const sb=await docEnsure();const {data,error}=await sb.storage.from(DOC_BUCKET).download(d.path);if(error)throw error;return data}
 const MIMEX={pdf:'application/pdf',png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',gif:'image/gif',webp:'image/webp',txt:'text/plain',csv:'text/csv',md:'text/markdown',json:'application/json',mp4:'video/mp4',webm:'video/webm',docx:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',xlsx:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',pptx:'application/vnd.openxmlformats-officedocument.presentationml.presentation',doc:'application/msword',xls:'application/vnd.ms-excel',zip:'application/zip'};
 const blobB64=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 async function docDrive(d){const mcp=DOC.mcp;if(!mcp){alert('Môi trường này chưa cho phép kết nối Google Drive.');return}
@@ -1368,30 +1457,30 @@ async function docDrive(d){const mcp=DOC.mcp;if(!mcp){alert('Môi trường này
    :c=='blocked_by_policy'?'Tổ chức của bạn đang chặn việc ghi file lên Google Drive.'
    :c=='server_unavailable'||c=='upstream_error'?'Google Drive chưa phản hồi. Hãy kiểm tra trong Drive xem file đã có chưa trước khi gửi lại để tránh bị trùng.'
    :c=='too_big'?m:'Không gửi được lên Google Drive: '+m)}}
-async function docDl(d){try{const dl=await(window.claude&&claude.use?claude.use('downloads'):null);if(!dl){alert('Môi trường này chưa cho phép tải file.');return}await dl.save({filename:d.name,data:await docBlob(d)})}catch(e){if(!e||e.code!='declined')alert('Không tải được tài liệu: '+(e&&e.message||e))}}
-async function docView(d){$('dkvn').textContent=d.name;$('dkvm').innerHTML=`${fname(d.fid)?`<span class="pl dy2">${esc(fname(d.fid))}</span>`:''}<span class="pl ${d.store=='cloud'?'k1':'k2'}">${d.store=='cloud'?'claude.ai':'Máy này'}</span><span class="mut">${fsz(d.size||0)}</span>`;
+async function docDl(d){try{const b=await docBlob(d);if(!dlBrowser(d.name,b,d.type||'application/octet-stream'))throw Error('Trình duyệt chặn tải file')}catch(e){if(!e||e.code!='declined')alert('Không tải được tài liệu: '+(e&&e.message||e))}}
+async function docView(d){$('dkvn').textContent=d.name;$('dkvm').innerHTML=`${fname(d.fid)?`<span class="pl dy2">${esc(fname(d.fid))}</span>`:''}<span class="pl ${d.store=='cloud'?'k1':'k2'}">${d.store=='cloud'?'Supabase':'Máy này'}</span><span class="mut">${fsz(d.size||0)}</span>`;
  const B=$('dkvb');B.innerHTML='<div class="mut">Đang mở...</div>';$('dkvd').onclick=()=>docDl(d);{const g=$('dkvg');g.style.display=DOC.mcp?'':'none';g.onclick=()=>docDrive(d)}$('dkv').showModal();
  const t=(d.type||CLOUDT[dext(d.name)]||'').toLowerCase(),note=d.note?`<div class="mut" style="margin-bottom:10px">${esc(d.note)}</div>`:'',nop='<p class="mut">Không xem trước được loại file này. Hãy bấm "Tải về" để mở bằng ứng dụng trên máy.</p>';
- try{if(/^image\//.test(t)){let src='/_blob/'+d.id;if(d.store=='local'){const b=await IDB.get(d.id);if(b.size>8*1048576){B.innerHTML=note+nop;return}src=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(b)})}B.innerHTML=note+`<div class="dkprev"><img src="${src}" alt="${esc(d.name)}"></div>`}
-  else if(t=='application/pdf'&&d.store=='cloud')B.innerHTML=note+`<iframe title="${esc(d.name)}" src="/_blob/${esc(d.id)}" style="width:100%;height:66vh;border:1px solid var(--ln);border-radius:10px;background:#fff"></iframe><p class="mut" style="font-size:12px">Nếu khung trống, hãy bấm "Tải về" để mở file.</p>`;
+ try{if(/^image\//.test(t)){let src='';if(d.store==='cloud'){const sb=await docEnsure();const r=await sb.storage.from(DOC_BUCKET).createSignedUrl(d.path,300);docCheck(r);src=r.data.signedUrl}if(d.store=='local'){const b=await IDB.get(d.id);if(b.size>8*1048576){B.innerHTML=note+nop;return}src=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(b)})}B.innerHTML=note+`<div class="dkprev"><img src="${src}" alt="${esc(d.name)}"></div>`}
+  else if(t=='application/pdf'&&d.store=='cloud'){const sb=await docEnsure();const r=await sb.storage.from(DOC_BUCKET).createSignedUrl(d.path,300);docCheck(r);B.innerHTML=note+`<iframe title="${esc(d.name)}" src="${esc(r.data.signedUrl)}" style="width:100%;height:66vh;border:1px solid var(--ln);border-radius:10px;background:#fff"></iframe><p class="mut" style="font-size:12px">Nếu khung trống, hãy bấm "Tải về" để mở file.</p>`;}
   else if(/^video\//.test(t)&&d.store=='cloud')B.innerHTML=note+`<div class="dkprev"><video controls src="/_blob/${esc(d.id)}"></video></div>`;
   else if(/^text\/|json$/.test(t)){const x=await(await docBlob(d)).text();B.innerHTML=note+`<div class="dkprev"><pre>${esc(x.slice(0,20000))}${x.length>20000?'\n… (đã cắt bớt)':''}</pre></div>`}
   else B.innerHTML=note+nop}catch(e){B.innerHTML=note+nop}}
-function docEdit(d){const F=DOC.fl().slice().sort((a,b)=>num(a.name,b.name)),cf=F.some(f=>f.id==d.fid)?d.fid:'';$('dke_n').value=d.name;$('dke_o').value=d.note||'';
+function docEdit(d){if(!cloudOK()||d.store!=='cloud'){alert('Chỉ sửa tài liệu đã lưu trên Cloud.');return}const F=DOC.fl().slice().sort((a,b)=>num(a.name,b.name)),cf=F.some(f=>f.id==d.fid)?d.fid:'';$('dke_n').value=d.name;$('dke_o').value=d.note||'';
  $('dke_c').innerHTML='<option value="">Chưa phân loại</option>'+F.map(f=>`<option value="${esc(f.id)}" ${f.id==cf?'selected':''}>${esc(f.name)}</option>`).join('');$('dke_x').onclick=()=>$('dke').close();
  $('dke_s').onclick=async()=>{const n=$('dke_n').value.trim(),c=$('dke_c').value,o=$('dke_o').value.trim();if(!n){alert('Hãy nhập tên tài liệu.');return}
   if(n==d.name&&c==cf&&o==(d.note||'')){$('dke').close();alert('Không có thay đổi nào để lưu.');return}
   if(!await ask(`Bạn có chắc muốn lưu thay đổi cho tài liệu "${d.name}"?${c!=cf?`\n• Thư mục: ${fname(cf)||'Chưa phân loại'} → ${fname(c)||'Chưa phân loại'}`:''}`,{title:'Xác nhận sửa',ok:'Lưu thay đổi',cls:''}))return;
   try{if(d.store=='cloud')await DOC.db.collection('docs').doc(d.id).update({name:n,fid:c,note:o});else{const{store,...m}=d;await IDB.upd({...m,name:n,fid:c,note:o});await docsLoad()}
    add('UPDATE','Sửa thông tin tài liệu: '+n);$('dke').close();docsRender();alert(c!=cf?`Đã chuyển tài liệu "${n}" sang thư mục "${fname(c)||'Chưa phân loại'}".`:`Đã cập nhật tài liệu "${n}".`)}catch(e){alert('Không lưu được: '+(e&&e.message||e))}};$('dke').showModal()}
-async function docDel(d){if(!await ask(`Bạn có chắc muốn xóa tài liệu "${d.name}"?\n${d.store=='cloud'?'File sẽ bị xóa khỏi claude.ai và mọi người dùng chung trang không còn xem được.\n':''}Thao tác này không hoàn tác được.`,{title:'Xác nhận xóa',ok:'Xóa'}))return;
- try{if(d.store=='cloud'){await DOC.db.collection('docs').doc(d.id).delete();try{await DOC.assets.delete(d.id)}catch(e){}}else{await IDB.del(d.id);await docsLoad()}
+async function docDel(d){if(!cloudOK()||d.store!=='cloud'){alert('Chỉ xóa tài liệu đã lưu trên Cloud.');return}if(!await ask(`Bạn có chắc muốn xóa tài liệu "${d.name}"?\n${d.store=='cloud'?'File sẽ bị xóa khỏi Supabase và mọi người dùng chung trang không còn xem được.\n':''}Thao tác này không hoàn tác được.`,{title:'Xác nhận xóa',ok:'Xóa'}))return;
+ try{if(d.store=='cloud'){await DOC.assets.delete(d.id);await DOC.db.collection('docs').doc(d.id).delete()}else{await IDB.del(d.id);await docsLoad()}
   add('DELETE','Xóa tài liệu: '+d.name);docsRender();alert(`Đã xóa tài liệu "${d.name}".`)}catch(e){alert('Không xóa được: '+(e&&e.message||e))}}
 $('dkvx').onclick=$('dkvc').onclick=()=>$('dkv').close();
 /* ===== Báo cáo suất ăn (theo buổi) ===== */
 const NCCS=['Vina Story','Tám Phương','Thiên Hồng Phúc','Lim Dương','Hương Ngọc Phát','Nguyên Sài Gòn','Minh Long Food'],SES=[['sang','Sáng','sáng'],['trua','Trưa','trưa'],['chieu','Chiều','chiều']],TDS=[['TĐ 8','td8'],['TĐ 11.1','td111'],['TĐ 11.3','td113']];
 const MENU_SEED={"Vina Story":{"man":{"2026-10-12":{"sang":["Bún thịt khìa"],"trua":["Cơm trắng","Thịt kho trứng cút","Cá bạc má chiên mắm tỏi","Chả lụa kho tiêu","Su su xào cà rốt","Canh cải xanh nấu gừng","Chuối"],"chieu":["Cơm trắng","Thịt xáo măng","Tôm rim lá chanh","Đậu phộng rim tốp mỡ","Rau muống xào","Canh rong biển","Táo xanh"]},"2026-10-13":{"sang":["Bánh mì chả cá","Sữa nuti"],"trua":["Cơm trắng","Cá basa kho sả nghệ","Thịt xào mắm ruốc + dưa leo","Đậu hủ kho tiêu","Dưa leo xào","Canh cải ngọt","Nhãn"],"chieu":["Cơm trắng","Gà kho sả ớt","Thịt kho củ cải","Cá cơm chiên giòn sốt mặn ngọt","Bắp cải xào","Canh cải thảo","Thạch"]},"2026-10-14":{"sang":["Xôi chả lụa +trứng kho tàu","Sữa"],"trua":["Cơm trắng","Cốt lết ram mỡ hành","Chả lụa kho trứng cút","Chả giò","Rau muống xào","Canh mồng tơi","Chuối"],"chieu":["Cơm trắng","Thịt kho tiêu","Trứng hấp thịt","Khô lưỡi trau sốt mắm me","Cà tím xào","Canh rau ngót","Táo xanh"]},"2026-10-15":{"sang":["Bún gạo xào tôm thịt"],"trua":["Cơm trắng","Thịt xào sả ớt dưa leo","Cá chim kho tiêu","Cá cơm rim đậu","Cải ngọt xào","Canh rau muống","Nhãn"],"chieu":["Cơm trắng","Vịt kho gừng","Chả cá rim","Cá cơm rim đậu","Củ quả luộc","Canh rau má","Quýt"]},"2026-10-16":{"sang":["Bánh mì bò kho"],"trua":["Cơm trắng","Cốt lết rim","Cá trê kho gừng","Nem rim sả ớt","Cải thảo xào cà rốt","Canh mướp mồng tơi","Táo xanh"],"chieu":["Cơm trắng","Gà kho gừng","Thịt xào su su","Bò viên xào cay","Bắp cải xào","Canh cải xanh","Chuối"]},"2026-10-17":{"sang":["Bánh ướt giò lụa lá + chả giò"],"trua":["Cơm trắng","Thịt heo nấu lagu","Tôm rim đậu hủ","Cà tím bung đậu","Rau muống xào","Canh rong biển","Chuối"],"chieu":["Cơm trắng","Cá tráo kho tiêu","Thịt ram sả + dưa leo","Chả cá xào cay","Cải thảo xào","Canh mồng tơi","Chôm chôm"]},"2026-10-18":{"sang":["Mì xào tôm thịt"],"trua":["Cơm trắng","Thịt kho tàu","Cá basa chiên","Dưa mắm trộn rau răm","Cải ngọt xào","Canh đu đủ","Chuối"],"chieu":["Cơm trắng","Gà rô ti","Chả trứng đúc thịt","Khô lưỡi trâu sốt tỏi ớt","Bắp cải xào","Canh rau ngót","Quýt"]}},"chay":{"2026-10-12":{"sang":["Bún sườn nướng chay","Sữa đậu nành"],"trua":["Cơm trắng","Nấm bào ngư xào sả ớt","Đậu hủ kho thơm","Đậu phộng rim","Su su xào cà rốt","Canh cải xanh nấu gừng","Chuối"],"chieu":["Cơm trắng","Mít non kho rau răm","Chả lụa xào thập cẩm","Chả giò","Rau muống xào","Canh rong biển","Táo xanh"]},"2026-10-13":{"sang":["Bánh mì chả lụa chay","Sữa đậu nành"],"trua":["Cơm trắng","Đùi gà chay rô ti","Củ quả kho tương hột","Đậu hủ xào bắp non","Dưa leo xào","Canh cải ngọt","Nhãn"],"chieu":["Cơm trắng","Nấm đùi gà kho cà rốt","Bò kho đậu hủ","Sườn non rim","Bắp cải xào","Canh cải thảo","Thạch"]},"2026-10-14":{"sang":["Bánh mì sườn chay + chả cá","Sữa"],"trua":["Cơm trắng","Sườn dừa chay kho thơm","Chả cá chay kho nấm","Nấm bào ngư xào mướp","Rau muống xào","Canh mồng tơi","Chuối"],"chieu":["Cơm trắng","Bò xào sa tế","Bắp non xào thập cẩm","Chả lụa rim củ cải","Cà tím xào","Canh rau ngót","Táo xanh"]},"2026-10-15":{"sang":["Xôi cải sa pấu + xúc xích rán","Sữa"],"trua":["Cơm trắng","Đậu hũ xào rau củ","Thịt kho tiêu chay","Nấm kim châm xào cải thìa","Cải ngọt xào","Canh rau muống","Nhãn"],"chieu":["Cơm trắng","Heo lát xáo măng","Nấm rơm kho củ quả","Cá kèo chay rim mặn","Củ quả luộc","Canh rau má","Quýt"]},"2026-10-16":{"sang":["Bánh mì bò kho chay","Sữa"],"trua":["Cơm trắng","Bò nấu lagu chay","Nấm đùi gà kho cà rốt","Đậu phộng om bí","Cải thảo xào cà rốt","Canh mướp mồng tơi","Táo xanh"],"chieu":["Cơm trắng","Gà xào dưa leo","Heo quay kho cải chua","Nấm bào ngư xào mướp","Su su xào","Canh cải xanh","Chuối"]},"2026-10-17":{"sang":["Bánh ướt chả giò + xúc xích chay","Sữa 1 bịch"],"trua":["Cơm trắng","Cá thu chay kho thơm","Mì căn rim sả ớt","Heo lát rim sả","Rau muống xào","Canh rong biển","Chuối"],"chieu":["Cơm trắng","Đậu hũ xào thập cẩm","Cá cơm rim đậu phộng chay","Chả giò","Cải thảo xào","Canh mồng tơi","Chôm chôm"]},"2026-10-18":{"sang":["Mì xào chay","Sữa nuti"],"trua":["Cơm trắng","Chạo chay rô ti","Đậu hủ kho thơm","Sữa nuti","Cải ngọt xào","Canh đu đủ","Chuối"],"chieu":["Cơm trắng","Gà nấu đậu chay","Nấm đông cô xào cải thìa","Sữa nuti","Bắp cải xào","Canh rau ngót","Quýt"]}}}};
-let MENU=(()=>{const m=JSON.parse(JSON.stringify(MENU_SEED)),u=ld('ktx_menu',{});for(const n in u)for(const k in u[n]){(m[n]=m[n]||{})[k]=Object.assign(m[n][k]||{},u[n][k])}return m})();
+let MENU={}; // v1.0.100: thực đơn nghiệp vụ lấy từ Supabase, không nạp bản máy hoặc dữ liệu mẫu
 /* Đọc một sheet thực đơn (mảng 2 chiều) -> {kind:'man'|'chay', days:{'YYYY-MM-DD':{sang:[],trua:[],chieu:[]}}} */
 function menuParse(rows,sheetName){
  const clean=s=>String(s==null?'':s).replace(/\s+/g,' ').trim(),cap=s=>s?s.charAt(0).toUpperCase()+s.slice(1):s;
@@ -1498,7 +1587,7 @@ async function mealCloudPublish186(records){
  }
  return{uploaded,failures};
 }
-async function mealImport(files){const pick=$('mp_ni').value,out=[],bad=[],cloudRecords=[];let any=false;
+async function mealImport(files){const pick=$('mp_ni').value,out=[],bad=[],cloudRecords=[];let any=false;const oldMenu=JSON.parse(JSON.stringify(MENU));
  try{if(!window.XLSX)throw new Error('Chưa tải được thư viện đọc Excel (cần kết nối mạng tới cdnjs).');
   for(const file of files){try{const wb=XLSX.read(await file.arrayBuffer(),{type:'array'});
     const head=(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:false,defval:''})||[]).slice(0,4).flat().join(' ');
@@ -1507,14 +1596,16 @@ async function mealImport(files){const pick=$('mp_ni').value,out=[],bad=[],cloud
     for(const sn of wb.SheetNames){const rows=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:false,defval:''}),r=menuParse(rows,sn);if(!r)continue;
      const dst=((MENU[ncc]=MENU[ncc]||{})[r.kind]=MENU[ncc][r.kind]||{});for(const iso in r.days){dst[iso]=r.days[iso];for(const period of ['sang','trua','chieu']){const dishes=r.days[iso][period]||[];if(dishes.length)cloudRecords.push({date:iso,period,vendor:ncc,kind:r.kind,dishes})}r.kind=='man'?nm++:nc++;if(iso<lo)lo=iso;if(iso>hi)hi=iso}}
     if(!nm&&!nc){bad.push(`${file.name}: không thấy bảng thực đơn đúng mẫu (cột SÁNG / TRƯA / TỐI theo từng ngày). Phần đầu file: ${menuDiag(wb)}`);continue}
-    const f=i=>i.slice(8)+'/'+i.slice(5,7);out.push(`${ncc}: ${nm} ngày mặn, ${nc} ngày chay (${f(lo)} – ${f(hi)})`);any=true;add('UPDATE',`Nhập thực đơn ${ncc}: ${nm} ngày mặn, ${nc} ngày chay`)}
+    const f=i=>i.slice(8)+'/'+i.slice(5,7);out.push(`${ncc}: ${nm} ngày mặn, ${nc} ngày chay (${f(lo)} – ${f(hi)})`);any=true}
    catch(e){bad.push(`${file.name}: ${e&&e.message||e}`)}}
-  if(any){try{localStorage.setItem('ktx_menu',JSON.stringify(MENU))}catch(e){}mealFill();mealCards()}
-  let cloudNote='';if(cloudRecords.length){
+  // Chỉ công bố dữ liệu thực đơn sau khi Cloud xác nhận toàn bộ các dòng.
+  let cloudNote='';let cloudSuccess=false;if(cloudRecords.length){
    const im=$('mp_im');if(im)im.textContent='Đã đọc Excel. Đang đồng bộ '+cloudRecords.length+' bảng thực đơn lên Supabase…';
-   try{const result=await mealCloudPublish186(cloudRecords);cloudNote=`\nCloud: đã cập nhật ${result.uploaded}/${cloudRecords.length} bảng.`+(result.failures.length?'\nLỗi Cloud ('+result.failures.length+'): '+result.failures.slice(0,8).join(' | '):'\nMở ứng dụng bằng điện thoại để xem cùng thực đơn.');}
-   catch(e){cloudNote='\nCHƯA ĐỒNG BỘ CLOUD: '+(e.message||e)+'\nThực đơn vẫn có trên trình duyệt PC hiện tại.';}
+   try{const result=await mealCloudPublish186(cloudRecords);cloudSuccess=result.failures.length===0&&result.uploaded===cloudRecords.length;cloudNote=`\nCloud: đã cập nhật ${result.uploaded}/${cloudRecords.length} bảng.`+(result.failures.length?'\nLỗi Cloud ('+result.failures.length+'): '+result.failures.slice(0,8).join(' | '):'\nDữ liệu được xác nhận trên Supabase.');}
+   catch(e){cloudNote='\nLƯU SUPABASE THẤT BẠI: '+(e.message||e)+'\nKhông ghi nhận dữ liệu trong ứng dụng.';}
   }
+  if(!cloudSuccess){MENU=oldMenu;if(cloudRecords.length)cloudNote+='\nMột số dòng có thể đã ghi Cloud: kiểm tra trước khi import lại.';}
+  else{mealFill();mealCards();try{add('UPDATE',`Nhập ${cloudRecords.length} bảng thực đơn đã xác nhận Supabase`)}catch(_){}}
   const msg=(out.length?'Đã nhập thực đơn:\n'+out.join('\n'):'Không nhập được thực đơn.')+(bad.length?'\nBỏ qua:\n'+bad.join('\n'):'')+cloudNote;
   const im=$('mp_im');if(im)im.textContent=msg;alert(msg)}
  catch(e){alert('Không nhập được thực đơn: '+(e&&e.message||e))}}
@@ -1598,6 +1689,19 @@ function arcRender(){if(!$('ar_t'))return;const L=arcFlt(),cn=r=>ARC.filter(a=>a
  const T2=$('ar_t');T2.querySelectorAll('.ak').forEach(c=>c.onchange=()=>{c.checked?AS.add(c.dataset.i):AS.delete(c.dataset.i);$('ar_n').textContent=`${L.length.toLocaleString('vi-VN')} / ${ARC.length.toLocaleString('vi-VN')} người · đã chọn ${AS.size}`;$('ar_n').classList.toggle('on',AS.size>0)});
  const ca=$('ar_a2');if(ca){ca.checked=L.length>0&&L.every(a=>AS.has(a.id));ca.onchange=()=>{L.forEach(a=>ca.checked?AS.add(a.id):AS.delete(a.id));arcRender()}}
  T2.querySelectorAll('[data-ar]').forEach(b=>b.onclick=()=>arcRestoreEdit29(b.dataset.ar));T2.querySelectorAll('[data-ap]').forEach(b=>b.onclick=()=>arcPurge(ARC.filter(a=>a.id==b.dataset.ap)))}
+// v1.0.111 — Restore is committed on Cloud before changing any local view.
+async function ktx111RestoreCloud(archives,placements){
+ const sb=typeof syncClient==='function'?syncClient():null;
+ if(!sb||!SUPA_SYNC||!SUPA_SYNC.enabled||!SUPA_SYNC.session||!SUPA_SYNC.ready)throw new Error('Cần đăng nhập và bật đồng bộ Supabase trước khi khôi phục.');
+ if(SUPA_SYNC.pending||SUPA_SYNC.pushing||SUPA_SYNC.pulling)throw new Error('Đang có thay đổi chờ hoặc đang đồng bộ. Vui lòng xử lý trước khi khôi phục.');
+ const input=archives.map(a=>({record_id:String(a.id),archive_payload:JSON.parse(JSON.stringify(a)),worker_payload:JSON.parse(JSON.stringify(placements&&placements[String(a.id)]||a.w))}));
+ if(input.length>500)throw new Error('Khôi phục tối đa 500 người mỗi giao dịch. Hãy lọc thành nhóm nhỏ hơn để bảo đảm tất cả cùng thành công hoặc cùng thất bại.');
+ const {data,error}=await sb.rpc('ktx_worker_restore_atomic_v111',{p_items:input});
+ if(error)throw new Error('Supabase không xác nhận khôi phục: '+error.message);
+ if(!data||Number(data.processed)!==input.length)throw new Error('Phản hồi Supabase không khớp số người được khôi phục. Hãy tải lại dữ liệu Cloud để kiểm tra.');
+ await syncPullAll(true);
+ return data;
+}
 async function arcRestoreEdit29(id){
  if(!can('restore'))return alert('Bạn không có quyền khôi phục.');
  const a=ARC.find(x=>String(x.id)===String(id));if(!a)return;
@@ -1608,17 +1712,20 @@ async function arcRestoreEdit29(id){
  dlg.addEventListener('close',async()=>{const ok=dlg.returnValue==='confirm',k=dlg.querySelector('#arc29k').value.trim(),d=dlg.querySelector('#arc29d').value.trim(),r=dlg.querySelector('#arc29r').value.trim();dlg.remove();if(!ok)return;if(!k||!d||!r){alert('Cần nhập đủ KTX, Dãy, Phòng mới.');return}if(W.some(z=>String(z.id)===String(id))){alert('Công nhân đã có trong danh sách tổng, không thể khôi phục trùng.');return}
  const msg='Xác nhận khôi phục '+w.name+' vào '+k+' · '+d+' · Phòng '+r+'?\nVị trí cũ vẫn được ghi trong lịch sử.';
  if(!await ask(msg,{title:'Xác nhận vị trí mới',ok:'Khôi phục',cls:'g'}))return;
- w.ktx=k;w.day=d;w.room=r;
+ const newWorker=JSON.parse(JSON.stringify(w));newWorker.ktx=k;newWorker.day=d;newWorker.room=r;
  const history={at:new Date().toISOString(),action:'RETURN_NEW_ROOM',old,newLocation:{ktx:k,day:d,room:r}};
- w.residenceMoves=Array.isArray(w.residenceMoves)?w.residenceMoves:[];w.residenceMoves.push(history);
- LOG.unshift({t:new Date().toLocaleString('vi-VN'),a:'RESTORE',d:'Công nhân quay lại: '+w.name+'; chỗ ở cũ '+old.ktx+'/'+old.day+'/'+old.room+' → '+k+'/'+d+'/'+r,day:ldy()});
- W.unshift(w);ARC=ARC.filter(x=>String(x.id)!==String(id));AS.delete(id);sv();all();alert('Đã khôi phục với vị trí mới. Hãy kiểm tra trạng thái lưu Supabase trước khi tải lại trang.');
+ newWorker.residenceMoves=Array.isArray(newWorker.residenceMoves)?newWorker.residenceMoves:[];newWorker.residenceMoves.push(history);
+ try{await ktx111RestoreCloud([a],{[String(id)]:newWorker});AS.delete(id);all();alert('Supabase đã xác nhận khôi phục với vị trí mới.');}
+ catch(err){alert('Khôi phục chưa được lưu: '+(err.message||err));}
  });
 }
-async function arcRestore(L){if(!can('restore')){alert('Bạn không có quyền khôi phục.');return}if(!await ask(`Khôi phục ${L.length.toLocaleString('vi-VN')} công nhân về danh sách chính?\n${L.slice(0,5).map(a=>'• '+a.w.name).join('\n')}${L.length>5?`\n… và ${L.length-5} người khác`:''}`,{title:'Xác nhận khôi phục',ok:'Khôi phục',cls:'g'}))return;
- const by={};L.forEach(a=>{if(!W.some(w=>w.id==a.id))W.unshift(a.w);const k=K(a.w)+'|'+a.date;(by[k]=by[k]||{k:K(a.w),day:a.date,n:0}).n++});
- Object.values(by).forEach(g=>LOG.unshift({t:new Date().toLocaleString('vi-VN'),a:'RESTORE',d:`Khôi phục ${g.n} công nhân về danh sách chính (${g.k})`,k:g.k,n:g.n,day:g.day}));
- const ids=new Set(L.map(a=>a.id));ARC=ARC.filter(a=>!ids.has(a.id));ids.forEach(i=>AS.delete(i));sv();all();alert(`Đã khôi phục ${L.length.toLocaleString('vi-VN')} công nhân về danh sách chính.`)}
+async function arcRestore(L){
+ if(!can('restore'))return alert('Bạn không có quyền khôi phục.');
+ if(!L.length)return;
+ if(!await ask(`Khôi phục ${L.length.toLocaleString('vi-VN')} công nhân về danh sách chính?`,{title:'Xác nhận khôi phục',ok:'Khôi phục',cls:'g'}))return;
+ try{await ktx111RestoreCloud(L);L.forEach(a=>AS.delete(a.id));all();alert('Supabase đã xác nhận khôi phục '+L.length.toLocaleString('vi-VN')+' công nhân.');}
+ catch(e){alert('Khôi phục thất bại hoặc chưa xác nhận: '+(e.message||e));}
+}
 async function arcPurge(L){if(!can('purge')){alert('Chỉ tài khoản được cấp quyền Xóa hẳn mới thực hiện được.');return}if(!await ask(`Xóa hẳn ${L.length.toLocaleString('vi-VN')} công nhân khỏi danh sách theo dõi?\n${L.slice(0,5).map(a=>'• '+a.w.name).join('\n')}${L.length>5?`\n… và ${L.length-5} người khác`:''}\n\nSau khi xóa hẳn sẽ không thể khôi phục.`,{title:'Xác nhận xóa hẳn',ok:'Xóa hẳn'}))return;
  const ids=new Set(L.map(a=>a.id));ARC=ARC.filter(a=>!ids.has(a.id));ids.forEach(i=>AS.delete(i));LOG.unshift({t:new Date().toLocaleString('vi-VN'),a:'PURGE',d:`Xóa hẳn ${L.length} công nhân khỏi danh sách điều chuyển/nghỉ việc`,day:ldy()});sv();all();alert(`Đã xóa hẳn ${L.length.toLocaleString('vi-VN')} công nhân khỏi danh sách theo dõi.`)}
 async function xlsArc(L){try{if(!L.length){alert('Không có dữ liệu để xuất.');return}const dl=await(window.claude&&claude.use?claude.use('downloads'):null);if(!dl){alert('Môi trường này chưa cho phép tải file.');return}if(!window.ExcelJS){alert('Không tải được thư viện tạo Excel (cần kết nối mạng).');return}

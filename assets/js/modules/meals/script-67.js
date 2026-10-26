@@ -15,8 +15,7 @@
    d[period]=dishes.map(x=>String(x.name||x.ten||'').trim()).filter(Boolean);
    d.q=d.q||{};d.q[period]=dishes.map(x=>String(x.standard||x.dl||'').trim());m[date]=d;changed++;
   }
-  if(changed){try{localStorage.setItem('ktx_menu',JSON.stringify(MENU))}catch(e){}
-   if(typeof mealFill==='function')mealFill();if(typeof mealCards==='function'&&document.getElementById('mp_cards'))mealCards();}
+  if(changed){if(typeof mealFill==='function')mealFill();if(typeof mealCards==='function'&&document.getElementById('mp_cards'))mealCards();}
   return {ok:true,count:changed};
  };
 })();
