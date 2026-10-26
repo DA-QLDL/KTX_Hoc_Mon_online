@@ -1,0 +1,12 @@
+/* v1.0.81: paired operational overview analytics; use app theme and real scoped data. */
+#home .home-analytics{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:stretch}
+#home .home-unit-panel{min-width:0}
+#home .home-unit-panel .unit-scroll{max-height:190px;overflow-y:auto;overscroll-behavior:contain}
+#home .home-unit-panel .unit-mini div span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#home .home-unit-panel .unit-chip{min-width:0}
+#home .bedroom-card{grid-column:1/-1}
+#home .bedroom-scroll{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:max-content;align-content:start;max-height:520px;overflow-y:auto;overscroll-behavior:contain;gap:10px;padding:2px 6px 4px 2px}
+#home .bedroom-group{height:auto;min-height:125px;align-self:start;box-sizing:border-box}
+#home .bedroom-grid{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(20px,auto)}
+@media(max-width:1000px){#home .home-analytics{grid-template-columns:1fr}#home .bedroom-scroll{grid-template-columns:repeat(2,minmax(0,1fr));max-height:470px}}
+@media(max-width:600px){#home .bedroom-scroll{grid-template-columns:1fr;max-height:420px}#home .home-unit-panel .unit-scroll{max-height:170px}}

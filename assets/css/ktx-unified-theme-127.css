@@ -1,0 +1,83 @@
+/* KTX Hoc Mon v1.0.27 | Unified visual system - based on approved QR attendance design.
+   Presentation only: no changes to application data, authorization or business operations. */
+:root,[data-theme="light"]{
+ --ktx27-blue:#1f68ef;--ktx27-navy:#153d7c;--ktx27-line:#dce7f5;
+ --ktx27-surface:#fff;--ktx27-back:#f1f6fe;--ktx27-muted:#667fa4;
+ --bg:#f1f6fe;--pn:#fff;--pn2:#f6f9ff;--ln:#dce7f5;--ink:#19355c;--mut:#667fa4;
+ --bl:#216af1;--gr:#15945e;--am:#c17815;--rd:#d73d53;
+ --sh:0 6px 22px rgba(32,77,140,.065);
+}
+body{background:var(--ktx27-back);color:var(--ink);font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:13px}
+/* Main layout */
+main{background:transparent}
+main>.top{background:transparent!important;border-bottom:1px solid #e3ebf8!important;padding-top:14px;padding-bottom:16px;margin-bottom:18px;gap:12px}
+main>.top h2,#ttl{font-weight:800;letter-spacing:-.035em;color:#163c7a;line-height:1.25}
+main>.top .eb{font-weight:750;letter-spacing:.045em;color:#2770eb;text-transform:uppercase;font-size:10px}
+main>.top .mut{color:#6e86a7}
+/* Sidebar: same proportions and selected menu as approved mockup */
+aside,.sidebar,#side{background:#fff!important;border-right:1px solid #e2ebf7!important}
+.brand{padding-bottom:16px;border-bottom:1px solid #e8eef7}.brand b{font-weight:800;color:#174489}.brand small{color:#7892b1}
+.gh{font-weight:750;color:#2f4d79}
+.gi>button,.system-hub-nav{border-radius:10px!important;min-height:38px;transition:background-color .16s ease,color .16s ease,box-shadow .16s ease}
+.gi>button:hover,.system-hub-nav:hover{background:#f1f6ff!important}
+.gi>button.on,.system-hub-nav.on{background:#e9f2ff!important;color:#1560df!important;box-shadow:inset 3px 0 0 #2470f1}
+.pill{border-radius:999px}
+/* Shared cards, statistics, administrative groups */
+.card,.sysfunc-intro,.sysfunc-group,.sysfunc-btn,.sysfunc-footer,
+.worker-filters,.transfer-room-card,.transfer-pro-card,
+[class*="stats"]>div,[class*="stat-card"],[class*="summary-card"]{
+ border-color:var(--ktx27-line);box-shadow:var(--sh)
+}
+.card,.sysfunc-intro,.sysfunc-group,.worker-filters,.transfer-room-card{background:#fff;border-radius:15px}
+.card{border:1px solid var(--ktx27-line)}
+.card h3,.card h4,.sysfunc-group h3{color:var(--ktx27-navy);font-weight:800;letter-spacing:-.018em}
+.sysfunc-btn{border-radius:11px;background:#fff!important;min-height:64px;text-align:left;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
+.sysfunc-btn:hover{transform:translateY(-1px);border-color:#aacbf7;box-shadow:0 9px 23px #2359a619}
+.sysfunc-btn b{color:#213d66}.sysfunc-btn small{color:#768cab;line-height:1.5}
+/* Inputs shared across all modules */
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+select,textarea{border:1px solid #d5e2f3;border-radius:10px;background-color:#fff;color:#203f67;min-height:37px;max-width:100%;font-family:inherit;transition:border-color .15s ease,box-shadow .15s ease}
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus,
+select:focus,textarea:focus{outline:0;border-color:#6da4ff!important;box-shadow:0 0 0 3px #2675ef1a}
+input[type="checkbox"],input[type="radio"]{accent-color:#216af1}
+/* Action and feedback design tokens */
+.btn,button.btn{border-radius:9px;min-height:34px;font-weight:700;letter-spacing:0;box-shadow:none;transition:filter .14s ease,transform .14s ease,box-shadow .14s ease}
+.btn:hover:not(:disabled){filter:brightness(.98);transform:translateY(-1px)}
+.btn:focus-visible,button:focus-visible{outline:2px solid #2171ef;outline-offset:2px}
+.btn:disabled{opacity:.53;cursor:not-allowed;transform:none!important}
+.btn.s,.ta-slate{background:#fff;color:#28528a;border:1px solid #c8d9f1}
+.btn.g,.ta-green,.ta-emerald{background:#e6f7ed;color:#168652;border:1px solid #c9e8d7}
+.btn.r{background:#fff0f2;color:#c83a4d;border:1px solid #f3cad2}
+#tools{gap:7px;align-items:center}
+#tools .btn{white-space:nowrap}
+/* Data tables in every module: scannable, high-contrast header and subtle striping */
+.table-wrap,.tbl-wrap,[class*="table-wrap"],[class*="scroller"]{border-radius:12px;scrollbar-color:#b5c9e8 #f5f8fd}
+table{border-collapse:separate;border-spacing:0;font-variant-numeric:tabular-nums}
+.table-wrap table,.tbl-wrap table{width:100%}
+table thead th{background:#edf4fd;color:#456791;font-weight:800;font-size:11px;letter-spacing:.018em;padding:12px 10px;border-bottom:1px solid #dce7f5}
+table tbody td{padding:10px 10px;border-bottom:1px solid #edf2fa;vertical-align:middle}
+table tbody tr:nth-child(even){background:#f8fbff}
+table tbody tr:hover{background:#edf5ff}
+table tbody tr:last-child td{border-bottom-color:transparent}
+.tag,.badge,[class*="status-pill"],[class*="status-badge"]{border-radius:999px;font-weight:700}
+/* QR module inherits common tokens and keeps its existing event handlers */
+#qr168 .qr168-stats>div{border-radius:13px;background:#fff;box-shadow:var(--sh);border:1px solid #dce7f5}
+#qr168 .qr26-listcard{border:1px solid #e0eaf7;box-shadow:var(--sh)}
+#qr168 .qr168-scroller{scrollbar-color:#b5c9e8 #f5f8fd}
+#qr168 .qr168-scroller th{background:#edf4fd}
+/* Dialogs & mobile forms */
+dialog,[role="dialog"]{border-radius:17px;border:1px solid #dbe6f4;box-shadow:0 22px 62px #102d5733}
+dialog::backdrop{background:rgba(21,40,73,.48)}
+@media(max-width:1000px){main>.top{align-items:flex-start}#tools{row-gap:7px}}
+@media(max-width:700px){
+ body{font-size:13px}
+ main>.top{padding-top:10px;padding-bottom:12px;margin-bottom:12px}
+ main>.top h2,#ttl{font-size:21px}
+ .card{border-radius:12px;padding:12px}
+ .sysfunc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .sysfunc-btn{min-width:0;padding:10px}
+ input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),select,textarea{font-size:16px}
+ .btn{min-height:38px}
+ table thead th,table tbody td{white-space:nowrap}
+}
+@media(prefers-reduced-motion:reduce){.btn,.sysfunc-btn,.gi>button{transition:none!important;transform:none!important}}
