@@ -113,7 +113,7 @@ body{min-height:0;padding:12px!important;background:#f1f6ff}
 <div class="fac-editor-overlay hide" id="facEditOverlay" role="presentation"><div class="card fac-editor" role="dialog" aria-modal="true" aria-labelledby="editTitle"><div id="editor"><h3 id="editTitle">Thêm phòng mới</h3><div class="fields" id="fields"></div><div class="toolbar"><button class="btn primary" id="save">Lưu bản ghi</button><button class="btn" id="cancel">Hủy</button></div></div></div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="excel-import.js"></script><script>
-(()=>{'use strict';const key='ktx_step169_cosovatchat';const cols=["KTX", "Dãy", "Phòng/Khu vực", "Giường", "Điều hòa", "Tủ", "Quạt", "Ổ cắm điện", "Remote", "Bóng tuýp", "Bàn ăn", "Ghế ăn", "Ghi chú"];const nums=new Set([3, 4, 5, 6, 7, 8, 9, 10, 11]);let data=[],editing=-1;const $=x=>document.getElementById(x);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));try{const v=JSON.parse(localStorage.getItem(key)||'[]');window.__facLocalBackup=Array.isArray(v)?v:[];data=[]}catch{}let cloudClient=null,cloudRev=null,cloudReady=false,cloudBusy=false,cloudAdmin=false,cloudUserId=null,cloudRowExists=false;
+(()=>{'use strict';const key='ktx_step169_cosovatchat';const cols=["KTX", "Dãy", "Phòng/Khu vực", "Giường", "Điều hòa", "Tủ", "Quạt", "Ổ cắm điện", "Remote", "Bóng tuýp", "Bàn ăn", "Ghế ăn", "Ghi chú"];const nums=new Set([3, 4, 5, 6, 7, 8, 9, 10, 11]);let data=[],editing=-1;const $=x=>document.getElementById(x);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));window.__facLocalBackup=[];data=[];let cloudClient=null,cloudRev=null,cloudReady=false,cloudBusy=false,cloudAdmin=false,cloudUserId=null,cloudRowExists=false;
 const cloudKey='ktx_step169_cosovatchat';
 const cloudHint=()=>document.getElementById('fac69StorageNote');
 function cloudStatus(t,isError=false){const h=cloudHint();if(h){h.hidden=!isError;h.style.background=isError?'#fff2f2':'#ecfdf5';h.style.borderColor=isError?'#ffc4c4':'#a7f3d0';const label=h.querySelector('[data-cloud-state]');if(label)label.textContent=t;else h.textContent=t;}}
@@ -134,23 +134,13 @@ async function persist(){
   }
   if(res.error)throw res.error;
   cloudRev=res.data.revision;cloudRowExists=true;lastCommitted=deepRows(latest);
-  if((window.__facLocalBackup||[]).length&&!localStorage.getItem(key+'_pre_cloud_migration'))localStorage.setItem(key+'_pre_cloud_migration',JSON.stringify(window.__facLocalBackup));
-  localStorage.setItem(key,JSON.stringify(latest));
   cloudStatus('Đã lưu Supabase ('+latest.length+' phòng/khu vực) · Phiên bản '+cloudRev+'.');return true;
  }catch(e){data=deepRows(lastCommitted);render();cloudStatus('Lưu thất bại, đã hoàn tác thay đổi trên màn hình: '+(e.message||e),true);return false}
  finally{cloudLock(false)}
 }
 async function initializeCloud(){
  cloudLock(true);
- const hint=cloudHint();if(hint){hint.innerHTML='<b data-cloud-state>Đang kết nối Supabase…</b> <button type="button" id="facImportExisting" style="margin-left:12px;padding:6px 10px;border-radius:7px;border:1px solid #a6b9de;background:#fff">Chuyển dữ liệu cũ lên Cloud (Admin)</button> <button type="button" id="facCloudRefresh" style="margin-left:6px;padding:6px 10px;border-radius:7px;border:1px solid #a6b9de;background:#fff">Tải lại Cloud</button>'}
- $('facImportExisting').onclick=async()=>{
-  if(!cloudReady||!cloudAdmin)return cloudStatus('Chỉ Admin đã kết nối Cloud mới được chuyển dữ liệu.',true);
-  const saved=window.__facLocalBackup||[];
-  if(!saved.length)return cloudStatus('Thiết bị không có dữ liệu cũ để chuyển.',true);
-  if(cloudRowExists && lastCommitted.length)return cloudStatus('Cloud đã có dữ liệu. Không ghi đè hàng loạt; hãy xuất cả 2 bên và đối chiếu.',true);
-  if(!confirm('CHUYỂN DỮ LIỆU CƠ SỞ VẬT CHẤT LÊN SUPABASE\nThiết bị này: '+saved.length+' phòng/khu vực.\nCloud: '+lastCommitted.length+' phòng/khu vực.\nHãy xuất bản sao lưu trước. Chỉ tiếp tục nếu đây là bộ dữ liệu chuẩn.'))return;
-  data=deepRows(saved);render();await persist();
- };
+ const hint=cloudHint();if(hint){hint.innerHTML='<b data-cloud-state>Đang kết nối Supabase…</b> <button type="button" id="facCloudRefresh" style="margin-left:6px;padding:6px 10px;border-radius:7px;border:1px solid #a6b9de;background:#fff">Tải lại Cloud</button>'}
  $('facCloudRefresh').onclick=async()=>{
   if(cloudBusy)return;
   if(JSON.stringify(data)!==JSON.stringify(lastCommitted))return cloudStatus('Có thay đổi chưa được xác nhận lưu. Không tải đè.',true);

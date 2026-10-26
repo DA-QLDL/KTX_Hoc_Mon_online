@@ -121,9 +121,9 @@ function menuParse(rows,sheetName){
    const rice=U.filter(x=>/^cơm\b/i.test(x.ten)),rest=U.filter(x=>!/^cơm\b/i.test(x.ten)),ord=[...rice,...rest];o[s]=ord.map(x=>x.ten);o.q[s]=ord.map(x=>x.dl)}
   days[key]=o});
  return{kind,days}}
-let menu={};try{menu=JSON.parse(localStorage.getItem('ktx_kiem_tra_menu_ncc_v1')||'{}')}catch(e){}let kind='man',filesLog=[];const today=()=>{const d=new Date();return[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')};$('date').value=today();$('meal').value='trua';function vendorList(){const old=$('vendor').value||'all';$('vendor').innerHTML='<option value="all">Tất cả NCC</option>'+vendors.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');$('vendor').value=old}vendorList();
+let menu={};let kind='man',filesLog=[];const today=()=>{const d=new Date();return[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')};$('date').value=today();$('meal').value='trua';function vendorList(){const old=$('vendor').value||'all';$('vendor').innerHTML='<option value="all">Tất cả NCC</option>'+vendors.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');$('vendor').value=old}vendorList();
 function show(){const day=$('date').value,s=$('meal').value,n=$('vendor').value;let L=[];for(const v of n==='all'?vendors:[n]){const d=menu[v]?.[kind]?.[day];(d?.[s]||[]).forEach((name,i)=>L.push({vendor:v,name,dl:d?.q?.[s]?.[i]||''}))}const tr=$('rows');tr.innerHTML=L.length?L.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.name)}${n==='all'?`<div class="vendor">${esc(r.vendor)}</div>`:''}</td><td>${esc(r.dl)||'—'}</td></tr>`).join(''):'<tr><td class="empty" colspan="3">Chưa có thực đơn cho lựa chọn này.</td></tr>';$('count').textContent=L.length+' món';$('heading').textContent=(kind==='man'?'Mặn':'Chay')+' · '+s.toUpperCase()+' · '+day;document.querySelectorAll('[data-kind]').forEach(b=>b.classList.toggle('active',b.dataset.kind===kind))}
-function status(msg,bad){$('status').textContent=msg;$('status').classList.toggle('bad',!!bad)}function persist(){try{localStorage.setItem('ktx_kiem_tra_menu_ncc_v1',JSON.stringify(menu))}catch(e){status('Đã đọc file, nhưng bộ nhớ thiết bị không đủ để lưu tạm. Vẫn xem được trong phiên này.',true)}}
+function status(msg,bad){$('status').textContent=msg;$('status').classList.toggle('bad',!!bad)}function persist(){/* Preview data stays in volatile memory until Supabase confirms a save. */}
 $('files').addEventListener('change',async e=>{const fs=[...e.target.files];e.target.value='';if(!fs.length)return;if(!window.XLSX){status('Không tải được thư viện đọc Excel. Hãy kiểm tra kết nối mạng.',true);return}let good=0,bad=0,details=[],first=null;for(const f of fs){try{const wb=XLSX.read(await f.arrayBuffer(),{type:'array',cellDates:false}),head=wb.SheetNames.slice(0,3).map(s=>(XLSX.utils.sheet_to_json(wb.Sheets[s],{header:1,raw:false,defval:''})||[]).slice(0,4).flat().join(' ')).join(' ');const vendor=detect(f.name+' '+head);if(!vendor){bad++;details.push('✗ '+f.name+': Chưa xác định được NCC từ tên file/nội dung; không nhập nhầm NCC');continue}let days=0,man=0,chay=0;for(const sn of wb.SheetNames){const data=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:false,defval:''});const r=menuParse(data,sn);if(!r)continue;for(const [date,o] of Object.entries(r.days)){if(!Object.values(['sang','trua','chieu']).some(x=>o[x]?.length))continue;const target=((menu[vendor]=menu[vendor]||{})[r.kind]=menu[vendor][r.kind]||{});target[date]=o;days++;if(r.kind==='man')man++;else chay++;if(!first)first={vendor,date}}}if(days){good++;details.push(`✓ ${f.name}: ${vendor} · ${man} ngày Mặn, ${chay} ngày Chay`)}else{bad++;details.push('✗ '+f.name+': Không tìm thấy bảng Sáng/Trưa/Tối và ngày ăn')} }catch(ex){bad++;details.push('✗ '+f.name+': '+ex.message)}}persist();if(first){$('vendor').value=first.vendor;$('date').value=first.date}status('Đã nhận '+good+'/'+fs.length+' file; '+bad+' file chưa đọc được.'+(first?' Đã chuyển tới thực đơn đầu tiên.':''),!good);$('log').textContent=details.join('\n');show()});
 
 // STEP213: same-origin parent bridge; do not duplicate credentials or Cloud connections.
@@ -143,9 +143,14 @@ cloudSave.onclick=async()=>{
  }
  if(!batches.length){status('Chưa có thực đơn để lưu. Hãy nhập Excel hoặc tải dữ liệu trước.',true);return}
  if(!confirm('Lưu '+batches.length+' bảng thực đơn lên Supabase? Dữ liệu cùng ngày/bữa/NCC/loại sẽ được cập nhật.'))return;
- let done=0,bad=[];
- for(const row of batches){const x=await sb.from('ktx_meal_menus').upsert(row,{onConflict:'meal_date,meal_period,vendor,menu_type'});if(x.error)bad.push(row.vendor+' '+row.meal_date+': '+x.error.message);else done++}
- status('Đã lưu '+done+'/'+batches.length+' bảng lên Cloud.'+(bad.length?' Lỗi: '+bad.slice(0,4).join(' | '):''),!!bad.length);
+ cloudSave.disabled=true;
+ try{
+  const {data,error}=await sb.rpc('ktx_commit_meal_menu_batch',{p_rows:batches});
+  if(error)throw error;
+  status('Đã lưu nguyên tử '+batches.length+' bảng thực đơn lên Supabase.');
+  await loadMenuCloud215();
+ }catch(e){status('Chưa lưu: '+(e.message||String(e))+'. Kiểm tra RPC 21__105_MEAL_MENU_ATOMIC_RPC.sql và quyền Supabase.',true)}
+ finally{cloudSave.disabled=false}
 };
 async function loadMenuCloud215(){
  const sb=client();if(!sb){status('Không kết nối được Supabase. Hãy mở tiện ích từ ứng dụng KTX đã đăng nhập.',true);return}
@@ -167,7 +172,7 @@ function refreshCloud215(){clearTimeout(cloudLoadTimer215);cloudLoadTimer215=set
  const sb=client();if(!sb){status('Chưa có kết nối Cloud trong cửa sổ này. Hãy mở Xem thực đơn từ ứng dụng đã đăng nhập.',true);return}
  try{await loadMenuCloud215()}catch(e){status('Không thể đồng bộ Menu Cloud: '+(e?.message||e),true)}
 },250)}
-$('clear').onclick=()=>{if(!confirm('Xóa dữ liệu thực đơn đã nhập trên trình duyệt này? Không xóa dữ liệu Cloud.'))return;menu={};localStorage.removeItem('ktx_kiem_tra_menu_ncc_v1');status('Đã xóa bản xem trước trên thiết bị.');$('log').textContent='';show()};$('refresh').onclick=refreshCloud215;['date','meal'].forEach(x=>$(x).addEventListener('change',()=>{show();refreshCloud215()}));$('vendor').addEventListener('change',show);document.querySelectorAll('[data-kind]').forEach(b=>b.onclick=()=>{kind=b.dataset.kind;show()});show();
+$('clear').onclick=()=>{if(!confirm('Xóa bản xem trước trong phiên này? Không xóa dữ liệu Cloud.'))return;menu={};status('Đã xóa bản xem trước trong phiên làm việc.');$('log').textContent='';show()};$('refresh').onclick=refreshCloud215;['date','meal'].forEach(x=>$(x).addEventListener('change',()=>{show();refreshCloud215()}));$('vendor').addEventListener('change',show);document.querySelectorAll('[data-kind]').forEach(b=>b.onclick=()=>{kind=b.dataset.kind;show()});show();
 // Wait for the authenticated parent bridge to be ready when mounted as iframe.
 let attempts215=0;const bootstrap215=setInterval(()=>{if(client()){clearInterval(bootstrap215);refreshCloud215()}else if(++attempts215>=25){clearInterval(bootstrap215);status('Không tìm thấy phiên Supabase dùng chung. Hãy mở từ nút Xem thực đơn trong ứng dụng đã đăng nhập.',true)}},400);
 })();
