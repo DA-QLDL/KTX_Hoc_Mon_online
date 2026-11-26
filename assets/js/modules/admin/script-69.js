@@ -1,1 +1,0 @@
-(function(){function hide(){var sub=typeof ME!=='undefined'&&ME.id&&ME.role!=='admin';document.querySelectorAll('nav button[data-p="sysfunc"],nav .system-hub-nav').forEach(function(b){b.style.display=sub?'none':''});}document.addEventListener('click',function(){setTimeout(hide,0)},true);setTimeout(hide,400);})();

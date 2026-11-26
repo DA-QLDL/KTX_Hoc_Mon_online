@@ -1,7 +1,0 @@
-/* Independent button visual feedback for PC and Mobile */
-button{ -webkit-tap-highlight-color:transparent; }
-button:active{animation:none!important;}
-@media (hover:none){button{touch-action:manipulation}}
-#mobile180 button:not(:focus-visible):focus{outline:none!important}
-#mobile180 .maction:active,#mobile180 .mbottom button:active{filter:none!important;transform:none!important}
-#mobile180 .maction,#mobile180 .mbottom button{animation:none!important;transition:background-color .12s ease,border-color .12s ease,color .12s ease!important}
