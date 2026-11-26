@@ -1,0 +1,40 @@
+/* KTX Hoc Mon V2.0.80 — consistent icon contrast on interactive actions.
+   Inherit the button's actual foreground; don't hardcode white on light actions.
+   Scoped to interactive controls so informative/status badges retain their colors.
+   No layout, state, data or JavaScript changes. */
+
+:is(button.btn, label.btn, a.btn, [role="button"].btn,
+    button.miconbtn, button.roomd-type, button.roomd-close,
+    button.roomd-action, button.sysfunc-btn,
+    button.ktx-action, a.ktx-action,
+    #mobile180 button.m180-quick-btn,
+    dialog .vf button, dialog .eh button,
+    dialog .vh button)
+  :is(svg.i, svg.lucide, svg.icon, svg[class*="icon"], i, .material-icons, .material-symbols-outlined){
+  color:inherit!important;
+  stroke:currentColor!important;
+  opacity:1!important;
+}
+/* External SVG <use> icons can inherit a stale stroke even after SVG color changes. */
+:is(button.btn, label.btn, a.btn, [role="button"].btn,
+    button.miconbtn, button.roomd-type, button.roomd-close,
+    button.roomd-action, button.ktx-action,
+    dialog .vf button, dialog .eh button, dialog .vh button)
+  svg.i use{stroke:currentColor!important;color:inherit!important}
+
+/* Named principal actions: icon and label must use the same foreground.
+   In the worker detail popup the original blue icon is nearly invisible. */
+#vdl .step165-view-actions :is(#ve2,#vx,#vTransfer239) svg.i,
+#dlg .vf #ds svg.i,
+#dld .vf :is(#dlp,#dly) svg.i{
+  color:inherit!important;
+  stroke:currentColor!important;
+  opacity:1!important;
+}
+
+/* Preserve clarity of light-background icon-only controls. */
+:is(dialog, #rdl, #mobile180) :is(button.btn.s, button.miconbtn, button.roomd-close)
+  :is(svg.i, svg.lucide){color:inherit!important;stroke:currentColor!important}
+
+/* Disabled controls stay visibly disabled; do not force their icon to full opacity. */
+:is(button.btn, button.miconbtn, dialog .vf button):disabled :is(svg.i,svg.lucide,svg.icon){opacity:inherit!important}

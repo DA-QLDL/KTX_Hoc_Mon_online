@@ -1,0 +1,22 @@
+/* QLKTX V48 - consistent font sizing, restricted to System Log page. */
+#log .card,
+#log .log-toolbar,
+#log #lgbody { font-size:12px !important; }
+#log .log-toolbar :is(input,select),
+#log .log-toolbar input::placeholder { font-size:12px !important; line-height:1.45 !important; }
+#log #lgbody > .mut { font-size:12px !important; line-height:1.5 !important; }
+#log #lgbody table :is(th,td) {
+  font-size:12px !important;
+  line-height:1.5 !important;
+  vertical-align:middle;
+}
+#log #lgbody table th { font-weight:800 !important; }
+#log #lgbody :is(.log-actor,.log-detail,.log-subject,.log-worker-link,
+  .log-audit-detail,.log-detail-toggle,.tag,.diff-pill,.worker-audit-diff,
+  .worker-audit-diff-row,.worker-audit-values) { font-size:12px !important; line-height:1.5 !important; }
+#log #lgbody .log-actor .mut { font-size:12px !important; line-height:1.5 !important; }
+#log #lgbody :is(.log-detail,.log-audit-detail) { overflow-wrap:anywhere; }
+@media (max-width:720px) {
+  #log .log-toolbar :is(input,select) { font-size:12px !important; }
+  #log #lgbody table :is(th,td) { font-size:12px !important; }
+}

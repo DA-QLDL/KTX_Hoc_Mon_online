@@ -1,0 +1,22 @@
+/* KTX v2230 — nguồn CSS duy nhất cho hai nút CCCD/QR, chỉ hiển thị icon */
+/* Giữ nguyên khung quét của biểu mẫu Thêm công nhân. */
+.v2098-scanner{margin:0 0 14px;padding:12px;border:1px solid #c8daf8;border-radius:15px;background:#f4f8ff;box-sizing:border-box;min-width:0}
+/* Đăng ký vào/ra KTX: chỉ còn hai icon, không hộp bao ngoài. */
+.ktx2221-source{margin:0 0 14px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;box-sizing:border-box;min-width:0}
+.v2098-scanner-row{display:flex;flex-direction:column;align-items:stretch;gap:10px}
+
+/* Hai nút là button thật, chỉ giữ icon, không nền/viền/khung */
+.v2098-scanner .ktxqr-actions,.ktx2221-source .ktxqr-actions{display:flex;gap:24px;align-items:center;justify-content:center;width:100%;min-width:0;margin:0;padding:12px 0 6px;box-sizing:border-box}
+.v2098-scanner .ktxqr-actions>.ktxqr-icon,.ktx2221-source .ktxqr-actions>.ktxqr-icon{position:relative;display:flex;align-items:center;justify-content:center;float:none;flex:none;box-sizing:border-box;width:54px;height:54px;min-width:54px;max-width:54px;min-height:54px;max-height:54px;margin:0;padding:0;border:0!important;border-radius:0!important;cursor:pointer;overflow:visible;transition:transform .16s ease,opacity .16s ease,filter .16s ease;appearance:none;-webkit-appearance:none;font-size:0;line-height:0;color:transparent;background:transparent!important;box-shadow:none!important}
+.v2098-scanner .ktxqr-icon:before,.ktx2221-source .ktxqr-icon:before{content:'';display:block;position:static;flex:none;width:48px;height:48px;background-repeat:no-repeat;background-position:center;background-size:contain;pointer-events:none}
+.v2098-scanner .ktxqr-icon:hover,.ktx2221-source .ktxqr-icon:hover{transform:scale(1.08)}
+.v2098-scanner .ktxqr-icon:focus-visible,.ktx2221-source .ktxqr-icon:focus-visible{outline:0;filter:drop-shadow(0 0 .75rem rgba(39,84,190,.35))}
+.v2098-scanner .ktxqr-scan,.ktx2221-source .ktxqr-scan{background:transparent!important}
+.v2098-scanner .ktxqr-photo,.ktx2221-source .ktxqr-photo{background:transparent!important}
+.v2098-scanner .ktxqr-scan:before,.ktx2221-source .ktxqr-scan:before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23005fe0' stroke-width='4.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 8H14a6 6 0 0 0-6 6v6M44 8h6a6 6 0 0 1 6 6v6M8 44v6a6 6 0 0 0 6 6h6m24 0h6a6 6 0 0 0 6-6v-6'/%3E%3Cpath d='M20 20h11v11H20zM25 24v3m12-7h7v7h-7zm-17 17h7v7h-7zm17 0h8v8h-8zm-6 0h2m-3 6h3m9-18v4m-18 3h3'/%3E%3C/g%3E%3C/svg%3E")}
+.v2098-scanner .ktxqr-photo:before,.ktx2221-source .ktxqr-photo:before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%235b2be0' stroke-width='4.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='7' y='10' width='42' height='42' rx='8'/%3E%3Ccircle cx='36' cy='22' r='4.5' fill='%235b2be0' stroke='none'/%3E%3Cpath d='m12 43 13-13 11 11 6-7 5 7'/%3E%3Ccircle cx='49' cy='48' r='12' fill='white'/%3E%3Cpath d='M49 42v12m-6-6h12' stroke='%235b2be0'/%3E%3C/g%3E%3C/svg%3E")}
+.v2098-scanner .ktxqr-file,.ktx2221-source .ktxqr-file{display:none}
+.v2098-scanner video{width:100%;max-height:250px;object-fit:contain;margin-top:8px;background:#000}
+.v2098-status,.ktx2221-message{font-size:12px;line-height:1.5;color:#526b8b}
+.ktx2221-message.error{color:#ba2843}
+@media(max-width:760px){.v2098-scanner .ktxqr-actions,.ktx2221-source .ktxqr-actions{gap:20px;padding:10px 0 4px}.v2098-scanner .ktxqr-actions>.ktxqr-icon,.ktx2221-source .ktxqr-actions>.ktxqr-icon{width:50px;height:50px;min-width:50px;max-width:50px;min-height:50px;max-height:50px}.v2098-scanner .ktxqr-icon:before,.ktx2221-source .ktxqr-icon:before{width:44px;height:44px}}

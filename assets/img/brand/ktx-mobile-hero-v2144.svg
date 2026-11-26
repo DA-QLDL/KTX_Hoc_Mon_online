@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="370" viewBox="0 0 1200 370">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1497ed"/><stop offset=".5" stop-color="#426be9"/><stop offset="1" stop-color="#292fba"/></linearGradient><linearGradient id="facade" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a1d5ff" stop-opacity=".62"/><stop offset="1" stop-color="#7b87e6" stop-opacity=".28"/></linearGradient><linearGradient id="haze" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f6faff" stop-opacity=".04"/><stop offset="1" stop-color="#121f79" stop-opacity=".4"/></linearGradient></defs>
+<rect width="1200" height="370" rx="30" fill="url(#sky)"/>
+<path d="M0 280Q250 205 445 290T860 265T1200 260V370H0" fill="#44b7ff" opacity=".23"/>
+<path d="M0 326Q305 245 555 320T1200 305V370H0" fill="#9cbdff" opacity=".25"/>
+<g opacity=".62" transform="translate(700 69)">
+ <path d="M-28 207L-28 76L215 6L392 70L392 218L220 265Z" fill="#d2e5ff" opacity=".19"/>
+ <path d="M2 83L216 22L216 249L2 201Z" fill="url(#facade)"/>
+ <path d="M216 22L367 78L367 201L216 249Z" fill="#6ea0e8" opacity=".51"/>
+ <path d="M-10 85L216 6L380 69L367 78L216 22L2 100Z" fill="#cadcff" opacity=".74"/>
+ <g fill="#e9f8ff" opacity=".66">
+ <rect x="24" y="109" width="26" height="21" rx="2"/><rect x="64" y="98" width="26" height="21" rx="2"/><rect x="104" y="87" width="26" height="21" rx="2"/><rect x="144" y="75" width="26" height="21" rx="2"/>
+ <rect x="24" y="149" width="26" height="21" rx="2"/><rect x="64" y="138" width="26" height="21" rx="2"/><rect x="104" y="127" width="26" height="21" rx="2"/><rect x="144" y="115" width="26" height="21" rx="2"/>
+ <rect x="24" y="186" width="26" height="17" rx="2"/><rect x="64" y="177" width="26" height="17" rx="2"/><rect x="104" y="165" width="26" height="17" rx="2"/><rect x="144" y="154" width="26" height="17" rx="2"/>
+ <path d="M244 67l19 7v19l-19-7zm34 13l19 7v19l-19-7zm34 13l19 7v19l-19-7zm-68 19l19 7v19l-19-7zm34 13l19 7v19l-19-7zm34 13l19 7v19l-19-7zm-68 20l19 7v19l-19-7zm34 12l19 7v19l-19-7zm34 13l19 7v19l-19-7z"/>
+ </g>
+ <path d="M-90 237Q96 191 213 260T489 217" fill="none" stroke="#def6ff" stroke-width="5" opacity=".25"/>
+ <g fill="#132a91" opacity=".85"><circle cx="-39" cy="228" r="37"/><circle cx="-72" cy="235" r="27"/><rect x="-44" y="228" width="10" height="51"/><circle cx="425" cy="218" r="32"/><circle cx="454" cy="225" r="26"/><rect x="422" y="218" width="9" height="55"/></g>
+</g><rect width="1200" height="370" rx="30" fill="url(#haze)"/></svg>

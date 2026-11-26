@@ -1,0 +1,74 @@
+/* V49: QR tab banner consistency (desktop only).
+   Keep heading and action tabs in one stable first grid row, independent
+   of pending review table/history content size. */
+@media screen and (min-width:901px){
+  html body[data-page="qr"]:not(.auth-locked) section#qr:not(.hide):has(> .qr224-heading):has(> .qr224-tabs){
+    display:grid!important;
+    grid-template-columns:minmax(210px,29fr) minmax(0,71fr)!important;
+    grid-template-rows:auto auto!important;
+    grid-auto-rows:auto!important;
+    align-items:stretch!important;
+    align-content:start!important;
+  }
+  html body[data-page="qr"]:not(.auth-locked) section#qr:not(.hide)> .qr224-heading{
+    grid-column:1/-1!important;
+    grid-row:1!important;
+    height:auto!important;
+    min-height:96px!important;
+    max-height:none!important;
+    margin:0 0 12px!important;
+    padding:10px 72% 10px 19px!important;
+    align-self:start!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+  }
+  html body[data-page="qr"]:not(.auth-locked) section#qr:not(.hide)> .qr224-tabs{
+    grid-column:2!important;
+    grid-row:1!important;
+    height:auto!important;
+    min-height:96px!important;
+    max-height:none!important;
+    margin:0 0 12px!important;
+    padding:10px 18px 0 5px!important;
+    align-self:start!important;
+    align-content:flex-start!important;
+    box-sizing:border-box!important;
+  }
+  html body[data-page="qr"]:not(.auth-locked) section#qr:not(.hide)>:not(.qr224-heading):not(.qr224-tabs){
+    grid-column:1/-1!important;
+    grid-row:auto!important;
+  }
+}
+@media screen and (min-width:901px) and (max-width:1120px){
+  html body[data-page="qr"]:not(.auth-locked) section#qr:not(.hide):has(> .qr224-heading):has(> .qr224-tabs){
+    grid-template-columns:minmax(175px,29fr) minmax(0,71fr)!important;
+  }
+}
+
+
+/* V145 - QR desktop sticky hero + action tabs.
+   The PC main pane is the vertical scroll container; keep the two cells in the
+   first QR grid row pinned together, without duplicating the generic .top.
+   Do not apply to mobile where #qr may be mounted inside #m196QrHost. */
+@media screen and (min-width:901px){
+  html body[data-page="qr"]:not(.auth-locked) > main section#qr:not(.hide):not(.m196-mounted) > .qr224-heading,
+  html body[data-page="qr"]:not(.auth-locked) > main section#qr:not(.hide):not(.m196-mounted) > .qr224-tabs{
+    position:sticky!important;
+    top:0!important;
+    z-index:125!important;
+    align-self:start!important;
+  }
+  html body[data-page="qr"]:not(.auth-locked) > main section#qr:not(.hide):not(.m196-mounted) > .qr224-heading{
+    isolation:isolate!important;
+    background-clip:padding-box!important;
+  }
+  html body[data-page="qr"]:not(.auth-locked) > main section#qr:not(.hide):not(.m196-mounted) > .qr224-tabs{
+    z-index:126!important;
+    /* Transparent action row is deliberately layered over the pinned image. */
+    pointer-events:auto!important;
+  }
+  html body[data-page="qr"]:not(.auth-locked) > main section#qr:not(.hide):not(.m196-mounted) > #qb{
+    position:relative!important;
+    z-index:1!important;
+  }
+}
