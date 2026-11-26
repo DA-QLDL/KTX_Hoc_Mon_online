@@ -3170,6 +3170,11 @@ function rpUnits(){
  });
  return c;
 }
+// Chú thích cố định chỉ xuất sau dòng Tổng giảm (cả hai KTX và từng KTX).
+// Điều chuyển, nghỉ việc và chuyển ra ngoài ở đều là nguyên nhân giảm quân số.
+function rp143DecreaseNote(){
+ return 'Điều chuyển, nghỉ việc, chuyển ra ngoài ở';
+}
 async function openRp(){if(!W.length){alert('Chưa có dữ liệu công nhân.');return}
  const day=ldy();await rp160LoadCloud(day);const ks=rpCalc(day);
  $('rpb').innerHTML=`<label class="fl">Ngày báo cáo <input type="date" lang="vi-VN" id="rd0" value="${day}"></label>`+ks.map((x,i)=>`<div class="dy" style="margin:12px 0 0"><b>${esc(x.k)}</b> <span class="mut">· ${x.tot.toLocaleString('vi-VN')} CNCH · ${x.days} dãy · ${x.rooms} phòng</span><div class="fg" style="margin-top:8px"><label>Tổng tăng <input type="number" min="0" id="ri${i}" value="${x.inc}"></label><label>Tổng giảm <input type="number" min="0" id="rx${i}" value="${x.dec}"></label></div><label class="fl">Lý do giảm (${esc(x.k)}) <input id="rr${i}" value="${esc(arcWhy(x.k,day))}"></label></div>`).join('')+
