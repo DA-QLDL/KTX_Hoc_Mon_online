@@ -3186,6 +3186,14 @@ async function saveDocx(lines,name){try{
  z.file('word/styles.xml',H+`<w:styles ${NS}><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman"/><w:sz w:val="28"/><w:szCs w:val="28"/><w:lang w:val="vi-VN"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="160" w:line="278" w:lineRule="auto"/><w:jc w:val="both"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style></w:styles>`);
  z.file('word/document.xml',H+`<w:document ${NS}><w:body>${lines.map(t=>`<w:p><w:r><w:t xml:space="preserve">${x(t)}</w:t></w:r></w:p>`).join('')}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>`);
  const blob=await z.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+ const status=document.getElementById('mp_export_status');
+ if(status&&String(name).startsWith('bao-cao-suat-an-')){
+  if(window.KTX_MEAL_WORD_URL){try{URL.revokeObjectURL(window.KTX_MEAL_WORD_URL)}catch(e){}}
+  const url=URL.createObjectURL(blob);window.KTX_MEAL_WORD_URL=url;
+  const link=document.createElement('a');link.href=url;link.download=name;link.textContent='Tải file báo cáo Word tại đây nếu chưa tự tải';
+  link.style.cssText='color:#155bb4;text-decoration:underline;font-weight:700';
+  status.replaceChildren(link);
+ }
  return dlBrowser(name,blob,'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
  }catch(e){alert('Không xuất được Word: '+(e&&e.message||e));return false}
 }
@@ -3541,8 +3549,8 @@ function mealPage(){const el=$('meal');
   el.innerHTML=`<div class="card"><div class="ctl"><label class="fl">Ngày<input type="date" lang="vi-VN" id="mp_d" value="${RP.date}"></label>
    <div class="fl">Buổi<div class="seg" id="mp_s">${SES.map(([k,l])=>`<button type="button" data-s="${k}" class="${k==RP.ses?'on':''}">${l}</button>`).join('')}</div></div>
    <label class="fl">KTX<select id="mp_k">${['KTX1','KTX2','KTX3'].map(k=>`<option>${k}</option>`).join('')}</select></label>
-   <label class="fl">Đơn giá<input id="mp_p" value="${esc(RP.price)}" placeholder="VD: 40.000đ" style="width:140px"></label><span class="row" style="margin-left:auto"><button class="btn meal-report-btn" id="mp_w">${ico('dl')}Xuất báo cáo</button><button class="btn meal-copy-btn" id="mp_c">${ico('copy')}Sao chép báo cáo</button></span></div>
-   <div id="mp_wk" style="margin-top:14px"></div>
+   <label class="fl">Đơn giá<input id="mp_p" value="${esc(RP.price)}" placeholder="VD: 40.000đ" style="width:140px"></label><span class="row" style="margin-left:auto"><button type="button" class="btn meal-report-btn" id="mp_w">${ico('dl')}Xuất báo cáo</button><button class="btn meal-copy-btn" id="mp_c">${ico('copy')}Sao chép báo cáo</button></span></div>
+   <div id="mp_wk" style="margin-top:14px"></div><div id="mp_export_status" role="status" aria-live="polite" style="font-size:12px;color:#14549c;margin:2px 0 0"></div>
   <style>
 #mp_stats{margin:9px 0 12px;font-family:inherit}.mp-stat-kpis{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}.mp-stat-kpi{border:1px solid #d9e6fa;background:#f1f6ff;border-radius:13px;padding:13px 18px;min-width:200px;box-sizing:border-box}.mp-stat-kpi.primary{background:linear-gradient(130deg,#1766ec,#0340bd);color:white;border-color:#1663e8}.mp-stat-kpi small{display:block;font-size:12px;font-weight:700;margin-bottom:5px;opacity:.92}.mp-stat-kpi strong{font-size:26px;letter-spacing:-.6px}.mp-stat-panels{display:grid;grid-template-columns:1.1fr 1fr;gap:12px}.mp-stat-panel{border-radius:14px;background:#fff;border:1px solid #d9e4f4;padding:14px 15px;min-width:0;box-shadow:0 2px 8px rgba(21,61,120,.055)}.mp-stat-panel h3{font-size:14px;margin:0 0 13px;color:#102b57}.mp-bars{display:flex;gap:8px;align-items:flex-end;min-height:190px;border-bottom:1px solid #d7e3f3;padding:14px 2px 0}.mp-bar-item{flex:1;min-width:0;display:flex;align-items:center;flex-direction:column;justify-content:flex-end;height:180px;gap:5px}.mp-bar-num{font-size:12px;font-weight:800;color:#14284c}.mp-bar{width:min(70%,58px);min-height:3px;border-radius:6px 6px 0 0;background:var(--bar-color);opacity:.86}.mp-bar-label{height:37px;margin-top:7px;text-align:center;font-size:10.5px;font-weight:700;line-height:1.16;overflow-wrap:anywhere;color:#284367}.mp-share-wrap{display:flex;gap:19px;align-items:center}.mp-donut{width:172px;height:172px;flex:0 0 172px;border-radius:50%;position:relative;background:var(--donut);display:flex;justify-content:center;align-items:center}.mp-donut-inner{height:106px;width:106px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;flex-direction:column;box-shadow:0 0 2px #ddd}.mp-donut-inner strong{font-size:24px;color:#123565}.mp-donut-inner small{font-size:11px;color:#5b759b}.mp-share-rows{flex:1;min-width:0}.mp-share-row{display:grid;grid-template-columns:10px minmax(80px,1fr) 52px 49px;gap:7px;align-items:center;font-size:11.5px;padding:6px 0;border-bottom:1px solid #edf1f8}.mp-share-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:650}.mp-share-value,.mp-share-percent{text-align:right;font-variant-numeric:tabular-nums}.mp-share-total{font-weight:800;color:#106b34;background:#e9faed;padding:8px 6px;border-radius:6px;margin-top:5px}.mp-share-key{width:10px;height:10px;border-radius:3px;background:var(--bar-color)}.mp-stat-empty{font-size:13px;color:#667c97;padding:30px 6px;text-align:center}@media(max-width:1000px){.mp-stat-panels{grid-template-columns:1fr}.mp-share-wrap{justify-content:center}}@media(max-width:580px){.mp-share-wrap{flex-wrap:wrap}.mp-donut{height:145px;width:145px;flex-basis:145px}.mp-share-rows{flex-basis:100%}.mp-bar-label{font-size:9px}}
 
@@ -3580,7 +3588,7 @@ function mealPage(){const el=$('meal');
 #mp_stats .mp-stat-panels{display:contents}
 #mp_stats .mp-stat-panel{min-width:0;padding:9px 11px;border-radius:10px}
 #mp_stats .mp-stat-panel:first-child{grid-column:1;grid-row:2}
-#mp_stats .mp-stat-panel:last-child{grid-column:2;grid-row:1 / span 2;display:flex;flex-direction:column;justify-content:center;align-self:start;margin-top:24px}
+#mp_stats .mp-stat-panel:last-child{grid-column:2;grid-row:2;display:flex;flex-direction:column;justify-content:center;align-self:stretch;margin-top:0}
 #mp_stats .mp-stat-panel h3{font-size:12px;margin-bottom:6px}
 #mp_stats .mp-bar-track{height:112px}
 #mp_stats .mp-bar{max-height:105px}
@@ -3593,7 +3601,7 @@ function mealPage(){const el=$('meal');
 .mp-vendor-settings{margin-bottom:7px;border:1px solid #dce7f5;border-radius:9px;background:#f9fbff;padding:0 8px}
 .mp-vendor-settings summary{cursor:pointer;padding:6px 2px;color:#526b90;font-size:11px;user-select:none}
 .mp-vendor-settings .meal-suppliers{margin:4px 0 9px}
-@media(max-width:890px){#mp_stats{grid-template-columns:1fr;grid-template-rows:auto auto auto}#mp_stats .mp-stat-kpis{grid-column:1;grid-row:1}#mp_stats .mp-stat-panel:first-child{grid-column:1;grid-row:2}#mp_stats .mp-stat-panel:last-child{grid-column:1;grid-row:3}}
+@media(max-width:890px){#mp_stats{grid-template-columns:1fr;grid-template-rows:auto auto auto}#mp_stats .mp-stat-kpis{grid-column:1;grid-row:1}#mp_stats .mp-stat-panel:first-child{grid-column:1;grid-row:2}#mp_stats .mp-stat-panel:last-child{grid-column:1;grid-row:3;align-self:stretch;margin-top:0}}
 @media(max-width:480px){#mp_stats .mp-stat-kpis{flex-wrap:wrap}#mp_stats .mp-stat-kpi{flex:1 1 140px}}
 /* Import controls sit in unused space after daily total without moving the charts. */
 .mp-analytics-area{position:relative;min-width:0}
@@ -3601,6 +3609,13 @@ function mealPage(){const el=$('meal');
 .mp-analytics-area .mp-import-footer select{width:192px;min-width:150px;max-width:192px;height:34px;margin:0}
 .mp-analytics-area .mp-import-footer .meal-import-btn{height:34px;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;margin:0}
 @media(max-width:1120px){.mp-analytics-area .mp-import-footer{position:static;justify-content:flex-start!important;margin:5px 0 9px;flex-wrap:wrap!important}.mp-analytics-area .mp-import-footer select{width:auto;max-width:240px}}
+/* v26-11-2026: compact supplier selector, center-left alignment. */
+#meal .mp-vendor-settings{padding:4px 7px;margin:4px 0 7px;border-radius:9px}
+#meal .mp-vendor-settings .meal-suppliers{box-sizing:border-box;min-height:54px;margin:0;padding:7px 10px!important;display:flex;flex-direction:column;justify-content:center;align-items:stretch;gap:0}
+#meal .mp-vendor-settings .meal-supplier-toolbar:not(:has(> button:not([hidden]))){display:none}
+#meal .mp-vendor-settings .meal-supplier-toolbar:empty{display:none}
+#meal .mp-vendor-settings .meal-supplier-list{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;align-content:center;gap:7px 10px;margin:0;padding:0;min-height:27px}
+#meal .mp-vendor-settings .meal-supplier{margin:0}
 </style>
   <div class="mp-analytics-area">
    <div id="mp_stats" aria-live="polite"></div>
@@ -3615,7 +3630,14 @@ function mealPage(){const el=$('meal');
   $('mp_k').onchange=e=>{RP.ktx=e.target.value;mealPrev()};$('mp_p').oninput=e=>{RP.price=e.target.value;mealPrev()};
   el.querySelectorAll('[data-c]').forEach(c=>c.onchange=()=>{c.checked?RP.on.add(c.dataset.c):RP.on.delete(c.dataset.c);mealCards()});
   $('mp_f').onchange=async e=>{const fs=[...e.target.files];e.target.value='';if(fs.length)await mealImport(fs)};
-  $('mp_c').onclick=mealCopy;$('mp_w').onclick=()=>saveDocx(mealText().split('\n'),`bao-cao-suat-an-${RP.ses}-${RP.date}.docx`)}
+  $('mp_c').onclick=mealCopy;
+  $('mp_w').onclick=async()=>{const b=$('mp_w'),status=$('mp_export_status');if(!b||b.disabled)return;
+   b.disabled=true;const label=b.innerHTML;b.textContent='Đang tạo Word…';if(status)status.textContent='Đang tạo file báo cáo…';
+   try{const ok=await saveDocx(mealText().split('\n'),`bao-cao-suat-an-${RP.ses}-${RP.date}.docx`);
+    if(!ok&&status)status.textContent='Xuất Word chưa thành công. Vui lòng thử lại hoặc kiểm tra quyền tải file của trình duyệt.';
+   }catch(e){if(status)status.textContent='Không thể xuất Word: '+(e&&e.message||e);alert('Không thể xuất Word: '+(e&&e.message||e));}
+   finally{b.innerHTML=label;b.disabled=false}
+  }}
  mealCards();if(typeof window.KTX213_PULL_MENUS==='function')window.KTX213_PULL_MENUS(RP.date,RP.ses).catch(e=>console.warn('Cloud menu:',e));if(window.KTX_VENDOR_CATALOG)window.KTX_VENDOR_CATALOG.load().catch(console.warn)}
 // ---- Cập nhật thông tin công nhân từ file Excel (v2263)
 // Ghi đè có kiểm soát các ô có dữ liệu: mã NV, ngày sinh, CCCD,
