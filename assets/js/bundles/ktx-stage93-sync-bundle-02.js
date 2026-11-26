@@ -237,13 +237,9 @@ if(typeof tttv==='function'&&!window.__step81TttvWrapped){window.__step81TttvWra
 if(typeof importTTTV==='function'&&!window.__step81ImportTtWrapped){window.__step81ImportTtWrapped=true;const oldImpTT81=importTTTV;importTTTV=async function(files,kind){const before=new Map(W.map(w=>[w.id,workerSnapshot(w)]));await oldImpTT81(files,kind);W.forEach(w=>{const b=before.get(w.id);if(!b)return;const ch=diff81(b,workerSnapshot(w)).filter(x=>x.field==='tt'||x.field==='tv');if(ch.length){addHistory(w,kind==='tt'?'RESIDENCE_IMPORT':'AWAY_IMPORT',kind==='tt'?'Cập nhật tạm trú từ file đăng ký':'Cập nhật tạm vắng từ file đăng ký');audit81(kind==='tt'?'TEMP_RESIDENCE_IMPORT':'AWAY_IMPORT',`Cập nhật từ file đăng ký: ${w.name}`,{workerId:w.id,workerName:w.name,changes:ch,persist:false})}});sv();updateAlertBadges()}}
 
 // QR approval: validate, history and audit on check-in.
-if(typeof qrApproveIn==='function'&&!window.__step81QrIn){window.__step81QrIn=true;qrApproveIn=async function(id){if(!can('qrApprove'))return alert('Bạn không có quyền duyệt hồ sơ QR.');const r=QRREQ.find(x=>x.id==id);if(!r)return;const o={id:'w'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:r.name||'',mnv:r.worker_code||'',gt:r.gender||'',dob:r.dob||'',sdt:r.phone||'',cccd:r.cccd||'',tinh:r.address||'',unit:r.unit||'',td:r.td||'',leader:r.leader||'',lsdt:r.leader_phone||'',ktx:r.ktx||'KTX 1',day:r.day||'',room:r.room||'',date:r.check_in_date||ldy()};normW(o);const v=validateWorkerData(o,null);if(!await confirmValidation(v))return;
-const qrMatchHits=typeof qrInPotentialMatches==='function'?qrInPotentialMatches(r):[];
-if(qrMatchHits.length){
- const detail=qrMatchHits.map(h=>`${h.worker.name||'—'} (${h.worker.mnv||'—'}): ${h.count} trường — ${h.fields.join(', ')}`).join('\n');
- if(!await ask('CẢNH BÁO: Hồ sơ đăng ký vào khớp từ 3 thông tin trở lên với dữ liệu hiện có.\n'+detail+'\n\nHãy đối chiếu kỹ trước khi duyệt để tránh tạo hồ sơ trùng.',{title:'Cảnh báo nghi trùng hồ sơ',ok:'Đã đối chiếu – Vẫn duyệt'}))return;
-}
-try{await qrSetStatus(id,'approved');addHistory(o,'CHECKIN',`Duyệt vào KTX qua QR · ${K(o)} · ${D(o)} · P.${R(o)||'—'}`);W.unshift(o);audit81('QR_CHECKIN',`Duyệt đăng ký vào qua QR: ${o.name}`,{workerId:o.id,workerName:o.name,before:null,after:workerSnapshot(o),persist:false});sv();updateAlertBadges();alert('Đã duyệt và thêm công nhân vào danh sách tổng.');qrPage()}catch(e){alert('Không duyệt được: '+(e.message||e))}}}
+// Production QR safeguard: do NOT override qrApproveIn from index.html.
+// Canonical implementation commits and confirms ktx_workers on Supabase BEFORE marking request approved.
+// The legacy STEP81 wrapper approved requests before persisting workers and has been removed.
 
 // 2) Alert center — group profile issues, dedupe and filter by category.
 let ALERT_FILTER81='all',ALERT_QUERY81='';

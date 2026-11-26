@@ -4297,7 +4297,7 @@ async function qrDesktopHistory(){
     host.innerHTML=`<section class="qr122-mobile-history"><h3>Lịch sử duyệt đăng ký vào/ra</h3>${records.map(historyCard).join('')||'<p class="qr122-history-empty">Chưa có hồ sơ đã xử lý.</p>'}</section>`;
   }else{
     const rows=records.map((r,i)=>`<tr class="qr70-main-row" data-qr70-row="${i}"><td><input type="checkbox" class="qr111-select" data-qr111-select="${i}" aria-label="Chọn hồ sơ ${i+1}"></td><td>${i+1}</td><td><strong>${esc(blank(r.name))}</strong><small class="qr238-sub">${esc(blank(r.worker_code))}</small></td><td>${typeBadge(r)}</td><td>${esc(compactPosition(r))}</td><td><span class="qr238-status ${r.status==='approved'?'done':'rejected'}">${state(r)}</span></td><td>${esc(dateTime(r.reviewed_at||r.created_at))}</td><td><button type="button" class="btn sm s qr70-history-toggle" data-qr-history-detail="${i}" aria-expanded="false" aria-controls="qr70-detail-${i}">Xem</button></td></tr><tr id="qr70-detail-${i}" class="qr70-detail-row" hidden><td colspan="8"><div class="qr176-detail-card"><div class="qr176-detail-top"><div class="qr176-detail-person"><strong class="qr176-person-name">${esc(blank(r.name))}</strong><span class="qr176-person-position">${esc(compactPosition(r))}</span></div><div class="qr176-detail-badges">${typeBadge(r)} <span class="qr238-status ${r.status==='approved'?'done':'rejected'}">${state(r)}</span></div></div>${fieldsHtml(r)}</div></td></tr>`).join('');
-    host.innerHTML=`<section class="card qr238-history qr-full-history"><div class="qr238-history-head"><h3>Lịch sử duyệt đăng ký vào/ra</h3><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="mut">${records.length} hồ sơ gần nhất (tối đa 200)</span><button type="button" class="btn sm" id="qrHistoryExportExcel" ${!records.length?'disabled':''} title="Xuất thông tin đầy đủ đăng ký vào và đăng ký ra">↓ Xuất Excel</button></div></div>${rows?`<div class="qr238-history-scroll"><table><thead><tr><th><input type="checkbox" id="qr111SelectAll" aria-label="Chọn tất cả hồ sơ để xuất Excel"></th><th>STT</th><th>Họ tên / Mã NV</th><th>Loại</th><th>Vị trí</th><th>Trạng thái</th><th>Thời gian xử lý</th><th>Thông tin</th></tr></thead><tbody>${rows}</tbody></table></div>`:'<p class="mut">Chưa có hồ sơ đã xử lý.</p>'}</section>`;
+    host.innerHTML=`<section class="card qr238-history qr-full-history"><div class="qr238-history-head"><h3>Lịch sử duyệt đăng ký vào/ra</h3><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="mut">${records.length} hồ sơ gần nhất (tối đa 200)</span>${ME.role==='admin'?'<button type="button" class="btn sm s" id="qrAuditApprovedBtn">Đối soát hồ sơ đã duyệt</button>':''}<button type="button" class="btn sm" id="qrHistoryExportExcel" ${!records.length?'disabled':''} title="Xuất thông tin đầy đủ đăng ký vào và đăng ký ra">↓ Xuất Excel</button></div></div>${rows?`<div class="qr238-history-scroll"><table><thead><tr><th><input type="checkbox" id="qr111SelectAll" aria-label="Chọn tất cả hồ sơ để xuất Excel"></th><th>STT</th><th>Họ tên / Mã NV</th><th>Loại</th><th>Vị trí</th><th>Trạng thái</th><th>Thời gian xử lý</th><th>Thông tin</th></tr></thead><tbody>${rows}</tbody></table></div>`:'<p class="mut">Chưa có hồ sơ đã xử lý.</p>'}</section>`;
     // V70: inline expandable detail row, directly below the selected record.
     // One open detail at a time, without an overlay or separate dialog.
     host.querySelectorAll('[data-qr-history-detail]').forEach(btn=>btn.addEventListener('click',()=>{
@@ -4316,6 +4316,8 @@ async function qrDesktopHistory(){
 
   }
   if(!isMobileHistory){
+  const auditButton=host.querySelector('#qrAuditApprovedBtn');
+  if(auditButton)auditButton.onclick=()=>qrAuditApprovedIn(records,host);
   // The selected set uses indexes into the current Cloud response; no data writes.
   const chosen=new Set();
   const desktopAll=host.querySelector('#qr111SelectAll');
@@ -4524,6 +4526,7 @@ async function qrInStoreWorkerCloud(r,options={}){
    .select('record_id,payload').eq('record_id',worker.id).maybeSingle();
  if(lookupError)throw lookupError;
  if(already){
+   if(!qrInIdentityMatch(r,already.payload||{}))throw Error('ID công nhân Cloud trùng nhưng định danh không khớp. Dừng duyệt để tránh ghi sai hồ sơ.');
    // Never overwrite a previously saved Cloud worker with a potentially stale request.
    {const ix=W.findIndex(w=>String(w.id)===worker.id);if(ix>=0)W[ix]=already.payload||worker;else W.unshift(already.payload||worker);}
    return {worker:already.payload||worker,created:false};
@@ -4555,67 +4558,107 @@ async function qrApproveIn(id){
    const detail=qrMatchHits.map(h=>`${h.worker.name||'—'} (${h.worker.mnv||'—'}): ${h.count} trường — ${h.fields.join(', ')}`).join('\n');
    if(!await ask('Cảnh báo nghi trùng hồ sơ (từ 3 thông tin khớp):\n'+detail+'\nHãy đối chiếu trước khi duyệt.',{title:'Cảnh báo nghi trùng',ok:'Đã đối chiếu – Vẫn duyệt'}))return;
  }
+ let statusCommitted=false;
  try{
    const saved=await qrInStoreWorkerCloud(r);
    // Approve only after the worker is positively committed to Supabase.
    await qrSetStatus(id,'approved');
+   statusCommitted=true;
+   // This read happens AFTER status approval, not just after the initial insert.
+   const verifySb=qrSb();
+   const {data:confirmed,error:confirmedError}=await verifySb.from('ktx_workers').select('record_id,payload').eq('record_id','qr_in_'+String(r.id)).maybeSingle();
+   if(confirmedError||!confirmed||!qrInIdentityMatch(r,confirmed.payload||{}))
+     throw Error('Hồ sơ QR đã chuyển sang Đã duyệt nhưng công nhân chưa được xác minh trong danh sách Cloud. Vào Lịch sử duyệt → Đối soát hồ sơ đã duyệt; KHÔNG tự duyệt hoặc thêm lần hai.');
    add('CREATE',`Duyệt đăng ký vào KTX qua QR: ${r.name}${r.worker_code?' ('+r.worker_code+')':''}`);
    all();
    alert('Supabase đã xác nhận lưu công nhân vào danh sách tổng và duyệt hồ sơ.');
    if(!document.querySelector('#mobile180 #m196QrHost.qr69-review-mode'))qrPage(true);
  }catch(e){
-   alert('Chưa hoàn tất duyệt đăng ký vào: '+(e.message||e)+'\n\nNếu công nhân đã được ghi lên Cloud nhưng cập nhật trạng thái duyệt lỗi, bấm Duyệt lại sau khi kết nối ổn định; hệ thống sử dụng cùng ID để tránh ghi trùng.');
+   alert(statusCommitted?'CẢNH BÁO: hồ sơ đã chuyển sang Đã duyệt nhưng chưa xác minh được công nhân trong danh sách Cloud. Vào Lịch sử duyệt → Đối soát hồ sơ đã duyệt. Không duyệt lại hoặc tạo thêm bằng tay.\nChi tiết: '+(e.message||e):'Chưa hoàn tất duyệt đăng ký vào: '+(e.message||e)+'\n\nNếu chưa duyệt nhưng đã có công nhân trên Cloud, hãy đối soát trước khi thử lại.');
    if(!document.querySelector('#mobile180 #m196QrHost.qr69-review-mode'))qrPage(true);
  }
 }
-// Repair historical approvals which reached residency_requests but never made it
-// into ktx_workers. Explicit per-record admin action, no bulk blind replay.
-// V58: Optimistic recovery is instant in the UI; actual Cloud persistence is
-// awaited in the background. Never claim success before Supabase confirms.
+// QR integrity: compare approved requests with authoritative worker & archive rows.
+// Read-only reconciliation. Manual recovery is enabled only after a fresh Cloud check.
+async function qrAuditCloudRows(table){
+ const sb=qrSb();if(!sb)throw Error('Không có kết nối Supabase.');
+ const rows=[],batch=500;
+ for(let offset=0;offset<10000;offset+=batch){
+  const {data,error}=await sb.from(table).select('record_id,payload').range(offset,offset+batch-1);
+  if(error)throw Error('Không đối soát được '+table+': '+error.message);
+  const part=data||[];rows.push(...part);if(part.length<batch)return rows;
+ }
+ throw Error('Dữ liệu vượt ngưỡng đối soát 10.000 hồ sơ. Chưa đưa ra kết luận.');
+}
+function qrAuditIdentity(req,entry){
+ if(!entry)return false;
+ const w=entry.payload?.w||entry.payload||{};
+ const id=String(entry.record_id||w.id||'');
+ const digits=v=>String(v??'').replace(/\D/g,'');
+ const rcc=digits(req.cccd),wcc=digits(w.cccd);
+ const rc=String(req.worker_code||'').trim().toLowerCase(),wc=String(w.mnv||'').trim().toLowerCase();
+ return id==='qr_in_'+String(req.id)||rcc.length>=9&&rcc===wcc||rc.length>=5&&rc===wc;
+}
+async function qrAuditApprovedIn(records,host){
+ if(!can('qrApprove')||ME.role!=='admin')return alert('Chỉ Admin được đối soát hồ sơ đã duyệt.');
+ const approved=records.filter(r=>r.status==='approved'&&r.request_type==='in');
+ let box=host.querySelector('#qrAuditPanel');
+ if(!box){host.insertAdjacentHTML('beforeend','<section id="qrAuditPanel" class="card" style="margin-top:12px" role="region" aria-label="Đối soát hồ sơ đã duyệt"></section>');box=host.querySelector('#qrAuditPanel')}
+ box.textContent='Đang đối soát '+approved.length+' hồ sơ đã duyệt với công nhân đang ở và hồ sơ lưu trữ trên Supabase…';
+ try{
+  const [workers,archive]=await Promise.all([qrAuditCloudRows('ktx_workers'),qrAuditCloudRows('ktx_archived_workers')]);
+  if(!box.isConnected)return;
+  const result=approved.map(r=>{
+   const active=workers.find(w=>qrAuditIdentity(r,w));
+   const archived=archive.find(w=>qrAuditIdentity(r,w));
+   return {r,state:active?'active':archived?'archived':'missing'};
+  });
+  const n=s=>result.filter(x=>x.state===s).length;
+  box.innerHTML='<h3 style="margin:0 0 8px">Đối soát hồ sơ đã duyệt (trong '+approved.length+' bản ghi lịch sử đang hiển thị)</h3>'+
+   '<p style="margin:0 0 9px">Có trong danh sách: <b>'+n('active')+'</b> · Đã lưu trữ: <b>'+n('archived')+'</b> · Cần kiểm tra: <b style="color:#b45309">'+n('missing')+'</b>. Không tự động khôi phục hồ sơ.</p>'+
+   '<div class="wrap"><table class="cmp3"><tr><th>Người đăng ký</th><th>Vị trí đã duyệt</th><th>Đối soát Cloud</th><th>Thao tác</th></tr>'+
+   result.map(({r,state})=>'<tr><td><b>'+esc(r.name||'—')+'</b><small>'+esc(r.worker_code||r.cccd||'—')+'</small></td><td>'+esc([r.ktx,r.day,r.room?'P.'+r.room:''].filter(Boolean).join(' · '))+'</td><td>'+({active:'Đang có trong DS',archived:'Đã vào lưu trữ',missing:'Chưa tìm thấy'}[state])+'</td><td>'+(state==='missing'?'<button type="button" class="btn sm s" data-qr-repair="'+esc(String(r.id))+'">Kiểm tra và bổ sung</button>':'—')+'</td></tr>').join('')+'</table></div>'+
+   '<p class="mut" style="margin-top:7px;font-size:12px">Bản ghi chưa tìm thấy có thể đã bị xóa hẳn hoặc lưu với thông tin định danh khác. Chỉ bổ sung sau khi xác minh.</p>';
+  box.querySelectorAll('[data-qr-repair]').forEach(btn=>btn.onclick=async()=>{
+   const r=approved.find(a=>String(a.id)===btn.dataset.qrRepair);if(!r)return;
+   const ok=await qrRecoverApprovedIn(r,btn);
+   if(ok)await qrAuditApprovedIn(records,host);
+  });
+ }catch(e){if(box.isConnected)box.innerHTML='<p class="rd">Không thể kết luận thiếu công nhân: '+esc(e.message||String(e))+'</p>'}
+}
+
+// Recovery deliberately stays synchronous and Cloud-confirmed. Never add a fake
+// optimistic worker to W: that used to make a missing record look saved.
 const qrRecoverInProgress=new Set();
 async function qrRecoverApprovedIn(r,button){
- if(!can('qrApprove')||ME.role!=='admin')return alert('Chỉ Admin được bổ sung hồ sơ đã duyệt.');
- if(!r||r.request_type!=='in'||r.status!=='approved')return;
- const key=String(r.id), worker=qrInWorkerPayload(r);
- if(qrRecoverInProgress.has(key))return;
- if(W.some(w=>qrInIdentityMatch(r,w)))return alert('Đã tìm thấy công nhân trong danh sách tổng. Không tạo bản ghi trùng.');
- if(!await ask('Bổ sung công nhân đã duyệt nhưng còn thiếu trong danh sách tổng?\n'+(r.name||'—')+' · '+(r.worker_code||'—')+' · '+(r.ktx||'—')+' · '+(r.day||'—')+' · P.'+(r.room||'—')+'\nCông nhân sẽ hiển thị tạm ngay; Supabase tiếp tục ghi ở nền.',{title:'Khôi phục công nhân đã duyệt',ok:'Bổ sung vào DS'}))return;
- if(qrRecoverInProgress.has(key)||W.some(w=>qrInIdentityMatch(r,w)))return;
- if(!window.KTX_SUPA_SYNC||!SUPA_SYNC.enabled||!navigator.onLine){
-  alert('Cloud chưa sẵn sàng. Vui lòng kết nối Supabase rồi thử lại.');return;
- }
+ if(!can('qrApprove')||ME.role!=='admin'){alert('Chỉ Admin được bổ sung hồ sơ đã duyệt.');return false}
+ if(!r||r.request_type!=='in'||r.status!=='approved')return false;
+ const key=String(r.id),worker=qrInWorkerPayload(r);
+ if(qrRecoverInProgress.has(key))return false;
+ if(!window.KTX_SUPA_SYNC||!SUPA_SYNC.enabled||!navigator.onLine){alert('Cloud chưa sẵn sàng.');return false}
  qrRecoverInProgress.add(key);
- // Immediate optimistic UI without claiming the Cloud write succeeded.
- W.unshift(worker);
- resetWorkSearchCache();
- try{all()}catch(e){console.warn('[QR recovery] optimistic repaint',e)}
- toast('Đã thêm tạm vào danh sách. Đang đồng bộ lên Cloud ở nền…','wn');
- if(button&&button.isConnected){button.disabled=true;button.textContent='Đang đồng bộ...'}
- // Yield to the browser so the user can continue operating while Cloud syncs.
- await new Promise(resolve=>setTimeout(resolve,0));
+ if(button){button.disabled=true;button.textContent='Đang đối soát…'}
  try{
-  const deadline=Date.now()+45000;
-  while(SUPA_SYNC.pulling||SUPA_SYNC.applying||SUPA_SYNC.pushing){
-   if(Date.now()>deadline)throw new Error('Đồng bộ chung kéo dài quá 45 giây; chưa thể ghi Cloud.');
-   await new Promise(resolve=>setTimeout(resolve,180));
-  }
-  // Existing Cloud insert is idempotent via qr_in_<request id>.
-  // The shared pending flag is unrelated to this direct individual upsert.
-  const saved=await qrInStoreWorkerCloud(r,{ignorePending:true});
-  if(!W.some(w=>String(w.id)===worker.id))W.unshift(saved.worker||worker);
+  const sb=qrSb();if(!sb)throw Error('Mất kết nối Supabase.');
+  const {data:latest,error:er}=await sb.from('residency_requests').select('*').eq('id',key).maybeSingle();
+  if(er)throw er;
+  if(!latest||latest.status!=='approved'||latest.request_type!=='in')throw Error('Hồ sơ không còn là đăng ký vào đã duyệt.');
+  const [workers,archive]=await Promise.all([qrAuditCloudRows('ktx_workers'),qrAuditCloudRows('ktx_archived_workers')]);
+  if(workers.some(x=>qrAuditIdentity(latest,x)))throw Error('Công nhân hiện đã có trong danh sách Cloud (có thể dùng mã hồ sơ khác). Không được thêm trùng.');
+  if(archive.some(x=>qrAuditIdentity(latest,x)))throw Error('Đã tìm thấy trong hồ sơ điều chuyển/nghỉ việc. Cần xác nhận tình trạng cư trú trước khi khôi phục.');
+  if(!await ask('Đã duyệt nhưng chưa tìm thấy trong danh sách hoặc lưu trữ. Anh đã kiểm tra lịch sử xóa/điều chuyển và xác nhận người này đang ở KTX?\n'+(latest.name||'—')+' · '+(latest.ktx||'—')+' · '+(latest.day||'—')+' · P.'+(latest.room||'—'),{title:'Xác minh trước khi bổ sung',ok:'Xác nhận bổ sung'}))return false;
+  if(button)button.textContent='Đang lưu Cloud…';
+  const saved=await qrInStoreWorkerCloud(latest,{ignorePending:true});
+  const {data:verify,error:verifyError}=await sb.from('ktx_workers').select('record_id,payload').eq('record_id',worker.id).maybeSingle();
+  if(verifyError||!verify)throw Error('Chưa xác minh được hồ sơ đã lưu sau khi ghi Cloud. Không xác nhận thành công.');
+  if(!qrAuditIdentity(latest,verify))throw Error('Hồ sơ Cloud không khớp định danh đăng ký. Cần đối soát thủ công.');
   resetWorkSearchCache();
-  add('CREATE','Khôi phục công nhân từ hồ sơ QR đã duyệt: '+(r.name||'—'));
-  alert('Đã đồng bộ Cloud thành công: '+(r.name||'—')+' đã có trong danh sách tổng.');
- }catch(e){
-  // Roll back ONLY the optimistic row created for this recovery.
-  const at=W.findIndex(w=>String(w.id)===worker.id);
-  if(at>=0)W.splice(at,1);
-  resetWorkSearchCache();
-  alert('Khôi phục chưa lưu được lên Supabase: '+(e.message||e)+'\nĐã hoàn lại bản ghi tạm. Anh có thể thử lại.');
- }finally{
-  qrRecoverInProgress.delete(key);
-  try{all()}catch(e){console.warn('[QR recovery] redraw failed',e)}
- }
+  try{add('CREATE','Bổ sung đã xác minh từ QR duyệt: '+(latest.name||'—'))}catch(e){console.warn('QR audit logging failed',e)}
+  alert('Supabase đã xác nhận hồ sơ công nhân: '+(latest.name||'—')+'.');
+  try{all()}catch(e){}
+  return true;
+ }catch(e){alert('Chưa bổ sung hồ sơ: '+(e.message||e));return false}
+ finally{qrRecoverInProgress.delete(key);if(button&&button.isConnected){button.disabled=false;button.textContent='Kiểm tra và bổ sung'}}
 }
 // V57: Check-out is not approved until the *existing* atomic RPC has
 // archived and removed the worker in Cloud, with post-transaction verification.
