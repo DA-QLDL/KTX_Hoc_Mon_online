@@ -6766,7 +6766,16 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         w.ktx=k; w.day=d; w.room=r;
         const history={at:new Date().toISOString(),action:'RETURN_NEW_ROOM',old,newLocation:{ktx:k,day:d,room:r},note};
         w.residenceMoves=Array.isArray(w.residenceMoves)?w.residenceMoves:[]; w.residenceMoves.push(history);
-        LOG.unshift({t:new Date().toLocaleString('vi-VN'),a:'RESTORE',d:'Công nhân quay lại: '+w.name+'; chỗ ở cũ '+old.ktx+'/'+old.day+'/'+old.room+' → '+k+'/'+d+'/'+r+(note?(' · '+note):''),day:ldy()});
+        // Attribution must be recorded at the moment of restoration, not guessed when reading the log.
+        const restoreAccount=(typeof SUPA_SYNC!=='undefined'&&SUPA_SYNC?.account)||null;
+        const restoreUser=(typeof SUPA_SYNC!=='undefined'&&SUPA_SYNC?.session?.user)||null;
+        const restoreActor=String(restoreAccount?.display_name||ME?.name||restoreUser?.email||'').trim();
+        LOG.unshift({t:new Date().toLocaleString('vi-VN'),a:'RESTORE',
+          d:'Công nhân quay lại: '+w.name+'; chỗ ở cũ '+old.ktx+'/'+old.day+'/'+old.room+' → '+k+'/'+d+'/'+r+(note?(' · '+note):''),
+          day:ldy(),at:Date.now(),actor:restoreActor,role:String(restoreAccount?.role||ME?.role||''),
+          workerId:String(w.id||''),workerName:String(w.name||''),ktx:k,workerKtx:k,workerDay:d,room:r,
+          before:{id:String(w.id||''),ktx:old.ktx,day:old.day,room:old.room},
+          after:{id:String(w.id||''),ktx:k,day:d,room:r}});
         W.unshift(w); ARC=ARC.filter(x=>String(x.id)!==String(id)); AS.delete(id); sv(); all(); alert('Đã khôi phục với vị trí mới. Hãy kiểm tra trạng thái lưu Supabase trước khi tải lại trang.');
       });
     };

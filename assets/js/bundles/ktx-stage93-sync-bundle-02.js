@@ -1841,7 +1841,7 @@ async function safetyPage(){
      const location=String(l.d||l.detail||'').match(/\bKTX\s*0*([12])\b/i);
      return location?'KTX '+location[1]:'';
    };
-   const auditAction=(l)=>l.a==='EXIT_KTX_DETAIL'?'KTX sau xóa':String(l.a||'');
+   const auditAction=(l)=>l.a==='EXIT_KTX_DETAIL'?'KTX trước khi rời':String(l.a||'');
    // V170: no name-based matching. Only Cloud-created user UUID is trusted.
    const admin=String(SUPA_SYNC.account?.role||ME.role||'')==='admin';
    const currentUid=String(SUPA_SYNC.session?.user?.id||'');
