@@ -3212,11 +3212,40 @@ function dailyHeadcountReportLines(){
  return L;
 }
 window.ktxDailyHeadcountReportText=()=>dailyHeadcountReportLines().join('\n');
+/* Daily Word export: give deterministic feedback even if Supabase audit cannot be loaded.
+   The fallback is explicitly marked as NOT verified against Cloud; no counts are fabricated. */
 async function exportDailyReportDirect(){
- await rp160LoadCloud(ldy());
- if(!RP160_CLOUD_OK){alert('Không đối soát được số tăng trên Cloud: '+RP160_CLOUD_ERROR);return false}
- const L=dailyHeadcountReportLines();if(!L.length){alert('Chưa có dữ liệu công nhân.');return}
- const ok=await saveDocx(L,`bao-cao-quan-so-${ldy()}.docx`);if(ok&&$('rpd')?.open)$('rpd').close();return ok;
+ const b=$('xr');if(b?.dataset.ktxDailyExportBusy==='1')return false;
+ const oldLabel=b?.innerHTML;
+ if(b){b.dataset.ktxDailyExportBusy='1';b.disabled=true;b.textContent='Đang xuất báo cáo…'}
+ let status=document.getElementById('ktxDailyExportStatus');
+ if(!status){status=document.createElement('div');status.id='ktxDailyExportStatus';status.setAttribute('role','status');status.setAttribute('aria-live','polite');status.style.cssText='position:fixed;right:18px;bottom:18px;z-index:2147483000;background:#fff;border:1px solid #b6cbed;border-radius:12px;box-shadow:0 8px 24px #10254b22;padding:12px 16px;color:#174277;max-width:min(520px,90vw);font-size:13px;line-height:1.5';document.body.appendChild(status)}
+ status.hidden=false;status.textContent='Đang kiểm tra số liệu và chuẩn bị báo cáo Word…';
+ try{
+  if(!Array.isArray(W)||!W.length)throw new Error('Chưa có dữ liệu công nhân để xuất báo cáo.');
+  let cloudOk=false,cloudError='';
+  try{
+   const timeout=Symbol('timeout');
+   const loaded=await Promise.race([rp160LoadCloud(ldy()),new Promise(resolve=>setTimeout(()=>resolve(timeout),12000))]);
+   cloudOk=loaded!==timeout&&RP160_CLOUD_OK;
+   if(!cloudOk)cloudError=loaded===timeout?'Quá thời gian đối soát (12 giây)':(RP160_CLOUD_ERROR||'Chưa thể đối soát nhật ký tăng quân số');
+  }catch(e){cloudError=e?.message||String(e)}
+  if(!cloudOk){
+   const proceed=window.confirm('Chưa đối soát được số tăng với Supabase: '+cloudError+'\n\nAnh có muốn xuất báo cáo từ dữ liệu hiện có? File sẽ ghi rõ số tăng chưa được xác minh trên Cloud.');
+   if(!proceed){status.textContent='Đã hủy xuất báo cáo. Dữ liệu không thay đổi.';return false}
+  }
+  const lines=dailyHeadcountReportLines();
+  if(!lines.length)throw new Error('Không tạo được nội dung báo cáo.');
+  if(!cloudOk)lines.push('LƯU Ý: Số tăng quân số chưa được đối soát với nhật ký Supabase tại thời điểm xuất. Cần kiểm tra trước khi sử dụng chính thức.');
+  status.textContent='Đang tạo file Word…';
+  const filename=`bao-cao-quan-so-${ldy()}.docx`;
+  const ok=await saveDocx(lines,filename);
+  if(!ok)throw new Error('Trình duyệt không tải được báo cáo Word.');
+  status.textContent=cloudOk?'Đã tạo báo cáo Word. Vui lòng kiểm tra thư mục Tải xuống.':'Đã tạo báo cáo Word có cảnh báo chưa đối soát Cloud. Vui lòng kiểm tra thư mục Tải xuống.';
+  if($('rpd')?.open)$('rpd').close();
+  return true;
+ }catch(e){const msg='Không xuất được báo cáo ngày: '+(e?.message||e);status.textContent=msg;alert(msg);return false}
+ finally{if(b){b.innerHTML=oldLabel;b.disabled=false;delete b.dataset.ktxDailyExportBusy}}
 }
 /* v2210: Workers opens the editable daily-report dialog; Overview continues direct Word export. */
 $('xr').onclick=async()=>{
