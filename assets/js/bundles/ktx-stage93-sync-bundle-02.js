@@ -1820,15 +1820,26 @@ async function safetyPage(){
  // EXIT_KTX_DETAIL is supplementary evidence only, never a second headcount decrease.
  const oldLog109=logp;
  logp=function(){
+   // KTX is audit provenance. Use only original location evidence; never
+   // classify a bare PURGE by author, row order, or current totals.
    const auditKtx=(l)=>{
-     const explicit=String(l.ktx||l.workerKtx||l.previousKtx||'').trim();
-     if(explicit)return explicit;
-     const id=String(l.workerId||'');
+     const p=l&&typeof l.payload==='object'?l.payload:{};
+     const changes=Array.isArray(l.changes)?l.changes:[];
+     const entry=changes.find(x=>String(x.field||'').toLowerCase()==='ktx');
+     const before=l.before&&typeof l.before==='object'?l.before:{};
+     const explicit=String(l.ktx||l.workerKtx||l.previousKtx||p.ktx||before.ktx||entry?.from||entry?.to||'').trim();
+     const normalized=explicit.match(/(?:^|\b)KTX\s*0*([12])(?:$|\b)/i);
+     if(normalized)return 'KTX '+normalized[1];
+     const id=String(l.workerId||l.worker_id||'');
      if(id){
+       const trace=(LOG||[]).find(x=>x.a==='EXIT_KTX_DETAIL'&&String(x.workerId||'')===id&&x.ktx);
+       if(trace)return String(trace.ktx);
        const found=(ARC||[]).find(a=>String((a.w&&a.w.id)||a.workerId||a.id||'')===id);
-       if(found){const person=found.w||found;return String(person.ktx||'').trim();}
+       if(found){const person=found.w||found;const m=String(person.ktx||'').match(/KTX\s*0*([12])/i);if(m)return 'KTX '+m[1]}
      }
-     return '';
+     // Only an EXPLICIT location in the text is admissible for older logs.
+     const location=String(l.d||l.detail||'').match(/\bKTX\s*0*([12])\b/i);
+     return location?'KTX '+location[1]:'';
    };
    const auditAction=(l)=>l.a==='EXIT_KTX_DETAIL'?'KTX sau xóa':String(l.a||'');
    // V170: no name-based matching. Only Cloud-created user UUID is trusted.
@@ -1842,13 +1853,13 @@ async function safetyPage(){
      const q=sa($('lgq').value),a=$('lga').value,u=$('lgu').value,d=$('lgd').value;
      const list=visibleLogs.filter(l=>(!a||auditAction(l)===a)&&(!u||ktxAuditActorDisplay(l)===u)&&(!d||String(l.day||'')===d)&&(!q||sa([l.a,l.d,auditAction(l),ktxAuditActorDisplay(l),l.workerName,auditKtx(l),l.workerDay,l.room,JSON.stringify(l.fields||[]),JSON.stringify(l.changes||[])].join(' ')).includes(q)));
      const shown=list.slice(0,500);
-     const unassigned=shown.filter(l=>l.a==='DELETE'&&!auditKtx(l)).length;
+     const unassigned=shown.filter(l=>['DELETE','PURGE'].includes(String(l.a||''))&&!auditKtx(l)).length;
      const details=shown.filter(l=>l.a==='EXIT_KTX_DETAIL').length;
      $('lgbody').innerHTML=`<div class="mut" style="margin-bottom:8px">${shown.length} bản ghi hiển thị / ${visibleLogs.length} tổng bản ghi${details?' · '+details+' bản ghi KTX đối soát':''}${unassigned?' · '+unassigned+' lần xóa chưa lưu KTX':''}</div><div class="wrap"><table><tr><th>Thời gian</th><th>Người thực hiện</th><th>Hành động</th><th>KTX liên quan</th><th>Chi tiết</th></tr>${shown.map(l=>{
        const w=l.workerId?W.find(x=>String(x.id)===String(l.workerId)):null;
        const ch=Array.isArray(l.changes)?l.changes:[];
        const afterField=field=>{const hit=ch.find(c=>String(c.field||'').toLowerCase()===field);return hit?String(hit.to??hit.after??'').trim():''};
-       const k=auditKtx(l),isExit=l.a==='EXIT_KTX_DETAIL',isDelete=l.a==='DELETE';
+       const k=auditKtx(l),isExit=l.a==='EXIT_KTX_DETAIL',isDelete=['DELETE','PURGE'].includes(l.a);
        // V157: render an audit summary for additions, but preserve the full LOG
        // record (including changes, workerId, and KTX) for headcount reports.
        const description=String(l.d||'').trim();

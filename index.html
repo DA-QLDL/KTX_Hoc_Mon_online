@@ -2539,6 +2539,24 @@ async function ktx108AtomicWorkerExit(list,inf){
       SUPA_SYNC.remoteIds.archive.add(id);
     }
   }
+  // V2612: A confirmed Cloud delete must retain its pre-delete location.
+  // These are *provenance-only* records, never additional headcount decreases.
+  const exitTraceId='exit-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
+  const exitNow=Date.now();
+  const exitRecords=[];
+  for(const row of payload){
+    const prior=row.payload||{};
+    const site=(typeof rp143NormK==='function'?rp143NormK(prior.ktx):'')||'';
+    if(!site){console.warn('[KTX audit] Vị trí trước xóa không hợp lệ',row.record_id);continue}
+    exitRecords.push({t:new Date(exitNow).toLocaleString('vi-VN'),a:'EXIT_KTX_DETAIL',
+      d:`Xác nhận ${inf.mode==='purge'?'xóa hẳn':'điều chuyển/nghỉ việc'}: ${prior.name||row.record_id} · ${site}`,
+      day:ldy(),at:exitNow,actor:typeof actorName==='function'?actorName():'',
+      role:ME?.role||'',workerId:String(row.record_id),workerName:String(prior.name||''),
+      ktx:site,workerKtx:site,workerDay:String(prior.day||''),room:String(prior.room||''),
+      exitTraceId,exitMode:inf.mode==='purge'?'purge':'archive',exitDate:String(inf.date||ldy()),
+      before:{id:String(row.record_id),ktx:site,day:prior.day||'',room:prior.room||''}});
+  }
+  if(exitRecords.length){LOG.unshift(...exitRecords);if(LOG.length>5000)LOG=LOG.slice(0,5000)}
   try{if(typeof persistLocal==='function')persistLocal();}catch(e){}
   if(typeof resetWorkSearchCache==='function')resetWorkSearchCache();
   list.forEach(w=>sel.delete(w.id));
