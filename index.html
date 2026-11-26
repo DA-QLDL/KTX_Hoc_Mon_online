@@ -3030,11 +3030,77 @@ function tl(){const L=tfl().sort((a,b)=>residenceCompare68(a,b,__resSort29.key)*
 const ldy=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const logDay=l=>{const m=(l.t||'').match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);return l.day||(m?`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`:'')};
 const rp143NormK=v=>{const a=String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toUpperCase().replace(/\s+/g,' ');const m=a.match(/^(?:KTX|KY TUC XA)?\s*0*([12])$/);return m?'KTX '+m[1]:''};
-const delCount=(k,day)=>{const target=rp143NormK(k);let total=0;const seen=new Set();
- const add=(n,key)=>{const amount=Math.max(0,Number(n)||0);if(!amount)return;const id=String(key||'').trim();if(id){if(seen.has(id))return;seen.add(id)}total+=amount};
- (Array.isArray(ARC)?ARC:[]).forEach((a,idx)=>{if(!a||!a.w)return;if(day&&String(a.date||'')!==String(day))return;const ak=rp143NormK((typeof K==='function'?K(a.w):a.w.ktx)||a.ktx||'');if(target&&ak!==target)return;const key='ARC:'+String(a.id||(a.w&&a.w.id)||[a.date,a.reason,ak,idx].join('|'));add(1,key)});
- (Array.isArray(LOG)?LOG:[]).forEach((x,idx)=>{if(!x||String(x.a||'').toUpperCase()!=='PURGE')return;if(day&&logDay(x)!==day)return;const detail=String(x.d||'');let lk=rp143NormK(x.k||x.ktx||'');if(!lk){const m=detail.match(/\bKTX\s*([12])\b/i);if(m)lk='KTX '+m[1]}if(target&&lk&&lk!==target)return;if(target&&!lk)return;const m=detail.match(/(\d+)/);const n=Number(x.n)||Number(m&&m[1])||1;const key='LOG_PURGE:'+String(x.id||x._sid||x.record_id||[detail,logDay(x),lk,idx].join('|'));add(n,key)});
- return total};
+/* v2611: A confirmed RP_MOVEMENT_V128 entry records ONE decrease operation on Cloud.
+   PURGE is a second audit for that same operation, not another decrease.
+   Never infer a KTX from a user name, nor count deleting an archived record again. */
+function rpDecreaseAudit(day){
+ const totals=new Map(),warnings=[],events=new Set();
+ const norm=rp143NormK;
+ const getKtx=(x,detail)=>{
+   const p=(x&&typeof x.payload==='object'&&x.payload)||{};
+   const before=(x&&typeof x.before==='object'&&x.before)||p.before||{};
+   const worker=(x&&typeof x.worker==='object'&&x.worker)||p.worker||{};
+   const changes=Array.isArray(x?.changes)?x.changes:(Array.isArray(p.changes)?p.changes:[]);
+   const change=changes.find(c=>String(c.field||'').toLowerCase()==='ktx');
+   const fromChange=change&&(change.from??change.before??change.to);
+   const direct=norm(x?.ktx||x?.k||p.ktx||p.k||before.ktx||worker.ktx||fromChange);
+   if(direct)return direct;
+   const m=String(detail||'').match(/\bKTX\s*0*([12])\b/i);
+   return m?'KTX '+m[1]:'';
+ };
+ const rows=[...(Array.isArray(LOG)?LOG:[]),...(Array.isArray(RP160_CLOUD_ROWS)?RP160_CLOUD_ROWS:[])];
+ const movement=new Map(),others=new Map();let unknownPurgeCount=0;
+ for(const raw of rows){
+   if(!raw||rp160DayOf(raw)!==day)continue;
+   const payload=(raw&&typeof raw.payload==='object'&&raw.payload)||{};
+   const x={...payload,...raw};
+   const action=String(x.a||x.action||'').toUpperCase();
+   const detail=String(x.d||x.detail||x.description||'');
+   const isMovement=/^RP_MOVEMENT_V\d+$/.test(action);
+   const isPurge=action==='PURGE'||action==='DELETE_PERMANENT';
+   if(!isMovement&&!isPurge)continue;
+   // A purge of an already archived worker does NOT change active headcount.
+   if(/hồ sơ lưu|danh sách điều chuyển|danh sách nghỉ việc/i.test(detail)||action==='PURGE_ARCHIVE')continue;
+   // Movement records may also describe an increase; accept decreases only.
+   if(isMovement&&!/\bGiảm\b/i.test(detail)&&!/(?:delete|checkout|archive|purge|decrease)/i.test(String(x.movement||x.type||'')))continue;
+   const k=getKtx(x,detail);
+   let count=Number(x.n??x.count??x.quantity);
+   if(!Number.isInteger(count)||count<=0){const m=detail.match(/\bGiảm\s+(\d+)\s+công\s+nhân/i)||detail.match(/\bXóa\s+hẳn\s+(\d+)\s+công\s+nhân/i);count=m?Number(m[1]):1}
+   if(!Number.isSafeInteger(count)||count<1||count>500){warnings.push('Số lượng giảm bất thường trong nhật ký: '+detail.slice(0,80));continue}
+   const dateSig=String(x.at||x.event_at||x.t||'');
+   const eventId=String(x._sid||x.record_id||x.auditId||'');
+   // Cloud and local copies of the same audit record must count only once.
+   const sig=eventId?'ID:'+eventId:['ROW',action,dateSig,detail,String(x.workerId||x.worker_id||'')].join('|');
+   if(events.has(sig))continue;events.add(sig);
+   if(!k){if(isPurge)unknownPurgeCount+=count;else warnings.push('Sự kiện giảm thiếu KTX: '+detail.slice(0,80));continue}
+   const target=isMovement?movement:others;
+   target.set(k,(target.get(k)||0)+count);
+ }
+ // Use authoritative movement audits when present for this KTX/day; archived
+ // records are fallback for older days where no movement audit was written.
+ const archive=new Map();
+ (Array.isArray(ARC)?ARC:[]).forEach(a=>{
+   if(!a||!a.w||String(a.date||'')!==String(day))return;
+   const k=norm(a.w.ktx||a.ktx||(typeof K==='function'?K(a.w):''));
+   if(!k){warnings.push('Hồ sơ lưu trữ không có KTX');return}
+   archive.set(k,(archive.get(k)||0)+1);
+ });
+ const movementTotal=[...movement.values()].reduce((a,b)=>a+b,0);
+ if(unknownPurgeCount>movementTotal)warnings.push('Có '+(unknownPurgeCount-movementTotal)+' lượt xóa hẳn chưa xác định KTX; cần đối chiếu nhật ký trước khi chốt báo cáo.');
+ const allKeys=new Set([...movement.keys(),...archive.keys(),...others.keys()]);
+ for(const k of allKeys){
+   // Separate archive and purge logs may represent the same exit.  Treat
+   // them as alternatives rather than adding them twice.
+   const total=movement.has(k)?movement.get(k):Math.max(archive.get(k)||0,others.get(k)||0);
+   totals.set(k,total);
+ }
+ return {totals,warnings,sourceCloud:RP160_CLOUD_OK};
+}
+const delCount=(k,day)=>{
+ const audit=rpDecreaseAudit(day||ldy());
+ const key=rp143NormK(k);
+ return key?(audit.totals.get(key)||0):[...audit.totals.values()].reduce((a,b)=>a+b,0);
+};
 const arcWhy=(k,day)=>{const c={};(Array.isArray(ARC)?ARC:[]).filter(a=>a&&a.w&&a.date==day&&(!k||K(a.w)==k)).forEach(a=>c[a.reason]=(c[a.reason]||0)+1);const t=Object.entries(c).map(([r,n])=>`${r} ${n}`).join(', ');return t};
 /* V160: Read-only Cloud audit reconciliation. Never modify Supabase, LOG or worker records.
    Each increase is a successfully recorded CREATE/IMPORT_CREATE/QR_CHECKIN for a NEW worker.
@@ -3205,6 +3271,7 @@ async function saveDocx(lines,name){try{
 $('rpg').onclick=async()=>{const day=$('rd0').value||ldy(),ks=rpCalc(day).map((x,i)=>({...x,inc:Math.max(0,+$('ri'+i).value||0),dec:Math.max(0,+$('rx'+i).value||0),why:$('rr'+i).value.trim()})),u=rpUnits(),nf=n=>n.toLocaleString('vi-VN'),p2=n=>String(n).padStart(2,'0'),dmy=day.split('-').reverse().join('/'),inc=ks.reduce((t,x)=>t+x.inc,0),dec=ks.reduce((t,x)=>t+x.dec,0),why=$('rrt').value.trim(),L=[];
  L.push(`Báo Cáo quân số ${dmy}`,`Quân số ${window.KTX_GLOBAL_CONFIG?.title||'KTX Hóc Môn'}:`,`Tổng: ${nf(W.length)} CNCH (${nf(u.xd)} CNCH XD, ${nf(u.me)} CNCH ME, ${nf(u.cm)} CNCH chờ mã, ${nf(u.vin)} Vinalpha, ${nf(u.td)} Trắc đạc, ${nf(u.kh)} BP Khác).`,`Tổng tăng ${p2(ks.length)} KTX : ${p2(inc)} CNCH`,`Tổng giảm ${p2(ks.length)} KTX : ${p2(dec)} CNCH (${rp143DecreaseNote(why)})`);
  ks.forEach((x,i)=>L.push(`${i+1}/ ${x.k} (${x.days} Dãy = ${x.rooms} phòng = ${nf(x.cap)} chỗ):`,`- Tổng : ${nf(x.tot)} CNCH`,`• Nam : ${nf(x.nam)}`,`• Nữ : ${nf(x.nu)}`,`• Công suất: ${nf(x.cap)}`,`• Hiệu suất: ${(x.cap?x.tot/x.cap*100:0).toFixed(2).replace('.',',')}%`,`- Tổng tăng: ${p2(x.inc)} CNCH`,`- Tổng giảm: ${p2(x.dec)} CNCH (${rp143DecreaseNote(x.why)})`));
+ const decreaseWarnings=rpDecreaseAudit(day).warnings;if(decreaseWarnings.length)L.push('- LƯU Ý ĐỐI SOÁT GIẢM: '+decreaseWarnings.join(' | '));
  L.push(`- Tình hình ANTT: ${$('ra').value.trim()}`,`- Tình hình điện nước: ${$('re').value.trim()}`);
  const ok=await saveDocx(L,`bao-cao-quan-so-${day}.docx`);if(ok&&$('rpd')?.open)$('rpd').close();};
 // PC và Mobile cùng sử dụng một mẫu báo cáo quân số; khác nhau ở cách xuất Word / sao chép Zalo.
@@ -3213,6 +3280,7 @@ function dailyHeadcountReportLines(){
  const day=ldy(),ks=rpCalc(day).map(x=>({...x,why:arcWhy(x.k,day)})),u=rpUnits(),nf=n=>n.toLocaleString('vi-VN'),p2=n=>String(n).padStart(2,'0'),dmy=day.split('-').reverse().join('/'),inc=ks.reduce((t,x)=>t+x.inc,0),dec=ks.reduce((t,x)=>t+x.dec,0),why=arcWhy('',day),L=[];
  L.push(`Báo Cáo quân số ${dmy}`,`Quân số ${window.KTX_GLOBAL_CONFIG?.title||'KTX Hóc Môn'}:`,`Tổng: ${nf(W.length)} CNCH (${nf(u.xd)} CNCH XD, ${nf(u.me)} CNCH ME, ${nf(u.cm)} CNCH chờ mã, ${nf(u.vin)} Vinalpha, ${nf(u.td)} Trắc đạc, ${nf(u.kh)} BP Khác).`,`Tổng tăng ${p2(ks.length)} KTX : ${p2(inc)} CNCH`,`Tổng giảm ${p2(ks.length)} KTX : ${p2(dec)} CNCH (${rp143DecreaseNote(why)})`);
  ks.forEach((x,i)=>L.push(`${i+1}/ ${x.k} (${x.days} Dãy = ${x.rooms} phòng = ${nf(x.cap)} chỗ):`,`- Tổng : ${nf(x.tot)} CNCH`,`• Nam : ${nf(x.nam)}`,`• Nữ : ${nf(x.nu)}`,`• Công suất: ${nf(x.cap)}`,`• Hiệu suất: ${(x.cap?x.tot/x.cap*100:0).toFixed(2).replace('.',',')}%`,`- Tổng tăng: ${p2(x.inc)} CNCH`,`- Tổng giảm: ${p2(x.dec)} CNCH (${rp143DecreaseNote(x.why)})`));
+ const decreaseWarnings=rpDecreaseAudit(day).warnings;if(decreaseWarnings.length)L.push('- LƯU Ý ĐỐI SOÁT GIẢM: '+decreaseWarnings.join(' | '));
  L.push('- Tình hình ANTT: ANTT đảm bảo.','- Tình hình điện nước: Điện nước đảm bảo, hoạt động bình thường');
  return L;
 }
