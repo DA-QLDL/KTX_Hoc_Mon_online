@@ -1,0 +1,257 @@
+{
+  "base": "Stage 93 FULL CLEAN",
+  "css_bundle": "assets/css/ktx-stage93-main-combined.css",
+  "css_sources": [
+    "assets/css/ktx-ui-consolidated-v2188.css",
+    "assets/css/utility-label-editor-v2196.css",
+    "assets/css/ktx-config-hub-v2199.css",
+    "assets/css/heatmap-v2200-ktx-kpi-visibility.css",
+    "assets/css/heatmap-v2201-thin-border-unframed-icons.css",
+    "assets/css/ktx-vendor-directions-v2203.css",
+    "assets/css/ktx-mobile-profile-layout-v2193.css",
+    "assets/css/ktx-mobile-document-status-v2204.css",
+    "assets/css/ktx-gender-unified-v2211.css",
+    "assets/css/ktx-transfer-dialog-v2213.css",
+    "assets/css/ktx-transfer-mobile-gender-v2214.css",
+    "assets/css/ktx-worker-audit-overflow-v2218.css",
+    "assets/css/ktx-cccd-actions-v2224.css",
+    "assets/css/ktx-executive-luxury-buttons-v1.css",
+    "assets/css/ktx-executive-luxury-surfaces-v1.css",
+    "assets/css/ktx-executive-luxury-dashboard-v1.css",
+    "assets/css/ktx-executive-luxury-navigation-workers-v1.css",
+    "assets/css/ktx-executive-luxury-worker-forms-v1.css",
+    "assets/css/ktx-executive-luxury-workflows-v1.css",
+    "assets/css/ktx-executive-luxury-residence-qr-v1.css",
+    "assets/css/ktx-executive-luxury-attendance-meals-v1.css",
+    "assets/css/ktx-executive-luxury-reports-vendors-v1.css",
+    "assets/css/ktx-executive-luxury-final-polish-v1.css",
+    "assets/css/ktx-executive-luxury-stage12-mobile-dialog-safety-v1.css",
+    "assets/css/ktx-pdf-suite-v229.css",
+    "assets/css/ktx-pdf-mobile-v247.css",
+    "assets/css/ktx-pdf-editor-v245.css",
+    "assets/css/ktx-pdf-actionbar-v246.css",
+    "assets/css/ktx-executive-luxury-design-system-v235.css",
+    "assets/css/ktx-utility-buttons-v255.css",
+    "assets/css/ktx-home-top-actions-v269.css",
+    "assets/css/ktx-mobile-bottom-three-v268.css",
+    "assets/css/ktx-org-chart-v256.css",
+    "assets/css/ktx-vault-mobile-full-v276.css",
+    "assets/css/ktx-dashboard-account-redesign-v277.css",
+    "assets/css/ktx-account-modal-unified-v280.css",
+    "assets/css/ktx-account-fix-v282.css",
+    "assets/css/ktx-stage87-ui.css",
+    "assets/css/ktx-stage91-repair.css",
+    "assets/css/ktx-mobile-quick-actions-palette-v290.css",
+    "assets/css/ktx-account-document-permissions-v271.css"
+  ],
+  "js_bundles": [
+    {
+      "path": "assets/js/bundles/ktx-stage93-sync-bundle-01.js",
+      "mode": "sync",
+      "source_count": 11,
+      "sources": [
+        "assets/js/core/worker-form-v2098.js",
+        "assets/js/modules/rooms/heatmap-v2164.js",
+        "assets/js/core/script-08.js",
+        "assets/js/modules/workers/script-09.js",
+        "assets/js/modules/workers/script-10.js",
+        "assets/js/modules/workers/script-11.js",
+        "assets/js/modules/reports/script-12.js",
+        "assets/js/modules/workers/script-13.js",
+        "assets/js/modules/residency/script-14.js",
+        "assets/js/modules/reports/script-15.js",
+        "assets/js/modules/residency/script-16.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-sync-bundle-02.js",
+      "mode": "sync",
+      "source_count": 17,
+      "sources": [
+        "assets/js/modules/admin/script-17.js",
+        "assets/js/modules/workers/script-18.js",
+        "assets/js/modules/admin/ios-auth-storage-v2046.js",
+        "assets/js/modules/admin/script-19.js",
+        "assets/js/modules/admin/script-20.js",
+        "assets/js/modules/residency/script-21.js",
+        "assets/js/modules/overview/script-22.js",
+        "assets/js/modules/overview/script-23.js",
+        "assets/js/modules/reports/script-24.js",
+        "assets/js/modules/overview/script-25.js",
+        "assets/js/modules/admin/script-26.js",
+        "assets/js/modules/admin/script-27.js",
+        "assets/js/modules/admin/script-28.js",
+        "assets/js/modules/admin/script-29.js",
+        "assets/js/modules/admin/script-30.js",
+        "assets/js/modules/admin/script-31.js",
+        "assets/js/modules/workers/script-32.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-sync-bundle-03.js",
+      "mode": "sync",
+      "source_count": 6,
+      "sources": [
+        "assets/js/modules/admin/script-33.js",
+        "assets/js/modules/admin/script-34.js",
+        "assets/js/modules/admin/script-35.js",
+        "assets/js/modules/admin/script-36.js",
+        "assets/js/core/script-37.js",
+        "assets/js/modules/meals/script-38.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-sync-bundle-04.js",
+      "mode": "sync",
+      "source_count": 2,
+      "sources": [
+        "assets/js/modules/meals/script-39.js",
+        "assets/js/modules/meals/vendor-catalog-v2091.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-sync-bundle-05.js",
+      "mode": "sync",
+      "source_count": 7,
+      "sources": [
+        "assets/js/core/script-40.js",
+        "assets/js/modules/attendance/script-41.js",
+        "assets/js/modules/admin/script-42.js",
+        "assets/js/modules/admin/script-43.js",
+        "assets/js/modules/workers/script-44.js",
+        "assets/js/core/script-45.js",
+        "assets/js/modules/admin/script-46.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-sync-bundle-06.js",
+      "mode": "sync",
+      "source_count": 18,
+      "sources": [
+        "assets/js/core/script-48.js",
+        "assets/js/core/script-49.js",
+        "assets/js/modules/rooms/script-50.js",
+        "assets/js/modules/admin/script-51.js",
+        "assets/js/modules/admin/script-52.js",
+        "assets/js/modules/admin/script-53.js",
+        "assets/js/modules/rooms/script-54.js",
+        "assets/js/modules/admin/script-55.js",
+        "assets/js/core/script-56.js",
+        "assets/js/core/script-57.js",
+        "assets/js/modules/admin/script-58.js",
+        "assets/js/modules/attendance/script-59.js",
+        "assets/js/modules/reports/script-60.js",
+        "assets/js/modules/attendance/script-61.js",
+        "assets/js/modules/attendance/script-62.js",
+        "assets/js/modules/reports/script-63.js",
+        "assets/js/modules/admin/script-64.js",
+        "assets/js/modules/admin/script-65.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-sync-bundle-07.js",
+      "mode": "sync",
+      "source_count": 3,
+      "sources": [
+        "assets/js/core/global-settings-164.js",
+        "assets/js/core/settings-display-168.js",
+        "assets/js/core/settings-live-166.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-sync-bundle-08.js",
+      "mode": "sync",
+      "source_count": 19,
+      "sources": [
+        "assets/js/core/script-68.js",
+        "assets/js/modules/meals/script-80.js",
+        "assets/js/modules/admin/script-69.js",
+        "assets/js/core/script-70.js",
+        "assets/js/core/script-71.js",
+        "assets/js/core/script-72.js",
+        "assets/js/core/ios-form-viewport-110.js",
+        "assets/js/core/navigation-back-117.js",
+        "assets/js/core/script-73.js",
+        "assets/js/core/archive-diagnostics-136.js",
+        "assets/js/core/archive-mobile-144.js",
+        "assets/js/modules/attendance/script-79.js",
+        "assets/js/core/feature-grid-160.js",
+        "assets/js/core/backup-banner-control-174.js",
+        "assets/js/modules/admin/restore-workers-once-177.js",
+        "assets/js/modules/admin/worker-import-atomic-109.js",
+        "assets/js/modules/admin/worker-replace-atomic-137.js",
+        "assets/js/core/desktop-wheel-scroll-patch.js",
+        "assets/js/core/daily-report-click-126.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-sync-bundle-09.js",
+      "mode": "sync",
+      "source_count": 5,
+      "sources": [
+        "assets/js/core/ktx-v2013-pagination.js",
+        "assets/js/core/ktx-v2020-clean-navigation.js",
+        "assets/js/modules/meals/ktx-v2027-meal-aggregate.js",
+        "assets/js/core/connection-status-v2072.js",
+        "assets/js/modules/admin/script-81-org-chart.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-defer-bundle-10.js",
+      "mode": "defer",
+      "source_count": 7,
+      "sources": [
+        "assets/js/core/scroll-layout-v2122.js",
+        "assets/js/core/utility-label-editor-v2197.js",
+        "assets/js/core/ktx-config-hub-v2199.js",
+        "assets/js/core/ktx-vendor-directions-v2204.js",
+        "assets/js/core/ktx-gender-unified-v2211.js",
+        "assets/js/core/ktx-transfer-room-gender-v2214.js",
+        "assets/js/core/ktx-assignment-display-v2215.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-defer-bundle-11.js",
+      "mode": "defer",
+      "source_count": 2,
+      "sources": [
+        "assets/js/core/ktx-pdf-suite-v229.js",
+        "assets/js/core/ktx-pdf-editor-v245.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-sync-bundle-12.js",
+      "mode": "sync",
+      "source_count": 5,
+      "sources": [
+        "assets/js/modules/admin/ktx-account-document-permissions-v271.js",
+        "assets/js/modules/admin/ktx-account-personal-email-v282.js",
+        "assets/js/modules/admin/ktx-account-modal-redesign-v282.js",
+        "assets/js/modules/admin/ktx-account-fields-v291.js",
+        "assets/js/modules/admin/ktx-system-config-page-v291.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-sync-bundle-13.js",
+      "mode": "sync",
+      "source_count": 4,
+      "sources": [
+        "assets/js/core/operational-fix-105.js",
+        "assets/js/core/download-status-106.js",
+        "assets/js/core/ios-cloud-error-v201.js",
+        "assets/js/core/script-74.js"
+      ]
+    },
+    {
+      "path": "assets/js/bundles/ktx-stage93-sync-bundle-14.js",
+      "mode": "sync",
+      "source_count": 3,
+      "sources": [
+        "assets/js/modules/attendance/script-76.js",
+        "assets/js/modules/attendance/script-77.js",
+        "assets/js/core/archive-v129-rollback-153.js"
+      ]
+    }
+  ],
+  "unchanged_js_count": 10
+}

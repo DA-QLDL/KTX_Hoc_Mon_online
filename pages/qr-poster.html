@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Poster QR vào/ra — KTX Hóc Môn</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#173965;background:#eef5ff}
+*{box-sizing:border-box}html,body{margin:0;height:100%}body{display:flex;flex-direction:column;min-height:100dvh;background:linear-gradient(180deg,#edf4ff 0%,#f7fbff 100%)}
+.toolbar{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid #d6e5f8;box-shadow:0 5px 18px rgba(28,86,160,.10);padding:12px max(14px,calc((100vw - 1100px)/2));display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.heading{flex:1;min-width:220px}.heading strong{font-size:16px;display:block}.heading small{display:block;color:#657c99;font-size:12px;margin-top:3px}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn,.download{border:1px solid #b8cdef;border-radius:11px;min-height:42px;padding:10px 15px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:7px;text-decoration:none;cursor:pointer;background:#f5f9ff;color:#2055a3;box-shadow:0 3px 9px rgba(31,91,178,.08)}.btn:hover,.download:hover{background:#e9f2ff}.btn.primary{background:#1568dc;color:#fff;border-color:#1568dc}.btn.primary:hover{background:#0f5fcf}.btn.close{background:#fff;color:#29496d}
+main{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:12px}.stage{width:min(100%,920px);height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}.poster-wrap{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:8px}.poster{display:block;max-width:100%;max-height:calc(100dvh - 120px);width:auto;height:auto;background:#fff;border-radius:14px;box-shadow:0 12px 32px rgba(21,51,95,.15)}.note{font-size:12px;line-height:1.55;color:#596f8d;margin:0;text-align:center}
+@media(max-width:720px){.toolbar{padding:10px 12px}.heading{width:100%}.actions{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.actions .download,.actions .btn{width:100%;min-height:44px;padding:10px 10px;font-size:13px}.actions .btn.close{grid-column:1/-1;order:-1}.poster{max-height:calc(100dvh - 190px);border-radius:10px}main{padding:8px}}
+@page{size:A4 landscape;margin:8mm}
+@media print{html,body{background:#fff!important;margin:0!important;padding:0!important;height:auto!important}body{display:block!important}.toolbar,.note{display:none!important}main{width:100%!important;height:100%!important;margin:0!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important}.poster-wrap{padding:0!important}.poster{display:block!important;max-width:100%!important;max-height:100%!important;width:auto!important;height:auto!important;object-fit:contain!important;border:0!important;border-radius:0!important;box-shadow:none!important;break-inside:avoid!important}}
+</style><style id="ktx-print-orientation"></style><link rel="stylesheet" href="../assets/css/ktx-executive-luxury-buttons-v1.css?v=1">
+</head>
+<body>
+<header class="toolbar">
+  <div class="heading"><strong>Poster QR đăng ký vào / ra KTX</strong><small id="formatLabel">Xem gọn trên điện thoại và máy tính • In A4 theo thiết bị</small></div>
+  <div class="actions">
+    <button type="button" class="btn close" id="goBack">← Đóng / Quay lại ứng dụng</button>
+    <a class="download" href="../assets/img/ktx-checkin-checkout-poster.png?v=2276" download="KTX_Hoc_Mon_Poster_QR_Checkin_Checkout.png">⬇ Tải ảnh</a>
+    <button type="button" class="btn primary" id="doPrint">⎙ In A4</button>
+  </div>
+</header>
+<main><div class="stage"><div class="poster-wrap"><img class="poster" id="posterImage" src="../assets/img/ktx-checkin-checkout-poster.png?v=2276" alt="Poster hướng dẫn QR check in và check out KTX Hóc Môn"></div><p class="note">Nếu đang dùng ứng dụng cài trên máy, bấm “Đóng / Quay lại ứng dụng” để trở về màn hình trước, không cần vuốt back.</p></div></main>
+<script>
+(function(){
+const portraitUrl='../assets/img/ktx-checkin-checkout-poster.png?v=2276';
+const landscapeUrl='../assets/img/ktx-checkin-checkout-landscape.png?v=2276';
+function mobile(){return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||matchMedia('(max-width:767px)').matches}
+function setup(){
+  const isMobile=mobile();
+  const url=isMobile?portraitUrl:landscapeUrl;
+  document.getElementById('ktx-print-orientation').textContent='@page{size:A4 '+(isMobile?'portrait':'landscape')+';margin:8mm}';
+  document.getElementById('formatLabel').textContent='Bản in mặc định: A4 '+(isMobile?'dọc (Mobile)':'ngang (PC)')+' • Ảnh tự co vừa màn hình';
+  const img=document.getElementById('posterImage');
+  const dl=document.querySelector('.download');
+  if(img) img.src=url;
+  if(dl){dl.href=url;dl.download=isMobile?'KTX_Hoc_Mon_Poster_QR_Checkin_Checkout_A4_doc.png':'KTX_Hoc_Mon_Poster_QR_Checkin_Checkout_A4_ngang.png';}
+}
+function goBack(){try{if(history.length>1){history.back();return;}}catch(e){};window.location.href='../index.html';}
+document.getElementById('doPrint').addEventListener('click',function(){setup();window.print()});
+document.getElementById('goBack').addEventListener('click',goBack);
+window.addEventListener('beforeprint',setup);
+window.addEventListener('resize',setup);
+setup();
+})();
+</script></body></html>

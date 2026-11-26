@@ -1,0 +1,229 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    },
+    {
+      "source": "/pwa/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, must-revalidate"
+        },
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "src": "/index\\.html",
+      "status": 308,
+      "headers": {
+        "Location": "/"
+      }
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/404\\.html",
+      "dest": "/pages/404.html"
+    },
+    {
+      "src": "/BUNDLE_MANIFEST_STAGE93\\.json",
+      "dest": "/config/BUNDLE_MANIFEST_STAGE93.json"
+    },
+    {
+      "src": "/HUONG_DAN_FULL_CLEAN_STAGE93\\.txt",
+      "dest": "/docs/HUONG_DAN_FULL_CLEAN_STAGE93.txt"
+    },
+    {
+      "src": "/HUONG_DAN_FULL_GOP_CSS_JS_STAGE93\\.txt",
+      "dest": "/docs/HUONG_DAN_FULL_GOP_CSS_JS_STAGE93.txt"
+    },
+    {
+      "src": "/KTX_HOC_MON\\.ico",
+      "dest": "/assets/img/brand/KTX_HOC_MON.ico"
+    },
+    {
+      "src": "/STAGE82_INSTALL_PERSONAL_EMAIL\\.sql",
+      "dest": "/docs/sql/STAGE82_INSTALL_PERSONAL_EMAIL.sql"
+    },
+    {
+      "src": "/apple\\-touch\\-icon\\.png",
+      "dest": "/assets/img/brand/apple-touch-icon.png"
+    },
+    {
+      "src": "/attendance\\-form\\.html",
+      "dest": "/pages/attendance-form.html"
+    },
+    {
+      "src": "/bien\\-ban\\-su\\-vu\\.html",
+      "dest": "/pages/bien-ban-su-vu.html"
+    },
+    {
+      "src": "/cccd\\-scan\\.js",
+      "dest": "/assets/js/legacy/cccd-scan.js"
+    },
+    {
+      "src": "/cloud\\-utility\\-store\\.js",
+      "dest": "/assets/js/legacy/cloud-utility-store.js"
+    },
+    {
+      "src": "/cosovatchat\\.html",
+      "dest": "/pages/cosovatchat.html"
+    },
+    {
+      "src": "/excel\\-import\\.js",
+      "dest": "/assets/js/legacy/excel-import.js"
+    },
+    {
+      "src": "/favicon\\-512\\.png",
+      "dest": "/assets/img/brand/favicon-512.png"
+    },
+    {
+      "src": "/kho\\-tai\\-lieu\\.html",
+      "dest": "/pages/kho-tai-lieu.html"
+    },
+    {
+      "src": "/kiem\\-tra\\-menu\\-ncc\\.html",
+      "dest": "/pages/kiem-tra-menu-ncc.html"
+    },
+    {
+      "src": "/kiem\\-tra\\-sao\\-luu\\.html",
+      "dest": "/pages/kiem-tra-sao-luu.html"
+    },
+    {
+      "src": "/ktx\\-background\\.webp",
+      "dest": "/assets/img/brand/ktx-background.webp"
+    },
+    {
+      "src": "/ktx\\-campus\\-hero\\.webp",
+      "dest": "/assets/img/brand/ktx-campus-hero.webp"
+    },
+    {
+      "src": "/ktx\\-campus\\-mobile\\.webp",
+      "dest": "/assets/img/brand/ktx-campus-mobile.webp"
+    },
+    {
+      "src": "/ktx\\-campus\\-stylized\\.jpg",
+      "dest": "/assets/img/brand/ktx-campus-stylized.jpg"
+    },
+    {
+      "src": "/ktx\\-login\\-art\\-clean\\-v2087\\.jpg",
+      "dest": "/assets/img/brand/ktx-login-art-clean-v2087.jpg"
+    },
+    {
+      "src": "/ktx\\-login\\-city\\.svg",
+      "dest": "/assets/img/brand/ktx-login-city.svg"
+    },
+    {
+      "src": "/ktx\\-login\\-selected\\.jpg",
+      "dest": "/assets/img/brand/ktx-login-selected.jpg"
+    },
+    {
+      "src": "/ktx\\-logo\\-full\\.png",
+      "dest": "/assets/img/brand/ktx-logo-full.png"
+    },
+    {
+      "src": "/ktx\\-logo\\.png",
+      "dest": "/assets/img/brand/ktx-logo.png"
+    },
+    {
+      "src": "/ktx\\-mobile\\-hero\\-v2144\\.svg",
+      "dest": "/assets/img/brand/ktx-mobile-hero-v2144.svg"
+    },
+    {
+      "src": "/ktx\\-v217\\-vault\\-bridge\\.js",
+      "dest": "/assets/js/legacy/ktx-v217-vault-bridge.js"
+    },
+    {
+      "src": "/manifest\\.webmanifest",
+      "dest": "/pwa/manifest.webmanifest"
+    },
+    {
+      "src": "/meal\\-xlsx\\-reader\\.js",
+      "dest": "/assets/js/legacy/meal-xlsx-reader.js"
+    },
+    {
+      "src": "/ncc\\-suat\\-an\\.js",
+      "dest": "/assets/js/legacy/ncc-suat-an.js"
+    },
+    {
+      "src": "/pccc\\.html",
+      "dest": "/pages/pccc.html"
+    },
+    {
+      "src": "/pwa\\-icon\\-192\\.png",
+      "dest": "/assets/img/brand/pwa-icon-192.png"
+    },
+    {
+      "src": "/pwa\\-icon\\-512\\.png",
+      "dest": "/assets/img/brand/pwa-icon-512.png"
+    },
+    {
+      "src": "/qr\\-config\\.js",
+      "dest": "/assets/js/legacy/qr-config.js"
+    },
+    {
+      "src": "/qr\\-form\\.html",
+      "dest": "/pages/qr-form.html"
+    },
+    {
+      "src": "/qr\\-poster\\.html",
+      "dest": "/pages/qr-poster.html"
+    },
+    {
+      "src": "/qr\\-sessions\\.js",
+      "dest": "/assets/js/legacy/qr-sessions.js"
+    },
+    {
+      "src": "/so\\-tang\\-giam\\.html",
+      "dest": "/pages/so-tang-giam.html"
+    },
+    {
+      "src": "/sw\\.js",
+      "dest": "/pwa/sw.js"
+    },
+    {
+      "src": "/theo\\-doi\\-suat\\-an\\.html",
+      "dest": "/pages/theo-doi-suat-an.html"
+    },
+    {
+      "src": "/thuc\\-don\\-moi\\.html",
+      "dest": "/pages/thuc-don-moi.html"
+    },
+    {
+      "src": "/vipham\\-ncc\\.html",
+      "dest": "/pages/vipham-ncc.html"
+    },
+    {
+      "src": "/vs\\-vpp\\.html",
+      "dest": "/pages/vs-vpp.html"
+    },
+    {
+      "src": "/QR-GOC/(.*)",
+      "dest": "/assets/img/qr-original/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "status": 404,
+      "dest": "/pages/404.html"
+    },
+    {
+      "src": "/.*",
+      "dest": "/index.html"
+    }
+  ]
+}

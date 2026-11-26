@@ -1,0 +1,11 @@
+BÁO CÁO KIỂM TRA BẢN LÀM SẠCH – 26/11/2026
+
+Nguồn: QLKTX-main (1).zip, tích hợp UPDATE bỏ hai tiêu đề NCC mới nhất.
+Đã loại: 174 tệp không thuộc đường tải runtime theo phân tích tham chiếu tĩnh.
+Phân loại: 114 JS, 56 CSS, 2 JSON metadata cũ, 2 TXT hướng dẫn cũ.
+Đã giữ: index.html, CSS bundle, JS bundle được tải, API serverless, trang phụ, PWA, hình ảnh, route Vercel và các cấu hình cần thiết.
+Đã sửa: danh sách cache PWA bỏ các tài nguyên legacy, tăng version để tránh cache cũ.
+Đã kiểm tra: 42 tệp JS còn lại hợp lệ với node --check; toàn bộ script nhúng trong HTML kiểm tra cú pháp không lỗi; 197 liên kết tài nguyên HTML không bị mất; toàn bộ route Vercel có tệp đích.
+Chưa kiểm tra: luồng tích hợp đăng nhập, Supabase Auth/RLS/RPC, phân quyền đa tài khoản, tạo/xóa công nhân, xuất Word/Excel, import menu với dữ liệu thực, QR, restore backup. Trình duyệt chạy trong môi trường kiểm tra bị chính sách chặn việc mở trang cục bộ.
+
+TRẠNG THÁI: Ứng viên triển khai để KIỂM THỬ STAGING, chưa được xác nhận production-ready chỉ dựa vào kiểm tra tĩnh. Cần nghiệm thu chức năng/bảo mật/dữ liệu trên môi trường staging trước khi đưa lên chính thức.
