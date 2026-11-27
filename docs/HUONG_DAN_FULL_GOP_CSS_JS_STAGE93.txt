@@ -1,0 +1,44 @@
+QLKTX HÓC MÔN — STAGE 93 FULL CLEAN · GỘP CSS / JS (SAFE BUNDLE)
+============================================================
+
+MỤC ĐÍCH
+- Gộp 41 stylesheet CSS của index.html thành 1 file mới:
+  assets/css/ktx-stage93-main-combined.css
+- Gộp 109 mã JS thuộc 14 nhóm liên tiếp và cùng chế độ nạp
+  (sync/defer) thành 14 file:
+  assets/js/bundles/ktx-stage93-*-bundle-XX.js
+- Trên trang chính: 41 -> 1 CSS, 119 -> 24 thẻ script nội bộ.
+- Không thay đổi thứ tự giữa các nhóm hoặc vị trí của mã inline.
+- Các trang phụ vẫn dùng CSS/JS độc lập như Stage 93.
+
+QUAN TRỌNG: GIỮ NGUYÊN FILE NGUỒN
+- File CSS/JS thành phần cũ vẫn được giữ lại để những trang phụ, tài nguyên
+  nạp động và thao tác hoàn nguyên không bị thiếu file.
+- Đây là gộp tài nguyên NẠP TRÊN TRANG CHÍNH, không phải gộp
+  toàn bộ hệ thống thành 2 file duy nhất.
+- Không minify/obfuscate để dễ đối chiếu và xử lý sự cố.
+
+CÁCH CÀI AN TOÀN
+1. Thoát hoàn toàn QLKTX Hóc Môn.
+2. Sao lưu thư mục hiện tại; giữ bản Stage93 FULL CLEAN làm bản dự phòng.
+3. Giải nén ZIP này vào MỘT THƯ MỤC MỚI, không ghi đè vào Stage 94-96.
+4. Chạy ứng dụng từ thư mục mới theo cách triển khai của anh.
+5. Thử đăng nhập, Tổng quan PC/Mobile, Quản lý công nhân, Kho tài liệu,
+   QR, các form, Tiện ích PDF, quản lý tài khoản và in/xuất.
+6. Nếu xuất hiện bất thường, dùng lại bản Stage93 FULL CLEAN cũ.
+
+KIỂM TRA ĐÃ THỰC HIỆN
+- Kiểm tra cú pháp Node.js cho toàn bộ JS (bao gồm file gộp): đạt.
+- Kiểm tra tất cả script/link/img/iframe được tham chiếu trực tiếp
+  trong các HTML: không thiếu tệp tại đường dẫn tương ứng.
+- Gộp CSS theo đúng thứ tự file cũ, giữ thư mục CSS để URL tương đối
+  không bị đổi gốc tham chiếu.
+- Gộp JS theo nhóm liên tiếp, không xuyên qua các script inline, URL
+  CDN hoặc thay đổi chế độ defer.
+- Chưa thử vận hành trên bản Electron/Supabase thật.
+- Trình duyệt kiểm thử trong môi trường này chặn cả file:// và
+  http://localhost, vì vậy KHÔNG xác nhận đã test tương tác UI.
+
+BẢN GỐC: QLKTX-Stage93-FULL-CLEAN.zip
+KHÔNG ÁP DỤNG thay đổi Stage94-96.
+DANH SÁCH nguồn các file gộp: BUNDLE_MANIFEST_STAGE93.json

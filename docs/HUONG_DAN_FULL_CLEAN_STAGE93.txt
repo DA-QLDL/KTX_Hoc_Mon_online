@@ -1,0 +1,25 @@
+QLKTX HÓC MÔN — STAGE 93 FULL CLEAN
+=================================
+Bản FULL giữ nguyên mã và hành vi Stage 93 (không bao gồm Stage 94–96).
+Đã loại bỏ tệp kiểm thử, bản vá cũ không được tham chiếu, tài liệu kiểm tra
+và SQL thử nghiệm cũ. Không thay đổi nội dung index.html, script-68.js,
+các file đang chạy, dữ liệu, phân quyền hoặc API.
+
+CÀI ĐẶT AN TOÀN
+1) Thoát ứng dụng; sao lưu thư mục QLKTX-main cũ.
+2) Giải nén gói FULL CLEAN vào MỘT THƯ MỤC MỚI, không giải nén chồng vào
+   thư mục Stage 94–96; việc giải nén chồng sẽ để lại file cũ không cần thiết.
+3) Dùng thư mục mới làm nguồn triển khai/cài đặt theo quy trình hiện tại.
+4) Không xóa dữ liệu trình duyệt, không xóa Supabase, không chạy SQL khi nâng cấp.
+
+CÁC TỆP GIỮ LẠI VÌ CẦN THIẾT
+- api/: endpoint máy chủ, không có thẻ <script> trong index nhưng vẫn cần.
+- sw.js, manifest.webmanifest, vercel.json, 404.html: triển khai/PWA.
+- Ảnh logo, poster QR, ảnh nền, tài nguyên phụ trợ.
+- STAGE82_INSTALL_PERSONAL_EMAIL.sql: file thiết lập Supabase tùy chọn
+  dành cho môi trường MỚI, không cần chạy lại trên cơ sở dữ liệu đang hoạt động.
+
+GIỚI HẠN KIỂM TRA
+Đã kiểm tra sự tồn tại các đường dẫn tham chiếu trực tiếp trong HTML/CSS,
+kiểm tra ZIP và cú pháp JS. Chưa chạy thử ứng dụng Windows/Electron với
+Supabase thực tế. Các file không chắc chắn có tải động hay không được giữ.
