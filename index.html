@@ -4661,6 +4661,60 @@ let QT='make',QM={t:'',s:'',c:''},QRREQ=[],QRCH=null,QCAM=null;
 // V64: RAM-only, session-scoped pending-request snapshot. Supabase remains the source of truth.
 let qrPendingAt=0,qrPendingValid=false,qrPendingPromise=null;
 const QR_PENDING_FRESH_MS=15000;
+// Verified server evidence only. Never use browser outbox or name-only
+// similarity to hide pending requests. This set is cleared on every check.
+const qrResolvedPendingIds=new Set();
+const qrIdentityText=v=>String(v??'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[đĐ]/g,'d').toLowerCase().replace(/\s+/g,' ');
+const qrIdentityDigits=v=>String(v??'').replace(/\D/g,'');
+function qrSamePersonStrict(a,b){
+ if(!a||!b)return false;
+ const nameA=qrIdentityText(a.name),nameB=qrIdentityText(b.name);
+ if(!nameA||!nameB||nameA!==nameB)return false;
+ const ca=qrIdentityDigits(a.cccd),cb=qrIdentityDigits(b.cccd);
+ if(ca.length>=9&&cb.length>=9)return ca===cb;
+ const ma=qrIdentityText(a.worker_code??a.mnv),mb=qrIdentityText(b.worker_code??b.mnv);
+ if(!ma||!mb||ma!==mb||ma==='cho ma'||ma==='-')return false;
+ const phoneA=qrIdentityDigits(a.phone??a.sdt),phoneB=qrIdentityDigits(b.phone??b.sdt);
+ const dobA=String(a.dob||'').trim(),dobB=String(b.dob||'').trim();
+ return !!((phoneA.length>=9&&phoneA===phoneB)||(dobA&&dobB&&dobA===dobB));
+}
+async function qrReconcileDuplicatePending(client,rows){
+ qrResolvedPendingIds.clear();
+ const candidates=(rows||[]).filter(r=>r.status==='pending'&&r.request_type==='in');
+ if(!candidates.length)return;
+ // Recent verified approvals are used as evidence; old approvals past the
+ // 1000-row bound simply remain visible for manual checking (fail safe).
+ const {data:approved,error}=await client.from('residency_requests')
+  .select('id,name,worker_code,cccd,phone,dob,status,request_type,created_at')
+  .eq('request_type','in').eq('status','approved')
+  .order('created_at',{ascending:false}).limit(1000);
+ if(error)throw error;
+ const possible=[];
+ for(const pending of candidates){
+  for(const done of approved||[]){
+   if(String(pending.id)===String(done.id))continue;
+   if(qrSamePersonStrict(pending,done))possible.push({pending,done});
+  }
+ }
+ if(!possible.length)return;
+ // A historical approved status alone is insufficient: verify the associated
+ // worker really exists in the authoritative active Cloud workers table.
+ const ids=[...new Set(possible.map(p=>'qr_in_'+String(p.done.id)))];
+ const verified=new Map();
+ for(let i=0;i<ids.length;i+=100){
+  const {data:found,error:we}=await client.from('ktx_workers')
+    .select('record_id,payload').in('record_id',ids.slice(i,i+100));
+  if(we)throw we;
+  for(const w of found||[])verified.set(String(w.record_id),w.payload);
+ }
+ for(const {pending,done} of possible){
+  const worker=verified.get('qr_in_'+String(done.id));
+  if(worker&&qrSamePersonStrict(pending,worker)&&qrSamePersonStrict(done,worker)){
+   qrResolvedPendingIds.add(String(pending.id));
+  }
+ }
+}
+
 function qrInvalidatePending(){qrPendingValid=false;qrPendingAt=0;}
 function qrPrefetchPending(){
  if(typeof can!=='function'||!can('qrApprove')||document.body.classList.contains('auth-locked'))return;
@@ -4872,6 +4926,8 @@ async function qrLoadRequests(force=false){
   const {data,error}=await sb.from('residency_requests').select('*')
    .eq('status','pending').order('created_at',{ascending:false}).limit(500);
   if(error)throw error;
+  try{await qrReconcileDuplicatePending(sb,data||[])}
+  catch(checkError){qrResolvedPendingIds.clear();console.warn('[QR] Cloud duplicate verification unavailable; keep requests visible:',checkError?.message||checkError)}
   QRREQ=(data||[]).filter(qr163Allowed);qrPendingAt=Date.now();qrPendingValid=true;qr70UpdatePendingBadges();
   return QRREQ;
  })();
@@ -5506,7 +5562,12 @@ function qrLocalKey(type,id,actor){return 'qr|'+actor+'|'+type+'|'+String(id);}
 // Pending/sending/review/failed jobs stay out of the "Duyệt" list until resolved.
 let qrQueueVisibleActor='',qrQueueVisibleKeys=new Set();
 function qrQueueKey(type,id){return String(type)+'|'+String(id)}
-function qrQueueIsHidden(type,id){return qrQueueVisibleActor===qrLocalActor()&&qrQueueVisibleKeys.has(qrQueueKey(type,id))}
+function qrQueueIsHidden(type,id){
+ // A QR request already superseded by a verified approved+active Cloud worker
+ // is not a fresh pending approval on either PC or Mobile.
+ if(type==='in'&&qrResolvedPendingIds.has(String(id)))return true;
+ return qrQueueVisibleActor===qrLocalActor()&&qrQueueVisibleKeys.has(qrQueueKey(type,id));
+}
 function qrQueueSetVisibleRows(rows){
  const actor=qrLocalActor();qrQueueVisibleActor=actor;
  qrQueueVisibleKeys=new Set(rows.filter(j=>j.actor===actor&&j.status!=='done').map(j=>qrQueueKey(j.type,j.id)));
@@ -6819,6 +6880,10 @@ async function m69FetchReview(type,seq,view,paint,quiet=false){
  try{
   const {data,error}=await client.from('residency_requests').select('*').eq('status','pending').eq('request_type',type).order('created_at',{ascending:false}).limit(500).abortSignal(abort.signal);
   if(error)throw error;
+  if(!current())return;
+  try{await qrReconcileDuplicatePending(client,(data||[]).concat(
+    (typeof QRREQ!=='undefined'?QRREQ:[]).filter(x=>x.request_type==='in'&&x.status==='pending')))}
+  catch(checkError){qrResolvedPendingIds.clear();console.warn('[QR Mobile] Cloud duplicate verification unavailable:',checkError?.message||checkError)}
   if(!current())return;
   await qrQueueLoadVisible();
   if(!current())return;
