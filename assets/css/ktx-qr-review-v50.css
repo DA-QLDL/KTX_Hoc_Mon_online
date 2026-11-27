@@ -1,0 +1,12 @@
+/* V50 — QR request empty/loading states, limited to QR review only. */
+#qr #qb .qr50-empty{
+  min-height:80px!important;display:flex!important;flex-direction:column!important;
+  align-items:flex-start!important;justify-content:center!important;
+  gap:5px!important;padding:14px 16px!important;
+  color:#315b80!important;background:#f4f9ff!important;
+  border:1px dashed #b9d6ed!important;border-radius:9px!important;
+  box-sizing:border-box!important;
+}
+#qr #qb .qr50-empty strong{display:block!important;font-size:13px!important;color:#17466f!important;font-weight:700!important;}
+#qr #qb .qr50-empty span{display:block!important;font-size:12px!important;color:#627d96!important;}
+#qr #qb .qr50-loading{font-size:13px!important;color:#355b7c!important;min-height:55px!important;display:flex!important;align-items:center!important;}

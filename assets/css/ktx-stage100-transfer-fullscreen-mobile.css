@@ -1,0 +1,152 @@
+/* Stage 100 · Approved Android/iOS transfer screen · presentation only */
+@media (max-width:700px) {
+  html body dialog#transferDlg.transfer-pro-dialog[open] {
+    position:fixed!important;
+    box-sizing:border-box!important;
+    inset:0!important;
+    margin:0!important;
+    width:100vw!important;
+    max-width:100vw!important;
+    height:100dvh!important;
+    min-height:100dvh!important;
+    max-height:100dvh!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+  html body dialog#transferDlg .pd.transfer-pro {
+    box-sizing:border-box!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:env(safe-area-inset-top,0px) 0 0!important;
+    margin:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+  html body dialog#transferDlg .ph {
+    position:relative!important;
+    top:auto!important;
+    z-index:2!important;
+    flex:0 0 auto!important;
+    min-height:65px!important;
+    box-sizing:border-box!important;
+    padding:13px 16px 10px!important;
+    margin:0!important;
+    border-bottom:1px solid #e6edf6!important;
+    background:#fff!important;
+  }
+  html body dialog#transferDlg .ph h3 {font-size:clamp(16px,4.7vw,20px)!important;line-height:1.2!important;}
+  html body dialog#transferDlg #transferSub {font-size:12px!important;}
+  html body dialog#transferDlg #transferX {min-width:40px!important;min-height:40px!important;width:40px!important;height:40px!important;}
+  html body dialog#transferDlg .transfer-current {
+    flex:0 0 auto!important;
+    box-sizing:border-box!important;
+    padding:10px!important;
+    margin:10px 15px 8px!important;
+    min-width:0!important;
+  }
+  html body dialog#transferDlg .transfer-selectors {
+    flex:0 0 auto!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    gap:10px!important;
+    margin:0 15px 9px!important;
+  }
+  html body dialog#transferDlg .transfer-selectors label {display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:4px!important;}
+  html body dialog#transferDlg .transfer-selectors select {box-sizing:border-box!important;width:100%!important;height:42px!important;min-height:42px!important;font-size:16px!important;}
+  /* User-approved removal: redundant room title, count summary and selection hint. Keep cap badge. */
+  html body dialog#transferDlg .transfer-room-head {
+    flex:0 0 auto!important;
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    padding:0!important;
+    margin:0 15px 9px!important;
+    gap:0!important;
+  }
+  html body dialog#transferDlg .transfer-room-head > div,
+  html body dialog#transferDlg #trRoomSummary,
+  html body dialog#transferDlg #trInfo.transfer-target-info,
+  html body dialog#transferDlg .transfer-note-label {display:none!important;}
+  html body dialog#transferDlg .transfer-cap {font-size:11px!important;padding:4px 10px!important;}
+  /* Room list uses remaining screen height; never leaves a blank area BELOW footer. */
+  html body dialog#transferDlg #trRoomGrid.transfer-room-grid {
+    box-sizing:border-box!important;
+    display:grid!important;
+    flex:1 1 0!important;
+    min-height:0!important;
+    max-height:none!important;
+    height:auto!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-auto-rows:minmax(76px,max-content)!important;
+    align-content:start!important;
+    align-items:start!important;
+    gap:8px!important;
+    margin:0!important;
+    padding:1px 15px 10px!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:thin;
+  }
+  html body dialog#transferDlg #trRoomGrid > .transfer-room-card {
+    box-sizing:border-box!important;
+    width:100%!important;
+    min-width:0!important;
+    min-height:76px!important;
+    max-height:none!important;
+    height:auto!important;
+    padding:7px 9px!important;
+    gap:2px!important;
+    border-radius:11px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+    align-items:flex-start!important;
+    opacity:1!important;
+    transition:border-color .12s ease,background-color .12s ease!important;
+  }
+  html body dialog#transferDlg #trRoomGrid .transfer-room-card strong {font-size:14px!important;line-height:1.15!important;}
+  html body dialog#transferDlg #trRoomGrid .transfer-room-card > span {font-size:11px!important;line-height:1.17!important;}
+  html body dialog#transferDlg #trRoomGrid .transfer-room-card > em {font-size:10px!important;line-height:1.18!important;margin-top:2px!important;padding:3px 7px!important;border-radius:20px!important;font-weight:750!important;}
+  /* Same occupancy thresholds / palette as overview: green available, blue full, red over, amber near full. */
+  html body dialog#transferDlg #trRoomGrid .transfer-room-card[data-heat-status="locked"],
+  html body dialog#transferDlg #trRoomGrid .transfer-room-card:disabled {opacity:.56!important;filter:grayscale(.3)!important;cursor:not-allowed!important;}
+  html body dialog#transferDlg #trRoomGrid .transfer-room-card.on,
+  html body dialog#transferDlg #trRoomGrid .transfer-room-card.selected {outline:2px solid #146bf3!important;outline-offset:-2px!important;box-shadow:0 0 0 2px #146bf32a!important;}
+  html body dialog#transferDlg .pf {
+    box-sizing:border-box!important;
+    position:relative!important;
+    bottom:auto!important;
+    flex:0 0 auto!important;
+    z-index:2!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,2fr)!important;
+    gap:10px!important;
+    width:100%!important;
+    min-height:68px!important;
+    margin:0!important;
+    padding:10px 15px max(12px,env(safe-area-inset-bottom,0px))!important;
+    border-top:1px solid #e5edf8!important;
+    background:#fff!important;
+    box-shadow:0 -4px 14px #163d690d!important;
+  }
+  html body dialog#transferDlg .pf :is(button,#transferCancel,#transferGo) {box-sizing:border-box!important;width:100%!important;min-width:0!important;height:45px!important;min-height:45px!important;border-radius:11px!important;font-size:clamp(11px,3.4vw,13px)!important;white-space:normal!important;}
+}
+@media (max-width:350px){
+  html body dialog#transferDlg #trRoomGrid.transfer-room-grid {gap:6px!important;padding-inline:10px!important;}
+  html body dialog#transferDlg .transfer-current {margin-inline:10px!important;}
+  html body dialog#transferDlg .transfer-selectors {margin-inline:10px!important;}
+  html body dialog#transferDlg .pf {padding-inline:10px!important;gap:7px!important;}
+}
+@media (max-width:700px){
+  html body dialog#transferDlg #trRoomGrid .transfer-room-card[data-heat-status] :is(strong,span,.tr2214-gender){color:inherit!important;}
+}

@@ -1,0 +1,236 @@
+/* QLKTX Stage 32 — unified SELECTED / ACTIVE visual state.
+   The style is intentionally scoped to selectors that represent navigation,
+   segmented controls and view-mode toggles. Destructive and approval ACTION
+   buttons keep their original semantic colors. No JavaScript or data changed. */
+:root{
+ --ktx-select-blue:#0866E9;
+ --ktx-select-ink:#FFFFFF;
+ --ktx-select-soft:#E8F1FF;
+ --ktx-select-border:#B9D3FB;
+
+  --el33-navy:#173B70;
+  --el33-active:var(--ktx-select-blue);
+  --el33-emerald:#18765D;
+  --el33-ruby:#B6384C;
+  --el33-gold:#97630F;
+  --el33-slate:#465C79;
+  --el33-text:#193352;
+  --el33-muted:#647A96;
+  --el33-line:#D8E4F1;
+  --el33-surface:#F5F8FD;
+  --el33-surface-soft:#FAFCFF;
+  --el33-radius:14px;
+  --el33-shadow:0 6px 18px rgba(23,59,112,.055);
+  --el33-gap-xs:4px;
+  --el33-gap-sm:8px;
+  --el33-gap-md:12px;
+  --el33-gap-lg:16px;
+}
+
+/* Desktop sidebar: active route, not action buttons. */
+@media (min-width:761px){
+ body nav button[data-p].on,
+ body nav button[data-p][aria-current="page"]{
+   background:#E8F1FF!important;color:#0866E9!important;
+   box-shadow:inset 0 0 0 1px #B9D3FB!important;
+ }
+ body nav button[data-p].on::before{background:#0866E9!important;}
+ body nav button[data-p].on svg{color:#0866E9!important;stroke:currentColor!important;}
+}
+
+/* Navigation tabs and segmented buttons in the main app. */
+body #qr .qr224-tabs button[data-qt]:not(.s),
+body #qr .qrhub-menu button.active,
+body #qr .qrhub-subtabs button.active,
+body #qr .qr58-state-bar button.active,
+body #qr .qr166-switch button.active,
+body #qr .ktx-qr-reg-tabs button.active,
+body .qr168-tabs button.active,
+body .ktx194-day-tabs button.active,
+body #mobile180 .m32-tabs button.active,
+body #mobile180 .m173-tabs button.active,
+body #mobile180 .m131-switch button.is-active,
+body #mobile180 .m131-switch button[aria-pressed="true"]{
+  background:#0866E9!important;
+  background-image:none!important;
+  border-color:#0866E9!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  text-shadow:none!important;
+  box-shadow:0 2px 7px rgba(8,102,233,.16)!important;
+}
+body #qr .qrhub-menu button.active small,
+body #qr .qr166-switch button.active small,
+body #qr .qr166-switch button.active .qr166-ico,
+body #qr .qrhub-subtabs button.active *,
+body #mobile180 .m131-switch button.is-active *{color:#fff!important;stroke:currentColor!important;}
+
+/* Desktop table sort selected: text/icons without changing the table header's fill. */
+body #work .cmp2 th .thbtn.active,
+body #work .cmp2 th .thbtn.active .arr{color:#0866E9!important;}
+
+/* Mobile app bottom navigation: low-contrast blue fill, legible icons. */
+@media (max-width:760px){
+ html body #mobile180 .mbottom button:is(.active,.is-active),
+ html body #mobile180 .mbottom button[aria-current="page"]{
+   background:#E8F1FF!important;
+   border:1px solid #B9D3FB!important;
+   color:#0866E9!important;
+   -webkit-text-fill-color:#0866E9!important;
+   box-shadow:none!important;
+ }
+ html body #mobile180 .mbottom button:is(.active,.is-active) :is(svg,.mi,i,span),
+ html body #mobile180 .mbottom button[aria-current="page"] :is(svg,.mi,i,span){
+   color:#0866E9!important;stroke:currentColor!important;
+ }
+}
+
+/* Separate utility pages — actual tab class names. */
+body .tabs button.active,
+body .tab.active,
+body .fac-tab.active{
+  background:#0866E9!important;
+  background-image:none!important;
+  border-color:#0866E9!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  box-shadow:0 2px 7px rgba(8,102,233,.14)!important;
+}
+
+/* Vault: preserve the approved compact two-button outer frame and pressed state. */
+body .vault-toolbar .vault-view .iconbtn[aria-pressed="true"]{
+  background:#0866E9!important;
+  border-color:#0866E9!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  box-shadow:0 2px 5px rgba(8,102,233,.18)!important;
+}
+body .vault-toolbar .vault-view .iconbtn[aria-pressed="true"] svg{
+  color:#fff!important;stroke:currentColor!important;
+}
+
+/* Active control keyboard indication stays distinguishable. */
+body :is(.tabs button,.tab,.fac-tab,.vault-view .iconbtn,.m131-switch button,.qrhub-menu button,.qrhub-subtabs button):focus-visible{
+  outline:2px solid #0866E9!important;outline-offset:2px!important;
+}
+
+
+/* ===============================================================
+   STAGE 33–36 — Executive Luxury UI Refinement / presentation only.
+   Existing selected-state rules from Stage 32 are merged above.
+   Scope deliberately avoids: permission classes, app routing, content
+   visibility, fixed/sticky table columns, print layout, and PDF outputs.
+   =============================================================== */
+
+@media screen {
+  /* 01 — dashboard: calm KPI surface and predictable spacing. */
+  body #home .g4{column-gap:12px;row-gap:12px}
+  body #home .g4 > .card{border-color:var(--el33-line);box-shadow:var(--el33-shadow)}
+  body #home .g4 .lbl{color:var(--el33-muted);line-height:1.5}
+  body #home .g4 .kpi{font-variant-numeric:tabular-nums}
+  body #adminboard :is(.adm-card,.adm-kpi),
+  body #opsboard :is(.card,.ops-card){border-color:var(--el33-line);box-shadow:var(--el33-shadow)}
+  body #mobile180 :is(.m131-stat,.mstat){min-width:0;box-sizing:border-box;border-color:var(--el33-line);box-shadow:var(--el33-shadow)}
+
+  /* 02 — navigation: same active treatment without changing routing. */
+  body nav button[data-p],body nav .gh{border-radius:10px;min-height:38px}
+  body nav button[data-p]:focus-visible,
+  body #mobile180 .mbottom button:focus-visible{outline:2px solid var(--el33-active);outline-offset:2px}
+  body #mobile180 .mbottom button{min-width:0}
+  body #mobile180 .mbottom :is(svg,.mi){flex-shrink:0}
+
+  /* 03 — workers: tidy headers, legible zebra and non-jumping actions. */
+  body #work :is(.worker-panel,.worker-primary,.worker-filters){min-width:0}
+  body #work :is(.worker-search input,.worker-filters select){border-color:var(--el33-line);border-radius:10px}
+  body #work .cmp2{font-variant-numeric:tabular-nums}
+  body #work .cmp2 :is(th,td){line-height:1.45}
+  body #work .cmp2 thead th{color:#24476F;background:#EDF3FA;border-bottom-color:#D5E1EE}
+  body #work .cmp2 tbody tr:nth-child(even){background:#F8FAFD}
+  body #work .cmp2 tbody tr:hover{background:#EEF5FD}
+  body #work .cmp2 tbody td{border-bottom-color:#E7EDF5}
+  body #work .cmp2 :is(.btn,button){vertical-align:middle}
+
+  /* 04 — worker forms and confirmation dialogs: no dimension changes. */
+  body :is(#dlg,#vdl,#dld,#cfd) :is(.eh,.vh){border-bottom-color:var(--el33-line)}
+  body :is(#dlg,#vdl,#dld) :is(.vf,.actionsBar){gap:9px}
+  body :is(#dlg,#vdl,#dld) :is(input:not([type=checkbox]):not([type=radio]),select,textarea){border-radius:10px}
+  body :is(#dlg,#vdl,#dld,#cfd) :is(button,.btn):focus-visible{outline:2px solid var(--el33-active);outline-offset:2px}
+  body #cfd #cfm{overflow-wrap:anywhere;line-height:1.6}
+
+  /* 05 — vault: search, breadcrumb, folder/file cards; preserve toggles. */
+  body .vault-toolbar{column-gap:8px;row-gap:8px}
+  body .vault-toolbar .vault-search{border-color:#CFDDF0;border-radius:10px}
+  body .vault-toolbar + .breadcrumb{border-radius:10px}
+  body .vault-toolbar ~ #content .grid:not(.list) .item{border-color:var(--el33-line);box-shadow:0 3px 12px rgba(23,59,112,.04)}
+  body .vault-toolbar ~ #content .grid.list .item{border-bottom-color:#E9EEF6}
+  body .vault-toolbar .vault-view .iconbtn:focus-visible{outline:2px solid var(--el33-active);outline-offset:2px}
+
+  /* 06 — QR desktop/mobile: consistent title and frame without touching canvas. */
+  body #qr .qr224-tabs{align-items:center;gap:8px}
+  body #qr .qr224-tabs button{border-radius:9px;line-height:1.25}
+  body #qr #qb .qr224-grid > .card{border-color:var(--el33-line);box-shadow:var(--el33-shadow)}
+  body #qr #qb .qr224-grid > .card h3{color:var(--el33-navy)}
+  body #mobile180 .m228-qr-screen .m228-qr-actions{gap:8px;min-width:0}
+  body #mobile180 #m196QrHost #qr .qr224-grid > .card{border-color:var(--el33-line)}
+
+  /* 07 — status and feedback: harmonize frame, not severity semantics. */
+  body :is(#toast.toast,.ktx-toast,.toast-message,[role=status].ktx-status){border-radius:11px;line-height:1.5}
+  body :is(#toast.toast,.ktx-toast,.toast-message){overflow-wrap:anywhere}
+  body :is(.qr238-history,.m228-history) :is(.done,.rejected){font-weight:750}
+  body .mcloudwarn{border-radius:10px}
+
+  /* 08 — core design system: consistent focus, inputs, card rhythm. */
+  body :is(input:not([type=checkbox]):not([type=radio]):not([type=file]),select,textarea):focus-visible{
+    outline:2px solid rgba(8,102,233,.35);outline-offset:1px;
+  }
+  body :is(.btn,.mbtn,.sysfunc-btn,.maction):focus-visible{outline:2px solid var(--el33-active);outline-offset:2px}
+  body :is(.card,.mpanel){background-clip:padding-box}
+}
+@media screen and (max-width:760px){
+  body #home .g4{gap:9px}
+  body #mobile180 :is(.m131-grid,.mstats){gap:9px}
+  body #mobile180 .m131-stat{padding:12px 10px}
+  body #mobile180 .mactions{gap:8px}
+  body #mobile180 :is(.mpage,.mpanel,.m71-detail){min-width:0;max-width:100%;box-sizing:border-box}
+  body #mobile180 .m131-actions{min-width:0}
+  body #mobile180 :is(.m228-qr-actions button,.mbottom button){min-width:0;overflow-wrap:anywhere}
+  body #mobile180 .m228-qr-actions button{overflow-wrap:break-word}
+  body #work :is(.wrap,.ktx250-worker-table-scroll){max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  body :is(#dlg,#vdl,#dld,#cfd) :is(.vf,.row){row-gap:8px}
+  body .vault-toolbar{gap:6px}
+}
+@media screen and (prefers-reduced-motion:reduce){
+  body :is(.btn,.mbtn,.maction,.sysfunc-btn,.vault-view .iconbtn){animation:none;transition:none}
+}
+
+
+/* STAGE 34–36 — targeted static refinements, consolidated. */
+@media screen {
+  /* Dense dashboards: prevent long KPI captions from overflowing cards. */
+  body #home .g4>.card :is(.lbl,.mut),
+  body #mobile180 :is(.m131-stat,.mstat) :is(small,.m131-stat-icon){
+    overflow-wrap:break-word;
+  }
+  /* Worker search and filters: readable labels without changing table widths. */
+  body #work :is(.worker-filters,.worker-primary) :is(input,select){
+    box-sizing:border-box;
+  }
+  body #work .cmp2 :is(th,td) :is(button,.btn):focus-visible{
+    outline:2px solid var(--el33-active);
+    outline-offset:1px;
+  }
+  /* Dialog hierarchy: wrapping long labels without changing actions order. */
+  body :is(#dlg,#vdl,#dld,#cfd) :is(label,.mut,p){
+    overflow-wrap:break-word;
+  }
+  /* Vault list rows can include long filenames; keep action column intact. */
+  body .vault-toolbar ~ #content .item>.title{
+    overflow-wrap:anywhere;
+  }
+  /* QR poster/button focus only: never change the functional QR canvas. */
+  body #qr #ktxQrPosterOpen:focus-visible,
+  body #mobile180 #ktxQrPosterMobile:focus-visible{
+    outline:2px solid var(--el33-active);
+    outline-offset:2px;
+  }
+}

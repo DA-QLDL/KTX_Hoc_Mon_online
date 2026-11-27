@@ -1,0 +1,96 @@
+/* KTX Hóc Môn V2.0.60 – Enterprise Blue / BÁO CÁO + THEO DÕI SUẤT ĂN
+   Presentational CSS only. Scopes strictly to #meal, meal popover and independent
+   body.ktx-meal-monitor-v2060. No navigation, validation or Supabase changes. */
+:root{
+  --meal60-ink:#183c68;--meal60-muted:#647e9f;--meal60-line:#d6e3f2;
+  --meal60-soft:#f2f7fe;--meal60-blue:#2169d1;--meal60-radius:8px;
+}
+/* Main meal report: compact surfaces and regular typographic rhythm */
+#meal>.card,#meal .g2>.card{padding:10px 12px!important;margin-bottom:10px!important;border:1px solid var(--meal60-line)!important;border-radius:11px!important;box-shadow:0 2px 8px rgba(17,62,110,.045)!important}
+#meal h2,#meal h3{color:var(--meal60-ink)!important;font-weight:750!important;line-height:1.3!important}
+#meal h3{font-size:13px!important}
+#meal :is(.fl,.mut,.meal-supplier-label){font-size:11px!important;line-height:1.35!important}
+#meal .ctl{display:flex!important;flex-wrap:wrap!important;align-items:flex-end!important;gap:8px 12px!important}
+#meal .ctl>.fl{margin:0!important;min-width:0!important}
+#meal .ctl>.row,#meal .ctl>span.row{gap:5px!important;flex-wrap:wrap!important;align-items:center!important}
+#meal :is(input:not([type=checkbox]):not([type=file]),select){box-sizing:border-box!important;height:30px!important;min-height:30px!important;max-width:100%!important;border:1px solid var(--meal60-line)!important;border-radius:7px!important;background:#fff!important;color:var(--meal60-ink)!important;padding:4px 8px!important;font-size:11px!important;line-height:1.25!important;box-shadow:none!important}
+#meal :is(input,select,button):focus-visible{outline:2px solid #2774d7!important;outline-offset:2px!important}
+/* Session segmented selector – compact and legible; active state remains blue */
+#meal #mp_s.seg{display:inline-flex!important;align-items:stretch!important;gap:0!important;overflow:hidden!important;border:1px solid var(--meal60-line)!important;border-radius:8px!important;box-shadow:none!important}
+#meal #mp_s.seg button{box-sizing:border-box!important;width:auto!important;min-width:58px!important;height:30px!important;min-height:30px!important;padding:5px 10px!important;margin:0!important;border:0!important;border-radius:0!important;font-size:11px!important;line-height:1.2!important;font-weight:750!important;box-shadow:none!important;transform:none!important}
+#meal #mp_s.seg button+button{border-left:1px solid var(--meal60-line)!important}
+#meal #mp_s.seg button.on{background:var(--meal60-blue)!important;color:#fff!important;box-shadow:none!important}
+/* Seven weekdays, explicitly compact. The buttons must not re-expand on hover. */
+#meal #mp_wk{margin-top:8px!important}
+#meal #mp_wk .wkd{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;gap:5px!important}
+#meal #mp_wk .wkd button{box-sizing:border-box!important;width:100%!important;min-width:0!important;min-height:48px!important;height:auto!important;padding:5px 4px!important;gap:2px!important;border:1px solid var(--meal60-line)!important;border-radius:7px!important;text-align:center!important;line-height:1.18!important;font-size:11px!important;font-weight:750!important;box-shadow:none!important;transform:none!important}
+#meal #mp_wk .wkd button small{font-size:9px!important;line-height:1.2!important;font-weight:500!important}
+#meal #mp_wk .wkd button.on{background:var(--meal60-blue)!important;color:#fff!important;border-color:var(--meal60-blue)!important;box-shadow:none!important}
+#meal #mp_wk .wkd button.on small{color:#f0f5ff!important}
+/* Report actions – equal height, clear priority and compact width */
+#meal :is(button.btn,label.btn,.meal-report-btn,.meal-copy-btn,.meal-import-btn,#ktx235MealExcel,#ktx235MealPdf){box-sizing:border-box!important;width:auto!important;min-height:28px!important;height:auto!important;padding:5px 8px!important;border-radius:7px!important;font-size:10.5px!important;font-weight:750!important;line-height:1.25!important;box-shadow:none!important;transform:none!important;white-space:normal!important}
+#meal :is(.meal-report-btn,.meal-copy-btn,.meal-import-btn) svg.i{width:13px!important;height:13px!important}
+/* Supplier chips – consistent with reporting controls */
+#meal .meal-suppliers{display:grid!important;grid-template-columns:auto minmax(0,1fr)!important;gap:8px!important;margin-top:9px!important;padding:9px 10px!important;background:#f7faff!important;border:1px solid var(--meal60-line)!important;border-radius:9px!important}
+#meal .meal-supplier-label{padding-top:4px!important;color:var(--meal60-muted)!important;font-weight:750!important}
+#meal .meal-supplier-list{display:flex!important;flex-wrap:wrap!important;gap:5px!important}
+#meal .meal-supplier{box-sizing:border-box!important;min-height:26px!important;max-width:100%!important;padding:3px 7px!important;gap:5px!important;font-size:10.5px!important;line-height:1.35!important;border:1px solid #bfd6f5!important;border-radius:7px!important;box-shadow:none!important;transform:none!important}
+#meal .meal-check{width:15px!important;height:15px!important;line-height:13px!important;font-size:10px!important}
+#meal #mp_cards{gap:9px!important}
+#meal #mp_cards>.card{padding:10px 11px!important}
+#meal #mp_cards :is(input:not([type=checkbox]),select){min-height:28px!important;height:28px!important;padding:4px 7px!important}
+#meal #mp_o{font-size:11px!important;line-height:1.45!important;max-width:100%!important;overflow-x:auto!important}
+/* Supplier aggregate dialog; retain its current visibility and data display behavior */
+#ktxMealAggregateDialog .kma-top{padding:12px 15px 9px!important}
+#ktxMealAggregateDialog h2{font-size:16px!important}
+#ktxMealAggregateDialog button{min-height:30px!important;padding:5px 9px!important;font-size:11px!important;border-radius:7px!important;box-shadow:none!important}
+#ktxMealAggregateDialog :is(input,select){height:32px!important;min-height:32px!important;padding:5px 8px!important;font-size:12px!important;border-radius:7px!important}
+#ktxMealAggregateDialog .kma-filters{gap:7px!important;padding:10px 15px 5px!important}
+#ktxMealAggregateDialog .kma-results{padding:0 15px 12px!important}
+#ktxMealAggregateDialog :is(th,td){padding:7px 8px!important;font-size:11px!important}
+/* Parent overlay header for Theo dõi suất ăn */
+#mealMonitor182 .head{height:42px!important;min-height:42px!important;padding:5px 11px!important}
+#mealMonitor182 .head b{font-size:13px!important;line-height:1.2!important}
+#mealMonitor182 .head button{min-height:28px!important;padding:4px 9px!important;font-size:11px!important;border-radius:7px!important;box-shadow:none!important}
+/* Separate document: thuc-don-moi.html (inside iframe) */
+body.ktx-meal-monitor-v2060{background:#f1f6fd!important;color:var(--meal60-ink)!important;padding:12px!important;font-size:12px!important}
+.ktx-meal-monitor-v2060 main{max-width:1200px!important}
+.ktx-meal-monitor-v2060 h1{font-size:19px!important;line-height:1.3!important;margin:0 0 4px!important;color:var(--meal60-ink)!important}
+.ktx-meal-monitor-v2060 .sub,.ktx-meal-monitor-v2060 .hint{font-size:11px!important;line-height:1.45!important;color:var(--meal60-muted)!important}
+.ktx-meal-monitor-v2060 .panel{margin:10px 0!important;padding:12px 13px!important;border:1px solid var(--meal60-line)!important;border-radius:10px!important;box-shadow:0 2px 8px rgba(17,62,110,.045)!important}
+.ktx-meal-monitor-v2060 .filter{gap:8px!important}
+.ktx-meal-monitor-v2060 label{font-size:11px!important;color:var(--meal60-ink)!important}
+.ktx-meal-monitor-v2060 label :is(input:not([type=file]),select){box-sizing:border-box!important;height:32px!important;min-height:32px!important;padding:5px 8px!important;margin-top:4px!important;font-size:12px!important;line-height:1.25!important;border:1px solid var(--meal60-line)!important;border-radius:7px!important}
+.ktx-meal-monitor-v2060 .bar{gap:6px!important;margin-top:10px!important}
+.ktx-meal-monitor-v2060 :is(button,.filebtn){box-sizing:border-box!important;min-height:29px!important;height:auto!important;padding:5px 9px!important;font-size:11px!important;font-weight:750!important;border-radius:7px!important;box-shadow:none!important;transform:none!important}
+.ktx-meal-monitor-v2060 .tabs{gap:6px!important;margin:9px 0!important}
+.ktx-meal-monitor-v2060 .tabs button{min-height:31px!important}
+.ktx-meal-monitor-v2060 h2{font-size:14px!important}
+.ktx-meal-monitor-v2060 .pill{padding:3px 8px!important;font-size:10px!important}
+.ktx-meal-monitor-v2060 .status{padding:7px 10px!important;margin-top:9px!important;font-size:11px!important;border-radius:7px!important}
+.ktx-meal-monitor-v2060 .scroll{max-width:100%!important;overflow-x:auto!important}
+.ktx-meal-monitor-v2060 table{font-size:11px!important}
+.ktx-meal-monitor-v2060 :is(th,td){padding:7px 9px!important;font-size:11px!important;line-height:1.3!important;border-bottom:1px solid #e7eef8!important}
+.ktx-meal-monitor-v2060 th{background:#edf4fc!important;color:var(--meal60-ink)!important}
+.ktx-meal-monitor-v2060 button:focus-visible,.ktx-meal-monitor-v2060 :is(input,select):focus-visible{outline:2px solid var(--meal60-blue)!important;outline-offset:2px!important}
+/* Responsive: keep touch targets usable without making oversized cards */
+@media(max-width:900px){
+ #meal #mp_wk .wkd{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+ #meal .ctl{gap:7px!important}
+ #meal .meal-suppliers{grid-template-columns:1fr!important}
+}
+@media(max-width:640px){
+ #meal>.card,#meal .g2>.card{padding:9px!important}
+ #meal #mp_wk .wkd{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}
+ #meal #mp_wk .wkd button{min-height:46px!important;font-size:10.5px!important}
+ #meal #mp_s.seg button{min-width:52px!important;min-height:32px!important;height:32px!important;font-size:11px!important}
+ #meal :is(button.btn,label.btn){min-height:32px!important}
+ #meal .meal-supplier{min-height:29px!important}
+ #ktxMealAggregateDialog .kma-filters{grid-template-columns:repeat(2,minmax(0,1fr))!important;padding:9px 12px 4px!important}
+ .ktx-meal-monitor-v2060 .filter{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .ktx-meal-monitor-v2060 .filter label:last-child{grid-column:1/-1!important}
+ .ktx-meal-monitor-v2060 .bar :is(button,.filebtn){flex:0 1 auto!important;min-height:33px!important}
+ .ktx-meal-monitor-v2060 label :is(input:not([type=file]),select){font-size:16px!important}
+ body.ktx-meal-monitor-v2060{padding:8px!important}
+ .ktx-meal-monitor-v2060 .panel{padding:10px!important}
+}
